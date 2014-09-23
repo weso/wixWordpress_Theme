@@ -12,13 +12,13 @@ class Renderer {
 	private $settings;
 	
 	private $compiledTemplatesPath;
-	private $viewsContentPath;
+	private $labelsPath;
 	
 	private function __construct($settings) {
 		$this->settings = $settings;
 		
 		$this->compiledTemplatesPath = $this->settings['themePath'].$this->settings['compiledTemplatesPath'];
-		$this->viewsContentPath = $this->settings['themePath'].$this->settings['viewsContentPath'];
+		$this->labelsPath = $this->settings['themePath'].$this->settings['labelsPath'];
 	}
 
 	public static function getInstance($settings) {
@@ -34,19 +34,52 @@ class Renderer {
 		
 		if (file_exists($fileCompiledTemplate)) {
 			$renderer = include($fileCompiledTemplate);
-			$contentFile = $this->viewsContentPath.$templateName.".json";
 			
-			if (file_exists($contentFile)) {
+			$pageContent = Array();
+			$pageContent["data"] = $this->loadData($templateName);
+			$pageContent["labels"] = $this->loadLabels("en");
 			
-				return $renderer(json_decode(file_get_contents($contentFile), true));
-			} else {
-			
-				return $renderer();
-			}
+			return $renderer($pageContent, true);
 		} else {
 	
 			return false;
 		}
 	}
+	
+	private function loadData($templateName) {
+		$className = ucfirst($templateName) . "Model";
+		$modelClass = new ReflectionClass($className);
+		$modelObj = $modelClass->newInstanceArgs();
+		
+		return $modelObj->get();
+	}
+	
+	private function loadLabels($lang) {
+		$labelsFile = $this->labelsPath.$lang.".json";
+		$defaultLabelsFile = $this->labelsPath."en.json";
+		
+		if (file_exists($labelsFile)) {
+	
+			return json_decode(file_get_contents($labelsFile), true);
+		} else {
+		
+			return json_decode(file_get_contents($defaultLabelsFile), true);
+		}
+	}
 } 
+
+class AboutModel {
+    
+	function AboutModel() {
+    }
+
+    function get() {
+      $data = Array();
+	
+      $data["indicators"] = "Indicador";
+
+      return $data;
+    }
+}
+
 ?>
