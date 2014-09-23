@@ -1,0 +1,6 @@
+{
+ "themePath": "/var/www/wordpress/wp-content/themes/wixWordpress_Theme",
+ "templatesPath": "/views/",
+ "compiledTemplatesPath": "/compiled-views/",
+ "viewsContentPath": "/views-content/"
+}

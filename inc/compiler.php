@@ -1,26 +1,27 @@
 <?php
 
-	require_once('lightncandy.php');
 	require_once('/var/www/wordpress/wp-load.php');
 
 	class Compiler {
 		
 		// singleton
 		private static $instance;
-
-		private static $compiledTemplatesPath;
-		private static $templatesPath;
-		private static $themePath;
-
-		private function __construct() {
-			self::$themePath = '/var/www/wordpress/wp-content/themes/wixWordpress_Theme/';
-			self::$templatesPath = self::$themePath.'views/';
-			self::$compiledTemplatesPath = self::$themePath.'compiled-views/';
+		
+		private $settings;
+		
+		private $templatesPath;
+		private $compiledTemplatesPath;
+		
+		private function __construct($settings) {
+			$this->settings = $settings;
+			
+			$this->templatesPath = $this->settings['themePath'].$this->settings['templatesPath'];
+			$this->compiledTemplatesPath = $this->settings['themePath'].$this->settings['compiledTemplatesPath'];
 		}
 
-		public static function getInstance() {
+		public static function getInstance($settings) {
 			if (!self::$instance) {
-				self::$instance = new static();
+				self::$instance = new static($settings);
 			}
 
 			return self::$instance;
@@ -34,7 +35,7 @@
 		}
 
 		public function compileTemplate($templateName) {
-			$templatePath = self::$templatesPath.$templateName.'.tmpl';			
+			$templatePath = $this->templatesPath.$templateName.'.tmpl';			
 
 			if (file_exists($templatePath)) {
 				$template = file_get_contents($templatePath);
@@ -42,8 +43,8 @@
 				$compiledTemplate = LightnCandy::compile($template, Array(
    					'flags' => LightnCandy::FLAG_STANDALONE,
     					'basedir' => Array(
-        					self::$templatesPath,
-						self::$templatesPath.'partials/',
+        					$this->templatesPath,
+							$this->templatesPath.'partials/',
     					),
     					'fileext' => Array(
         					'.tmpl',
@@ -52,19 +53,11 @@
     					)
 				));
 
-				file_put_contents(self::$compiledTemplatesPath.$templateName, $compiledTemplate);
+				file_put_contents($this->compiledTemplatesPath.$templateName, $compiledTemplate);
 			} else {
 				echo 'File: '.$templatePath.' does not exists';
 			}	
 		}
 		
-		public function getCompiledTemplatesPath() {
-			return self::$compiledTemplatesPath;
-		}
-		
-		public function getThemePath() {
-			return self::$themePath;
-		}
-
 	}
 ?>

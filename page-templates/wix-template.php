@@ -6,12 +6,15 @@
  * @subpackage Wen index
  * @since 1.0
  */
-	require_once('/var/www/wordpress/wp-content/themes/wixWordpress_Theme/inc/renderer.php');	
+	require_once(__DIR__.'/../inc/controller.php');	
+
+	$controller = Controller::getInstance();
+	$renderer = $controller->renderer;
 
 	global $post;
 	$post_slug = $post->post_name;
 
-	$html = renderTemplate('about');
+	$html = $renderer->renderTemplate('about');
 	
 	if (!$html) {
 		echo '404';
