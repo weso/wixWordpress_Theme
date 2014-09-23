@@ -55,7 +55,7 @@
 
 				file_put_contents($this->compiledTemplatesPath.$templateName, $compiledTemplate);
 			} else {
-				echo 'File: '.$templatePath.' does not exists';
+				error_log(date("Y-m-d H:i:s").': File: '.$templatePath.' does not exists');
 			}	
 		}
 		
