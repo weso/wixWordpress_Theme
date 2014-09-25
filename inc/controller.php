@@ -2,7 +2,7 @@
 	
 	ini_set("error_log", __DIR__."/errors.log");
 	
-	require_once('lightncandy.php');
+	require_once('lightncandy/lightncandy.php');
 	require_once('compiler.php');
 	require_once('renderer.php');
 

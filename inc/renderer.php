@@ -5,6 +5,9 @@
  *
  */
 
+require_once(__DIR__."/twitter/Twitter.php");
+require_once(__DIR__."/gallery/Gallery.php");
+ 
 class Renderer {
 
 	private static $instance;
@@ -70,14 +73,18 @@ class Renderer {
 
 class AboutModel {
     
-	function AboutModel() {
+    function AboutModel() {
     }
 
     function get() {
-      $data = Array();
-	
-      $data["indicators"] = "Indicador";
+      $gallery = new Gallery();
+      $twitter = new Twitter();
 
+      $data = Array();
+	  
+      $data["tweets"] = $twitter->loadDefaultAccountTweets();
+      $data["gallery"] = $gallery->getImages();
+	
       return $data;
     }
 }
