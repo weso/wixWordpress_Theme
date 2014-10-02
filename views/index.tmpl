@@ -1,0 +1,9 @@
+<h1>Front page</h1>
+<h2>News and media</h2>
+{{#data}}
+	{{#news}}
+		<h3>{{title}}</h3>
+		<p>{{{content}}}</p>
+	{{/news}}
+{{/data}}
+{{> twitter_timeline }}

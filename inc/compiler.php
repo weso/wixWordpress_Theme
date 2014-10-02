@@ -29,6 +29,7 @@
 
 		public function compileTemplates() {
 			$pages = get_pages();
+			self::compileTemplate('index');
 			foreach ($pages as $page) {
 				self::compileTemplate($page->post_name);
 			}

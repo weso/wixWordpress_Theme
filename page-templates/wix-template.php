@@ -14,11 +14,13 @@
 	global $post;
 	$post_slug = $post->post_name;
 
-	$html = $renderer->renderTemplate('about');
+	$html = $renderer->renderTemplate($post_slug);
 	
 	if (!$html) {
 		echo '404';
 	} else {
 		echo $html;
 	}
+	
+	die();
 ?>

@@ -5,4 +5,7 @@
   $compiler = $controller->compiler;
 
   $compiler->compileTemplates();
+
+  // $renderer = $controller->renderer;
+  // print $renderer->renderTemplate('report');
 ?>

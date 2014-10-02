@@ -1,0 +1,7 @@
+{
+  "SMTPHost": "smtp.gmail.com",
+  "SMTPPort": 465,
+  "username": "",
+  "password": "",
+  "mailReceiver": ""
+}
