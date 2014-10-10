@@ -13,7 +13,8 @@
 
 	global $post;
 	$post_slug = $post->post_name;
-
+	
+	get_header();	
 	$html = $renderer->renderTemplate($post_slug);
 	
 	if (!$html) {
@@ -22,5 +23,6 @@
 		echo $html;
 	}
 	
+	get_footer();	
 	die();
 ?>

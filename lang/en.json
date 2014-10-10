@@ -1,4 +1,8 @@
 {
-  "name": "Pepe",
-  "value": 1000
+  "a_home": "Home",
+  "a_report": "The Report",
+  "a_data": "The Data",
+  "a_blog": "Blog",
+  "a_media": "Media Centre",
+  "a_about": "About"
 }

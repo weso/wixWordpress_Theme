@@ -29,15 +29,22 @@
 
 		public function compileTemplates() {
 			$pages = get_pages();
-			self::compileTemplate('index');
+			self::compileTemplate('index', false);
+			self::compileTemplate('header', true);
+			self::compileTemplate('footer', true);
+			
 			foreach ($pages as $page) {
-				self::compileTemplate($page->post_name);
+				self::compileTemplate($page->post_name, false);
 			}
 		}
 
-		public function compileTemplate($templateName) {
-			$templatePath = $this->templatesPath.$templateName.'.tmpl';			
-
+		public function compileTemplate($templateName, $partial) {
+			if ($partial) {
+				$templatePath = $this->templatesPath."partials/".$templateName.'.hbs';			
+			} else {
+				$templatePath = $this->templatesPath.$templateName.'.hbs';			
+			}
+			
 			if (file_exists($templatePath)) {
 				$template = file_get_contents($templatePath);
 
@@ -50,7 +57,7 @@
     					'fileext' => Array(
         					'.tmpl',
         					'.mustache',
-        					'.handlebars',
+        					'.hbs',
     					)
 				));
 

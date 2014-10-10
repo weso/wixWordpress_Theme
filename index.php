@@ -5,8 +5,7 @@
         $renderer = $controller->renderer;
 	
 	get_header();
-	
-	echo $renderer->renderTemplate('index');
+	echo $renderer->renderTemplate("index");
 	
 	get_footer(); 
 ?>

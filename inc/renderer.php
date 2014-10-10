@@ -18,6 +18,13 @@ class Renderer {
 	private $compiledTemplatesPath;
 	private $labelsPath;
 	
+	private $menu = Array(Array("path"=>"", "label"=>"Home"),
+						Array("path"=>"report", "label"=>"The Report"),
+						Array("path"=>"data", "label"=>"The Data"),
+						Array("path"=>"blog", "label"=>"Blog"),
+						Array("path"=>"media-centre", "label"=>"Media Centre"),
+						Array("path"=>"about", "label"=>"About"));
+	
 	private function __construct($settings) {
 		$this->settings = $settings;
 		
@@ -39,9 +46,13 @@ class Renderer {
 		if (file_exists($fileCompiledTemplate)) {
 			$renderer = include($fileCompiledTemplate);
 			
+			$navigation = wp_nav_menu( array( 'theme_location' => 'primary', 'echo' => 0 ) );
+			
 			$pageContent = Array();
+			$pageContent["navigation"] = $navigation;
 			$pageContent["data"] = $this->loadData($templateName);
 			$pageContent["labels"] = $this->loadLabels("en");
+			$pageContent["path"] = get_stylesheet_directory_uri();
 			
 			return $renderer($pageContent, true);
 		} else {
@@ -51,14 +62,18 @@ class Renderer {
 	}
 	
 	private function loadData($templateName) {
-		$templateName = preg_replace("/[^A-Za-z]/", '', $templateName);
-		
-		$className = ucfirst($templateName) . "Model";
-		$modelClass = new ReflectionClass($className);
-		$modelObj = $modelClass->newInstanceArgs();
-		
-		return $modelObj->get();
-	}
+		try {
+			$templateName = preg_replace("/[^A-Za-z]/", '', $templateName);
+			
+			$className = ucfirst($templateName) . "Model";
+			$modelClass = new ReflectionClass($className);
+			$modelObj = $modelClass->newInstanceArgs();
+			
+			return $modelObj->get();
+		} catch (ReflectionException $e) {
+			return array();
+		}
+	}	
 	
 	private function loadLabels($lang) {
 		$labelsFile = $this->labelsPath.$lang.".json";
@@ -115,15 +130,15 @@ class ReportModel {
 		$post = get_post($id); 
 		
 		// Filter the post content
-		$post_content = apply_filters('the_content', $post->post_content); 
-		$html = str_get_html($post_content);
-		
+		$post_content = apply_filters('the_content', $post->post_content);
+
 		$chapter_counter = 0;
-		foreach($html->find('article') as $article) {
+		$html = "";
+		
+		foreach($this->sliceHtmlIntoChapters($post_content) as $chapter) {
 			$chapter_counter++;
 			
-			$h1 = $article->find('h1', 0);
-			$h1->setAttribute('id', 'chapter_'.$chapter_counter);
+			$article = str_get_html($chapter);
 			
 			$section_counter = 0;
 			foreach($article->find('h2') as $h2) {
@@ -132,30 +147,62 @@ class ReportModel {
 			}
 			
 			$chapters['chapter_'.$chapter_counter] = $article;
+			$html .= $article;
 		}
 		
-		$data["content"] = $html;
-		$data["sidebar"] = $this->generateSideBar($chapters);
+		$slices = $this->generateSideBar($chapters);
+		
+		$data["report"]["content"] = $html;
+		$data["report"]["ul"] = $slices["sidebar"];
 		
 		return $data;
 	}
 	
+	function sliceHtmlIntoChapters($html) {
+		$chapters = Array();
+		$positions = Array();
+		
+		$article_class = 'text-article';
+		$article_id = 'chapter_';
+		
+		$lastPos = 0;
+		while (($lastPos = strpos($html, "<h1>", $lastPos))!== false) {
+			$positions[] = $lastPos;
+			$lastPos = $lastPos + strlen("<h1>");
+		}
+		
+		for ($i=0; $i < count($positions)-1; $i++) {
+			$chapters["chapter_".($i+1)] = "<article class='".$article_class."' id='".$article_id.($i+1)."'>".substr($html, $positions[$i], $positions[$i+1] - $positions[$i])."</article>";
+		}
+		
+		$chapters["chapter_".count($positions)] = "<article class='".$article_class."' id='".$article_id.count($positions)."'>".substr($html, $positions[$i])."</article>";
+		
+		return $chapters;
+	}
+	
 	function generateSideBar($chapters) {
-		$sidebar = "<ul>";
+		$slices = Array();
+		$subsections = Array();
+		$sidebar = "";
+		$subsection = "";
 		
 		foreach ($chapters as $article) {
+			$article_element = $article->find('article', 0);
 			$chapter_title = $article->find('h1', 0);
-			$sidebar .= "<li><a href='#".$chapter_title->getAttribute('id')."'>".$chapter_title->innertext."</a><ul>";
+			$sidebar .= "<li><a href='#".$article_element->getAttribute('id')."'>".$chapter_title->innertext."</a><ul>";
 			
 			foreach($article->find('h2') as $h2) {
-				$sidebar .= "<li><a href='#".$h2->getAttribute('id')."'>".$h2->innertext()."</a></li>";
+				$subsection = "<li><a href='#".$h2->getAttribute('id')."'>".$h2->innertext()."</a></li>";
 			}
 			
-			$sidebar .= "</ul></li>";
+			$subsections[$article_element->getAttribute('id')] = "<ul>".$subsection."</ul>";
+			$sidebar .= $subsection."</ul></li>";
 		}
-		$sidebar .= "</ul>";
 		
-		return $sidebar;
+		$slices["sidebar"] = $sidebar;
+		$slices["subsections"] = $subsections;
+		
+		return $slices;
 	}
 }
 
@@ -193,22 +240,31 @@ class IndexModel {
 		} 
 		wp_reset_postdata();
 		
+		while (count($posts) < 3) {
+			$post = Array();
+			$post['title'] = "No more news";
+			$post['content'] = "";
+
+			array_push($posts, $post);
+		}
+		
 		return $posts;
 	}
 }
 
-class MediacentreModel {
+class MediaModel {
 	
 	function MediacentreModel(){
 	}
 
 	function get() {
 		$data = Array();
-
-		$data["sectionOne"] = $this->getPostContent('sectionone');
-		$data["sectionTwo"] = $this->getPostContent('sectiontwo');
-	
-		$data["sidebar"] = $this->generateSidebar($data);
+		$data["media"] = Array();
+		
+		$data["media"]["press_releases"] = $this->getPostContent('press-releases');
+		$data["media"]["videos"] = $this->getPostContent('videos');
+		$data["media"]["visualisations"] = $this->getPostContent('visualizations');
+		$data["media"]["in_the_press"] = $this->getPostContent('in-the-press');
 	
 		return $data;
 

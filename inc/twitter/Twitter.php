@@ -61,13 +61,11 @@
 					$language = $tweet->lang;
 				
 					$tweet = array(
-						'text' => $text,
-						'date' => $date,
-						'language' => $language,
-						'user' => array(
+						'content' => $text,
+						'account' => array(
 							'name' => $username,
-							'account' => $user_account,
-							'image' => $account_image
+							'display_name' => $user_account,
+							'img' => $account_image
 						)
 					);
 				

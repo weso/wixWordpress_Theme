@@ -1,0 +1,20 @@
+/*
+Theme Name:     Web Index
+Theme URI:      http://thewebindex.org/
+Description:    Web Index theme 2014
+Author:         Borja Garrido
+Author URI:     
+Template:       twentyeleven
+Version:        1.2
+
+This theme (v1.0 to 1.1) was formerly developped by Zonda as a copy of the
+orginal WP Twenty Eleven theme under the GNU General Public License.
+
+From 1.2 on it is re-implemented as a child theme of Twenty Eleven and made
+ready for mobile devices.
+
+-- Borja
+
+*/
+
+@import url("../twentyeleven/style.css");
