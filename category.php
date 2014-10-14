@@ -14,7 +14,7 @@
 get_header(); ?>
 		
 <main class="content">
-	echo $renderer->renderTemplate("by");
+	<?php echo $renderer->renderTemplate("by"); ?>
   	<div class="container">
   		<?php dynamic_sidebar('blog-sidebar'); ?>
 		<section id="primary" class="right-content blog-articles">
