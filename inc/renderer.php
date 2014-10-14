@@ -186,6 +186,9 @@ class ReportModel {
 			
 			$nav = "<nav><ul class='tags'>$tags</ul></nav>";
 			
+			$title = $article->find('h1');
+			$title->outertext = $title->outertext . $nav;
+			
 			$chapters["chapter_".($i+1)] = "<article class='".$article_class."' id='".$article_id.($i+1)."'><p class='chapter'>$number</p>$nav$article<hr /></article>";
 		}
 		
