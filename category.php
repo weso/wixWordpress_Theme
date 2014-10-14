@@ -6,13 +6,17 @@
  * @subpackage Twenty_Eleven
  * @since Twenty Eleven 1.0
  */
+ 
+ require_once(__DIR__.'/inc/controller.php');
+ $controller = Controller::getInstance();
+ $renderer = $controller->renderer;
 
 get_header(); ?>
-<?php dynamic_sidebar('blog-sidebar'); ?>
 		
 <main class="content">
-	{{>by}}
+	echo $renderer->renderTemplate("by");
   	<div class="container">
+  		<?php dynamic_sidebar('blog-sidebar'); ?>
 		<section id="primary" class="right-content blog-articles">
 
 			<?php if ( have_posts() ) : ?>
