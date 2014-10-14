@@ -243,6 +243,8 @@ aside.left-bar {
     height: 1.5em;
     background-image: -webkit-linear-gradient( top , #fff, rgba(255, 255, 255, 0.5));
     background-image: linear-gradient(to bottom, #fff, rgba(255, 255, 255, 0.5)); }
+  aside.left-bar li > ul {
+    display: none; }
 
 @media (min-width: 64em) {
   aside.left-bar {
