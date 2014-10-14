@@ -1459,6 +1459,7 @@ body {
   font-family: Raleway, sans-serif;
   color: #333;
   margin: 0;
+  position: inherit !important;
   top: 0 !important; }
 
 .goog-te-banner-frame {
