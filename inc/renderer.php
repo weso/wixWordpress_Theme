@@ -98,16 +98,115 @@ class AboutModel {
     }
 
     function get() {
-      $gallery = new Gallery();
-      $twitter = new Twitter();
+		global $wpdb;
+		
+		$data = Array();
+		$chapters = Array();
+		
+		// Obtain the post id through its name
+		$id = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_name = 'about'");
+		
+		// Obtain the post through its id
+		$post = get_post($id); 
+		
+		// Filter the post content
+		$post_content = apply_filters('the_content', $post->post_content);
 
-      $data = Array();
-	  
-      $data["tweets"] = $twitter->loadDefaultAccountTweets();
-      $data["gallery"] = $gallery->getImages();
+		$chapter_counter = 0;
+		$html = "";
+		
+		foreach($this->sliceHtmlIntoChapters($post_content) as $chapter) {
+			$chapter_counter++;
+			
+			$article = str_get_html($chapter);
+			
+			$section_counter = 0;
+			foreach($article->find('h2') as $h2) {
+				$section_counter++;
+				$h2->setAttribute('id', 'chapter_'.$chapter_counter.'_section_'.$section_counter);
+			}
+			
+			$chapters['chapter_'.$chapter_counter] = $article;
+			$html .= $article;
+		}
+		
+		$slices = $this->generateSideBar($chapters);
+		
+		$data["about"]["content"] = $html;
+		$data["about"]["ul"] = $slices["sidebar"];
+		
+		return $data;
+	}
 	
-      return $data;
-    }
+	function sliceHtmlIntoChapters($html) {
+		$chapters = Array();
+		$positions = Array();
+		
+		$article_class = 'text-article';
+		$article_id = 'chapter_';
+		
+		$lastPos = 0;
+		while (($lastPos = strpos($html, "<h1>", $lastPos))!== false) {
+			$positions[] = $lastPos;
+			$lastPos = $lastPos + strlen("<h1>");
+		}
+		
+		for ($i=0; $i < count($positions); $i++) {
+			$number = $i + 1;
+			if ($i == (count($positions)-1)) {
+				$article = substr($html, $positions[$i]);
+			} else {
+				$article = substr($html, $positions[$i], $positions[$i+1] - $positions[$i]);
+			}
+
+			$processed_article = str_get_html($article);
+			$tags = "";
+			
+			foreach($processed_article->find('h2') as $h2) {
+				$content = $h2->innertext();
+				$id = $h2->id;
+				$tags .= "<li><a href='#$id'>$content</a></li>";
+			}
+			
+			$nav = "<nav><ul class='tags'>$tags</ul></nav>";
+			
+			$title = $processed_article->find('h1', 0);
+			
+			if ($title)
+				$title->outertext = $title->outertext . $nav;
+			
+			$content = $processed_article->outertext;
+			
+			$chapters["chapter_".($i+1)] = "<article class='".$article_class."' id='".$article_id.($i+1)."'><p class='chapter'>$number</p>$content<hr /></article>";
+		}
+		
+		return $chapters;
+	}
+	
+	function generateSideBar($chapters) {
+		$slices = Array();
+		$subsections = Array();
+		$sidebar = "";
+		$subsection = "";
+		
+		foreach ($chapters as $article) {
+			$article_element = $article->find('article', 0);
+			$chapter_title = $article->find('h1', 0);
+			$sidebar .= "<li><a href='#".$article_element->getAttribute('id')."'>".$chapter_title->innertext."</a><ul>";
+			
+			foreach($article->find('h2') as $h2) {
+				$subsection = "<li><a href='#".$h2->getAttribute('id')."'>".$h2->innertext()."</a></li>";
+			}
+			
+			$subsections[$article_element->getAttribute('id')] = "<ul>".$subsection."</ul>";
+			$sidebar .= $subsection."</ul></li>";
+		}
+		
+		$slices["sidebar"] = $sidebar;
+		$slices["subsections"] = $subsections;
+		
+		return $slices;
+	}
 }
 
 require_once('simplehtmldom/simple_html_dom.php');
@@ -169,12 +268,17 @@ class ReportModel {
 		while (($lastPos = strpos($html, "<h1>", $lastPos))!== false) {
 			$positions[] = $lastPos;
 			$lastPos = $lastPos + strlen("<h1>");
-		}
+		}	
 		
-		for ($i=0; $i < count($positions)-1; $i++) {
+		for ($i=0; $i < count($positions); $i++) {
 			$number = $i + 1;
-			$article = substr($html, $positions[$i], $positions[$i+1] - $positions[$i]);
 			
+			if ($i == (count($positions)-1)) {
+				$article = substr($html, $positions[$i]);
+			} else {
+				$article = substr($html, $positions[$i], $positions[$i+1] - $positions[$i]);
+			}
+
 			$processed_article = str_get_html($article);
 			$tags = "";
 			
@@ -195,8 +299,6 @@ class ReportModel {
 			
 			$chapters["chapter_".($i+1)] = "<article class='".$article_class."' id='".$article_id.($i+1)."'><p class='chapter'>$number</p>$content<hr /></article>";
 		}
-		
-		$chapters["chapter_".count($positions)] = "<article class='".$article_class."' id='".$article_id.count($positions)."'>".substr($html, $positions[$i])."</article>";
 		
 		return $chapters;
 	}
@@ -334,3 +436,4 @@ class MediaModel {
 	}
 }
 ?>
+
