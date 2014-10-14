@@ -188,8 +188,7 @@ class ReportModel {
 			
 			$title = $processed_article->find('h1');
 			
-			if ($title && $title->outertext)
-				$title->outertext = $title->outertext . $nav;
+			$title->outertext = $title->outertext . $nav;
 			
 			$content = $processed_article->outertext;
 			
