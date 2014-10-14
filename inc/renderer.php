@@ -186,9 +186,10 @@ class ReportModel {
 			
 			$nav = "<nav><ul class='tags'>$tags</ul></nav>";
 			
-			$title = $processed_article->find('h1', 0)->outertext;
+			$title = $processed_article->find('h1', 0);
 			
-			$processed_article->find('h1', 0)->outertext = $title . $nav;
+			if ($title)
+				$title->outertext = $title->outertext . $nav;
 			
 			$content = $processed_article->outertext;
 			
