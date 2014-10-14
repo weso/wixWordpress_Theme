@@ -73,6 +73,7 @@ get_header(); ?>
 			</div><!-- #content -->
 		</section><!-- #primary -->
 	</div>
+	<script src="/wp-content/themes/wixWordpress_Theme/scripts/left-bar.js"></script>
 </main>
 
 <?php get_footer(); ?>
