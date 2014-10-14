@@ -209,6 +209,15 @@ class AboutModel {
 	}
 }
 
+class ContactModel {
+	function ContactModel() {
+	}
+
+	function get() {
+		return Array();
+	}
+}
+
 require_once('simplehtmldom/simple_html_dom.php');
 
 class ReportModel {
