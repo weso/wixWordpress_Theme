@@ -172,7 +172,8 @@ class ReportModel {
 		}
 		
 		for ($i=0; $i < count($positions)-1; $i++) {
-			$chapters["chapter_".($i+1)] = "<article class='".$article_class."' id='".$article_id.($i+1)."'>".substr($html, $positions[$i], $positions[$i+1] - $positions[$i])."</article>";
+			$number = $i + 1;
+			$chapters["chapter_".($i+1)] = "<article class='".$article_class."' id='".$article_id.($i+1)."'><p class='chapter'>$number</p>".substr($html, $positions[$i], $positions[$i+1] - $positions[$i])."<hr /></article>";
 		}
 		
 		$chapters["chapter_".count($positions)] = "<article class='".$article_class."' id='".$article_id.count($positions)."'>".substr($html, $positions[$i])."</article>";
