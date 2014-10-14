@@ -32,6 +32,7 @@
 			self::compileTemplate('index', false);
 			self::compileTemplate('header', true);
 			self::compileTemplate('footer', true);
+			self::compileTemplate('by', true);
 			
 			foreach ($pages as $page) {
 				self::compileTemplate($page->post_name, false);
