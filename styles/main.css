@@ -232,49 +232,49 @@ input[type="submit"] {
 /* CONTACT */
 /* DATA */
 /* LEFT BAR */
-aside.left-bar, aside {
+aside.left-bar {
   padding: 0; }
-  aside.left-bar h1, aside h1 {
+  aside.left-bar h1 {
     background-color: #fff; }
-  aside.left-bar nav, aside nav {
+  aside.left-bar nav {
     background-color: #fff;
     padding: 0.5em 0.2em; }
-  aside.left-bar .bar, aside .bar {
+  aside.left-bar .bar {
     height: 1.5em;
     background-image: -webkit-linear-gradient( top , #fff, rgba(255, 255, 255, 0.5));
     background-image: linear-gradient(to bottom, #fff, rgba(255, 255, 255, 0.5)); }
 
 @media (min-width: 64em) {
-  aside.left-bar, aside {
+  aside.left-bar {
     width: 30%;
     height: 100%;
     float: left;
     padding: 0; }
-    aside.left-bar h1, aside h1 {
+    aside.left-bar h1 {
       font-size: 2em;
       text-align: left;
       margin-bottom: 1em;
       background-color: transparent; }
-    aside.left-bar nav, aside nav {
+    aside.left-bar nav {
       padding: 0;
       background-color: transparent; }
-    aside.left-bar .bar, aside .bar {
+    aside.left-bar .bar {
       display: none; }
 
   aside.left-bar > div {
     margin-right: 1em; }
 
-  section.right-content, section#primary {
+  section.right-content {
     padding-left: 32%; }
 
   section.right-content article:first-child h2:first-child, section.right-content h2:first-child {
     margin-top: 0; } }
 @media (min-width: 66em) {
-  aside.left-bar, aside {
+  aside.left-bar {
     width: 18em;
     float: left; }
 
-  section.right-content, section#primary {
+  section.right-content {
     padding-left: 19em;
     margin-bottom: 30em; } }
 /* FIXED */
@@ -561,7 +561,7 @@ a.read-more {
 /* TRANSLATOR */
 div.translator {
   float: right;
-  margin: 0.5em 0.5em 0 0; }
+  margin: 0.5em 1em 0 0; }
   div.translator div {
     font-size: 1em; }
   div.translator a:hover {
