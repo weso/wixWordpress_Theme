@@ -179,10 +179,13 @@ class ReportModel {
 			$tags = "";
 			
 			foreach($processed_article->find('h2') as $h2) {
-				$tags .= $h2;
+				$content = $h2->innertext();
+				$tags .= "<li>$content</li>";
 			}
 			
-			$chapters["chapter_".($i+1)] = "<article class='".$article_class."' id='".$article_id.($i+1)."'><p class='chapter'>$number</p><nav>$tags</nav>$article<hr /></article>";
+			$nav = "<nav><ul class='tags'>$tags</ul></nav>";
+			
+			$chapters["chapter_".($i+1)] = "<article class='".$article_class."' id='".$article_id.($i+1)."'><p class='chapter'>$number</p>$nav$article<hr /></article>";
 		}
 		
 		$chapters["chapter_".count($positions)] = "<article class='".$article_class."' id='".$article_id.count($positions)."'>".substr($html, $positions[$i])."</article>";
