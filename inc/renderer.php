@@ -188,7 +188,7 @@ class ReportModel {
 			
 			$title = $processed_article->find('h1');
 			
-			if ($title)
+			if ($title && $title->outertext)
 				$title->outertext = $title->outertext . $nav;
 			
 			$chapters["chapter_".($i+1)] = "<article class='".$article_class."' id='".$article_id.($i+1)."'><p class='chapter'>$number</p>$article<hr /></article>";
