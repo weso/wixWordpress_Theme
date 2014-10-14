@@ -7,7 +7,7 @@
       elapseTimeout: 100,
       server: {
         method: "JSONP",
-        url: "http://localhost:5000"
+        url: "http://intertip.webfoundation.org/api"
       }
     },
     release: {

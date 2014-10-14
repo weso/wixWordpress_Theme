@@ -319,16 +319,16 @@ article ul.tags {
   font-size: 0.8em; }
 
 /* ARTICLE */
-article.text-article {
+.right-content article {
   text-align: left; }
-  article.text-article:after {
+  .right-content article:after {
     content: "";
     display: table;
     clear: both; }
-  article.text-article img:not([alt]) {
+  .right-content article img:not([alt]) {
     width: 100%;
     margin-bottom: 0.5em; }
-  article.text-article .chapter {
+  .right-content article .chapter {
     font-family: "Merriweather Sans", sans-serif;
     font-size: 1.4em;
     font-weight: 700;
@@ -342,7 +342,7 @@ article.text-article {
     background-color: red;
     color: white;
     text-align: center; }
-  article.text-article h1 {
+  .right-content article h1 {
     font-family: "Merriweather Sans", sans-serif;
     font-size: 2em;
     font-weight: 700;
@@ -350,9 +350,9 @@ article.text-article {
     margin-top: 0;
     text-align: center; }
     @media screen and (min-width: 40em) {
-      article.text-article h1 {
+      .right-content article h1 {
         font-size: 2.6em; } }
-  article.text-article h2 {
+  .right-content article h2 {
     font-family: "Merriweather", serif;
     font-style: italic;
     font-size: 1em;
@@ -360,21 +360,21 @@ article.text-article {
     line-height: 1.6em;
     margin-bottom: .9em; }
     @media screen and (min-width: 40em) {
-      article.text-article h2 {
+      .right-content article h2 {
         font-size: 1.2em; } }
-  article.text-article h3:before {
+  .right-content article h3:before {
     content: "● ";
     color: red;
     font-size: 1.3em; }
-  article.text-article h4:before {
+  .right-content article h4:before {
     content: "□ ";
     color: red;
     font-size: 1.1em; }
-  article.text-article h5:before {
+  .right-content article h5:before {
     content: "‣ ";
     color: red;
     font-size: 1.2em; }
-  article.text-article code {
+  .right-content article code {
     white-space: nowrap;
     font-family: monaco;
     background: #F7F7F7;
@@ -383,27 +383,27 @@ article.text-article {
     padding: .1em .4em;
     font-size: .75em;
     font-style: normal; }
-  article.text-article h3 {
+  .right-content article h3 {
     font-family: "Merriweather Sans", sans-serif;
     font-size: 1.4em;
     font-weight: 400;
     line-height: 1.3em;
     margin-bottom: .4em; }
-  article.text-article p.date {
+  .right-content article time {
     color: rgba(51, 51, 51, 0.4);
     font-family: "Merriweather Sans", sans-serif;
     font-style: italic;
     font-size: 1em;
     margin-bottom: .3em; }
-  article.text-article p {
+  .right-content article p {
     font-family: "Merriweather", serif;
     line-height: 1.6em;
     font-size: .9em;
     margin-bottom: 1.5em; }
-    article.text-article p span {
+    .right-content article p span {
       font-family: "Merriweather Sans", sans-serif;
       font-weight: 700; }
-  article.text-article a.read-more {
+  .right-content article a.read-more {
     display: inline-block;
     font-family: "Merriweather Sans", sans-serif;
     font-weight: 700;
@@ -411,21 +411,28 @@ article.text-article {
     text-transform: uppercase;
     margin-left: .2em;
     position: relative; }
-    article.text-article a.read-more span {
+    .right-content article a.read-more span {
       font-family: "Merriweather Sans", sans-serif;
       font-style: normal;
       font-size: 1.5em; }
-  article.text-article hr {
+  .right-content article hr {
     width: 3em; }
-  article.text-article p.author {
+  .right-content article span.by-author {
+    display: block;
     font-family: "Merriweather", serif;
     font-style: italic;
     text-align: right; }
-  article.text-article iframe {
+  .right-content article iframe {
     width: 100%;
     height: 25em;
     margin-top: 1em;
     margin-bottom: 1em; }
+  .right-content article .cat-links a {
+    display: inline-block;
+    background-color: #379A81;
+    padding: 0.1em 0.3em;
+    color: white;
+    border-radius: 0.2em; }
 
 header.site-header .logo {
   margin: 0.5em 0 0 0.5em;
@@ -1102,6 +1109,15 @@ ul.blog-tags li.active:nth-child(4) a {
   border-bottom-color: #4b253e; }
 
 /* ARTICLES */
+section.blog-articles article {
+  margin-bottom: 2em; }
+section.blog-articles h1 {
+  font-size: 2.6em; }
+  section.blog-articles h1 a {
+    color: #333;
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 1em;
+    font-weight: 700; }
 section.blog-articles ul.tags a {
   color: #0f0f0f; }
 section.blog-articles article:nth-of-type(1) .chapter {
