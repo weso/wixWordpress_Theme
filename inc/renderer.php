@@ -187,9 +187,11 @@ class ReportModel {
 			$nav = "<nav><ul class='tags'>$tags</ul></nav>";
 			
 			$title = $processed_article->find('h1');
-			$title->outertext = $title->outertext . $nav;
 			
-			$chapters["chapter_".($i+1)] = "<article class='".$article_class."' id='".$article_id.($i+1)."'><p class='chapter'>$number</p>$nav$article<hr /></article>";
+			if ($title)
+				$title->outertext = $title->outertext . $nav;
+			
+			$chapters["chapter_".($i+1)] = "<article class='".$article_class."' id='".$article_id.($i+1)."'><p class='chapter'>$number</p>$article<hr /></article>";
 		}
 		
 		$chapters["chapter_".count($positions)] = "<article class='".$article_class."' id='".$article_id.count($positions)."'>".substr($html, $positions[$i])."</article>";
