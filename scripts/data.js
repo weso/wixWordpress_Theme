@@ -1,5 +1,5 @@
 (function() {
-  var checkSelectorDataReady, getCountries, getIndicators, getObservations, getSelectorData, getYears, global, processAJAX, processJSONP, renderCharts, setIndicatorOptions, setPageStateful, updateInfo;
+  var chartSelectors, checkSelectorDataReady, getCountries, getIndicators, getObservations, getSelectorData, getYears, global, li, processAJAX, processJSONP, renderBoxes, renderCharts, renderTable, renderTendencyChart, setIndicatorOptions, setPageStateful, updateInfo, _i, _len;
 
   global = this;
 
@@ -165,6 +165,19 @@
       labelName: "name",
       valueName: "iso3",
       childrenName: "countries",
+      beforeChange: function(selectedItems, element) {
+        if (!global.options.countrySelector) {
+          return;
+        }
+        if (selectedItems.length === 0) {
+          return global.options.countrySelector.select("ALL");
+        } else if (element.code === "ALL") {
+          global.options.countrySelector.clear();
+          return global.options.countrySelector.select("ALL");
+        } else if (selectedItems.search("ALL") !== -1) {
+          return global.options.countrySelector.unselect("ALL");
+        }
+      },
       sort: false
     });
     document.getElementById("country-selector").appendChild(global.options.countrySelector.render());
@@ -196,7 +209,9 @@
       return;
     }
     observations = data.data;
-    return renderCharts(observations);
+    renderCharts(observations);
+    renderTable(observations);
+    return renderBoxes(observations);
   };
 
   processJSONP = function(url) {
@@ -225,17 +240,20 @@
   };
 
   renderCharts = function(data) {
-    var barContainer, colour1, colour2, colourLength, colours, i, index, intervalLength, length, map, mapContainer, options, range, resize, _i, _j, _len, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _results;
-    console.log(data);
+    var barContainer, countryView, lineContainer, map, mapContainer, mapView, options, resize, view, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7;
     mapContainer = "#map";
     barContainer = "#country-bars";
+    lineContainer = "#lines";
+    mapView = "#map-view";
+    countryView = "#country-view";
     if (global.selections.countries === "ALL") {
-      if ((_ref = document.querySelector(mapContainer)) != null) {
+      if ((_ref = document.querySelector(mapView)) != null) {
         _ref.style.display = 'block';
       }
-      if ((_ref1 = document.querySelector(barContainer)) != null) {
+      if ((_ref1 = document.querySelector(countryView)) != null) {
         _ref1.style.display = 'none';
       }
+      view = document.querySelector(mapView);
       if ((_ref2 = document.querySelector(mapContainer)) != null) {
         _ref2.innerHTML = "";
       }
@@ -246,18 +264,135 @@
         borderColour: "#E4E5D8",
         backgroundColour: "none",
         countries: data.observations,
-        colourRange: ["#E5E066", "#83C04C", "#1B7A65", "#1B4E5A", "#005475"]
+        width: view.offsetWidth,
+        height: view.offsetHeight,
+        colourRange: ["#E5E066", "#83C04C", "#1B7A65", "#1B4E5A", "#005475"],
+        onCountryClick: function(info) {
+          var code;
+          code = info.iso3;
+          global.options.countrySelector.select(code);
+          return global.options.countrySelector.refresh();
+        }
       });
+      options = {
+        maxRankingRows: 10,
+        margins: [4, 12, 1, 0],
+        container: "#ranking",
+        chartType: "ranking",
+        rankingElementShape: "square",
+        rankingDirection: "HigherToLower",
+        sortSeries: true,
+        mean: {
+          show: true,
+          margin: 10,
+          stroke: 1
+        },
+        median: {
+          show: true,
+          margin: 10,
+          stroke: 1
+        },
+        xAxis: {
+          title: "",
+          colour: "#ccc",
+          "font-family": "'Kite One', sans-serif",
+          "font-size": "14px"
+        },
+        yAxis: {
+          margin: 1,
+          title: "",
+          "font-family": "'Kite One', sans-serif",
+          "font-size": "12px"
+        },
+        legend: {
+          "font-family": "'Kite One', sans-serif",
+          "font-size": "14px"
+        },
+        serieColours: ["#0489B1", "#088A68", "#21610B", "#DBA901", "#084B8A"],
+        valueOnItem: {
+          "font-family": "Helvetica",
+          "font-colour": "#fff",
+          "font-size": "11px"
+        },
+        width: view.offsetWidth,
+        height: view.offsetHeight,
+        series: data.secondVisualisation,
+        getElementColour: function(options, element, index) {
+          var pos;
+          pos = 0;
+          switch (element.continent) {
+            case "ECS":
+              pos = 0;
+              break;
+            case "NAC":
+              pos = 1;
+              break;
+            case "LCN":
+              pos = 1;
+              break;
+            case "AFR":
+              pos = 2;
+              break;
+            case "SAS":
+              pos = 3;
+              break;
+            case "EAS":
+              pos = 3;
+              break;
+            case "MEA":
+              pos = 4;
+          }
+          return options.serieColours[pos];
+        },
+        getLegendElements: function(options) {
+          var continent, elements, i, length, range, serie, series, _i, _j, _k, _len, _len1, _ref3, _results;
+          elements = [];
+          series = options.series;
+          length = series.length;
+          for (_i = 0, _len = series.length; _i < _len; _i++) {
+            serie = series[_i];
+            continent = serie.continent;
+            if (elements.indexOf(continent) === -1) {
+              elements.push(continent);
+            }
+          }
+          elements = elements.sort();
+          length = elements.length;
+          range = (function() {
+            _results = [];
+            for (var _j = 0, _ref3 = length - 1; 0 <= _ref3 ? _j <= _ref3 : _j >= _ref3; 0 <= _ref3 ? _j++ : _j--){ _results.push(_j); }
+            return _results;
+          }).apply(this);
+          for (_k = 0, _len1 = range.length; _k < _len1; _k++) {
+            i = range[_k];
+            elements[i] = {
+              name: elements[i],
+              continent: elements[i]
+            };
+          }
+          return elements;
+        },
+        events: {
+          onclick: function(info) {
+            var code;
+            code = info["data-code"];
+            global.options.countrySelector.select(code);
+            return global.options.countrySelector.refresh();
+          }
+        }
+      };
+      wesCountry.charts.chart(options);
     } else {
-      if ((_ref3 = document.querySelector(barContainer)) != null) {
-        _ref3.style.display = 'block';
+      if ((_ref3 = document.querySelector(mapView)) != null) {
+        _ref3.style.display = 'none';
       }
-      if ((_ref4 = document.querySelector(mapContainer)) != null) {
-        _ref4.style.display = 'none';
+      if ((_ref4 = document.querySelector(countryView)) != null) {
+        _ref4.style.display = 'block';
       }
       if ((_ref5 = document.querySelector(barContainer)) != null) {
         _ref5.innerHTML = "";
       }
+      view = document.querySelector(countryView);
       options = {
         container: barContainer,
         chartType: "bar",
@@ -270,7 +405,7 @@
           title: ""
         },
         valueOnItem: {
-          show: false
+          show: true
         },
         xAxis: {
           values: [],
@@ -283,13 +418,66 @@
         },
         median: {
           show: true
+        },
+        width: view.offsetWidth,
+        height: view.offsetHeight,
+        serieColours: wesCountry.makeGradientPalette(["#005475", "#1B4E5A", "#1B7A65", "#83C04C", "#E5E066"], data.bars.length),
+        getElementColour: function(options, element, index) {
+          var colour, rank;
+          rank = element.rank ? element.rank - 1 : index;
+          rank = rank >= 0 && rank < options.serieColours.length ? rank : index;
+          colour = options.serieColours[rank];
+          colour = element.selected ? colour : wesCountry.shadeColour(colour, 0.5);
+          return colour;
+        },
+        events: {
+          onclick: function(info) {
+            var code;
+            code = info["data-code"];
+            global.options.countrySelector.select(code);
+            return global.options.countrySelector.refresh();
+          }
         }
       };
+      wesCountry.charts.chart(options);
+      if ((_ref6 = document.querySelector(lineContainer)) != null) {
+        _ref6.innerHTML = "";
+      }
+      options = {
+        container: lineContainer,
+        chartType: "line",
+        margins: [5, 15, 5, 1],
+        groupMargin: 0,
+        yAxis: {
+          title: ""
+        },
+        xAxis: {
+          title: "",
+          values: data.secondVisualisation.years
+        },
+        series: data.secondVisualisation.series,
+        width: view.offsetWidth,
+        height: view.offsetHeight,
+        valueOnItem: {
+          show: false
+        },
+        vertex: {
+          show: true
+        },
+        events: {
+          onclick: function(info) {
+            var code;
+            code = info["data-code"];
+            global.options.countrySelector.select(code);
+            return global.options.countrySelector.refresh();
+          }
+        }
+      };
+      wesCountry.charts.chart(options);
     }
-    wesCountry.charts.chart(options);
     barContainer = "#bars";
-    if ((_ref6 = document.querySelector(barContainer)) != null) {
-      _ref6.innerHTML = "";
+    if ((_ref7 = document.querySelector(barContainer)) != null) {
+      _ref7.innerHTML = "";
     }
     options = {
       container: barContainer,
@@ -316,52 +504,22 @@
       },
       median: {
         show: true
+      },
+      serieColours: wesCountry.makeGradientPalette(["#005475", "#1B4E5A", "#1B7A65", "#83C04C", "#E5E066"], data.bars.length),
+      getElementColour: function(options, element, index) {
+        var colour;
+        colour = options.serieColours[index];
+        colour = element.selected ? colour : wesCountry.shadeColour(colour, 0.3);
+        return colour;
+      },
+      events: {
+        onclick: function(info) {
+          var code;
+          code = info["data-code"];
+          global.options.countrySelector.select(code);
+          return global.options.countrySelector.refresh();
+        }
       }
-    };
-    length = data.bars.length;
-    colours = [
-      {
-        r: 0,
-        g: 84,
-        b: 117
-      }, {
-        r: 27,
-        g: 78,
-        b: 90
-      }, {
-        r: 27,
-        g: 122,
-        b: 101
-      }, {
-        r: 131,
-        g: 192,
-        b: 76
-      }, {
-        r: 229,
-        g: 224,
-        b: 102
-      }
-    ];
-    options.serieColours = [];
-    index = 0;
-    colourLength = colours.length;
-    intervalLength = length / (colourLength - 1);
-    range = (function() {
-      _results = [];
-      for (var _i = 0; 0 <= intervalLength ? _i <= intervalLength : _i >= intervalLength; 0 <= intervalLength ? _i++ : _i--){ _results.push(_i); }
-      return _results;
-    }).apply(this);
-    while (index < colourLength - 1) {
-      for (_j = 0, _len = range.length; _j < _len; _j++) {
-        i = range[_j];
-        colour1 = colours[index];
-        colour2 = colours[index + 1];
-        options.serieColours.push(wesCountry.makeGradientColour(colour1, colour2, (i / intervalLength) * 100).cssColour);
-      }
-      index++;
-    }
-    options.getElementColour = function(options, element, index) {
-      return options.serieColours[index];
     };
     wesCountry.charts.chart(options);
     if (window.attachEvent) {
@@ -374,8 +532,150 @@
     };
   };
 
+  renderTable = function(data) {
+    var byCountry, className, code, div, i, id, img, name, observation, observations, path, previousValue, rank, span, table, td, tendency, tr, value, years, _i, _len, _ref, _results;
+    observations = data.observations;
+    byCountry = data.byCountry;
+    years = data.years;
+    table = document.querySelector("#data-table tbody");
+    path = (_ref = document.getElementById("path")) != null ? _ref.value : void 0;
+    table.innerHTML = "";
+    _results = [];
+    for (_i = 0, _len = observations.length; _i < _len; _i++) {
+      observation = observations[_i];
+      code = observation.code;
+      name = observation.area_name;
+      rank = observation.rank;
+      value = observation.value;
+      previousValue = observation["previous-value"];
+      tendency = 0;
+      if (previousValue) {
+        tendency = previousValue.tendency;
+      }
+      tr = document.createElement("tr");
+      table.appendChild(tr);
+      td = document.createElement("td");
+      td.setAttribute("data-title", "Country");
+      tr.appendChild(td);
+      img = document.createElement("img");
+      img.className = "flag";
+      img.src = "" + path + "/images/flags/" + code + ".png";
+      td.appendChild(img);
+      span = document.createElement("span");
+      span.innerHTML = name;
+      td.appendChild(span);
+      td = document.createElement("td");
+      td.setAttribute("data-title", "Rank");
+      tr.appendChild(td);
+      td.innerHTML = rank;
+      td = document.createElement("td");
+      td.setAttribute("data-title", "Value");
+      tr.appendChild(td);
+      td.innerHTML = value;
+      i = document.createElement("i");
+      className = "fa fa-minus";
+      if (tendency === 1) {
+        className = "fa fa-long-arrow-up";
+      }
+      if (tendency === -1) {
+        className = "fa fa-long-arrow-down";
+      }
+      i.className = className;
+      td.appendChild(i);
+      td = document.createElement("td");
+      td.setAttribute("data-title", "Tendency");
+      tr.appendChild(td);
+      div = document.createElement("div");
+      id = wesCountry.guid();
+      div.id = "g" + id;
+      td.appendChild(div);
+      _results.push(renderTendencyChart("#g" + id, byCountry[code], years));
+    }
+    return _results;
+  };
+
+  renderTendencyChart = function(container, serie, years) {
+    var options;
+    options = {
+      container: container,
+      chartType: "line",
+      margins: [0, 0, 0, 0],
+      groupMargin: 0,
+      yAxis: {
+        title: "",
+        "font-colour": "transparent",
+        tickColour: "none"
+      },
+      xAxis: {
+        title: "",
+        "font-colour": "transparent",
+        values: years
+      },
+      series: [serie],
+      valueOnItem: {
+        show: false
+      },
+      vertex: {
+        show: false
+      },
+      legend: {
+        show: false
+      },
+      serieColours: ["#333"]
+    };
+    return wesCountry.charts.chart(options);
+  };
+
+  renderBoxes = function(data) {
+    var higher, lower, mean, median, _ref, _ref1, _ref2, _ref3;
+    mean = data.mean;
+    median = data.median;
+    higher = data.higher.area;
+    lower = data.lower.area;
+    if ((_ref = document.getElementById("mean")) != null) {
+      _ref.innerHTML = mean;
+    }
+    if ((_ref1 = document.getElementById("median")) != null) {
+      _ref1.innerHTML = median;
+    }
+    if ((_ref2 = document.getElementById("higher")) != null) {
+      _ref2.innerHTML = higher;
+    }
+    return (_ref3 = document.getElementById("lower")) != null ? _ref3.innerHTML = lower : void 0;
+  };
+
   setTimeout(function() {
     return getSelectorData();
   }, this.settings.elapseTimeout);
+
+  chartSelectors = document.querySelectorAll(".tabs ul[data-selector] li");
+
+  for (_i = 0, _len = chartSelectors.length; _i < _len; _i++) {
+    li = chartSelectors[_i];
+    li.onclick = function() {
+      var block, blockSelector, blocks, elementSelector, lis, parent, _j, _k, _l, _len1, _len2, _len3, _results;
+      parent = this.parentNode;
+      lis = parent.querySelectorAll("li");
+      for (_j = 0, _len1 = lis.length; _j < _len1; _j++) {
+        li = lis[_j];
+        li.className = "";
+      }
+      this.className = "selected";
+      blockSelector = parent.getAttribute("data-selector");
+      elementSelector = this.getAttribute("data-selector");
+      blocks = document.querySelectorAll("." + blockSelector + " > div");
+      for (_k = 0, _len2 = blocks.length; _k < _len2; _k++) {
+        block = blocks[_k];
+        block.style.display = 'none';
+      }
+      blocks = document.querySelectorAll("." + blockSelector + " > div." + elementSelector);
+      _results = [];
+      for (_l = 0, _len3 = blocks.length; _l < _len3; _l++) {
+        block = blocks[_l];
+        _results.push(block.style.display = 'block');
+      }
+      return _results;
+    };
+  }
 
 }).call(this);

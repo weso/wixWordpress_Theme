@@ -9,9 +9,11 @@
 
 get_header(); ?>
 <?php dynamic_sidebar('blog-sidebar'); ?>
-
-		<section id="primary">
-			<div id="content" role="main">
+		
+<main class="content">
+	{{>by}}
+  	<div class="container">
+		<section id="primary" class="right-content blog-articles">
 
 			<?php if ( have_posts() ) : ?>
 
@@ -66,5 +68,7 @@ get_header(); ?>
 
 			</div><!-- #content -->
 		</section><!-- #primary -->
+	</div>
+</main>
 
 <?php get_footer(); ?>

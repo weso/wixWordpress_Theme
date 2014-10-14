@@ -11,7 +11,7 @@ if ( function_exists('register_sidebar') ) {
     'name' => 'Blog sidebar',
     'id' => 'blog-sidebar',
     'description' => 'Sidebar for the blog section.',
-    'before_widget' => '<aside><h1>Blog</h1>',
+    'before_widget' => '<aside class="left-bar"><h1>Blog</h1>',
     'after_widget' => '</aside>',
     'before_title' => '<span class="hidden">',
     'after_title' => '</span>'));
