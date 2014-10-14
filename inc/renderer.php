@@ -180,7 +180,8 @@ class ReportModel {
 			
 			foreach($processed_article->find('h2') as $h2) {
 				$content = $h2->innertext();
-				$tags .= "<li>$content</li>";
+				$id = $h2->id;
+				$tags .= "<li><a href='#$id'>$content</a></li>";
 			}
 			
 			$nav = "<nav><ul class='tags'>$tags</ul></nav>";
