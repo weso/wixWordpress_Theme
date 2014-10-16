@@ -53,7 +53,7 @@ class Renderer {
 			$pageContent["data"] = $this->loadData($templateName);
 			$pageContent["labels"] = $this->loadLabels("en");
 			$pageContent["path"] = get_stylesheet_directory_uri();
-			
+			$pageContent["host"] = get_site_url();			
 			return $renderer($pageContent, true);
 		} else {
 	

@@ -12,11 +12,12 @@
  $renderer = $controller->renderer;
 
 get_header(); ?>
-		
-<main class="content">
+<main class="content">	
 	<?php echo $renderer->renderTemplate("by"); ?>
   	<div class="container">
+		<aside class="left-bar"><h1>Blog</h1>
   		<?php dynamic_sidebar('blog-sidebar'); ?>
+		</aside>
 		<section id="primary" class="right-content blog-articles">
 
 			<?php if ( have_posts() ) : ?>
