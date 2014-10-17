@@ -54,9 +54,9 @@
 					$text = $this->processTweetText($tweet);
 				
 					$date = date("j M Y", strtotime($tweet->created_at));
-
+					
 					$username = $tweet->user->name;
-					$user_account =  $tweet->user->screen_name;
+					$screen_name =  $tweet->user->screen_name;
 					$account_image = $tweet->user->profile_image_url;
 					$language = $tweet->lang;
 				
@@ -64,7 +64,7 @@
 						'content' => $text,
 						'account' => array(
 							'name' => $username,
-							'display_name' => $user_account,
+							'displayName' => $screen_name,
 							'img' => $account_image
 						)
 					);

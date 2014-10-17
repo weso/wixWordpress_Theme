@@ -345,15 +345,14 @@ class IndexModel {
 	function get() {
 	  $twitter = new Twitter();
 
-      $data = Array();
-	  
-	  $data["news"] = $this->getPostsByCategory('news');
-      $data["tweets"] = $twitter->loadDefaultAccountTweets();
-	  
-	  return $data;
+      	$data = Array();
+	$data["news"] = $this->getPostsByCategory('news');
+      	$data["tweets"] = $twitter->loadDefaultAccountTweets();
+	return $data;
 	}
 	
 	function getPostsByCategory($categorySlug) {
+		global $post;
 		$posts = Array();
 		$categoryId = get_category_by_slug($categorySlug)->term_id;
 		
@@ -361,14 +360,15 @@ class IndexModel {
 		
 		$myposts = get_posts( $args );
 		
-		foreach ( $myposts as $wppost ){ 
-			setup_postdata( $wppost );
-			$post = Array();
-			$post['title'] = get_the_title();
-			$post['time'] = get_the_date();
-			$post['content'] = get_the_content("Read more...");
+		foreach ( $myposts as $post ){
+			setup_postdata( $post );
 
-			array_push($posts, $post);
+			$news = Array();
+			$news['title'] = get_the_title();
+			$news['time'] = get_the_date();
+			$news['content'] = get_the_content("Read more...");
+
+			array_push($posts, $news);
 		} 
 		wp_reset_postdata();
 		
