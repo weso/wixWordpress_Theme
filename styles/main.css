@@ -410,7 +410,8 @@ article ul.tags {
     font-size: .8em;
     text-transform: uppercase;
     margin-left: .2em;
-    position: relative; }
+    position: relative;
+    cursor: pointer; }
     .right-content article a.read-more span {
       font-family: "Merriweather Sans", sans-serif;
       font-style: normal;
@@ -959,7 +960,8 @@ table.ranking {
   text-align: center;
   margin: 0 0.3em 1.5em 0.3em;
   clear: both; }
-  .line-behind-text h1, .line-behind-text h2, .line-behind-text h3, .line-behind-text h4, .line-behind-text h5, .line-behind-text h6 {
+  .line-behind-text h1, .line-behind-text h2, .line-behind-text h3, .line-behind-text h4, .line-behind-text h5, .line-behind-text h6, .line-behind-text span {
+    display: block;
     margin-bottom: 1.4em;
     background: white;
     color: gray;
@@ -1094,6 +1096,13 @@ section.about-articles article:nth-of-type(4) h3:before, section.about-articles 
 section.about-articles article:nth-of-type(4) ul.tags li a {
   background-color: #a9538d; }
 
+/* READ MORE */
+.element-hidden {
+  display: none; }
+
+.element-shown {
+  display: auto; }
+
 /* SIDEBAR TAGS */
 .cat-links a, li.cat-item a {
   display: inline-block;
@@ -1125,6 +1134,7 @@ div.hslice {
   margin-left: auto;
   margin-right: auto;
   margin-top: 1em;
+  margin-right: 0 !important;
   overflow: hidden; }
   div.hslice:after {
     content: "";
@@ -1144,9 +1154,12 @@ div.hslice {
       margin-right: 0; }
     div.hslice a img {
       width: 100%; }
-  div.hslice span.entry-title {
-    display: block;
-    margin-bottom: 0.5em; }
+
+aside.left-bar .line-behind-text {
+  margin-left: 0;
+  margin-right: 0; }
+  aside.left-bar .line-behind-text span {
+    font-size: 0.8em; }
 
 .view-all-photos {
   margin-right: 1em; }
