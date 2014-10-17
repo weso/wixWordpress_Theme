@@ -821,9 +821,11 @@ div.goog-te-menu2 {
     border-radius: 50%;
     margin-right: 2em; }
   .grid-items .tweet header .name {
-    font-weight: bold; }
+    font-weight: bold;
+    display: block; }
   .grid-items .tweet header .account {
-    color: #555; }
+    color: #555;
+    display: block; }
   .grid-items .tweet p.content {
     clear: both;
     margin: 2em 0 0 0;
@@ -831,7 +833,8 @@ div.goog-te-menu2 {
 .grid-items .news {
   padding-top: 0.8em;
   padding-bottom: 0.2em;
-  text-align: left; }
+  text-align: left;
+  position: relative; }
   .grid-items .news header {
     color: #111;
     font-weight: bold; }
@@ -839,13 +842,28 @@ div.goog-te-menu2 {
     margin: 1em 0; }
   .grid-items .news .read-more {
     color: #0096af;
-    font-size: 1em; }
+    background-color: rgba(107, 131, 166, 0.7);
+    font-size: 1em;
+    position: absolute;
+    width: 100%;
+    max-width: 100%;
+    bottom: 0;
+    left: 0;
+    padding: 1em; }
+    .grid-items .news .read-more a {
+      color: white; }
 .grid-items .news:nth-of-type(1) {
   background-color: #B4C63F; }
-.grid-items .news:nth-of-type(2) {
-  background-color: #77D4B7; }
+  .grid-items .news:nth-of-type(1) .read-more {
+    background-color: rgba(180, 198, 63, 0.8); }
 .grid-items .news:nth-of-type(3) {
+  background-color: #77D4B7; }
+  .grid-items .news:nth-of-type(3) .read-more {
+    background-color: rgba(119, 212, 183, 0.8); }
+.grid-items .news:nth-of-type(5) {
   background-color: #88BE4A; }
+  .grid-items .news:nth-of-type(5) .read-more {
+    background-color: rgba(136, 190, 74, 0.8); }
 
 .news-header {
   margin-bottom: 3em !important; }
