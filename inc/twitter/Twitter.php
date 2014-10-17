@@ -46,8 +46,7 @@
 											'exclude_replies' => 'true', 
 											'include_rts' => 'true', 
 											'count' => TWEET_LIMIT));
-											
-			var_dump($tweets);							
+																	
 			if (!empty($tweets)) {
 				$processed_tweets = array();
 		
