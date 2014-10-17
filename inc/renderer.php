@@ -366,6 +366,7 @@ class IndexModel {
 			$news = Array();
 			$news['title'] = get_the_title();
 			$news['time'] = get_the_date();
+			$news['link'] = get_permalink();
 			$news['content'] = get_the_content("Read more...");
 
 			array_push($posts, $news);
