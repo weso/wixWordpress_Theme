@@ -48,7 +48,7 @@
 			//								'count' => TWEET_LIMIT));
 											
 			$tweets = $twitter->get('search/tweets', 
-									array('q' => "$hashtag+from:$account", 
+									array('q' => "$%23hashtag+from:$account", 
 											'count' => TWEET_LIMIT));
 			var_dump($tweets);							
 			if (!empty($tweets)) {
