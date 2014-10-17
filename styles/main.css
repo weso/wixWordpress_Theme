@@ -852,6 +852,8 @@ div.goog-te-menu2 {
     padding: 1em; }
     .grid-items .news .read-more a {
       color: white; }
+  .grid-items .news a:hover {
+    color: white; }
 .grid-items .news:nth-of-type(1) {
   background-color: #B4C63F; }
   .grid-items .news:nth-of-type(1) .read-more {
