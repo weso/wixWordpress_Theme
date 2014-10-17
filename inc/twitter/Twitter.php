@@ -41,16 +41,12 @@
 		function loadTweets($account, $hashtag) {
 			$twitter = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
 		
-			//$tweets = $twitter->get('statuses/user_timeline', 
-			//						array('screen_name' => $account, 
-			//								'exclude_replies' => 'true', 
-			//								'include_rts' => 'true', 
-			//								'count' => TWEET_LIMIT));
-											
-			$tweets = $twitter->get('search/tweets', 
-									array('q' => "from%3A$account%20%23$hashtag", 
+			$tweets = $twitter->get('statuses/user_timeline', 
+									array('screen_name' => $account, 
+											'exclude_replies' => 'true', 
+											'include_rts' => 'true', 
 											'count' => TWEET_LIMIT));
-											echo "from%3A$account%20%23$hashtag";
+											
 			var_dump($tweets);							
 			if (!empty($tweets)) {
 				$processed_tweets = array();
