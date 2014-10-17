@@ -9,6 +9,10 @@
 				define('DEFAULT_ACCOUNT', $settings["twitterAccount"]);
 			}
 			
+			if(!defined('DEFAULT_HASHTAG')) {
+				define('DEFAULT_HASHTAG', $settings["twitterHashtag"]);
+			}
+			
 			if(!defined('TWEET_LIMIT')) {
 				define('TWEET_LIMIT', $settings["tweetsLimit"]);
 			}
@@ -31,16 +35,20 @@
 		}
 	
 		function loadDefaultAccountTweets() {
-			return $this->loadTweets(DEFAULT_ACCOUNT);
+			return $this->loadTweets(DEFAULT_ACCOUNT, DEFAULT_HASHTAG);
 		}
 	
-		function loadTweets($account) {
+		function loadTweets($account, $hashtag) {
 			$twitter = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
 		
-			$tweets = $twitter->get('statuses/user_timeline', 
-									array('screen_name' => $account, 
-											'exclude_replies' => 'true', 
-											'include_rts' => 'true', 
+			//$tweets = $twitter->get('statuses/user_timeline', 
+			//						array('screen_name' => $account, 
+			//								'exclude_replies' => 'true', 
+			//								'include_rts' => 'true', 
+			//								'count' => TWEET_LIMIT));
+											
+			$tweets = $twitter->get('search/tweets', 
+									array('q' => "$hashtag+from:$account", 
 											'count' => TWEET_LIMIT));
 										
 			if (!empty($tweets)) {
