@@ -820,6 +820,10 @@ div.goog-te-menu2 {
     width: 4em;
     border-radius: 50%;
     margin-right: 2em; }
+  .grid-items .tweet header i {
+    float: left;
+    margin-right: 0.4em;
+    color: #919279; }
   .grid-items .tweet header .name {
     font-weight: bold;
     display: block; }
@@ -828,8 +832,10 @@ div.goog-te-menu2 {
     display: block; }
   .grid-items .tweet p.content {
     clear: both;
-    margin: 2em 0 0 0;
+    margin: 1em 0 0 0;
     color: #333; }
+.grid-items .tweet:hover {
+  background-color: #cbd39e !important; }
 .grid-items .news {
   padding-top: 0.8em;
   padding-bottom: 0.2em;
