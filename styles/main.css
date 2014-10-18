@@ -846,6 +846,8 @@ div.goog-te-menu2 {
     font-weight: bold; }
   .grid-items .news p.content {
     margin: 1em 0; }
+  .grid-items .news iframe, .grid-items .news img {
+    display: none; }
   .grid-items .news .read-more {
     color: #0096af;
     background-color: rgba(107, 131, 166, 0.7);
