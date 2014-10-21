@@ -3,8 +3,8 @@
  * Template for displaying Category Archive pages
  *
  * @package WordPress
- * @subpackage Twenty_Eleven
- * @since Twenty Eleven 1.0
+ * @subpackage Twenty_Fourteen
+ * @since Twenty Fourteen 1.0
  */
  
  require_once(__DIR__.'/inc/controller.php');
@@ -20,57 +20,40 @@ get_header(); ?>
 		</aside>
 		<section id="primary" class="right-content blog-articles">
 
-			<?php if ( have_posts() ) : ?>
+<?php if ( have_posts() ) : ?>
 
-				<header class="page-header">
-					<?php
-						$category_description = category_description();
-						if ( ! empty( $category_description ) ) {
-							/**
-							 * Filter the default Twenty Eleven category description.
-							 *
-							 * @since Twenty Eleven 1.0
-							 *
-							 * @param string The default category description HTML.
-							 */
-							echo apply_filters( 'category_archive_meta', '<div class="category-archive-meta">' . $category_description . '</div>' );
-						}
-					?>
-				</header>
+			<header class="archive-header">
 
-				<?php twentyeleven_content_nav( 'nav-above' ); ?>
+				<?php
+					// Show an optional term description.
+					$term_description = term_description();
+					if ( ! empty( $term_description ) ) :
+						printf( '<div class="taxonomy-description">%s</div>', $term_description );
+					endif;
+				?>
+			</header><!-- .archive-header -->
 
-				<?php /* Start the Loop */ ?>
-				<?php while ( have_posts() ) : the_post(); ?>
+			<?php
+					// Start the Loop.
+					while ( have_posts() ) : the_post();
 
-					<?php
-						/*
-						 * Include the Post-Format-specific template for the content.
-						 * If you want to overload this in a child theme then include a file
-						 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-						 */
-						get_template_part( 'content', get_post_format() );
-					?>
+					/*
+					 * Include the post format-specific template for the content. If you want to
+					 * use this in a child theme, then include a file called called content-___.php
+					 * (where ___ is the post format) and that will be used instead.
+					 */
+					get_template_part( 'content', get_post_format() );
 
-				<?php endwhile; ?>
+					endwhile;
+					// Previous/next page navigation.
+					twentyfourteen_paging_nav();
 
-				<?php twentyeleven_content_nav( 'nav-below' ); ?>
+				else :
+					// If no content, include the "No posts found" template.
+					get_template_part( 'content', 'none' );
 
-			<?php else : ?>
-
-				<article id="post-0" class="post no-results not-found">
-					<header class="entry-header">
-						<h1 class="entry-title"><?php _e( 'Nothing Found', 'twentyeleven' ); ?></h1>
-					</header><!-- .entry-header -->
-
-					<div class="entry-content">
-						<p><?php _e( 'Apologies, but no results were found for the requested archive. Perhaps searching will help find a related post.', 'twentyeleven' ); ?></p>
-						<?php get_search_form(); ?>
-					</div><!-- .entry-content -->
-				</article><!-- #post-0 -->
-
-			<?php endif; ?>
-
+				endif;
+			?>
 			</div><!-- #content -->
 		</section><!-- #primary -->
 	</div>
