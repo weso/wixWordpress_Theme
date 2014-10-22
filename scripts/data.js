@@ -1,5 +1,5 @@
 (function() {
-  var chartSelectors, checkSelectorDataReady, getCountries, getIndicators, getObservations, getSelectorData, getYears, global, li, processAJAX, processJSONP, renderBoxes, renderCharts, renderTable, renderTendencyChart, setIndicatorOptions, setPageStateful, updateInfo, _i, _len;
+  var chartSelectors, checkSelectorDataReady, getCountries, getIndicators, getObservations, getSelectorData, getYears, global, li, processAJAX, processJSONP, renderBoxes, renderCharts, renderMap, renderTable, renderTendencyChart, setIndicatorOptions, setPageStateful, updateInfo, _i, _len;
 
   global = this;
 
@@ -12,6 +12,8 @@
     countries: null,
     year: null
   };
+
+  global.maxTableRows = 7;
 
   setPageStateful = function() {
     return wesCountry.stateful.start({
@@ -51,6 +53,7 @@
         }, {
           name: "country",
           selector: global.options.countrySelector,
+          value: "ALL",
           onChange: function(index, value, parameters, selectors) {
             if (settings.debug) {
               console.log("country:onChange index:" + index + " value:" + value);
@@ -159,12 +162,13 @@
     });
     global.options.countrySelector = new wesCountry.selector.basic({
       data: countries,
-      onChange: null,
       selectedItems: ["ALL"],
-      maxSelectedItems: 3,
+      maxSelectedItems: global.maxTableRows,
       labelName: "name",
       valueName: "iso3",
       childrenName: "countries",
+      autoClose: true,
+      selectParentNodes: false,
       beforeChange: function(selectedItems, element) {
         if (!global.options.countrySelector) {
           return;
@@ -172,8 +176,10 @@
         if (selectedItems.length === 0) {
           return global.options.countrySelector.select("ALL");
         } else if (element.code === "ALL") {
-          global.options.countrySelector.clear();
-          return global.options.countrySelector.select("ALL");
+          if (selectedItems.length > 1) {
+            global.options.countrySelector.clear();
+            return global.options.countrySelector.select("ALL");
+          }
         } else if (selectedItems.search("ALL") !== -1) {
           return global.options.countrySelector.unselect("ALL");
         }
@@ -240,10 +246,11 @@
   };
 
   renderCharts = function(data) {
-    var barContainer, countryView, lineContainer, map, mapContainer, mapView, options, resize, view, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7;
+    var barContainer, countryView, lineContainer, mapContainer, mapView, options, rankingContainer, resize, view, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7;
     mapContainer = "#map";
     barContainer = "#country-bars";
     lineContainer = "#lines";
+    rankingContainer = "#ranking";
     mapView = "#map-view";
     countryView = "#country-view";
     if (global.selections.countries === "ALL") {
@@ -254,30 +261,15 @@
         _ref1.style.display = 'none';
       }
       view = document.querySelector(mapView);
-      if ((_ref2 = document.querySelector(mapContainer)) != null) {
+      global.observations = data.observations;
+      renderMap();
+      if ((_ref2 = document.querySelector(rankingContainer)) != null) {
         _ref2.innerHTML = "";
       }
-      map = wesCountry.maps.createMap({
-        container: mapContainer,
-        borderWidth: 1.5,
-        landColour: "#E4E5D8",
-        borderColour: "#E4E5D8",
-        backgroundColour: "none",
-        countries: data.observations,
-        width: view.offsetWidth,
-        height: view.offsetHeight,
-        colourRange: ["#E5E066", "#83C04C", "#1B7A65", "#1B4E5A", "#005475"],
-        onCountryClick: function(info) {
-          var code;
-          code = info.iso3;
-          global.options.countrySelector.select(code);
-          return global.options.countrySelector.refresh();
-        }
-      });
       options = {
         maxRankingRows: 10,
         margins: [4, 12, 1, 0],
-        container: "#ranking",
+        container: rankingContainer,
         chartType: "ranking",
         rankingElementShape: "square",
         rankingDirection: "HigherToLower",
@@ -317,6 +309,9 @@
         width: view.offsetWidth,
         height: view.offsetHeight,
         series: data.secondVisualisation,
+        getName: function(serie) {
+          return serie.code;
+        },
         getElementColour: function(options, element, index) {
           var pos;
           pos = 0;
@@ -366,7 +361,7 @@
           for (_k = 0, _len1 = range.length; _k < _len1; _k++) {
             i = range[_k];
             elements[i] = {
-              name: elements[i],
+              code: elements[i],
               continent: elements[i]
             };
           }
@@ -453,9 +448,9 @@
         },
         xAxis: {
           title: "",
-          values: data.secondVisualisation.years
+          values: data.years ? data.years : []
         },
-        series: data.secondVisualisation.series,
+        series: data.secondVisualisation ? data.secondVisualisation : [],
         width: view.offsetWidth,
         height: view.offsetHeight,
         valueOnItem: {
@@ -464,6 +459,7 @@
         vertex: {
           show: true
         },
+        serieColours: ["#FF9900", "#E3493B", "#23B5AF", "#336699", "#FF6600", "#931FC4", "#795227"],
         events: {
           onclick: function(info) {
             var code;
@@ -471,6 +467,9 @@
             global.options.countrySelector.select(code);
             return global.options.countrySelector.refresh();
           }
+        },
+        getName: function(serie) {
+          return serie.area_name;
         }
       };
       wesCountry.charts.chart(options);
@@ -527,33 +526,65 @@
     } else {
       window.addEventListener("resize", resize, false);
     }
-    return resize = function() {
-      return createMap();
-    };
+    return resize = function() {};
+  };
+
+  renderMap = function() {
+    var map, mapContainer, _ref;
+    mapContainer = "#map";
+    if ((_ref = document.querySelector(mapContainer)) != null) {
+      _ref.innerHTML = "";
+    }
+    return map = wesCountry.maps.createMap({
+      container: mapContainer,
+      borderWidth: 1.5,
+      landColour: "#E4E5D8",
+      borderColour: "#E4E5D8",
+      backgroundColour: "none",
+      countries: global.observations,
+      colourRange: ["#E5E066", "#83C04C", "#1B7A65", "#1B4E5A", "#005475"],
+      onCountryClick: function(info) {
+        var code;
+        code = info.iso3;
+        global.options.countrySelector.select(code);
+        return global.options.countrySelector.refresh();
+      },
+      getValue: function(country) {
+        if (country.values || country.values.length > 0) {
+          return country.values[0];
+        } else {
+          return country.value;
+        }
+      }
+    });
   };
 
   renderTable = function(data) {
-    var byCountry, className, code, div, i, id, img, name, observation, observations, path, previousValue, rank, span, table, td, tendency, tr, value, years, _i, _len, _ref, _results;
+    var a, byCountry, className, code, count, div, i, id, img, name, observation, observations, path, previousValue, rank, row, rows, span, table, td, tendency, tr, value, years, _i, _j, _len, _len1, _ref;
     observations = data.observations;
     byCountry = data.byCountry;
     years = data.years;
     table = document.querySelector("#data-table tbody");
     path = (_ref = document.getElementById("path")) != null ? _ref.value : void 0;
     table.innerHTML = "";
-    _results = [];
+    count = 0;
     for (_i = 0, _len = observations.length; _i < _len; _i++) {
       observation = observations[_i];
+      count++;
       code = observation.code;
       name = observation.area_name;
-      rank = observation.rank;
-      value = observation.value;
-      previousValue = observation["previous-value"];
+      rank = observation.rank ? observation.rank : count;
+      value = observation.values && observation.values.length > 0 ? observation.values[0] : observation.value;
+      previousValue = observation.previous_value;
       tendency = 0;
       if (previousValue) {
         tendency = previousValue.tendency;
       }
       tr = document.createElement("tr");
       table.appendChild(tr);
+      if (count > global.maxTableRows) {
+        tr.className = "to-hide";
+      }
       td = document.createElement("td");
       td.setAttribute("data-title", "Country");
       tr.appendChild(td);
@@ -575,10 +606,10 @@
       i = document.createElement("i");
       className = "fa fa-minus";
       if (tendency === 1) {
-        className = "fa fa-long-arrow-up";
+        className = "fa fa-long-arrow-up green";
       }
       if (tendency === -1) {
-        className = "fa fa-long-arrow-down";
+        className = "fa fa-long-arrow-down red";
       }
       i.className = className;
       td.appendChild(i);
@@ -589,13 +620,49 @@
       id = wesCountry.guid();
       div.id = "g" + id;
       td.appendChild(div);
-      _results.push(renderTendencyChart("#g" + id, byCountry[code], years));
+      renderTendencyChart("#g" + id, byCountry[code], years);
     }
-    return _results;
+    if (count > global.maxTableRows) {
+      rows = table.querySelectorAll(".to-hide");
+      for (_j = 0, _len1 = rows.length; _j < _len1; _j++) {
+        row = rows[_j];
+        row.className = "hidden";
+      }
+      tr = document.createElement("tr");
+      table.appendChild(tr);
+      td = document.createElement("td");
+      td.colSpan = 4;
+      td.className = "view-more";
+      tr.appendChild(td);
+      a = document.createElement("a");
+      a.innerHTML = "View more";
+      td.appendChild(a);
+      a.collapsed = true;
+      a.table = table;
+      return a.onclick = function() {
+        var collapsed, newClassName, text, _k, _len2, _results;
+        collapsed = this.collapsed;
+        this.collapsed = !collapsed;
+        className = collapsed ? "hidden" : "shown";
+        newClassName = collapsed ? "shown" : "hidden";
+        text = collapsed ? "View less" : "View more";
+        this.innerHTML = text;
+        rows = this.table.querySelectorAll("tr." + className);
+        _results = [];
+        for (_k = 0, _len2 = rows.length; _k < _len2; _k++) {
+          row = rows[_k];
+          _results.push(row.className = newClassName);
+        }
+        return _results;
+      };
+    }
   };
 
   renderTendencyChart = function(container, serie, years) {
     var options;
+    if (!serie) {
+      return;
+    }
     options = {
       container: container,
       chartType: "line",
@@ -633,10 +700,10 @@
     higher = data.higher.area;
     lower = data.lower.area;
     if ((_ref = document.getElementById("mean")) != null) {
-      _ref.innerHTML = mean;
+      _ref.innerHTML = mean.toFixed(2);
     }
     if ((_ref1 = document.getElementById("median")) != null) {
-      _ref1.innerHTML = median;
+      _ref1.innerHTML = median.toFixed(2);
     }
     if ((_ref2 = document.getElementById("higher")) != null) {
       _ref2.innerHTML = higher;
@@ -653,7 +720,7 @@
   for (_i = 0, _len = chartSelectors.length; _i < _len; _i++) {
     li = chartSelectors[_i];
     li.onclick = function() {
-      var block, blockSelector, blocks, elementSelector, lis, parent, _j, _k, _l, _len1, _len2, _len3, _results;
+      var block, blockSelector, blocks, elementSelector, info, lis, parent, _j, _k, _l, _len1, _len2, _len3;
       parent = this.parentNode;
       lis = parent.querySelectorAll("li");
       for (_j = 0, _len1 = lis.length; _j < _len1; _j++) {
@@ -669,12 +736,14 @@
         block.style.display = 'none';
       }
       blocks = document.querySelectorAll("." + blockSelector + " > div." + elementSelector);
-      _results = [];
       for (_l = 0, _len3 = blocks.length; _l < _len3; _l++) {
         block = blocks[_l];
-        _results.push(block.style.display = 'block');
+        block.style.display = 'block';
       }
-      return _results;
+      info = this.getAttribute("data-info");
+      if (info && info === "map") {
+        return renderMap();
+      }
     };
   }
 

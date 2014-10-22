@@ -319,16 +319,16 @@ article ul.tags {
   font-size: 0.8em; }
 
 /* ARTICLE */
-.right-content article {
+.right-content article, article.entry-article {
   text-align: left; }
-  .right-content article:after {
+  .right-content article:after, article.entry-article:after {
     content: "";
     display: table;
     clear: both; }
-  .right-content article img:not([alt]) {
+  .right-content article img:not([alt]), article.entry-article img:not([alt]) {
     width: 100%;
     margin-bottom: 0.5em; }
-  .right-content article .chapter {
+  .right-content article .chapter, article.entry-article .chapter {
     font-family: "Merriweather Sans", sans-serif;
     font-size: 1.4em;
     font-weight: 700;
@@ -342,7 +342,7 @@ article ul.tags {
     background-color: red;
     color: white;
     text-align: center; }
-  .right-content article h1 {
+  .right-content article h1, article.entry-article h1 {
     font-family: "Merriweather Sans", sans-serif;
     font-size: 2em;
     font-weight: 700;
@@ -350,9 +350,9 @@ article ul.tags {
     margin-top: 0;
     text-align: center; }
     @media screen and (min-width: 40em) {
-      .right-content article h1 {
+      .right-content article h1, article.entry-article h1 {
         font-size: 2.6em; } }
-  .right-content article h2 {
+  .right-content article h2, article.entry-article h2 {
     font-family: "Merriweather", serif;
     font-style: italic;
     font-size: 1em;
@@ -360,21 +360,21 @@ article ul.tags {
     line-height: 1.6em;
     margin-bottom: .9em; }
     @media screen and (min-width: 40em) {
-      .right-content article h2 {
+      .right-content article h2, article.entry-article h2 {
         font-size: 1.2em; } }
-  .right-content article h3:before {
+  .right-content article h3:before, article.entry-article h3:before {
     content: "● ";
     color: red;
     font-size: 1.3em; }
-  .right-content article h4:before {
+  .right-content article h4:before, article.entry-article h4:before {
     content: "□ ";
     color: red;
     font-size: 1.1em; }
-  .right-content article h5:before {
+  .right-content article h5:before, article.entry-article h5:before {
     content: "‣ ";
     color: red;
     font-size: 1.2em; }
-  .right-content article code {
+  .right-content article code, article.entry-article code {
     white-space: nowrap;
     font-family: monaco;
     background: #F7F7F7;
@@ -383,27 +383,27 @@ article ul.tags {
     padding: .1em .4em;
     font-size: .75em;
     font-style: normal; }
-  .right-content article h3 {
+  .right-content article h3, article.entry-article h3 {
     font-family: "Merriweather Sans", sans-serif;
     font-size: 1.4em;
     font-weight: 400;
     line-height: 1.3em;
     margin-bottom: .4em; }
-  .right-content article time {
+  .right-content article time, article.entry-article time {
     color: rgba(51, 51, 51, 0.4);
     font-family: "Merriweather Sans", sans-serif;
     font-style: italic;
     font-size: 1em;
     margin-bottom: .3em; }
-  .right-content article p {
+  .right-content article p, article.entry-article p {
     font-family: "Merriweather", serif;
     line-height: 1.6em;
     font-size: .9em;
     margin-bottom: 1.5em; }
-    .right-content article p span {
+    .right-content article p span, article.entry-article p span {
       font-family: "Merriweather Sans", sans-serif;
       font-weight: 700; }
-  .right-content article a.read-more {
+  .right-content article a.read-more, article.entry-article a.read-more {
     display: inline-block;
     font-family: "Merriweather Sans", sans-serif;
     font-weight: 700;
@@ -412,18 +412,18 @@ article ul.tags {
     margin-left: .2em;
     position: relative;
     cursor: pointer; }
-    .right-content article a.read-more span {
+    .right-content article a.read-more span, article.entry-article a.read-more span {
       font-family: "Merriweather Sans", sans-serif;
       font-style: normal;
       font-size: 1.5em; }
-  .right-content article hr {
+  .right-content article hr, article.entry-article hr {
     width: 3em; }
-  .right-content article span.by-author {
+  .right-content article span.by-author, article.entry-article span.by-author {
     display: block;
     font-family: "Merriweather", serif;
     font-style: italic;
     text-align: right; }
-  .right-content article iframe {
+  .right-content article iframe, article.entry-article iframe {
     width: 100%;
     height: 25em;
     margin-top: 1em;
@@ -1267,8 +1267,8 @@ div.box-follow {
 .data-container .indicator-selector {
   height: 2.5em;
   overflow: hidden;
-  background: url(../images/select_arrow.png) no-repeat right #f1f1f1;
-  border: 0.1em solid #ddd; }
+  background: url(../images/select_arrow.png) no-repeat right white;
+  border: 0.1em solid white; }
   .data-container .indicator-selector select {
     width: 100%;
     background: transparent;
@@ -1280,18 +1280,61 @@ div.box-follow {
     -webkit-appearance: none;
     color: #333; }
 
+/* SELECT-BOX */
+div.select-box {
+  margin: 0.5em 0 !important;
+  padding: 0.5em;
+  background-color: #47caaa; }
+  div.select-box h2 {
+    margin-bottom: 0.5em; }
+  div.select-box div.circle-number {
+    width: 1.6em;
+    height: 1.6em;
+    font-size: 1.8em;
+    margin: 0 auto !important;
+    background-color: #1b5d4d;
+    color: white;
+    text-align: center;
+    border-radius: 50%; }
+
+div.select-box.first-box {
+  background-color: #47caaa; }
+  div.select-box.first-box div.circle-number {
+    background-color: #26856e; }
+
+div.select-box.second-box {
+  background-color: #a9ca47; }
+  div.select-box.second-box div.circle-number {
+    background-color: #6d8526; }
+
+div.select-box.third-box {
+  background-color: #CED53C; }
+  div.select-box.third-box div.circle-number {
+    background-color: #888d1e; }
+
+div.down-arrow {
+  text-align: center;
+  margin: 0.3em 0 !important; }
+  div.down-arrow i {
+    line-height: 0.5em;
+    color: #4CA4A4; }
+
+div.first-box {
+  margin-top: 1.7em !important; }
+
 /* TIMELINE */
 div.timeline div.line a.circle {
   width: 1.5em;
   height: 1.5em;
   border: none;
-  background-color: #ccc; }
+  background-color: white; }
 div.timeline div.line:before {
   border: none; }
 div.timeline div.line a.circle:hover, div.timeline div.selected a.circle {
-  background-color: #244d4d !important; }
+  background-color: #4c5d1b !important; }
 div.timeline div.element a {
-  color: #333 !important; }
+  color: #333 !important;
+  font-size: 0.9em; }
 
 /* BOXES */
 .data-box {
@@ -1373,11 +1416,11 @@ div.country-box {
   div.country-box .selector ul {
     font-size: 0.9em; }
     div.country-box .selector ul a {
-      color: #555; }
+      color: #222; }
     div.country-box .selector ul li.selected a {
       color: #111; }
       div.country-box .selector ul li.selected a div.circle {
-        background-color: #26856e;
+        background-color: #888d1e !important;
         color: white; }
     div.country-box .selector ul li {
       margin-bottom: 0.3em;
@@ -1395,7 +1438,7 @@ div.country-box {
       width: 1.3em;
       height: 1.3em;
       border: none;
-      background-color: #ccc;
+      background-color: white;
       padding-top: 0;
       line-height: 1.2em; }
 
@@ -1454,6 +1497,8 @@ table.full-ranking {
   table.full-ranking img {
     vertical-align: middle;
     margin-right: 1em; }
+  table.full-ranking tr.hidden {
+    display: none; }
   table.full-ranking td[data-title="Country"] {
     width: 55%; }
   table.full-ranking td[data-title="Rank"] {
@@ -1463,14 +1508,23 @@ table.full-ranking {
     text-align: right;
     width: 15%; }
     table.full-ranking td[data-title="Value"] i {
-      margin-left: 1em;
-      color: #555; }
+      margin-left: 1em; }
+    table.full-ranking td[data-title="Value"] i.red {
+      color: #f93845; }
+    table.full-ranking td[data-title="Value"] i.green {
+      color: #0096af; }
   table.full-ranking td[data-title="Tendency"] {
     width: 15%; }
     table.full-ranking td[data-title="Tendency"] div {
       height: 2.5em; }
       table.full-ranking td[data-title="Tendency"] div .wesCountry-body .signature {
         display: none; }
+  table.full-ranking td.view-more {
+    text-align: right;
+    border-bottom: none;
+    padding-bottom: 0; }
+    table.full-ranking td.view-more a {
+      cursor: pointer; }
 
 body {
   font-family: Raleway, sans-serif;
