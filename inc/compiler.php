@@ -16,8 +16,8 @@
 		private function __construct($settings) {
 			$this->settings = $settings;
 			
-			$this->templatesPath = $this->settings['themePath'].$this->settings['templatesPath'];
-			$this->compiledTemplatesPath = $this->settings['themePath'].$this->settings['compiledTemplatesPath'];
+			$this->templatesPath = get_stylesheet_directory().$this->settings['templatesPath'];
+			$this->compiledTemplatesPath = get_stylesheet_directory().$this->settings['compiledTemplatesPath'];
 		}
 
 		public static function getInstance($settings) {

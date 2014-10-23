@@ -28,8 +28,8 @@ class Renderer {
 	private function __construct($settings) {
 		$this->settings = $settings;
 		
-		$this->compiledTemplatesPath = $this->settings['themePath'].$this->settings['compiledTemplatesPath'];
-		$this->labelsPath = $this->settings['themePath'].$this->settings['labelsPath'];
+		$this->compiledTemplatesPath = get_stylesheet_directory().$this->settings['compiledTemplatesPath'];
+		$this->labelsPath = get_stylesheet_directory().$this->settings['labelsPath'];
 	}
 
 	public static function getInstance($settings) {
@@ -42,7 +42,7 @@ class Renderer {
 
 	public function renderTemplate($templateName) {
 		$fileCompiledTemplate = $this->compiledTemplatesPath.$templateName;
-		
+	
 		if (file_exists($fileCompiledTemplate)) {
 			$renderer = include($fileCompiledTemplate);
 			

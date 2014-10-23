@@ -1,5 +1,4 @@
 {
- "themePath": "/var/www/wordpress/wp-content/themes/wixWordpress_Theme",
  "templatesPath": "/views/",
  "compiledTemplatesPath": "/compiled-views/",
  "modelsPath": "/models/",
