@@ -18,7 +18,16 @@
 	$html = $renderer->renderTemplate($post_slug);
 	
 	if (!$html) {
-		echo '404';
+		echo '<main class="content">';
+			echo $renderer->renderTemplate("by");
+			echo '<div class="container">';
+				$id = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_name = '$post_slug'");
+				if ($id) {
+					echo apply_filters('the_content', get_post($id)->post_content);
+				} else {
+					echo '404';
+				}
+			echo '</div></main>';
 	} else {
 		echo $html;
 	}
