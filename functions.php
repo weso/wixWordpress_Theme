@@ -5,6 +5,17 @@ function enqueue_child_theme_styles() {
     wp_enqueue_style( 'child-style', get_stylesheet_uri(), array('parent-style')  );
 }
 
+// Rewrite rules when accessing data
+function add_rewrite_rules($aRules) {
+  $aNewRules = array('data/?indicator$' => 'index.php?pagename=data');
+  $aRules = $aNewRules + $aRules;
+  
+  return $aRules;
+}
+
+// hook add_rewrite_rules function
+add_filter('rewrite_rules_array', 'add_rewrite_rules');
+
 add_action('widgets_init', 'wi_unregister_sidebar', 11);
 function wi_unregister_sidebar() {
   unregister_sidebar('sidebar-5');
