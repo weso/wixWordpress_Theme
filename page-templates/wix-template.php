@@ -6,7 +6,7 @@
  * @subpackage Wen index
  * @since 1.0
  */
-	require_once(__DIR__.'/../inc/controller.php');	
+	require_once(get_stylesheet_directory().'/inc/controller.php');	
 
 	$controller = Controller::getInstance();
 	$renderer = $controller->renderer;

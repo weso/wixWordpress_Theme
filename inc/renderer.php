@@ -5,9 +5,9 @@
  *
  */
 
-require_once('/var/www/wordpress/wp-load.php');
-require_once(__DIR__."/twitter/Twitter.php");
-require_once(__DIR__."/gallery/Gallery.php");
+$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME']);
+require_once( str_replace('index.php', '', $parse_uri[0]).'wp-load.php');
+require_once(get_stylesheet_directory()."/inc/twitter/Twitter.php");
  
 class Renderer {
 
