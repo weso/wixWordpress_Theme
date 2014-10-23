@@ -18,7 +18,7 @@ if ( function_exists('register_sidebar') ) {
     'description' => 'Sidebar for the blog section.',
     'before_widget' => '',
     'after_widget' => '',
-    'before_title' => '<div class="line-behind-text"><span class="hidden">',
+    'before_title' => '<div class="sidebar-title line-behind-text"><span class="hidden">',
     'after_title' => '</span></div>'));
 }
 
