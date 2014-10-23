@@ -15,6 +15,7 @@ get_header(); ?>
 <main class="content">
 	<?php echo $renderer->renderTemplate("by"); ?>
 	<div class="container" role="main">
+		<section class="articles">
 			<?php
 				// Start the Loop.
 				while ( have_posts() ) : the_post();
@@ -35,6 +36,7 @@ get_header(); ?>
 					}*/
 				endwhile;
 			?>
+		</section>
 	</div><!-- #content -->
 </main><!-- #primary -->
 
