@@ -319,16 +319,16 @@ article ul.tags {
   font-size: 0.8em; }
 
 /* ARTICLE */
-.right-content article, article.entry-article {
+.right-content article, article.entry-article, .articles article {
   text-align: left; }
-  .right-content article:after, article.entry-article:after {
+  .right-content article:after, article.entry-article:after, .articles article:after {
     content: "";
     display: table;
     clear: both; }
-  .right-content article img:not([alt]), article.entry-article img:not([alt]) {
+  .right-content article img:not([alt]), article.entry-article img:not([alt]), .articles article img:not([alt]) {
     width: 100%;
     margin-bottom: 0.5em; }
-  .right-content article .chapter, article.entry-article .chapter {
+  .right-content article .chapter, article.entry-article .chapter, .articles article .chapter {
     font-family: "Merriweather Sans", sans-serif;
     font-size: 1.4em;
     font-weight: 700;
@@ -342,7 +342,7 @@ article ul.tags {
     background-color: red;
     color: white;
     text-align: center; }
-  .right-content article h1, article.entry-article h1 {
+  .right-content article h1, article.entry-article h1, .articles article h1 {
     font-family: "Merriweather Sans", sans-serif;
     font-size: 2em;
     font-weight: 700;
@@ -350,9 +350,9 @@ article ul.tags {
     margin-top: 0;
     text-align: center; }
     @media screen and (min-width: 40em) {
-      .right-content article h1, article.entry-article h1 {
+      .right-content article h1, article.entry-article h1, .articles article h1 {
         font-size: 2.6em; } }
-  .right-content article h2, article.entry-article h2 {
+  .right-content article h2, article.entry-article h2, .articles article h2 {
     font-family: "Merriweather", serif;
     font-style: italic;
     font-size: 1em;
@@ -360,21 +360,21 @@ article ul.tags {
     line-height: 1.6em;
     margin-bottom: .9em; }
     @media screen and (min-width: 40em) {
-      .right-content article h2, article.entry-article h2 {
+      .right-content article h2, article.entry-article h2, .articles article h2 {
         font-size: 1.2em; } }
-  .right-content article h3:before, article.entry-article h3:before {
+  .right-content article h3:before, article.entry-article h3:before, .articles article h3:before {
     content: "● ";
     color: red;
     font-size: 1.3em; }
-  .right-content article h4:before, article.entry-article h4:before {
+  .right-content article h4:before, article.entry-article h4:before, .articles article h4:before {
     content: "□ ";
     color: red;
     font-size: 1.1em; }
-  .right-content article h5:before, article.entry-article h5:before {
+  .right-content article h5:before, article.entry-article h5:before, .articles article h5:before {
     content: "‣ ";
     color: red;
     font-size: 1.2em; }
-  .right-content article code, article.entry-article code {
+  .right-content article code, article.entry-article code, .articles article code {
     white-space: nowrap;
     font-family: monaco;
     background: #F7F7F7;
@@ -383,27 +383,27 @@ article ul.tags {
     padding: .1em .4em;
     font-size: .75em;
     font-style: normal; }
-  .right-content article h3, article.entry-article h3 {
+  .right-content article h3, article.entry-article h3, .articles article h3 {
     font-family: "Merriweather Sans", sans-serif;
     font-size: 1.4em;
     font-weight: 400;
     line-height: 1.3em;
     margin-bottom: .4em; }
-  .right-content article time, article.entry-article time {
+  .right-content article time, article.entry-article time, .articles article time {
     color: rgba(51, 51, 51, 0.4);
     font-family: "Merriweather Sans", sans-serif;
     font-style: italic;
     font-size: 1em;
     margin-bottom: .3em; }
-  .right-content article p, article.entry-article p {
+  .right-content article p, article.entry-article p, .articles article p {
     font-family: "Merriweather", serif;
     line-height: 1.6em;
     font-size: .9em;
     margin-bottom: 1.5em; }
-    .right-content article p span, article.entry-article p span {
+    .right-content article p span, article.entry-article p span, .articles article p span {
       font-family: "Merriweather Sans", sans-serif;
       font-weight: 700; }
-  .right-content article a.read-more, article.entry-article a.read-more {
+  .right-content article a.read-more, article.entry-article a.read-more, .articles article a.read-more {
     display: inline-block;
     font-family: "Merriweather Sans", sans-serif;
     font-weight: 700;
@@ -412,18 +412,18 @@ article ul.tags {
     margin-left: .2em;
     position: relative;
     cursor: pointer; }
-    .right-content article a.read-more span, article.entry-article a.read-more span {
+    .right-content article a.read-more span, article.entry-article a.read-more span, .articles article a.read-more span {
       font-family: "Merriweather Sans", sans-serif;
       font-style: normal;
       font-size: 1.5em; }
-  .right-content article hr, article.entry-article hr {
+  .right-content article hr, article.entry-article hr, .articles article hr {
     width: 3em; }
-  .right-content article span.by-author, article.entry-article span.by-author {
+  .right-content article span.by-author, article.entry-article span.by-author, .articles article span.by-author {
     display: block;
     font-family: "Merriweather", serif;
     font-style: italic;
     text-align: right; }
-  .right-content article iframe, article.entry-article iframe {
+  .right-content article iframe, article.entry-article iframe, .articles article iframe {
     width: 100%;
     height: 25em;
     margin-top: 1em;
@@ -1125,22 +1125,53 @@ section.about-articles article:nth-of-type(4) ul.tags li a {
   display: auto; }
 
 /* SIDEBAR TAGS */
+.sidebar-title:nth-child(2) {
+  display: none; }
+
+ul {
+  overflow: hidden;
+  clear: both; }
+
+li.cat-item {
+  float: left;
+  margin-right: 0.2em;
+  font-size: 1em; }
+
+.cat-links {
+  color: transparent;
+  text-align: right; }
+
 .cat-links a, li.cat-item a {
   display: inline-block;
   background-color: #379A81;
   padding: 0.1em 0.3em;
   color: white;
-  border-radius: 0.2em; }
+  border-radius: 0.2em;
+  margin-bottom: 0.4em; }
 
-/* News */
-.cat-links a[href$="/news/"], li.cat-item a[href$="/news/"] {
+/* Gallery */
+.cat-links a[href$="/gallery/"], li.cat-item a[href$="/gallery/"] {
   background-color: #f93845; }
+
+/* In the press */
+.cat-links a[href$="/in-the-press/"], li.cat-item a[href$="/in-the-press/"] {
+  background-color: #0096af; }
+
+/* Latest news */
+.cat-links a[href$="/latest-news/"], li.cat-item a[href$="/latest-news/"] {
+  background-color: #89ba00; }
+
+/* News media */
+.cat-links a[href$="/news-media/"], li.cat-item a[href$="/news-media/"] {
+  background-color: #7e3e69; }
 
 /* ARTICLES */
 section.blog-articles article {
-  margin-bottom: 2em; }
+  margin-bottom: 2.5em;
+  padding-bottom: 0.5em;
+  border-bottom: 0.1em solid #ccc; }
 section.blog-articles h1 {
-  font-size: 2.6em; }
+  font-size: 2.2em; }
   section.blog-articles h1 a {
     color: #333;
     font-family: 'Merriweather Sans', sans-serif;
@@ -1148,13 +1179,22 @@ section.blog-articles h1 {
     font-weight: 700; }
 section.blog-articles ul.tags a {
   color: #0f0f0f; }
+section.blog-articles .cat-links a {
+  font-size: 0.8em; }
+section.blog-articles .entry-meta {
+  margin-bottom: 1em; }
+section.blog-articles figure {
+  margin: 0;
+  width: 100% !important; }
+  section.blog-articles figure img {
+    width: 100%;
+    height: auto; }
 
 /* GALLERY */
 div.hslice {
   max-width: 68em;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 1em;
   margin-right: 0 !important;
   overflow: hidden; }
   div.hslice:after {
