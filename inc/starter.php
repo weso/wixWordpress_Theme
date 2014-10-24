@@ -1,11 +1,12 @@
 <?php
-  require_once("controller.php");
+  require_once("compiler.php");
+	
+  $settingsPath = __DIR__.'/settings.json';
 
-  $controller = Controller::getInstance();
-  $compiler = $controller->compiler;
-
-  $compiler->compileTemplates();
-
-  // $renderer = $controller->renderer;
-  // print $renderer->renderTemplate('report');
+  if (file_exists($settingsPath)) {
+  	$settings = json_decode(file_get_contents($settingsPath), true);
+	$compiler = Compiler::getInstance($settings);
+	
+  	$compiler->compileTemplates();
+  }
 ?>

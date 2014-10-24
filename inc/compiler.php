@@ -1,7 +1,5 @@
 <?php
-
-	$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME']);
-	require_once( str_replace('index.php', '', $parse_uri[0]).'wp-load.php');
+	require_once('lightncandy/lightncandy.php');
 
 	class Compiler {
 		
@@ -16,8 +14,8 @@
 		private function __construct($settings) {
 			$this->settings = $settings;
 			
-			$this->templatesPath = get_stylesheet_directory().$this->settings['templatesPath'];
-			$this->compiledTemplatesPath = get_stylesheet_directory().$this->settings['compiledTemplatesPath'];
+			$this->templatesPath = __DIR__ . '/..' . $this->settings['templatesPath'];
+			$this->compiledTemplatesPath = __DIR__ . '/..' . $this->settings['compiledTemplatesPath'];
 		}
 
 		public static function getInstance($settings) {
@@ -29,14 +27,13 @@
 		}
 
 		public function compileTemplates() {
-			$pages = get_pages();
-			self::compileTemplate('index', false);
+			$pages = scandir($this->templatesPath);
 			self::compileTemplate('header', true);
 			self::compileTemplate('footer', true);
 			self::compileTemplate('by', true);
 			
 			foreach ($pages as $page) {
-				self::compileTemplate($page->post_name, false);
+				self::compileTemplate($page, false);
 			}
 		}
 
@@ -44,7 +41,7 @@
 			if ($partial) {
 				$templatePath = $this->templatesPath."partials/".$templateName.'.hbs';			
 			} else {
-				$templatePath = $this->templatesPath.$templateName.'.hbs';			
+				$templatePath = $this->templatesPath.$templateName;			
 			}
 			
 			if (file_exists($templatePath)) {

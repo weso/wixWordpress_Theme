@@ -1,0 +1,25 @@
+<?php return function ($in, $debugopt = 1) {
+    $cx = Array(
+        'flags' => Array(
+            'jstrue' => false,
+            'jsobj' => false,
+            'spvar' => false,
+            'prop' => false,
+            'method' => false,
+            'mustlok' => false,
+            'mustsec' => false,
+            'debug' => $debugopt,
+        ),
+        'helpers' => Array(),
+        'blockhelpers' => Array(),
+        'hbhelpers' => Array(),
+        'partials' => Array(),
+        'scopes' => Array($in),
+        'sp_vars' => Array(),
+'funcs' => Array(
+)
+
+    );
+    return '';
+}
+?>
