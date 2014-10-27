@@ -41,7 +41,7 @@
             return updateInfo();
           }
         }, {
-          name: "year",
+          name: "time",
           selector: global.options.timeline,
           onChange: function(index, value, parameters, selectors) {
             if (settings.debug) {
