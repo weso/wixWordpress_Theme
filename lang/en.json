@@ -76,5 +76,9 @@
   "data_country": "Country",
   "data_rank": "Rank",
   "data_value": "Value",
-  "data_tendency": "Tendency"
+  "data_tendency": "Tendency",
+  "error_title": "Where we're going we don't need roads",
+  "error_subtitle": "The page you are searching doesn't exist",
+  "error_search": "Search for something",
+  "error_description": "Please, visit our <a href='/legacy'>legacy</a> page for previous years' information."
 }
