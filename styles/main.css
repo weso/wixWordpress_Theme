@@ -231,6 +231,7 @@ input[type="submit"] {
 /* BLOG */
 /* CONTACT */
 /* DATA */
+/* ERROR */
 /* LEFT BAR */
 aside.left-bar {
   padding: 0; }
@@ -249,7 +250,6 @@ aside.left-bar {
 @media (min-width: 64em) {
   aside.left-bar {
     width: 30%;
-    height: 100%;
     float: left;
     padding: 0; }
     aside.left-bar h1 {
@@ -1570,6 +1570,102 @@ table.full-ranking {
     padding-bottom: 0; }
     table.full-ranking td.view-more a {
       cursor: pointer; }
+
+div.water {
+  width: 100%;
+  min-height: 4em;
+  background-color: #2f8e8d;
+  background-repeat: repeat-x;
+  background-image: url(../images/error_water.png); }
+
+div.error-links {
+  background-color: #2f8e8d;
+  color: white;
+  padding-top: 1em;
+  padding-bottom: 3em; }
+  div.error-links p {
+    font-size: 1.4em;
+    margin-top: 1em; }
+    div.error-links p a {
+      color: white;
+      text-decoration: underline; }
+    div.error-links p a:hover {
+      color: #222; }
+
+div.lighthouse {
+  text-align: center;
+  margin-bottom: -4em;
+  position: relative; }
+  div.lighthouse h1 {
+    text-align: center;
+    margin-top: 1.2em; }
+  div.lighthouse img {
+    max-width: 90%; }
+  div.lighthouse img.clouds {
+    position: absolute;
+    z-index: -1;
+    top: 20%;
+    left: 10%; }
+  div.lighthouse img.clouds-right {
+    right: 10%;
+    left: auto; }
+
+.error-search-bar {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  margin-top: 1em; }
+  .error-search-bar input {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block; }
+  .error-search-bar div.search-and-submit {
+    position: relative; }
+    .error-search-bar div.search-and-submit input[type=search] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      -ms-appearance: none;
+      -o-appearance: none;
+      appearance: none;
+      width: 100%;
+      padding: .8em .8em;
+      font-size: 1.1em;
+      font-style: italic;
+      border-radius: 3px;
+      margin: 0; }
+    .error-search-bar div.search-and-submit button[type=submit] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      outline: none;
+      margin: 0;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      padding: 5px 10px;
+      background-color: #71cb3a; }
+      .error-search-bar div.search-and-submit button[type=submit] img {
+        height: 12px;
+        opacity: .7; }
+
+div.error-footer {
+  background-color: #2f8e8d; }
+  div.error-footer .footer {
+    background-image: none;
+    background-color: transparent;
+    margin-top: 0; }
+    div.error-footer .footer li a {
+      color: white; }
+    div.error-footer .footer i {
+      color: #2f8e8d; }
+    div.error-footer .footer p {
+      color: white; }
+      div.error-footer .footer p a {
+        color: white;
+        text-decoration: underline; }
+      div.error-footer .footer p a:hover {
+        color: #222; }
 
 body {
   font-family: Raleway, sans-serif;
