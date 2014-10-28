@@ -60,7 +60,7 @@
     					)
 				));
 
-				file_put_contents($this->compiledTemplatesPath.$templateName, $compiledTemplate);
+				file_put_contents($this->compiledTemplatesPath.explode('.', $templateName)[0], $compiledTemplate);
 			} else {
 				error_log(date("Y-m-d H:i:s").': File: '.$templatePath.' does not exists');
 			}	

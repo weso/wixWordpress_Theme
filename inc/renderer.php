@@ -42,7 +42,7 @@ class Renderer {
 
 	public function renderTemplate($templateName) {
 		$fileCompiledTemplate = $this->compiledTemplatesPath.$templateName;
-	
+		
 		if (file_exists($fileCompiledTemplate)) {
 			$renderer = include($fileCompiledTemplate);
 			
@@ -50,6 +50,7 @@ class Renderer {
 			
 			$pageContent = Array();
 			$pageContent["navigation"] = $navigation;
+
 			$pageContent["data"] = $this->loadData($templateName);
 			$pageContent["labels"] = $this->loadLabels("en");
 			$pageContent["path"] = get_stylesheet_directory_uri();
@@ -218,6 +219,20 @@ class ContactModel {
 	}
 }
 
+class ErrorModel {
+	function ErrorModel() {
+	}
+
+	function get() {
+		global $wpdb;
+		$data = Array();
+	
+		$data["search"] = get_search_form(false);
+		
+		return $data;
+	}
+}
+
 require_once('simplehtmldom/simple_html_dom.php');
 
 class ReportModel {
@@ -249,11 +264,24 @@ class ReportModel {
 			$article = str_get_html($chapter);
 			
 			$section_counter = 0;
+			$tags = "";
+
 			foreach($article->find('h2') as $h2) {
 				$section_counter++;
 				$h2->setAttribute('id', 'chapter_'.$chapter_counter.'_section_'.$section_counter);
+				
+				$content = $h2->innertext();
+				$id = $h2->id;
+				$tags .= "<li><a href='#$id'>$content</a></li>";
 			}
 			
+			$nav = "<nav><ul class='tags'>$tags</ul></nav>";
+		
+			$title = $article->find('h1', 0);
+
+                        if ($title)
+                                $title->outertext = $title->outertext . $nav;
+	
 			$chapters['chapter_'.$chapter_counter] = $article;
 			$html .= $article;
 		}
@@ -289,15 +317,6 @@ class ReportModel {
 			}
 
 			$processed_article = str_get_html($article);
-			$tags = "";
-			
-			foreach($processed_article->find('h2') as $h2) {
-				$content = $h2->innertext();
-				$id = $h2->id;
-				$tags .= "<li><a href='#$id'>$content</a></li>";
-			}
-			
-			$nav = "<nav><ul class='tags'>$tags</ul></nav>";
 			
 			$title = $processed_article->find('h1', 0);
 			
@@ -385,22 +404,91 @@ class IndexModel {
 	}
 }
 
-class MediaModel {
-	
-	function MediacentreModel(){
+class LegacyModel {
+	function LegacyModel(){
 	}
 
 	function get() {
-		$data = Array();
-		$data["media"] = Array();
-		
-		$data["media"]["press_releases"] = $this->getPostContent('press-releases');
-		$data["media"]["videos"] = $this->getPostContent('videos');
-		$data["media"]["visualisations"] = $this->getPostContent('visualizations');
-		$data["media"]["in_the_press"] = $this->getPostContent('in-the-press');
+                $slug = "legacy";
+                $data = Array();
+
+                $data[$slug] = Array();
+
+                $children = $this->getChildPages($slug);
+
+                foreach ($children as $page) {
+                        $formatted_name = str_replace('-', '_', $page->post_name);
+			$formatted_content = $this->generateSubSections($slug, apply_filters('the_content', $page->post_content));
+                        $data[$slug][$formatted_name] = $formatted_content;
+                }
+
+                return $data;
+
+        }
+
+	function generateSubSections($post_slug, $content) {
+		$children = $this->getChildPaged($post_slug);
+		$article = str_get_html($content);
+
+		$tags = "";
+		foreach ($children as $page) {
+			$title = $page->title;
+			$link = $page->permalink;
+
+			$tags .= "<li><a href='$link'>$title</a></li>";
+		}
+
+                $nav = "<nav><ul class='tags'>$tags</ul></nav>";
+
+                $title = $article->find('h1', 0);
+
+                if ($title)
+                	$title->outertext = $title->outertext . $nav;
+
+                return $article;
+	}
+
+        function getChildPages($post_slug) {
+                global $wpdb;
+                $my_wp_query = new WP_Query();
+
+                $id = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_name = '$post_slug'");
+                $all_wp_pages = $my_wp_query->query(array('post_type' => 'page'));
+
+                return get_page_children($id, $all_wp_pages);
+        }
+}
+
+class MediaModel {
 	
+	function MediaModel(){
+	}
+
+	function get() {
+		$slug = "media";
+		$data = Array();
+
+		$data[$slug] = Array();
+			
+		$children = $this->getChildPages($slug);
+
+		foreach ($children as $page) {
+			$formatted_name = str_replace('-', '_', $page->post_name);
+			$data[$slug][$formatted_name] = apply_filters('the_content', $page->post_content);
+		}
+
 		return $data;
 
+	}
+
+	function getChildPages($post_slug) {
+		global $wpdb;
+		$my_wp_query = new WP_Query();	
+	
+		$id = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_name = '$post_slug'");
+		$all_wp_pages = $my_wp_query->query(array('post_type' => 'page'));
+
+		return get_page_children($id, $all_wp_pages);
 	}
 
 	function getPostContent($post_slug) {	
