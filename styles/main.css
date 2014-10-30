@@ -1869,6 +1869,10 @@ div.error-footer {
 p.open {
   text-align: right; }
 
+.report-articles iframe {
+  min-height: 35em;
+  border: none; }
+
 body {
   font-family: Raleway, sans-serif;
   color: #333;
