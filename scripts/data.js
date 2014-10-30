@@ -1,5 +1,5 @@
 (function() {
-  var chartSelectors, checkSelectorDataReady, getCountries, getIndicators, getObservations, getSelectorData, getYears, global, li, processAJAX, processJSONP, renderBoxes, renderCharts, renderMap, renderTable, renderTendencyChart, setIndicatorOptions, setPageStateful, updateInfo, _i, _len;
+  var chartSelectors, checkSelectorDataReady, getCountries, getIndicators, getObservations, getSelectorData, getYears, global, li, renderBoxes, renderCharts, renderMap, renderTable, renderTendencyChart, setIndicatorOptions, setPageStateful, updateInfo, _i, _len;
 
   global = this;
 
@@ -78,9 +78,9 @@
     url = "" + host + "/indicators/INDEX";
     if (this.settings.server.method === "JSONP") {
       url += "?callback=getIndicatorsCallback";
-      return processJSONP(url);
+      return this.processJSONP(url);
     } else {
-      return processAJAX(url, getYearsCallback);
+      return this.processAJAX(url, getYearsCallback);
     }
   };
 
@@ -117,9 +117,9 @@
     url = "" + host + "/years/array";
     if (this.settings.server.method === "JSONP") {
       url += "?callback=getYearsCallback";
-      return processJSONP(url);
+      return this.processJSONP(url);
     } else {
-      return processAJAX(url, getYearsCallback);
+      return this.processAJAX(url, getYearsCallback);
     }
   };
 
@@ -144,9 +144,9 @@
     url = "" + host + "/areas/continents";
     if (this.settings.server.method === "JSONP") {
       url += "?callback=getCountriesCallback";
-      return processJSONP(url);
+      return this.processJSONP(url);
     } else {
-      return processAJAX(url, getYearsCallback);
+      return this.processAJAX(url, getYearsCallback);
     }
   };
 
@@ -203,9 +203,9 @@
     url = "" + host + "/visualisations/" + indicator + "/" + countries + "/" + year;
     if (this.settings.server.method === "JSONP") {
       url += "?callback=getObservationsCallback";
-      return processJSONP(url);
+      return this.processJSONP(url);
     } else {
-      return processAJAX(url, getObservationsCallback);
+      return this.processAJAX(url, getObservationsCallback);
     }
   };
 
@@ -219,17 +219,6 @@
     renderTable(observations);
     return renderBoxes(observations);
   };
-
-  processJSONP = function(url) {
-    var head, script;
-    head = document.head;
-    script = document.createElement("script");
-    script.setAttribute("src", url);
-    head.appendChild(script);
-    return head.removeChild(script);
-  };
-
-  processAJAX = function(url, callback) {};
 
   updateInfo = function() {
     var countries, indicator, year;
@@ -431,6 +420,14 @@
             code = info["data-code"];
             global.options.countrySelector.select(code);
             return global.options.countrySelector.refresh();
+          },
+          onmouseover: function(info) {
+            var country, ranked, text, value;
+            country = info["data-area_name"];
+            value = info["data-values"];
+            ranked = info["data-ranked"];
+            text = "" + country + ": " + value + " #" + ranked;
+            return wesCountry.charts.showTooltip(text, info.event);
           }
         }
       };
@@ -517,6 +514,14 @@
           code = info["data-code"];
           global.options.countrySelector.select(code);
           return global.options.countrySelector.refresh();
+        },
+        onmouseover: function(info) {
+          var country, ranked, text, value;
+          country = info["data-area_name"];
+          value = info["data-values"];
+          ranked = info["data-ranked"];
+          text = "" + country + ": " + value + " #" + ranked;
+          return wesCountry.charts.showTooltip(text, info.event);
         }
       }
     };
@@ -555,12 +560,31 @@
         } else {
           return country.value;
         }
+      },
+      onCountryOver: function(info, visor) {
+        var name, ranked, rankedValue, value;
+        if (visor) {
+          visor.innerHTML = '';
+          name = document.createElement('span');
+          name.innerHTML = info.name;
+          name.className = 'name';
+          visor.appendChild(name);
+          value = document.createElement('span');
+          value.innerHTML = info.value;
+          value.className = 'value';
+          visor.appendChild(value);
+          ranked = document.createElement('span');
+          rankedValue = info["data-ranked"] ? "#" + info["data-ranked"] : "";
+          ranked.innerHTML = rankedValue;
+          ranked.className = 'value';
+          return visor.appendChild(ranked);
+        }
       }
     });
   };
 
   renderTable = function(data) {
-    var a, byCountry, className, code, count, div, i, id, img, name, observation, observations, path, previousValue, rank, row, rows, span, table, td, tendency, tr, value, years, _i, _j, _len, _len1, _ref;
+    var a, byCountry, code, count, img, name, observation, observations, path, previousValue, rank, row, rows, span, table, td, tendency, tr, value, years, _i, _j, _len, _len1, _ref;
     observations = data.observations;
     byCountry = data.byCountry;
     years = data.years;
@@ -576,7 +600,6 @@
       rank = observation.rank ? observation.rank : count;
       value = observation.values && observation.values.length > 0 ? observation.values[0] : observation.value;
       previousValue = observation.previous_value;
-      tendency = 0;
       if (previousValue) {
         tendency = previousValue.tendency;
       }
@@ -602,25 +625,7 @@
       td = document.createElement("td");
       td.setAttribute("data-title", "Value");
       tr.appendChild(td);
-      td.innerHTML = value;
-      i = document.createElement("i");
-      className = "fa fa-minus";
-      if (tendency === 1) {
-        className = "fa fa-long-arrow-up green";
-      }
-      if (tendency === -1) {
-        className = "fa fa-long-arrow-down red";
-      }
-      i.className = className;
-      td.appendChild(i);
-      td = document.createElement("td");
-      td.setAttribute("data-title", "Tendency");
-      tr.appendChild(td);
-      div = document.createElement("div");
-      id = wesCountry.guid();
-      div.id = "g" + id;
-      td.appendChild(div);
-      renderTendencyChart("#g" + id, byCountry[code], years);
+      td.innerHTML = value.toFixed(2);
     }
     if (count > global.maxTableRows) {
       rows = table.querySelectorAll(".to-hide");
@@ -640,7 +645,7 @@
       a.collapsed = true;
       a.table = table;
       return a.onclick = function() {
-        var collapsed, newClassName, text, _k, _len2, _results;
+        var className, collapsed, newClassName, text, _k, _len2, _results;
         collapsed = this.collapsed;
         this.collapsed = !collapsed;
         className = collapsed ? "hidden" : "shown";
