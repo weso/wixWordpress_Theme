@@ -1,0 +1,46 @@
+.nn-rect-hover {
+	opacity: 0.1;
+	-webkit-transition: all 0.3s linear;
+/*    transition: all 0.3s linear;
+*/
+}
+
+.nn-rect-not-hover {
+	opacity: 1;
+	-webkit-transition: all 0.3s linear;
+/*    transition: all 0.3s linear;
+*/
+}
+
+.nn-svg > line {
+	stroke-width: 0.5;
+	stroke-opacity: 0.8;
+}
+
+#nn-tooltip-text {
+	position: absolute;
+	top: 60%;
+	opacity: 0;
+	left: 60%;
+}
+
+.nn-svg > text {
+        font-size: 12px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #333;
+}
+
+.nn-svg {
+	background: #EDEDED;
+}
+
+.nn-pos-dot {
+	font-size: 20px;
+	fill: rgb(153, 204, 51);
+}
+
+.nn-neg-dot {
+	font-size: 20px;
+	fill: rgb(153, 51, 51);
+}

@@ -1,0 +1,62 @@
+.gn-viz {
+  background: #EDEDED;
+}
+
+.gn-viz text {
+  font-weight: 200;
+  cursor: pointer;
+  fill: #111;
+}
+
+.gn-y-label text,
+.gn-viz .gn-viz-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 600;
+  fill: #444;
+  text-anchor: middle;
+  cursor: default;
+}
+
+.gn-viz-prosecution {
+  fill: #eee;
+  stroke: none;
+}
+
+.gn-viz-support {
+  fill: #e5e5e5;
+  stroke: none;
+}
+
+.gn-viz-range-path {
+  stroke: #fff;
+}
+
+.gn-y-label line,
+.gn-viz-divide {
+  stroke: #b4b4b4;
+}
+
+.gn-y-label text {
+  text-anchor: end;
+}
+
+.gn-score-low {
+  color: #993333;
+  text-align: center;
+}
+
+.gn-score-medium {
+  color: #336699;
+  text-align: center;
+}
+
+.gn-score-high {
+  color: #99CC33;
+  text-align: center;
+}
+
+.gn-ui-container label {
+  margin-bottom: 4px !important;
+}
+

@@ -1,0 +1,12 @@
+.sv-ui-container,
+.viz-container text,
+.viz-container {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.viz-container label {
+  font-size: 0.6em;
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 600;
+}

@@ -37,14 +37,26 @@
   };
 
   empowermentCallback = function() {
-    var circle, circles, r, _j, _len1, _results;
+    var circle, circles, inc, increment, r, _j, _len1, _results;
     circles = document.querySelectorAll(".infographic-circles .circle");
     _results = [];
     for (_j = 0, _len1 = circles.length; _j < _len1; _j++) {
       circle = circles[_j];
       r = circle.getAttribute("data-r");
+      increment = function(circle, inc, time) {
+        return setTimeout(function() {
+          return circle.setAttribute("r", "" + inc + "%");
+        }, time);
+      };
       if (r) {
-        _results.push(circle.setAttribute("r", r));
+        _results.push((function() {
+          var _k, _results1;
+          _results1 = [];
+          for (inc = _k = 0; 0 <= r ? _k <= r : _k >= r; inc = 0 <= r ? ++_k : --_k) {
+            _results1.push(increment(circle, inc, inc * 30));
+          }
+          return _results1;
+        })());
       } else {
         _results.push(void 0);
       }
@@ -187,7 +199,7 @@
       size = valueCircle.getBoundingClientRect().width;
       value = observation.values[0];
       r = size * value / 100;
-      valueCircle.setAttribute("data-r", "" + r + "%");
+      valueCircle.setAttribute("data-r", "" + r);
       valueCircle.setAttribute("r", "0");
       _results.push((_ref1 = newCircle.querySelector(".country")) != null ? _ref1.innerHTML = observation.area : void 0);
     }

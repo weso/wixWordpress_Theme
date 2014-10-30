@@ -1,0 +1,480 @@
+/* map styles */
+
+.sv-mapbox {
+  background: #ededed;
+}
+
+.sv-boundary {
+  stroke: 0.2px;
+  stroke-fill: #eee;
+  fill: #d6d6d6;
+}
+
+.sv-ui-container {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  width: 310px;
+  background: #dfdfdf;
+  padding: 20px;
+  border-radius: 12px;
+  opacity: .95;
+  text-align: center;
+}
+
+.sv-ui-container h2 {
+  font-size: 24px;
+  line-height: 32px;
+  margin: 0;
+  font-weight: 600;
+}
+
+.sv-control h3 {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #333;
+  -webkit-transition: color 400ms;
+  -moz-transition: color 400ms;
+  transition: color 400ms;
+}
+
+.slider {
+  background: #993333;
+  margin-bottom: 12px;
+  box-shadow: inset 0 2px 0 0 rgba(0,0,0,0.1);
+  border-radius: 60em;
+  border: none;
+  cursor: pointer;
+  height: 0.5em;
+  transition: background 450ms;
+
+  -webkit-transition: background 400ms;
+  -moz-transition: background 400ms;
+  transition: background 400ms;
+}
+
+.noUI-base {
+  height: 0.5em;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.noUi-origin {
+  left: 15%;
+
+  border-radius: 60px;
+  box-shadow: inset 0 2px 0 0 rgba(0,0,0,0.1);
+  background: #c9c9c9;
+  margin-right: -1px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+
+  -webkit-transition: background 400ms;
+  -moz-transition: background 400ms;
+  transition: background 400ms;
+}
+
+.noUi-handle {
+  left: -0.75em;
+  top: -0.5em;
+  width: 1.5em;
+  height: 1.5em;
+  border: 0;
+
+  background: #e5e5e5;
+  box-shadow: inset 0 -2px 0 0 rgba(0,0,0,0.1);
+  border-radius: 60em;
+  -moz-transition: all 0.2s ease-in 0s;
+  -webkit-transition: all 0.2s ease-in;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s ease-in 0s;
+  transform: translate3d(0, 0, 0);
+
+  box-sizing: border-box;
+
+  position: relative;
+  z-index: 1;
+}
+
+.sv-control-labels {
+  position: relative;
+  height: 12px;
+  margin-bottom: 12px;
+}
+
+.sv-control-labels > label {
+  position: absolute;
+  top: 1px;
+  color: #555;
+  -webkit-transition: color 400ms;
+  -moz-transition: color 400ms;
+  transition: color 400ms;
+}
+
+.sv-control .left { left: 0px; }
+.sv-control .right { right: 0px; }
+
+.sv-control-ui {
+  position: relative;
+  height: 18px;
+  margin-bottom: 20px;
+  font-size: 0.8em;
+}
+
+.sv-control-ui > span {
+  position: absolute;
+  color: #444;
+  font-weight: 600;
+}
+
+.sv-filter-indicator {
+  color: #444;
+  -webkit-transition: color 400ms;
+  -moz-transition: color 400ms;
+  transition: color 400ms;
+}
+
+.sv-control-ui .disable-toggle { cursor: pointer; }
+.sv-control-ui .enable { display: none; }
+.sv-disabled .disable { display: none; }
+.sv-disabled .enable { display: block; }
+
+.sv-disabled,
+.sv-disabled label,
+.sv-disabled .sv-filter-indicator,
+.sv-disabled h3 { color: #999; }
+.sv-disabled .noUi-origin,
+.sv-disabled .slider { background: #999; }
+
+.tally-legend label {
+  padding: 6px 8px;
+  margin: 8px 0 0;
+  border-radius: 6px;
+  display: inline-block;
+  box-shadow: inset 0 2px 0 0 rgba(255,255,255,0.1);
+}
+
+.sv-legend-false { background: #99CC33; }
+.viz-tip .sv-affected-false { color: #99CC33; }
+
+.sv-legend-true { background: #993333; }
+.viz-tip .sv-affected-true { color: #993333; }
+
+.sv-legend-na { background: #bfbfbf; }
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Northward tooltips */
+.d3-tip.n:after {
+  content: "\25BC";
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+  text-align: center;
+}
+
+/* Eastward tooltips */
+.d3-tip.e:after {
+  content: "\25C0";
+  margin: -4px 0 0 0;
+  top: 50%;
+  left: -8px;
+}
+
+/* Southward tooltips */
+.d3-tip.s:after {
+  content: "\25B2";
+  margin: 0 0 1px 0;
+  top: -8px;
+  left: 0;
+  text-align: center;
+}
+
+/* Westward tooltips */
+.d3-tip.w:after {
+  content: "\25B6";
+  margin: -4px 0 0 -1px;
+  top: 50%;
+  left: 100%;
+}
+.gn-viz {
+  background: #EDEDED;
+}
+
+.gn-viz text {
+  font-weight: 200;
+  cursor: pointer;
+  fill: #111;
+}
+
+.gn-y-label text,
+.gn-viz .gn-viz-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 600;
+  fill: #444;
+  text-anchor: middle;
+  cursor: default;
+}
+
+.gn-viz-prosecution {
+  fill: #eee;
+  stroke: none;
+}
+
+.gn-viz-support {
+  fill: #e5e5e5;
+  stroke: none;
+}
+
+.gn-viz-range-path {
+  stroke: #fff;
+}
+
+.gn-y-label line,
+.gn-viz-divide {
+  stroke: #b4b4b4;
+}
+
+.gn-y-label text {
+  text-anchor: end;
+}
+
+.gn-score-low {
+  color: #993333;
+  text-align: center;
+}
+
+.gn-score-medium {
+  color: #336699;
+  text-align: center;
+}
+
+.gn-score-high {
+  color: #99CC33;
+  text-align: center;
+}
+
+.gn-ui-container label {
+  margin-bottom: 4px !important;
+}
+
+
+/* BASE STYLESHEET */
+body, html {
+  height: 100%;
+}
+
+
+.nn-rect-hover {
+	opacity: 0.1;
+	-webkit-transition: all 0.3s linear;
+/*    transition: all 0.3s linear;
+*/
+}
+
+.nn-rect-not-hover {
+	opacity: 1;
+	-webkit-transition: all 0.3s linear;
+/*    transition: all 0.3s linear;
+*/
+}
+
+.nn-svg > line {
+	stroke-width: 0.5;
+	stroke-opacity: 0.8;
+}
+
+#nn-tooltip-text {
+	position: absolute;
+	top: 60%;
+	opacity: 0;
+	left: 60%;
+}
+
+.nn-svg > text {
+        font-size: 12px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #333;
+}
+
+.nn-svg {
+	background: #EDEDED;
+}
+
+.nn-pos-dot {
+	font-size: 20px;
+	fill: rgb(153, 204, 51);
+}
+
+.nn-neg-dot {
+	font-size: 20px;
+	fill: rgb(153, 51, 51);
+}
+
+.sv-ui-container,
+.viz-container text,
+.viz-container {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.viz-container label {
+  font-size: 0.6em;
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.viz-container {
+  background: #EDEDED;
+  position: relative;
+}
+
+.viz-ui {
+  float: left;
+  margin: 0 8px 30px;
+  padding: 20px 5px;
+  display: inline-block;
+  height: 80px;
+  background: #FEFEFE;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.viz-ui button {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  background: #f6f6f6;
+  color: #333;
+
+  border-color: #ccc;
+  border: 1px solid transparent;
+  border-radius: 8px;
+
+  -webkit-transition: background .3s;
+  -moz-transition: background .3s;
+  transition: background .3s;
+}
+
+.viz-ui button:hover {
+  background: #f6f6f6;
+}
+
+.viz-ui button.selected {
+  background: #336699;
+  color: #fefefe;
+}
+
+.viz-ui .dbl-toggle button:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.viz-ui .dbl-toggle button:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.viz-ui .dbl-toggle button {
+  position: relative;
+  float: left;
+}
+
+.viz-overlay-tip {
+  padding: 10px 5px 10px;
+  height: 80px;
+  display: none;
+  background: #fefefe;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  color: #444;
+}
+
+.viz-overlay-tip hr {
+  height: 0;
+  padding: 0;
+  margin: 4px 0;
+}
+
+.viz-overlay-tip table {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  width: auto;
+  table-layout: auto;
+}
+
+.viz-overlay-tip table td {
+  border-bottom: none;
+  padding: 4px 10px 0;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.viz-overlay-tip table td:first-child {
+  padding: 4px 12px 0 0;
+}
+
+.viz-overlay-tip table td:last-child {
+  font-weight: 300;
+}
+
+@media (min-width: 480px) {
+  .viz-overlay-tip {
+    display: inline-block;
+  }
+}
+
+@media (min-width: 768px) {
+  .viz-ui {
+    margin: 0 5% 30px;
+    padding: 20px;
+    height: 100px;
+  }
+  .viz-overlay-tip {
+    padding: 10px 20px 10px;
+    height: 100px;
+  }
+  .viz-overlay-tip table td {
+    padding: 4px 12px 0;
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+

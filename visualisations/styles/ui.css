@@ -1,0 +1,124 @@
+.viz-container {
+  background: #EDEDED;
+  position: relative;
+}
+
+.viz-ui {
+  float: left;
+  margin: 0 8px 30px;
+  padding: 20px 5px;
+  display: inline-block;
+  height: 80px;
+  background: #FEFEFE;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.viz-ui button {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  background: #f6f6f6;
+  color: #333;
+
+  border-color: #ccc;
+  border: 1px solid transparent;
+  border-radius: 8px;
+
+  -webkit-transition: background .3s;
+  -moz-transition: background .3s;
+  transition: background .3s;
+}
+
+.viz-ui button:hover {
+  background: #f6f6f6;
+}
+
+.viz-ui button.selected {
+  background: #336699;
+  color: #fefefe;
+}
+
+.viz-ui .dbl-toggle button:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.viz-ui .dbl-toggle button:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.viz-ui .dbl-toggle button {
+  position: relative;
+  float: left;
+}
+
+.viz-overlay-tip {
+  padding: 10px 5px 10px;
+  height: 80px;
+  display: none;
+  background: #fefefe;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  color: #444;
+}
+
+.viz-overlay-tip hr {
+  height: 0;
+  padding: 0;
+  margin: 4px 0;
+}
+
+.viz-overlay-tip table {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  width: auto;
+  table-layout: auto;
+}
+
+.viz-overlay-tip table td {
+  border-bottom: none;
+  padding: 4px 10px 0;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.viz-overlay-tip table td:first-child {
+  padding: 4px 12px 0 0;
+}
+
+.viz-overlay-tip table td:last-child {
+  font-weight: 300;
+}
+
+@media (min-width: 480px) {
+  .viz-overlay-tip {
+    display: inline-block;
+  }
+}
+
+@media (min-width: 768px) {
+  .viz-ui {
+    margin: 0 5% 30px;
+    padding: 20px;
+    height: 100px;
+  }
+  .viz-overlay-tip {
+    padding: 10px 20px 10px;
+    height: 100px;
+  }
+  .viz-overlay-tip table td {
+    padding: 4px 12px 0;
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
