@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>Base Viz Page</title>
+    <title>Censorship and Surveillance</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
@@ -21,36 +21,33 @@
 
       <div class="viz-ui sv-ui-container">
 
-        <div class="sv-control sv-left-control" id="censorship-slider">
-          <h3>Degree of Government Censorship</h3>
-          <div class="sv-control-labels">
-            <label class="left">Low</label>
-            <label class="right">High</label>
-          </div>
-          <div class="slider"></div>
-          <div class="sv-control-ui">
-            <span class="left sv-filter-indicator"></span>
-            <span class="right disable-toggle">
-              <span class="disable">&#10006; disable </span>
-              <span class="enable">&#x2713; enable</span>
-            </span>
+        <div class="sv-control sv-left-control" id="sv-type-toggle">
+          <label>View data for</label>
+          <div class="dbl-toggle">
+            <button id="sv-toggle-region" class="selected" data-type="censorship">Censorship</button>
+            <button id="sv-toggle-econ" data-type="surveillance">Surveillance</button>
           </div>
         </div>
 
-        <div class="sv-control" id="surveillance-slider">
+
+        <div class="sv-control" id="censorship-slider">
+          <div class="sv-control">
+            <h3>Degree of Government Censorship</h3>
+            <div class="sv-control-labels">
+              <label class="left">Low</label>
+              <label class="right">High</label>
+            </div>
+            <div class="slider"></div>
+          </div>
+        </div>
+
+        <div class="sv-control" id="surveillance-slider" style="display: none;">
           <h3>Degree of Vulnerability to Government Surveillance</h3>
           <div class="sv-control-labels">
             <label class="left">Low</label>
             <label class="right">High</label>
           </div>
           <div class="slider"></div>
-          <div class="sv-control-ui">
-            <span class="left sv-filter-indicator"></span>
-            <span class="right disable-toggle">
-              <span class="disable">&#10006; disable </span>
-              <span class="enable">&#x2713; enable</span>
-            </span>
-          </div>
         </div>
 
         <div class="sv-affected-labels" style="display:none;">

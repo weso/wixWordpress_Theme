@@ -12,7 +12,7 @@
 
 .sv-ui-container {
   opacity: .95;
-  height: 165px;
+  height: 150px;
   position: absolute;
   top: 0;
   left: 8px;
@@ -26,7 +26,14 @@
   text-align: left;
 }
 
-.sv-affected-labels { text-align: center; }
+.sv-ui-container button {
+  padding: 12px;
+}
+
+.sv-affected-labels {
+  text-align: center;
+  margin-top: 8px;
+}
 
 .sv-affected-labels label,
 .sv-affected-labels h2 {
@@ -40,11 +47,12 @@
 
 .sv-control {
   display: inline-block;
-  width: 355px;
 }
 
+.sv-control .slider { width: 355px; }
+
 .sv-left-control {
-  margin-right: 20px;
+  margin-right: 30px;
 }
 
 .sv-control h3 {

@@ -6,7 +6,7 @@
 
 }
 
-@media (min-width: 768px) {
+@media (min-width: 800px) {
 
   .viz-ui {
     margin: 0 5% 30px;
@@ -15,8 +15,9 @@
   }
 
   .sv-ui-container {
-    height: 165px;
+    height: 150px;
     left: 5%;
+    margin: 0;
   }
 
   .viz-overlay-tip {
@@ -29,5 +30,13 @@
     font-size: 14px;
     line-height: 20px;
   }
-}
 
+  .viz-ui button {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  .viz-overlay-tip hr {
+    margin: 4px 0;
+  }
+}

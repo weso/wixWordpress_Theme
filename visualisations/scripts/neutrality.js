@@ -119,8 +119,6 @@
       return country.econ
     })
 
-    console.log(this.groupByRegion)
-
     function MaybeLen(arg) { return ((arg)?arg.length:0) }
     this.maxSetSize = Math.max(
       MaybeLen(this.groupBy[1][-1]),
@@ -133,7 +131,7 @@
     // INSERT FLAGS INTO SVG
     // *********************
 
-    var FLAG_DOMAIN = 'bin/flags/';
+    var FLAG_DOMAIN = 'bin/square-flags/';
     var FLAG_EXTENSION = '.png';
     this.svg.append('defs');
     var defs = this.svg.select('defs');
@@ -150,10 +148,10 @@
         })
         .append('image')
         .attr({
-          x: -0.5,
-          y: -0.5,
-          width: 2,
-          height: 2
+          x: 0,
+          y: 0,
+          width: 1,
+          height: 1
         })
         .attr('xlink:href', FLAG_DOMAIN + val.Flag_Name + FLAG_EXTENSION)
     })
@@ -325,7 +323,7 @@
       that.svg.selectAll('.nn-rect').attr('class','nn-rect nn-rect-hover')
       d3.select(this).attr('class', 'nn-rect nn-rect-not-hover');
 
-      if (that.attribute == 'region') {
+      if (that.attribute === 'region') {
         _(that.groupByRegion[d.region]).pluck('country').forEach(function(countryName) {
           d3.select('[data-name="'+ countryName+ '"]').attr('class', 'nn-rect nn-rect-not-hover')
         })        
@@ -365,6 +363,7 @@
         neutrality.attribute = $target.attr('data-type');
       });
     }
+    neutrality.attribute = 'region'
 
     Utility.resize.addDispatch('neutrality', neutrality.resize, neutrality);
     neutrality.draw();

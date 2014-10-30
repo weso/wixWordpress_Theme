@@ -45,9 +45,7 @@
       .domain([0, data.length])
       .range([0, height]);
 
-    var fontSize = this.fontSize = d3.scale.quantize()
-      .domain([0, height])
-      .range([23, 19, 17, 15, 14, 13.5, 13, 13.5, 12, 11.5, 11, 10.5, 10, 9, 8, 7]);
+    var fontSize = this.fontSize = calculateFontScale(height);
 
     var fill = this.fill = d3.scale.quantize()
       .domain([0, height])
@@ -314,6 +312,19 @@
   function doubleIndicatorScore(score) {
       return score <= 6 ? 'low' : score <= 13 ? 'medium' : 'high';
   }
+
+  function calculateFontScale(height) {
+    var fontSize = this.fontSize = d3.scale.quantize()
+      .domain([0, height]);
+    // adjust fontsize smaller if height is very small
+    if (height <= 450) {
+      fontSize.range([15, 14, 13.5, 13, 13.5, 12, 11.5, 11, 10.5, 10, 9, 8, 7, 6, 5, 4]);
+    } else {
+      fontSize.range([23, 19, 17, 15, 14, 13.5, 13, 13.5, 12, 11.5, 11, 10.5, 10, 9, 8, 7]);
+    }
+    return fontSize;
+  }
+
 
   window.GenderViz = init;
 

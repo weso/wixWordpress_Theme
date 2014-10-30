@@ -29,6 +29,7 @@
     this.data = data;
     // to hold the slider values
     this.metrics = {};
+    this.metricName = '';
     return this;
   }
 
@@ -96,20 +97,16 @@
     this.fill();
   };
 
-  Censorship.prototype.disableMetric = function(name) {
-    delete this.metrics[name];
-    this.fill();
-  };
-
   Censorship.prototype.fill = function() {
-    var metrics = this.metrics,
+    var metric = this.metricName,
+      val = this.metrics[metric],
       itu = 0, countries = 0;
 
     this.dataCountries.transition()
       .duration(200)
       .style('fill', function(d) {
         // all metrics are less than, or under, the filters
-        if (_.every(metrics, function(v, m) { return d.country[m] < v; })) {
+        if (d.country[metric] < val) {
           d.stat = false;
           return '#909090';
         } else {
@@ -184,24 +181,22 @@
 
     // binding
     var resize = surveillance.resize.bind(surveillance),
-      remove = surveillance.disableMetric.bind(surveillance),
       drag = surveillance.onDrag.bind(surveillance);
 
     // listen for page resize
     Utility.resize.addDispatch('censorship', surveillance.resize, surveillance);
 
     // data for initial slider position
-    var sliders = [
-      {id: 'censorship-slider', start: 2, name: 'censorship', key: 'P4',},
-      {id: 'surveillance-slider', start: 4, name: 'surveillance', key: 'P9'},
-    ];
+    var sliders = {
+      censorship: {id: 'censorship-slider', start: 2, name: 'censorship', key: 'P4'},
+      surveillance: {id: 'surveillance-slider', start: 4, name: 'surveillance', key: 'P9'}
+    };
 
     // init sliders
     _.each(sliders, function(slider) {
       var extent = d3.extent(_.values(args.primary), function(d) {
         return d[slider.key];
       });
-
       slider.UI = new SliderUI({
         id: slider.id,
         start: slider.start,
@@ -211,12 +206,38 @@
           max: 10 - extent[0]
         },
         dragFn: Utility.debounce(drag, 400, false),
-        stopFn: remove
+        stopFn: function() { return; }
       });
+      slider.$el = $('#' + slider.id);
 
-      // tell the map our initial slider values
+      // register the initial values
       surveillance.metrics[slider.name] = slider.start;
     });
+
+    // default metric
+    surveillance.metricName = 'censorship';
+
+    var $toggles = $('#sv-type-toggle');
+    if ($toggles.length) {
+      $toggles.on('click', 'button', function() {
+        var $target = $(this);
+        if ($target.hasClass('selected')) { return false; }
+
+        $toggles.find('.selected').removeClass('selected');
+        $target.addClass('selected');
+
+        var selected = sliders[$target.attr('data-type')];
+        surveillance.metricName = selected.name;
+        _.each(sliders, function(slider) {
+          if (slider.name === selected.name) {
+            slider.$el.fadeIn(200);
+          } else {
+            slider.$el.hide();
+          }
+        });
+        surveillance.fill();
+      });
+    }
 
     // query topojson, then draw chart
     d3.json('bin/wi_name_countries.topojson', function(topo) {

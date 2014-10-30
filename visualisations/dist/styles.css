@@ -56,8 +56,14 @@
 /* BASE STYLESHEET */
 body, html {
   height: 100%;
+  overflow: hidden;
+  background: #EDEDED;
 }
 
+.viz-container {
+  height: 100%;
+  overflow: hidden;
+}
 
 .sv-ui-container,
 .viz-container text,
@@ -80,7 +86,7 @@ body, html {
 .viz-ui {
   float: left;
   margin: 0 8px 30px;
-  padding: 20px 5px;
+  padding: 20px 10px;
   display: inline-block;
   height: 80px;
   background: #FEFEFE;
@@ -91,9 +97,9 @@ body, html {
 
 .viz-ui button {
   display: inline-block;
-  padding: 6px 12px;
+  padding: 4px 4px;
   margin-bottom: 0;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   line-height: 1.42857143;
   text-align: center;
@@ -148,7 +154,7 @@ body, html {
 .viz-overlay-tip hr {
   height: 0;
   padding: 0;
-  margin: 4px 0;
+  margin: 0;
 }
 
 .viz-overlay-tip table {
@@ -162,16 +168,12 @@ body, html {
   border-bottom: none;
   padding: 4px 10px 0;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 18px;
 }
 
 .viz-overlay-tip table td:first-child {
   padding: 4px 12px 0 0;
-}
-
-.viz-overlay-tip table td:last-child {
-  font-weight: 300;
 }
 
 /* map styles */
@@ -188,7 +190,7 @@ body, html {
 
 .sv-ui-container {
   opacity: .95;
-  height: 165px;
+  height: 150px;
   position: absolute;
   top: 0;
   left: 8px;
@@ -202,7 +204,14 @@ body, html {
   text-align: left;
 }
 
-.sv-affected-labels { text-align: center; }
+.sv-ui-container button {
+  padding: 12px;
+}
+
+.sv-affected-labels {
+  text-align: center;
+  margin-top: 8px;
+}
 
 .sv-affected-labels label,
 .sv-affected-labels h2 {
@@ -216,11 +225,12 @@ body, html {
 
 .sv-control {
   display: inline-block;
-  width: 355px;
 }
 
+.sv-control .slider { width: 355px; }
+
 .sv-left-control {
-  margin-right: 20px;
+  margin-right: 30px;
 }
 
 .sv-control h3 {
@@ -482,7 +492,7 @@ body, html {
 
 }
 
-@media (min-width: 768px) {
+@media (min-width: 800px) {
 
   .viz-ui {
     margin: 0 5% 30px;
@@ -491,8 +501,9 @@ body, html {
   }
 
   .sv-ui-container {
-    height: 165px;
+    height: 150px;
     left: 5%;
+    margin: 0;
   }
 
   .viz-overlay-tip {
@@ -505,5 +516,13 @@ body, html {
     font-size: 14px;
     line-height: 20px;
   }
-}
 
+  .viz-ui button {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  .viz-overlay-tip hr {
+    margin: 4px 0;
+  }
+}

@@ -150,6 +150,7 @@ $(document).on('ready', function() {
     this.data = data;
     // to hold the slider values
     this.metrics = {};
+    this.metricName = '';
     return this;
   }
 
@@ -217,20 +218,16 @@ $(document).on('ready', function() {
     this.fill();
   };
 
-  Censorship.prototype.disableMetric = function(name) {
-    delete this.metrics[name];
-    this.fill();
-  };
-
   Censorship.prototype.fill = function() {
-    var metrics = this.metrics,
+    var metric = this.metricName,
+      val = this.metrics[metric],
       itu = 0, countries = 0;
 
     this.dataCountries.transition()
       .duration(200)
       .style('fill', function(d) {
         // all metrics are less than, or under, the filters
-        if (_.every(metrics, function(v, m) { return d.country[m] < v; })) {
+        if (d.country[metric] < val) {
           d.stat = false;
           return '#909090';
         } else {
@@ -305,24 +302,22 @@ $(document).on('ready', function() {
 
     // binding
     var resize = surveillance.resize.bind(surveillance),
-      remove = surveillance.disableMetric.bind(surveillance),
       drag = surveillance.onDrag.bind(surveillance);
 
     // listen for page resize
     Utility.resize.addDispatch('censorship', surveillance.resize, surveillance);
 
     // data for initial slider position
-    var sliders = [
-      {id: 'censorship-slider', start: 2, name: 'censorship', key: 'P4',},
-      {id: 'surveillance-slider', start: 4, name: 'surveillance', key: 'P9'},
-    ];
+    var sliders = {
+      censorship: {id: 'censorship-slider', start: 2, name: 'censorship', key: 'P4'},
+      surveillance: {id: 'surveillance-slider', start: 4, name: 'surveillance', key: 'P9'}
+    };
 
     // init sliders
     _.each(sliders, function(slider) {
       var extent = d3.extent(_.values(args.primary), function(d) {
         return d[slider.key];
       });
-
       slider.UI = new SliderUI({
         id: slider.id,
         start: slider.start,
@@ -332,12 +327,38 @@ $(document).on('ready', function() {
           max: 10 - extent[0]
         },
         dragFn: Utility.debounce(drag, 400, false),
-        stopFn: remove
+        stopFn: function() { return; }
       });
+      slider.$el = $('#' + slider.id);
 
-      // tell the map our initial slider values
+      // register the initial values
       surveillance.metrics[slider.name] = slider.start;
     });
+
+    // default metric
+    surveillance.metricName = 'censorship';
+
+    var $toggles = $('#sv-type-toggle');
+    if ($toggles.length) {
+      $toggles.on('click', 'button', function() {
+        var $target = $(this);
+        if ($target.hasClass('selected')) { return false; }
+
+        $toggles.find('.selected').removeClass('selected');
+        $target.addClass('selected');
+
+        var selected = sliders[$target.attr('data-type')];
+        surveillance.metricName = selected.name;
+        _.each(sliders, function(slider) {
+          if (slider.name === selected.name) {
+            slider.$el.fadeIn(200);
+          } else {
+            slider.$el.hide();
+          }
+        });
+        surveillance.fill();
+      });
+    }
 
     // query topojson, then draw chart
     d3.json('bin/wi_name_countries.topojson', function(topo) {
@@ -397,9 +418,7 @@ $(document).on('ready', function() {
       .domain([0, data.length])
       .range([0, height]);
 
-    var fontSize = this.fontSize = d3.scale.quantize()
-      .domain([0, height])
-      .range([23, 19, 17, 15, 14, 13.5, 13, 13.5, 12, 11.5, 11, 10.5, 10, 9, 8, 7]);
+    var fontSize = this.fontSize = calculateFontScale(height);
 
     var fill = this.fill = d3.scale.quantize()
       .domain([0, height])
@@ -667,6 +686,19 @@ $(document).on('ready', function() {
       return score <= 6 ? 'low' : score <= 13 ? 'medium' : 'high';
   }
 
+  function calculateFontScale(height) {
+    var fontSize = this.fontSize = d3.scale.quantize()
+      .domain([0, height]);
+    // adjust fontsize smaller if height is very small
+    if (height <= 450) {
+      fontSize.range([15, 14, 13.5, 13, 13.5, 12, 11.5, 11, 10.5, 10, 9, 8, 7, 6, 5, 4]);
+    } else {
+      fontSize.range([23, 19, 17, 15, 14, 13.5, 13, 13.5, 12, 11.5, 11, 10.5, 10, 9, 8, 7]);
+    }
+    return fontSize;
+  }
+
+
   window.GenderViz = init;
 
 
@@ -793,8 +825,6 @@ $(document).on('ready', function() {
       return country.econ
     })
 
-    console.log(this.groupByRegion)
-
     function MaybeLen(arg) { return ((arg)?arg.length:0) }
     this.maxSetSize = Math.max(
       MaybeLen(this.groupBy[1][-1]),
@@ -807,7 +837,7 @@ $(document).on('ready', function() {
     // INSERT FLAGS INTO SVG
     // *********************
 
-    var FLAG_DOMAIN = 'bin/flags/';
+    var FLAG_DOMAIN = 'bin/square-flags/';
     var FLAG_EXTENSION = '.png';
     this.svg.append('defs');
     var defs = this.svg.select('defs');
@@ -824,10 +854,10 @@ $(document).on('ready', function() {
         })
         .append('image')
         .attr({
-          x: -0.5,
-          y: -0.5,
-          width: 2,
-          height: 2
+          x: 0,
+          y: 0,
+          width: 1,
+          height: 1
         })
         .attr('xlink:href', FLAG_DOMAIN + val.Flag_Name + FLAG_EXTENSION)
     })
@@ -999,7 +1029,7 @@ $(document).on('ready', function() {
       that.svg.selectAll('.nn-rect').attr('class','nn-rect nn-rect-hover')
       d3.select(this).attr('class', 'nn-rect nn-rect-not-hover');
 
-      if (that.attribute == 'region') {
+      if (that.attribute === 'region') {
         _(that.groupByRegion[d.region]).pluck('country').forEach(function(countryName) {
           d3.select('[data-name="'+ countryName+ '"]').attr('class', 'nn-rect nn-rect-not-hover')
         })        
@@ -1039,6 +1069,7 @@ $(document).on('ready', function() {
         neutrality.attribute = $target.attr('data-type');
       });
     }
+    neutrality.attribute = 'region'
 
     Utility.resize.addDispatch('neutrality', neutrality.resize, neutrality);
     neutrality.draw();
