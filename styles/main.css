@@ -1859,6 +1859,9 @@ div.error-footer {
       div.error-footer .footer p a:hover {
         color: #222; }
 
+p.open {
+  text-align: right; }
+
 body {
   font-family: Raleway, sans-serif;
   color: #333;
