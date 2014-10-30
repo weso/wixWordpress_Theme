@@ -2,5 +2,6 @@
  "templatesPath": "/views/",
  "compiledTemplatesPath": "/compiled-views/",
  "modelsPath": "/models/",
+ "visualisationsPath": "/visualisations",
  "labelsPath": "/lang/"
 }

@@ -29,6 +29,7 @@ class Renderer {
 		$this->settings = $settings;
 		
 		$this->compiledTemplatesPath = get_stylesheet_directory().$this->settings['compiledTemplatesPath'];
+		$this->visualisationsPath = get_stylesheet_directory().$this->settings['visualisationsPath'];
 		$this->labelsPath = get_stylesheet_directory().$this->settings['labelsPath'];
 	}
 
@@ -52,6 +53,7 @@ class Renderer {
 			$pageContent["navigation"] = $navigation;
 
 			$pageContent["data"] = $this->loadData($templateName);
+			$pageContent["visualisations"] = $this->loadVisualisations();
 			$pageContent["labels"] = $this->loadLabels("en");
 			$pageContent["path"] = get_stylesheet_directory_uri();
 			$pageContent["host"] = get_site_url();			
@@ -76,6 +78,16 @@ class Renderer {
 		}
 	}	
 	
+	private function loadVisualisations() {
+		$visualisationsFile = $this->visualisationsPath."settings.json";
+		
+		if (file_exists($visualisationsFile)) {
+			return json_decode(file_get_contents($visualisationsFile), true);
+		} else {
+			return Array();
+		}
+	}
+
 	private function loadLabels($lang) {
 		$labelsFile = $this->labelsPath.$lang.".json";
 		$defaultLabelsFile = $this->labelsPath."en.json";
@@ -124,7 +136,7 @@ class AboutModel {
 			$section_counter = 0;
 			foreach($article->find('h2') as $h2) {
 				$section_counter++;
-				$h2->setAttribute('id', 'chapter_'.$chapter_counter.'_section_'.$section_counter);
+				$h2->setAttribute('id', $this->formatTitleToAnchor($h2->innertext));
 			}
 			
 			$chapters['chapter_'.$chapter_counter] = $article;
@@ -175,10 +187,11 @@ class AboutModel {
 			
 			if ($title)
 				$title->outertext = $title->outertext . $nav;
+				$article_id = $this->formatTitleToAnchor($title->innertext);
 			
 			$content = $processed_article->outertext;
 			
-			$chapters["chapter_".($i+1)] = "<article class='".$article_class."' id='".$article_id.($i+1)."'><p class='chapter'>$number</p>$content<hr /></article>";
+			$chapters["chapter_".($i+1)] = "<article class='".$article_class."' id='".$article_id."'><p class='chapter'>$number</p>$content<hr /></article>";
 		}
 		
 		return $chapters;
@@ -208,6 +221,13 @@ class AboutModel {
 		
 		return $slices;
 	}
+
+	function formatTitleToAnchor($title) {
+                $anchor = strtolower(str_replace(' ', '_', $title));
+
+                return $anchor;
+        }
+
 }
 
 class ContactModel {
@@ -268,7 +288,7 @@ class ReportModel {
 
 			foreach($article->find('h2') as $h2) {
 				$section_counter++;
-				$h2->setAttribute('id', 'chapter_'.$chapter_counter.'_section_'.$section_counter);
+				$h2->setAttribute('id', $this->formatTitleToAnchor($h2->innertext()));
 				
 				$content = $h2->innertext();
 				$id = $h2->id;
@@ -321,11 +341,12 @@ class ReportModel {
 			$title = $processed_article->find('h1', 0);
 			
 			if ($title)
-				$title->outertext = $title->outertext . $nav;
+				$title->outertext = $title->outertext;
+				$article_id = $title->innertext;
 			
 			$content = $processed_article->outertext;
 			
-			$chapters["chapter_".($i+1)] = "<article class='".$article_class."' id='".$article_id.($i+1)."'><p class='chapter'>$number</p>$content<hr /></article>";
+			$chapters["chapter_".($i+1)] = "<article class='".$article_class."' id='".$article_id."'><p class='chapter'>$number</p>$content<hr /></article>";
 		}
 		
 		return $chapters;
@@ -354,6 +375,12 @@ class ReportModel {
 		$slices["subsections"] = $subsections;
 		
 		return $slices;
+	}
+
+	function formatTitleToAnchor($title) {
+		$anchor = strtolower(str_replace(' ', '_', $title));
+
+		return $anchor;
 	}
 }
 
