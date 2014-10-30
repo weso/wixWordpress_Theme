@@ -53,10 +53,16 @@ class Renderer {
 			$pageContent["navigation"] = $navigation;
 
 			$pageContent["data"] = $this->loadData($templateName);
-			$pageContent["visualisations"] = $this->loadVisualisations();
+			$pageContent["data"]["visualisations"] = $this->loadVisualisations();
+			
+			foreach ($pageContent["data"]["visualisations"] as &$visualisation) {
+				$visualisation["url"] = get_stylesheet_directory_uri().$visualisation["url"];
+			}
+
 			$pageContent["labels"] = $this->loadLabels("en");
 			$pageContent["path"] = get_stylesheet_directory_uri();
-			$pageContent["host"] = get_site_url();			
+			$pageContent["host"] = get_site_url();		
+
 			return $renderer($pageContent, true);
 		} else {
 	
@@ -498,14 +504,12 @@ class MediaModel {
 		$data[$slug] = Array();
 			
 		$children = $this->getChildPages($slug);
-
 		foreach ($children as $page) {
 			$formatted_name = str_replace('-', '_', $page->post_name);
 			$data[$slug][$formatted_name] = apply_filters('the_content', $page->post_content);
 		}
-
+	
 		return $data;
-
 	}
 
 	function getChildPages($post_slug) {
@@ -514,7 +518,6 @@ class MediaModel {
 	
 		$id = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_name = '$post_slug'");
 		$all_wp_pages = $my_wp_query->query(array('post_type' => 'page'));
-
 		return get_page_children($id, $all_wp_pages);
 	}
 

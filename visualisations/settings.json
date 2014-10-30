@@ -1,5 +1,5 @@
 [
-{"id":"gender","page":"","position":"","caption":"","url":"http:\/\/156.35.82.103\/wordpress\/wp-content\/themes\/wixWordpress_Theme\/visualisations\/gender.html"},
-{"id":"neutrality","page":"","position":"","caption":"","url":"http:\/\/156.35.82.103\/wordpress\/wp-content\/themes\/wixWordpress_Theme\/visualisations\/neutrality.html"},
-{"id":"censorship","page":"","position":"","caption":"","url":"http:\/\/156.35.82.103\/wordpress\/wp-content\/themes\/wixWordpress_Theme\/visualisations\/censorship.html"}
+{"id":"gender","page":"","position":"","caption":"Gender","url":"\/visualisations\/gender.html"},
+{"id":"neutrality","page":"","position":"","caption":"Neutrality","url":"\/visualisations\/neutrality.html"},
+{"id":"censorship","page":"","position":"","caption":"Censorship","url":"\/visualisations\/censorship.html"}
 ]
