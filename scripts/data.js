@@ -653,7 +653,7 @@
       td.appendChild(a);
       a.collapsed = true;
       a.table = table;
-      a.onclick = function() {
+      return a.onclick = function() {
         var className, collapsed, newClassName, text, _k, _len2, _results;
         collapsed = this.collapsed;
         this.collapsed = !collapsed;
@@ -670,7 +670,6 @@
         return _results;
       };
     }
-    return wesCountry.table.sort.apply();
   };
 
   renderTendencyChart = function(container, serie, years) {

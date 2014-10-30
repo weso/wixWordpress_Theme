@@ -220,12 +220,11 @@
   }
 
   this.getRankingCallback = function(data) {
-    var area, country, empowerment, flag, freedom_openness, index, path, rank, relevant_content, tableBody, td, tr, universal_access, value, values, _len2, _n, _ref1, _results;
+    var area, country, empowerment, flag, freedom_openness, index, path, rank, relevant_content, tableBody, td, tr, universal_access, value, values, _len2, _n, _ref1;
     tableBody = document.querySelector("table.ranking tbody");
     values = data.values ? data.values : [];
     path = (_ref1 = document.getElementById("path")) != null ? _ref1.value : void 0;
     count = 0;
-    _results = [];
     for (_n = 0, _len2 = values.length; _n < _len2; _n++) {
       value = values[_n];
       count++;
@@ -271,9 +270,9 @@
       td = document.createElement("td");
       td.setAttribute("data-title", "Empowerment");
       tr.appendChild(td);
-      _results.push(td.innerHTML = empowerment.toFixed(2));
+      td.innerHTML = empowerment.toFixed(2);
     }
-    return _results;
+    return wesCountry.table.sort.apply();
   };
 
 }).call(this);
