@@ -597,7 +597,7 @@
       count++;
       code = observation.code;
       name = observation.area_name;
-      rank = observation.rank ? observation.rank : count;
+      rank = observation.ranked ? observation.ranked : count;
       value = observation.values && observation.values.length > 0 ? observation.values[0] : observation.value;
       previousValue = observation.previous_value;
       if (previousValue) {
