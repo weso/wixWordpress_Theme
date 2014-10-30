@@ -12,6 +12,7 @@
   background: #FEFEFE;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
+  overflow: hidden;
 }
 
 .viz-ui button {
@@ -98,27 +99,3 @@
 .viz-overlay-tip table td:last-child {
   font-weight: 300;
 }
-
-@media (min-width: 480px) {
-  .viz-overlay-tip {
-    display: inline-block;
-  }
-}
-
-@media (min-width: 768px) {
-  .viz-ui {
-    margin: 0 5% 30px;
-    padding: 20px;
-    height: 100px;
-  }
-  .viz-overlay-tip {
-    padding: 10px 20px 10px;
-    height: 100px;
-  }
-  .viz-overlay-tip table td {
-    padding: 4px 12px 0;
-    font-size: 14px;
-    line-height: 20px;
-  }
-}
-

@@ -708,6 +708,7 @@ div.illustrations {
 
 /* ACCORDION */
 div.accordion {
+  display: none;
   overflow: hidden;
   height: 32em;
   font-family: 'Raleway', sans-serif;

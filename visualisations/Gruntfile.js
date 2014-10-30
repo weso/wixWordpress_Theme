@@ -18,7 +18,14 @@ module.exports = function (grunt) {
                         './styles/lib/*.css'
                     ],
                     './dist/styles.css': [
-                        './styles/*.css'
+                        './styles/d3.tip.css',
+                        './styles/main.css',
+                        './styles/typography.css',
+                        './styles/ui.css',
+                        './styles/censorship.css',
+                        './styles/neutrality.css',
+                        './styles/gender.css',
+                        './styles/responsive.css',
                     ],
                 },
             },

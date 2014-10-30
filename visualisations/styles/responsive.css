@@ -1,0 +1,33 @@
+@media (min-width: 480px) {
+
+  .viz-overlay-tip {
+    display: inline-block;
+  }
+
+}
+
+@media (min-width: 768px) {
+
+  .viz-ui {
+    margin: 0 5% 30px;
+    padding: 20px;
+    height: 100px;
+  }
+
+  .sv-ui-container {
+    height: 165px;
+    left: 5%;
+  }
+
+  .viz-overlay-tip {
+    padding: 10px 20px 10px;
+    height: 100px;
+  }
+
+  .viz-overlay-tip table td {
+    padding: 4px 12px 0;
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+

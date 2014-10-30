@@ -12,7 +12,7 @@
     this.dataset = []
 
     var economic_regional = _(args.economic_regional).map(function(countryVal, country) {
-      return {country: country, region: countryVal.region, econ: country.econ}
+      return {country: country, region: countryVal.region, econ: parseInt(countryVal.econ)}
     })
 
     var totalPop = 0;
@@ -29,7 +29,8 @@
           score: args.neutrality[country]['Score'],
           pop: args.itu[country]['Population'] * args.itu[country]['ITU']/totalPop,
           id: args.flags[country]['ID'],
-          region: args.economic_regional[country]['region']
+          region: args.economic_regional[country]['region'],
+          econ: args.economic_regional[country]['econ']
         });
       }
     }
@@ -113,6 +114,12 @@
     this.groupByRegion = _(economic_regional).groupBy(function(country) {
       return country.region
     })
+
+    this.groupByEcon = _(economic_regional).groupBy(function(country) {
+      return country.econ
+    })
+
+    console.log(this.groupByRegion)
 
     function MaybeLen(arg) { return ((arg)?arg.length:0) }
     this.maxSetSize = Math.max(
@@ -318,9 +325,16 @@
       that.svg.selectAll('.nn-rect').attr('class','nn-rect nn-rect-hover')
       d3.select(this).attr('class', 'nn-rect nn-rect-not-hover');
 
-      _(that.groupByRegion[d.region]).pluck('country').forEach(function(countryName) {
-        d3.select('[data-name="'+ countryName+ '"]').attr('class', 'nn-rect nn-rect-not-hover')
-      })
+      if (that.attribute == 'region') {
+        _(that.groupByRegion[d.region]).pluck('country').forEach(function(countryName) {
+          d3.select('[data-name="'+ countryName+ '"]').attr('class', 'nn-rect nn-rect-not-hover')
+        })        
+      } else {
+        _(that.groupByEcon[d.econ]).pluck('country').forEach(function(countryName) {
+          d3.select('[data-name="'+ countryName+ '"]').attr('class', 'nn-rect nn-rect-not-hover')
+        })   
+      }
+
 
     })
     .on('mouseout', function(d) {
@@ -335,13 +349,25 @@
   }
 
   function init(args, viz) {
-    d3.json('bin/economic_regional.json', function(resp) {
-      args.economic_regional = resp
-      var neutrality = new Neutrality(args, viz);
-      neutrality.$el = viz.$el;
-      Utility.resize.addDispatch('neutrality', neutrality.resize, neutrality);
-      neutrality.draw();
-    })
+
+    var neutrality = new Neutrality(args, viz);
+    neutrality.$el = viz.$el;
+
+    var $toggles = $('#nn-ui-container');
+    if ($toggles.length) {
+      $toggles.on('click', 'button', function() {
+        var $target = $(this);
+        if ($target.hasClass('selected')) { return false; }
+
+        $toggles.find('.selected').removeClass('selected');
+        $target.addClass('selected');
+
+        neutrality.attribute = $target.attr('data-type');
+      });
+    }
+
+    Utility.resize.addDispatch('neutrality', neutrality.resize, neutrality);
+    neutrality.draw();
 
   }
 

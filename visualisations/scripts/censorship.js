@@ -4,13 +4,18 @@
   // surveillance chart wrapper
   var Censorship = function(args) {
     var primary = args.primary, itu = args.itu,
+      totalItu = 0,
       data = {};
 
     // keep the variables we need
     for (var key in primary) {
+
+      var users = itu[key].Population * itu[key].ITU / 100;
+      totalItu += users;
+
       data[key] = {
         pop: itu[key].Population,
-        itu: itu[key].Population * itu[key].ITU / 100,
+        itu: users,
         name: key,
         censorship: 10 - primary[key]['P4'],
         surveillance: 10 - primary[key]['P9']
@@ -18,7 +23,8 @@
     }
 
     this.itu = $('#sv-affected-itu');
-    this.pop = $('#sv-affected-pop');
+    this.countries = $('#sv-affected-countries');
+    //$('#sv-total-itu').text(Utility.prettyN(totalItu));
 
     this.data = data;
     // to hold the slider values
@@ -32,29 +38,10 @@
     var width = this.$el.width(),
       height = this.$el.height();
 
-    var tooltip = d3.tip()
-      .attr('class', 'viz-tip sv-viz-tip')
-      .attr('id', 'sv-tooltip')
-      .html(function(d) {
-        if (!d.country) {
-          return ['<h5>', d.id, '</h5><hr /><h6>No data available</h6>'].join('');
-        }
-        var affected = d.stat ? 'Directly affected' : 'Not directly affected';
-        return ['<h5>', d.id, '</h5><h6>', Utility.prettyN(d.country.itu),
-                ' internet users</h6><h6 class="sv-affected-', d.stat, '">',
-                affected, '</h6><hr /><table><tbody><tr><td>', d.country.censorship,
-                '</td><td>Degree of government censorship</td></tr><tr><td>', d.country.surveillance,
-                '</td><td>Degree of vulnerability to government surveillance</td></tr><tr><td>',
-                '</tbody</table>',
-        ].join('');
-      });
-
-
     var svg = this.svg = d3.select('#' + this.id).append('svg:svg')
       .attr('class', 'sv-mapbox')
       .attr('width', width)
-      .attr('height', height)
-      .call(tooltip);
+      .attr('height', height);
 
     var mercator = this.projection = d3.geo.mercator()
       .scale((width + 1) / 2 / Math.PI)
@@ -71,8 +58,9 @@
     .enter().append('path')
       .attr('class', 'sv-boundary')
       .attr('d', path)
-      .on('mouseover', tooltip.show)
-      .on('mouseout', tooltip.hide);
+      //.on('mouseover', tooltip.show)
+      //.on('mouseout', tooltip.hide);
+    ;
 
     var data = this.data;
     this.dataCountries = allCountries.filter(function(d) {
@@ -81,6 +69,26 @@
     });
 
     this.fill();
+    // show the affected label after there's something there
+    $('.sv-affected-labels').fadeIn(400);
+
+    function toolTipHTML(d) {
+      //.attr('class', 'viz-tip sv-viz-tip')
+      //.attr('id', 'sv-tooltip')
+      //.html(function(d) {
+      if (!d.country) {
+        return ['<h5>', d.id, '</h5><hr /><h6>No data available</h6>'].join('');
+      }
+
+      var affected = d.stat ? 'Directly affected' : 'Not directly affected';
+      return ['<h5>', d.id, '</h5><h6>', Utility.prettyN(d.country.itu),
+              ' internet users</h6><h6 class="sv-affected-', d.stat, '">',
+              affected, '</h6><hr /><table><tbody><tr><td>', d.country.censorship,
+              '</td><td>Degree of government censorship</td></tr><tr><td>', d.country.surveillance,
+              '</td><td>Degree of vulnerability to government surveillance</td></tr><tr><td>',
+              '</tbody</table>',
+      ].join('');
+    }
   };
 
   Censorship.prototype.onDrag = function(val, name) {
@@ -95,8 +103,8 @@
 
   Censorship.prototype.fill = function() {
     var metrics = this.metrics,
-      itu = 0;
-      //pop = 0;
+      itu = 0, countries = 0;
+
     this.dataCountries.transition()
       .duration(200)
       .style('fill', function(d) {
@@ -106,14 +114,14 @@
           return '#909090';
         } else {
           d.stat = true;
-          //pop += d.country.pop;
           itu += d.country.itu;
+          countries += 1;
           return '#222';
         }
       });
 
     this.itu.text(Utility.prettyN(itu));
-    //this.pop.text(Utility.prettyN(pop));
+    this.countries.text(countries);
   };
 
   Censorship.prototype.resize = function(args) {
@@ -133,7 +141,7 @@
 
     var $el = $('#' + options.id),
       $slider = $el.find('.slider'),
-      $label = $el.find('.sv-filter-indicator'),
+      //$label = $el.find('.sv-filter-indicator'),
       $toggle = $el.find('.disable-toggle'),
       active = true;
 
@@ -143,11 +151,11 @@
       range: options.range
     });
 
-    $label.text(options.start + '/10');
+    //$label.text(options.start + '/10');
 
     $slider.on('slide', function() {
       var val = Math.round($slider.val());
-      $label.text(val + '/10');
+      //$label.text(val + '/10');
       options.dragFn(val, options.name);
     });
 
@@ -184,19 +192,23 @@
 
     // data for initial slider position
     var sliders = [
-      {id: 'censorship-slider', start: 2, name: 'censorship'},
-      {id: 'surveillance-slider', start: 3, name: 'surveillance'},
+      {id: 'censorship-slider', start: 2, name: 'censorship', key: 'P4',},
+      {id: 'surveillance-slider', start: 4, name: 'surveillance', key: 'P9'},
     ];
 
     // init sliders
     _.each(sliders, function(slider) {
+      var extent = d3.extent(_.values(args.primary), function(d) {
+        return d[slider.key];
+      });
+
       slider.UI = new SliderUI({
         id: slider.id,
         start: slider.start,
         name: slider.name,
         range: {
-          min: 0,
-          max: 10
+          min: 10 - extent[1] + 1,
+          max: 10 - extent[0]
         },
         dragFn: Utility.debounce(drag, 400, false),
         stopFn: remove

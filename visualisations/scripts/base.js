@@ -6,7 +6,8 @@
     itu_pop: 'http://desolate-caverns-3750.herokuapp.com/json/ITU_pop.json',
     primary: 'http://desolate-caverns-3750.herokuapp.com/json/primary.json',
     net_neutrality: 'http://desolate-caverns-3750.herokuapp.com/json/net_neutrality.json',
-    flags: 'http://desolate-caverns-3750.herokuapp.com/json/flags_local.json'
+    flags: 'http://desolate-caverns-3750.herokuapp.com/json/flags_local.json',
+    economic_regional: 'http://desolate-caverns-3750.herokuapp.com/json/economic_regional.json'
   };
 
   // Uses queue.js to load json async
@@ -16,9 +17,15 @@
     for (var prop in urls) {
       q.defer(d3.json, urls[prop]);
     }
-    q.await(function(error, itu, primary, neutrality, flags) {
+    q.await(function(error, itu, primary, neutrality, flags, economic_regional) {
       // if (error) { console.log(error); }
-      fn({itu: itu, primary: primary, neutrality: neutrality, flags: flags});
+      fn({
+        itu: itu, 
+        primary: primary, 
+        neutrality: neutrality, 
+        flags: flags, 
+        economic_regional: economic_regional
+      });
     });
   };
 
