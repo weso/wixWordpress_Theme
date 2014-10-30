@@ -429,6 +429,9 @@
             text = "" + country + ": " + value + " #" + ranked;
             return wesCountry.charts.showTooltip(text, info.event);
           }
+        },
+        getName: function(serie) {
+          return serie["short_name"];
         }
       };
       wesCountry.charts.chart(options);
@@ -605,6 +608,12 @@
       }
       tr = document.createElement("tr");
       table.appendChild(tr);
+      tr.code = code;
+      tr.onclick = function() {
+        code = this.code;
+        global.options.countrySelector.select(code);
+        return global.options.countrySelector.refresh();
+      };
       if (count > global.maxTableRows) {
         tr.className = "to-hide";
       }

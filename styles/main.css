@@ -1734,8 +1734,15 @@ table.full-ranking {
   table.full-ranking img {
     vertical-align: middle;
     margin-right: 1em; }
+  table.full-ranking tr {
+    cursor: pointer; }
+  table.full-ranking tr:hover {
+    background-color: #bbb; }
   table.full-ranking tr.hidden {
     display: none; }
+  table.full-ranking td {
+    padding-left: 0.4em;
+    padding-right: 0.4em; }
   table.full-ranking td[data-title="Country"] {
     width: 55%; }
   table.full-ranking td[data-title="Rank"] {

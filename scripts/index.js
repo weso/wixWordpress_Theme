@@ -155,7 +155,7 @@
 
   host = this.settings.server.url;
 
-  url = "" + host + "/observations/" + empowermentIndicator + "/ALL/" + 2013;
+  url = "" + host + "/observations/" + empowermentIndicator + "/ALL/" + year;
 
   if (this.settings.server.method === "JSONP") {
     url += "?callback=getEmpowermentObservationsCallback";
@@ -202,6 +202,76 @@
       valueCircle.setAttribute("data-r", "" + r);
       valueCircle.setAttribute("r", "0");
       _results.push((_ref1 = newCircle.querySelector(".country")) != null ? _ref1.innerHTML = observation.area : void 0);
+    }
+    return _results;
+  };
+
+  year = "2013";
+
+  host = this.settings.server.url;
+
+  url = "" + host + "/rankings/" + year;
+
+  if (this.settings.server.method === "JSONP") {
+    url += "?callback=getRankingCallback";
+    this.processJSONP(url);
+  } else {
+    this.processAJAX(url, getRankingCallback);
+  }
+
+  this.getRankingCallback = function(data) {
+    var area, country, empowerment, flag, freedom_openness, index, path, rank, relevant_content, tableBody, td, tr, universal_access, value, values, _len2, _n, _ref1, _results;
+    tableBody = document.querySelector("table.ranking tbody");
+    values = data.values ? data.values : [];
+    path = (_ref1 = document.getElementById("path")) != null ? _ref1.value : void 0;
+    count = 0;
+    _results = [];
+    for (_n = 0, _len2 = values.length; _n < _len2; _n++) {
+      value = values[_n];
+      count++;
+      if (count > 5) {
+        break;
+      }
+      country = value["name"];
+      area = value["area"];
+      rank = value["rank"];
+      index = value["index"];
+      empowerment = value["EMPOWERMENT"];
+      universal_access = value["UNIVERSAL_ACCESS"];
+      freedom_openness = value["FREEDOM_&_OPENNESS"];
+      relevant_content = value["RELEVANT_CONTENT_&_USE"];
+      tr = document.createElement("tr");
+      tableBody.appendChild(tr);
+      td = document.createElement("td");
+      tr.appendChild(td);
+      flag = document.createElement("img");
+      flag.className = "flag";
+      flag.src = "" + path + "/images/flags/" + area + ".png";
+      td.appendChild(flag);
+      p = document.createElement("p");
+      p.className = "country-name";
+      p.innerHTML = country;
+      td.appendChild(p);
+      td = document.createElement("td");
+      td.setAttribute("data-title", "Rank");
+      td.innerHTML = rank;
+      tr.appendChild(td);
+      td = document.createElement("td");
+      td.setAttribute("data-title", "Universal Access");
+      tr.appendChild(td);
+      td.innerHTML = universal_access.toFixed(2);
+      td = document.createElement("td");
+      td.setAttribute("data-title", "Relevant Content");
+      tr.appendChild(td);
+      td.innerHTML = relevant_content.toFixed(2);
+      td = document.createElement("td");
+      td.setAttribute("data-title", "Freedom And Openness");
+      tr.appendChild(td);
+      td.innerHTML = freedom_openness.toFixed(2);
+      td = document.createElement("td");
+      td.setAttribute("data-title", "Empowerment");
+      tr.appendChild(td);
+      _results.push(td.innerHTML = empowerment.toFixed(2));
     }
     return _results;
   };
