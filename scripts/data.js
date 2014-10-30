@@ -408,7 +408,7 @@
         serieColours: wesCountry.makeGradientPalette(["#005475", "#1B4E5A", "#1B7A65", "#83C04C", "#E5E066"], data.bars.length),
         getElementColour: function(options, element, index) {
           var colour, rank;
-          rank = element.rank ? element.rank - 1 : index;
+          rank = element.ranked ? element.ranked - 1 : index;
           rank = rank >= 0 && rank < options.serieColours.length ? rank : index;
           colour = options.serieColours[rank];
           colour = element.selected ? colour : wesCountry.shadeColour(colour, 0.5);
