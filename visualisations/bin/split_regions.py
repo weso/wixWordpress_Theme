@@ -24,12 +24,12 @@ def step1(): # reading topojson, matching on some kind of name, writing wi_name 
         country_name = country_name.strip()
         found = False
         for match_country in geometries:
-            if 'id' in match_country and match_country['id'].lower().find(country_name.lower()) != -1:
+            if 'id' in match_country and match_country['id'].lower() == country_name.lower():
                 match_country['wi_name'] = country_name
                 found = True
             else:
                 for key in ['NAME', 'NAME_LONG', 'BRK_NAME', 'NAME_SORT']:
-                    if match_country['properties'][key].lower().find(country_name.lower()) != -1:
+                    if match_country['properties'][key].lower() == country_name.lower():
                         match_country['wi_name'] = country_name
                         found = True
         if not found:
@@ -37,6 +37,20 @@ def step1(): # reading topojson, matching on some kind of name, writing wi_name 
     print unfound
     topo['objects']['countries']['geometries'] = geometries
     pretty_write(topo, 'countries_regions_wi_name.topojson')
+
+def step1_5(): # checking to see how many countries we have
+    topo = read('countries_regions_wi_name.topojson')
+    geometries = topo['objects']['countries']['geometries']
+
+    countries = 0
+    for country in geometries:
+        if 'wi_name' in country:
+            countries += 1
+            continue
+        continue
+
+    print countries
+
 
 # step 1.5 is manually adding wi_names for viet nam and venezuela
 

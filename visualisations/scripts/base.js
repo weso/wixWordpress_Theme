@@ -20,10 +20,10 @@
     q.await(function(error, itu, primary, neutrality, flags, economic_regional) {
       // if (error) { console.log(error); }
       fn({
-        itu: itu, 
-        primary: primary, 
-        neutrality: neutrality, 
-        flags: flags, 
+        itu: itu,
+        primary: primary,
+        neutrality: neutrality,
+        flags: flags,
         economic_regional: economic_regional
       });
     });
@@ -70,8 +70,8 @@
   window.Utility.comma = comma;
 
   function prettyN(n) {
-    return n > 1000000000 ? (Math.round(n / 100000000) / 10) + '-billion' :
-      n > 1000000 ? (Math.round(n / 100000) / 10) + '-million' :
+    return n > 1000000000 ? (Math.round(n / 100000000) / 10) + ' billion' :
+      n > 1000000 ? (Math.round(n / 100000) / 10) + ' million' :
       comma(Math.round(n));
   }
   window.Utility.prettyN = prettyN;

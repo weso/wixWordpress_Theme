@@ -12,13 +12,11 @@
   };
 
   var econTranslation = {
-    1: 'Most Developed Economy',
-    2: 'Developed, Non-G7 Economy',
-    3: 'Emerging Economy (Upper)',
-    4: 'Emerging Economy (Middle)',
-    5: 'Emerging Economy (Lower)',
-    6: 'Developing Economy',
-    7: 'Least Developed Economy',
+    1: 'High Income OECD',
+    2: 'High Income non-OECD',
+    3: 'Upper Middle Income',
+    4: 'Lower Middle Income',
+    5: 'Low Income'
   };
 
   var GenderViz = function() {
@@ -258,51 +256,48 @@
 
   function init(args, viz) {
 
-    // file that contains economic levels and regions
-    d3.json('bin/economic_regional.json', function(resp) {
+    var econ_region = args.economic_regional;
+    console.log(econ_region);
 
-      // create new data file containing what we need
-      var data = _.map(args.primary, function(d, name) {
-        var support = d['S11'], action = d['S12'];
-        return {
-          support: support,
-          action: action,
-          overall: (support + action) / 2,
-          scores: {
-            support: singleIndicatorScore(support),
-            action: singleIndicatorScore(action),
-            overall: singleIndicatorScore((support + action)/2)
-          },
-          diff: support - action,
-          name: name,
-          econ: resp[name].econ,
-          region: resp[name].region
-        };
-      });
-
-      // init gender viz
-      var gender = new GenderViz();
-      gender.$tooltip = $('#gn-overlay-tip');
-      gender.draw(data, viz);
-
-      var $toggles = $('#gn-ui-container');
-      if ($toggles.length) {
-        $toggles.on('click', 'button', function() {
-          var $target = $(this);
-          if ($target.hasClass('selected')) { return false; }
-
-          $toggles.find('.selected').removeClass('selected');
-          $target.addClass('selected');
-
-          gender.attribute = $target.attr('data-type');
-        });
-      }
-
-      // listen for page resize
-      Utility.resize.addDispatch('gender', gender.resize, gender);
-
-
+    // create new data file containing what we need
+    var data = _.map(args.primary, function(d, name) {
+      var support = d['S11'], action = d['S12'];
+      return {
+        support: support,
+        action: action,
+        overall: (support + action) / 2,
+        scores: {
+          support: singleIndicatorScore(support),
+          action: singleIndicatorScore(action),
+          overall: singleIndicatorScore((support + action)/2)
+        },
+        diff: support - action,
+        name: name,
+        econ: econ_region[name].econ,
+        region: econ_region[name].region
+      };
     });
+
+    // init gender viz
+    var gender = new GenderViz();
+    gender.$tooltip = $('#gn-overlay-tip');
+    gender.draw(data, viz);
+
+    var $toggles = $('#gn-ui-container');
+    if ($toggles.length) {
+      $toggles.on('click', 'button', function() {
+        var $target = $(this);
+        if ($target.hasClass('selected')) { return false; }
+
+        $toggles.find('.selected').removeClass('selected');
+        $target.addClass('selected');
+
+        gender.attribute = $target.attr('data-type');
+      });
+    }
+
+    // listen for page resize
+    Utility.resize.addDispatch('gender', gender.resize, gender);
   }
 
   function singleIndicatorScore(score) {

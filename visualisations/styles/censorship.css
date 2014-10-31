@@ -12,27 +12,22 @@
 
 .sv-ui-container {
   opacity: .95;
-  height: 150px;
+  height: 105px;
   position: absolute;
   top: 0;
   left: 8px;
 }
 
 .sv-ui-container h2 {
-  font-size: 24px;
-  line-height: 30px;
+  font-size: 14px;
+  line-height: 20px;
   margin: 0;
   font-weight: 600;
   text-align: left;
 }
 
-.sv-ui-container button {
-  padding: 12px;
-}
-
 .sv-affected-labels {
   text-align: center;
-  margin-top: 8px;
 }
 
 .sv-affected-labels label,
@@ -42,6 +37,7 @@
 
 .sv-affected-labels label {
   font-size: .8em;
+  font-weight: 400;
   text-transform: none;
 }
 
@@ -49,26 +45,45 @@
   display: inline-block;
 }
 
-.sv-control .slider { width: 355px; }
+.sv-slider-container { width: 250px; }
 
 .sv-left-control {
   margin-right: 30px;
 }
 
+.sv-overlay-tip {
+  position: absolute;
+  top: 0;
+  right: 8px;
+  height: 100px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+}
+
+.sv-overlay-tip h3,
 .sv-control h3 {
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 13px;
+  line-height: 18px;
+  margin-bottom: 2px;
   font-weight: 600;
-  margin-bottom: 6px;
   color: #333;
   -webkit-transition: color 400ms;
   -moz-transition: color 400ms;
   transition: color 400ms;
 }
 
+.sv-overlay-tip h4 {
+  font-size: 12px;
+  line-height: 14px;
+  margin-bottom: 2px;
+  font-weight: 600;
+}
+
+.sv-affected-true { color: #993333; }
+
 .slider {
+  width: 100%;
+  margin-bottom: 6px;
   background: #993333;
-  margin-bottom: 12px;
   box-shadow: inset 0 2px 0 0 rgba(0,0,0,0.1);
   border-radius: 60em;
   border: none;
@@ -180,18 +195,20 @@
 .sv-disabled .noUi-origin,
 .sv-disabled .slider { background: #999; }
 
+.tally-legend {
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+}
+
 .tally-legend label {
-  padding: 6px 8px;
+  padding: 4px;
   margin: 8px 0 0;
   border-radius: 6px;
   display: inline-block;
   box-shadow: inset 0 2px 0 0 rgba(255,255,255,0.1);
 }
 
-.sv-legend-false { background: #99CC33; }
-.viz-tip .sv-affected-false { color: #99CC33; }
-
-.sv-legend-true { background: #993333; }
-.viz-tip .sv-affected-true { color: #993333; }
-
-.sv-legend-na { background: #bfbfbf; }
+.sv-legend-true { background: #222222; color: #fefefe;}
+.sv-legend-false { background: #909090; }
+.sv-legend-na { background: #D6D6D6; }

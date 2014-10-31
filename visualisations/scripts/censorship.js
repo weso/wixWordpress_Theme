@@ -24,12 +24,13 @@
 
     this.itu = $('#sv-affected-itu');
     this.countries = $('#sv-affected-countries');
-    //$('#sv-total-itu').text(Utility.prettyN(totalItu));
 
     this.data = data;
     // to hold the slider values
     this.metrics = {};
     this.metricName = '';
+
+    this.$tooltip = $('#sv-overlay-tip');
     return this;
   }
 
@@ -51,6 +52,7 @@
 
     var path = this.path = d3.geo.path().projection(mercator);
 
+    var $tooltip = this.$tooltip;
     var allCountries = this.allCountries = svg.append('g')
       .attr('class', 'sv-boundary-layer')
       .style('stroke-linejoin', 'round')
@@ -59,9 +61,12 @@
     .enter().append('path')
       .attr('class', 'sv-boundary')
       .attr('d', path)
-      //.on('mouseover', tooltip.show)
-      //.on('mouseout', tooltip.hide);
-    ;
+      .on('mouseover', function(d) {
+          $tooltip.html(toolTipHTML(d)).show();
+      })
+      .on('mouseout', function(d) {
+        $tooltip.hide();
+      });
 
     var data = this.data;
     this.dataCountries = allCountries.filter(function(d) {
@@ -74,17 +79,14 @@
     $('.sv-affected-labels').fadeIn(400);
 
     function toolTipHTML(d) {
-      //.attr('class', 'viz-tip sv-viz-tip')
-      //.attr('id', 'sv-tooltip')
-      //.html(function(d) {
       if (!d.country) {
-        return ['<h5>', d.id, '</h5><hr /><h6>No data available</h6>'].join('');
+        return ['<h3>', d.id, '</h3><hr /><h4>No data available</h4>'].join('');
       }
 
       var affected = d.stat ? 'Directly affected' : 'Not directly affected';
-      return ['<h5>', d.id, '</h5><h6>', Utility.prettyN(d.country.itu),
-              ' internet users</h6><h6 class="sv-affected-', d.stat, '">',
-              affected, '</h6><hr /><table><tbody><tr><td>', d.country.censorship,
+      return ['<h3>', d.id, '</h3><h4>', Utility.prettyN(d.country.itu),
+              ' internet users</h4><h4 class="sv-affected-', d.stat, '">',
+              affected, '</h4><hr /><table><tbody><tr><td>', d.country.censorship,
               '</td><td>Degree of government censorship</td></tr><tr><td>', d.country.surveillance,
               '</td><td>Degree of vulnerability to government surveillance</td></tr><tr><td>',
               '</tbody</table>',

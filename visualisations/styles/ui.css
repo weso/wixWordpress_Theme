@@ -5,10 +5,10 @@
 
 .viz-ui {
   float: left;
-  margin: 0 8px 30px;
-  padding: 20px 10px;
+  margin: 0 8px 15px;
+  padding: 0 10px;
   display: inline-block;
-  height: 80px;
+  height: 60px;
   background: #FEFEFE;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
@@ -62,8 +62,9 @@
 }
 
 .viz-overlay-tip {
-  padding: 10px 5px 10px;
-  height: 80px;
+  float: left;
+  padding: 0px 10px 5px;
+  height: 60px;
   display: none;
   background: #fefefe;
   border-bottom-left-radius: 12px;
@@ -86,12 +87,12 @@
 
 .viz-overlay-tip table td {
   border-bottom: none;
-  padding: 4px 10px 0;
+  padding: 2px 10px;
   font-weight: 400;
   font-size: 13px;
-  line-height: 18px;
+  line-height: 16px;
 }
 
 .viz-overlay-tip table td:first-child {
-  padding: 4px 12px 0 0;
+  padding: 2px 12px 0 0;
 }

@@ -1,17 +1,13 @@
 @media (min-width: 480px) {
 
-  .viz-overlay-tip {
-    display: inline-block;
-  }
-
 }
 
 @media (min-width: 800px) {
 
   .viz-ui {
-    margin: 0 5% 30px;
-    padding: 20px;
-    height: 100px;
+    margin: 0 8px 30px;
+    padding: 20px 10px;
+    height: 80px;
   }
 
   .sv-ui-container {
@@ -21,22 +17,51 @@
   }
 
   .viz-overlay-tip {
-    padding: 10px 20px 10px;
-    height: 100px;
+    padding: 10px 5px 10px;
+    height: 80px;
   }
-
-  .viz-overlay-tip table td {
-    padding: 4px 12px 0;
-    font-size: 14px;
-    line-height: 20px;
-  }
+  .viz-overlay-tip table td { padding: 4px 10px 0; }
 
   .viz-ui button {
     padding: 6px 12px;
     font-size: 14px;
   }
+  .sv-overlay-tip h3,
+  .sv-control h3 {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 6px;
+  }
 
-  .viz-overlay-tip hr {
-    margin: 4px 0;
+  .sv-overlay-tip h4 {
+    font-size: 13px;
+    line-height: 18px;
+    margin-bottom: 6px;
+  }
+
+  .sv-slider-container { width: 355px; }
+  .sv-ui-container button { padding: 12px; }
+  .sv-ui-container h2 {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .sv-affected-labels label {
+    font-size: .8em;
+  }
+
+  .sv-affected-labels { margin-top: 8px; }
+  .slider { margin-bottom: 12px; }
+
+  .sv-overlay-tip {
+    right: 5%;
+    height: 140px;
+    padding: 10px 10px 20px;
+  }
+
+  .tally-legend {
+    position: absolute;
+    left: 2%;
+    bottom: 2%;
   }
 }

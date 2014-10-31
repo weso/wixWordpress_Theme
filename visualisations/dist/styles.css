@@ -85,10 +85,10 @@ body, html {
 
 .viz-ui {
   float: left;
-  margin: 0 8px 30px;
-  padding: 20px 10px;
+  margin: 0 8px 15px;
+  padding: 0 10px;
   display: inline-block;
-  height: 80px;
+  height: 60px;
   background: #FEFEFE;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
@@ -142,8 +142,9 @@ body, html {
 }
 
 .viz-overlay-tip {
-  padding: 10px 5px 10px;
-  height: 80px;
+  float: left;
+  padding: 0px 10px 5px;
+  height: 60px;
   display: none;
   background: #fefefe;
   border-bottom-left-radius: 12px;
@@ -166,14 +167,14 @@ body, html {
 
 .viz-overlay-tip table td {
   border-bottom: none;
-  padding: 4px 10px 0;
+  padding: 2px 10px;
   font-weight: 400;
   font-size: 13px;
-  line-height: 18px;
+  line-height: 16px;
 }
 
 .viz-overlay-tip table td:first-child {
-  padding: 4px 12px 0 0;
+  padding: 2px 12px 0 0;
 }
 
 /* map styles */
@@ -190,27 +191,22 @@ body, html {
 
 .sv-ui-container {
   opacity: .95;
-  height: 150px;
+  height: 105px;
   position: absolute;
   top: 0;
   left: 8px;
 }
 
 .sv-ui-container h2 {
-  font-size: 24px;
-  line-height: 30px;
+  font-size: 14px;
+  line-height: 20px;
   margin: 0;
   font-weight: 600;
   text-align: left;
 }
 
-.sv-ui-container button {
-  padding: 12px;
-}
-
 .sv-affected-labels {
   text-align: center;
-  margin-top: 8px;
 }
 
 .sv-affected-labels label,
@@ -220,6 +216,7 @@ body, html {
 
 .sv-affected-labels label {
   font-size: .8em;
+  font-weight: 400;
   text-transform: none;
 }
 
@@ -227,26 +224,45 @@ body, html {
   display: inline-block;
 }
 
-.sv-control .slider { width: 355px; }
+.sv-slider-container { width: 250px; }
 
 .sv-left-control {
   margin-right: 30px;
 }
 
+.sv-overlay-tip {
+  position: absolute;
+  top: 0;
+  right: 8px;
+  height: 100px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+}
+
+.sv-overlay-tip h3,
 .sv-control h3 {
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 13px;
+  line-height: 18px;
+  margin-bottom: 2px;
   font-weight: 600;
-  margin-bottom: 6px;
   color: #333;
   -webkit-transition: color 400ms;
   -moz-transition: color 400ms;
   transition: color 400ms;
 }
 
+.sv-overlay-tip h4 {
+  font-size: 12px;
+  line-height: 14px;
+  margin-bottom: 2px;
+  font-weight: 600;
+}
+
+.sv-affected-true { color: #993333; }
+
 .slider {
+  width: 100%;
+  margin-bottom: 6px;
   background: #993333;
-  margin-bottom: 12px;
   box-shadow: inset 0 2px 0 0 rgba(0,0,0,0.1);
   border-radius: 60em;
   border: none;
@@ -358,21 +374,23 @@ body, html {
 .sv-disabled .noUi-origin,
 .sv-disabled .slider { background: #999; }
 
+.tally-legend {
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+}
+
 .tally-legend label {
-  padding: 6px 8px;
+  padding: 4px;
   margin: 8px 0 0;
   border-radius: 6px;
   display: inline-block;
   box-shadow: inset 0 2px 0 0 rgba(255,255,255,0.1);
 }
 
-.sv-legend-false { background: #99CC33; }
-.viz-tip .sv-affected-false { color: #99CC33; }
-
-.sv-legend-true { background: #993333; }
-.viz-tip .sv-affected-true { color: #993333; }
-
-.sv-legend-na { background: #bfbfbf; }
+.sv-legend-true { background: #222222; color: #fefefe;}
+.sv-legend-false { background: #909090; }
+.sv-legend-na { background: #D6D6D6; }
 
 .nn-rect-hover {
 	opacity: 0.1;
@@ -486,18 +504,14 @@ body, html {
 
 @media (min-width: 480px) {
 
-  .viz-overlay-tip {
-    display: inline-block;
-  }
-
 }
 
 @media (min-width: 800px) {
 
   .viz-ui {
-    margin: 0 5% 30px;
-    padding: 20px;
-    height: 100px;
+    margin: 0 8px 30px;
+    padding: 20px 10px;
+    height: 80px;
   }
 
   .sv-ui-container {
@@ -507,22 +521,51 @@ body, html {
   }
 
   .viz-overlay-tip {
-    padding: 10px 20px 10px;
-    height: 100px;
+    padding: 10px 5px 10px;
+    height: 80px;
   }
-
-  .viz-overlay-tip table td {
-    padding: 4px 12px 0;
-    font-size: 14px;
-    line-height: 20px;
-  }
+  .viz-overlay-tip table td { padding: 4px 10px 0; }
 
   .viz-ui button {
     padding: 6px 12px;
     font-size: 14px;
   }
+  .sv-overlay-tip h3,
+  .sv-control h3 {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 6px;
+  }
 
-  .viz-overlay-tip hr {
-    margin: 4px 0;
+  .sv-overlay-tip h4 {
+    font-size: 13px;
+    line-height: 18px;
+    margin-bottom: 6px;
+  }
+
+  .sv-slider-container { width: 355px; }
+  .sv-ui-container button { padding: 12px; }
+  .sv-ui-container h2 {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .sv-affected-labels label {
+    font-size: .8em;
+  }
+
+  .sv-affected-labels { margin-top: 8px; }
+  .slider { margin-bottom: 12px; }
+
+  .sv-overlay-tip {
+    right: 5%;
+    height: 140px;
+    padding: 10px 10px 20px;
+  }
+
+  .tally-legend {
+    position: absolute;
+    left: 2%;
+    bottom: 2%;
   }
 }

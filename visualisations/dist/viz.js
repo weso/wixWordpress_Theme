@@ -20,10 +20,10 @@
     q.await(function(error, itu, primary, neutrality, flags, economic_regional) {
       // if (error) { console.log(error); }
       fn({
-        itu: itu, 
-        primary: primary, 
-        neutrality: neutrality, 
-        flags: flags, 
+        itu: itu,
+        primary: primary,
+        neutrality: neutrality,
+        flags: flags,
         economic_regional: economic_regional
       });
     });
@@ -70,8 +70,8 @@
   window.Utility.comma = comma;
 
   function prettyN(n) {
-    return n > 1000000000 ? (Math.round(n / 100000000) / 10) + '-billion' :
-      n > 1000000 ? (Math.round(n / 100000) / 10) + '-million' :
+    return n > 1000000000 ? (Math.round(n / 100000000) / 10) + ' billion' :
+      n > 1000000 ? (Math.round(n / 100000) / 10) + ' million' :
       comma(Math.round(n));
   }
   window.Utility.prettyN = prettyN;
@@ -145,12 +145,13 @@ $(document).on('ready', function() {
 
     this.itu = $('#sv-affected-itu');
     this.countries = $('#sv-affected-countries');
-    //$('#sv-total-itu').text(Utility.prettyN(totalItu));
 
     this.data = data;
     // to hold the slider values
     this.metrics = {};
     this.metricName = '';
+
+    this.$tooltip = $('#sv-overlay-tip');
     return this;
   }
 
@@ -172,6 +173,7 @@ $(document).on('ready', function() {
 
     var path = this.path = d3.geo.path().projection(mercator);
 
+    var $tooltip = this.$tooltip;
     var allCountries = this.allCountries = svg.append('g')
       .attr('class', 'sv-boundary-layer')
       .style('stroke-linejoin', 'round')
@@ -180,9 +182,12 @@ $(document).on('ready', function() {
     .enter().append('path')
       .attr('class', 'sv-boundary')
       .attr('d', path)
-      //.on('mouseover', tooltip.show)
-      //.on('mouseout', tooltip.hide);
-    ;
+      .on('mouseover', function(d) {
+          $tooltip.html(toolTipHTML(d)).show();
+      })
+      .on('mouseout', function(d) {
+        $tooltip.hide();
+      });
 
     var data = this.data;
     this.dataCountries = allCountries.filter(function(d) {
@@ -195,17 +200,14 @@ $(document).on('ready', function() {
     $('.sv-affected-labels').fadeIn(400);
 
     function toolTipHTML(d) {
-      //.attr('class', 'viz-tip sv-viz-tip')
-      //.attr('id', 'sv-tooltip')
-      //.html(function(d) {
       if (!d.country) {
-        return ['<h5>', d.id, '</h5><hr /><h6>No data available</h6>'].join('');
+        return ['<h3>', d.id, '</h3><hr /><h4>No data available</h4>'].join('');
       }
 
       var affected = d.stat ? 'Directly affected' : 'Not directly affected';
-      return ['<h5>', d.id, '</h5><h6>', Utility.prettyN(d.country.itu),
-              ' internet users</h6><h6 class="sv-affected-', d.stat, '">',
-              affected, '</h6><hr /><table><tbody><tr><td>', d.country.censorship,
+      return ['<h3>', d.id, '</h3><h4>', Utility.prettyN(d.country.itu),
+              ' internet users</h4><h4 class="sv-affected-', d.stat, '">',
+              affected, '</h4><hr /><table><tbody><tr><td>', d.country.censorship,
               '</td><td>Degree of government censorship</td></tr><tr><td>', d.country.surveillance,
               '</td><td>Degree of vulnerability to government surveillance</td></tr><tr><td>',
               '</tbody</table>',
@@ -385,13 +387,11 @@ $(document).on('ready', function() {
   };
 
   var econTranslation = {
-    1: 'Most Developed Economy',
-    2: 'Developed, Non-G7 Economy',
-    3: 'Emerging Economy (Upper)',
-    4: 'Emerging Economy (Middle)',
-    5: 'Emerging Economy (Lower)',
-    6: 'Developing Economy',
-    7: 'Least Developed Economy',
+    1: 'High Income OECD',
+    2: 'High Income non-OECD',
+    3: 'Upper Middle Income',
+    4: 'Lower Middle Income',
+    5: 'Low Income'
   };
 
   var GenderViz = function() {
@@ -631,51 +631,48 @@ $(document).on('ready', function() {
 
   function init(args, viz) {
 
-    // file that contains economic levels and regions
-    d3.json('bin/economic_regional.json', function(resp) {
+    var econ_region = args.economic_regional;
+    console.log(econ_region);
 
-      // create new data file containing what we need
-      var data = _.map(args.primary, function(d, name) {
-        var support = d['S11'], action = d['S12'];
-        return {
-          support: support,
-          action: action,
-          overall: (support + action) / 2,
-          scores: {
-            support: singleIndicatorScore(support),
-            action: singleIndicatorScore(action),
-            overall: singleIndicatorScore((support + action)/2)
-          },
-          diff: support - action,
-          name: name,
-          econ: resp[name].econ,
-          region: resp[name].region
-        };
-      });
-
-      // init gender viz
-      var gender = new GenderViz();
-      gender.$tooltip = $('#gn-overlay-tip');
-      gender.draw(data, viz);
-
-      var $toggles = $('#gn-ui-container');
-      if ($toggles.length) {
-        $toggles.on('click', 'button', function() {
-          var $target = $(this);
-          if ($target.hasClass('selected')) { return false; }
-
-          $toggles.find('.selected').removeClass('selected');
-          $target.addClass('selected');
-
-          gender.attribute = $target.attr('data-type');
-        });
-      }
-
-      // listen for page resize
-      Utility.resize.addDispatch('gender', gender.resize, gender);
-
-
+    // create new data file containing what we need
+    var data = _.map(args.primary, function(d, name) {
+      var support = d['S11'], action = d['S12'];
+      return {
+        support: support,
+        action: action,
+        overall: (support + action) / 2,
+        scores: {
+          support: singleIndicatorScore(support),
+          action: singleIndicatorScore(action),
+          overall: singleIndicatorScore((support + action)/2)
+        },
+        diff: support - action,
+        name: name,
+        econ: econ_region[name].econ,
+        region: econ_region[name].region
+      };
     });
+
+    // init gender viz
+    var gender = new GenderViz();
+    gender.$tooltip = $('#gn-overlay-tip');
+    gender.draw(data, viz);
+
+    var $toggles = $('#gn-ui-container');
+    if ($toggles.length) {
+      $toggles.on('click', 'button', function() {
+        var $target = $(this);
+        if ($target.hasClass('selected')) { return false; }
+
+        $toggles.find('.selected').removeClass('selected');
+        $target.addClass('selected');
+
+        gender.attribute = $target.attr('data-type');
+      });
+    }
+
+    // listen for page resize
+    Utility.resize.addDispatch('gender', gender.resize, gender);
   }
 
   function singleIndicatorScore(score) {

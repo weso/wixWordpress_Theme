@@ -19,8 +19,9 @@
 
     <div class="viz-container">
 
-      <div class="viz-ui sv-ui-container">
+      <div style="width: 100%; height: 100%;" id="censorship-and-surveillance"></div>
 
+      <div class="viz-ui sv-ui-container">
         <div class="sv-control sv-left-control" id="sv-type-toggle">
           <label>View data for</label>
           <div class="dbl-toggle">
@@ -29,19 +30,16 @@
           </div>
         </div>
 
-
-        <div class="sv-control" id="censorship-slider">
-          <div class="sv-control">
-            <h3>Degree of Government Censorship</h3>
-            <div class="sv-control-labels">
-              <label class="left">Low</label>
-              <label class="right">High</label>
-            </div>
-            <div class="slider"></div>
+        <div class="sv-control sv-slider-container" id="censorship-slider">
+          <h3>Degree of Government Censorship</h3>
+          <div class="sv-control-labels">
+            <label class="left">Low</label>
+            <label class="right">High</label>
           </div>
+          <div class="slider"></div>
         </div>
 
-        <div class="sv-control" id="surveillance-slider" style="display: none;">
+        <div class="sv-control sv-slider-container" id="surveillance-slider" style="display: none;">
           <h3>Degree of Vulnerability to Government Surveillance</h3>
           <div class="sv-control-labels">
             <label class="left">Low</label>
@@ -57,15 +55,15 @@
           <label>countries directly affected using these filters</label>
         </div>
 
-        <div class="tally-legend" style="display:none;">
-          <label class="sv-legend-false">Not directly affected</label>
-          <label class="sv-legend-true">Directly Affected</label>
-          <label class="sv-legend-na">No data</label>
-        </div>
 
       </div>
+      <div class="viz-overlay-tip sv-overlay-tip" id="sv-overlay-tip" style="display:none;"></div>
 
-      <div style="width: 100%; height: 100%;" id="censorship-and-surveillance"></div>
+      <div class="tally-legend">
+        <label class="sv-legend-true">Directly Affected</label>
+        <label class="sv-legend-false">Not directly affected</label>
+        <label class="sv-legend-na">No data</label>
+      </div>
 
     </div>
 

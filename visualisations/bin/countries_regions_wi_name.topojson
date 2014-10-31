@@ -166773,8 +166773,7 @@
                         "NAME_SORT": "Hong Kong SAR, China",
                         "REGION_WB": "East Asia & Pacific"
                     },
-                    "type": "MultiPolygon",
-                    "wi_name": "China"
+                    "type": "MultiPolygon"
                 },
                 {
                     "arcs": [
@@ -167803,8 +167802,7 @@
                         "NAME_SORT": "Indian Ocean Territories",
                         "REGION_WB": "East Asia & Pacific"
                     },
-                    "type": "MultiPolygon",
-                    "wi_name": "India"
+                    "type": "MultiPolygon"
                 },
                 {
                     "arcs": [
@@ -170460,8 +170458,7 @@
                         "NAME_SORT": "Korea, Dem. Rep.",
                         "REGION_WB": "East Asia & Pacific"
                     },
-                    "type": "MultiPolygon",
-                    "wi_name": "Republic Of Korea"
+                    "type": "MultiPolygon"
                 },
                 {
                     "arcs": [
@@ -171624,8 +171621,7 @@
                         "NAME_SORT": "Somaliland",
                         "REGION_WB": "Sub-Saharan Africa"
                     },
-                    "type": "Polygon",
-                    "wi_name": "Mali"
+                    "type": "Polygon"
                 },
                 {
                     "arcs": [
@@ -171645,8 +171641,7 @@
                         "NAME_SORT": "Somalia",
                         "REGION_WB": "Sub-Saharan Africa"
                     },
-                    "type": "Polygon",
-                    "wi_name": "Mali"
+                    "type": "Polygon"
                 },
                 {
                     "arcs": [
