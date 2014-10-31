@@ -1,40 +1,270 @@
-<main class=content> <input type=hidden id=path value="{{path}}"> <div class=accordion> <article> <header> <h1>63%</h1> <h2>privacy & surveillance</h2> </header> <footer> <i class="fa fa-unlock-alt fa-3x"></i> </footer> <section class=extra> <div class=extra-container-padding> <svg width=300 height=300> <defs> <pattern id=world patternunits=userSpaceOnUse width=280 height=280> <image xlink:href={{path}}/images/accordion/world.png x=0 y=0 width=280 height="280"> </pattern> <pattern id=world-gray patternunits=userSpaceOnUse width=280 height=280> <image xlink:href={{path}}/images/accordion/world_gray.png x=0 y=0 width=280 height="280"> </pattern> <filter id=shadow> <fegaussianblur in=SourceAlpha stddeviation="3"> <feoffset dx=0 dy=0 result="offsetblur"> <feflood flood-color="#333"> <fecomposite in2=offsetblur operator="in"> <femerge> <femergenode> <femergenode in="SourceGraphic"> </femerge> </filter> </defs> <circle cx=140 cy=140 r=140 stroke=black stroke-width=0 fill="url(#world-gray)"> <path d="M 140,140 L 140,0 A 140,140 0 1 1 37.94,235.83 Z" fill=url(#world) filter="url(#shadow)"> </svg> </div> <footer> <h1><strong>63%</strong> of countries</h1> <h2>do not have effective laws and practices to</h2> <h2>protect the privacy of online communications</h2> </footer> </section> </article> <article> <header> <h1>65%</h1> <h2>gender</h2> </header> <footer> <i class="fa fa-female fa-3x"></i> </footer> <section class=extra> <div class="infographic-percentage extra-container-padding"> <img class=infographic-icon alt="" src="{{path}}/images/accordion/woman.svg"> </div> <footer> <h1><strong>65%</strong> of countries</h1> <h2>are not doing enough to stop online</h2> <h2>violence against women</h2> </footer> </section> </article> <article> <header> <h1>60%</h1> <h2>empowerment</h2> </header> <footer> <i class="fa fa-trophy fa-3x"></i> </footer> <section class=extra> <div id=infographic-circles class="infographic-circles extra-container-padding"> <div class=model> <svg width=40 height=40> <defs> <filter id=innerShadow x0=-50% y0=-50% width=200% height=200%> <fegaussianblur in=SourceAlpha stddeviation=3 result=blur></fegaussianblur> <feoffset dy=2 dx=3></feoffset> <fecomposite in2=SourceAlpha operator=arithmetic k2=-1 k3=1 result=shadowDiff></fecomposite> <feflood flood-color=#0F5460 flood-opacity=0.75></feflood> <fecomposite in2=shadowDiff operator=in></fecomposite> <fecomposite in2=SourceGraphic operator=over result=firstfilter></fecomposite> <fegaussianblur in=firstfilter stddeviation=3 result=blur2></fegaussianblur> <feoffset dy=-2 dx=-3></feoffset> <fecomposite in2=firstfilter operator=arithmetic k2=-1 k3=1 result=shadowDiff></fecomposite> <feflood flood-color=#0F5460 flood-opacity=0.75></feflood> <fecomposite in2=shadowDiff operator=in></fecomposite> <fecomposite in2=firstfilter operator=over></fecomposite> </filter> </defs> <circle cx=50% cy=50% r=50% fill=#01839A filter="url(#innerShadow)"> <circle cx=50% cy=50% r=50% fill=#FACC2E class="circle"> </svg> <p class=country></p> </div> </div> <footer> <h1><strong>60%</strong> of countries</h1> <h2>do not have effective laws and practices to</h2> <h2>protect the privacy of online communications</h2> </footer> </section> </article> <article> <header> <h1>43%</h1> <h2>net neutrality</h2> </header> <footer> <i class="fa fa-university fa-3x"></i> </footer> <section class=extra> <div id=map class=extra-container></div> <footer> <h1><strong>43%</strong> of countries</h1> <h2>do not have effective laws and practices to</h2> <h2>protect the privacy of online communications</h2> </footer> </section> </article> </div> {{>by}} <div class=container> <h1 class=text-center>{{#labels}}{{home_title}}{{/labels}}</h1> <h2>{{#labels}}{{home_description}}{{/labels}} <a href={{host}}/about class=read-more>{{#labels}}{{read_more}}{{/labels}} <span>&#187;</span></a></h2> <!-- GRID --> <div class=grid-items> <a href={{host}}/about class=grid-item> <i class="fa fa-play fa-3x"></i> <h1>{{#labels}}{{home_video_box}}{{/labels}}</h1> </a> <a href={{host}}/report class=grid-item> <i class="fa fa-file-text fa-3x"></i> <h1>{{#labels}}{{home_report_box}}{{/labels}}</h1> </a> <a href={{host}}/data class=grid-item> <i class="fa fa-line-chart fa-3x"></i> <h1>{{#labels}}{{home_data_box}}{{/labels}}</h1> </a> <div class="grid-item grid-item-full illustrations"> <section class=illustration-buttons> <a href=javascript:void(0); class="circle selected">1</a> <a href=javascript:void(0); class=circle>2</a> <a href=javascript:void(0); class=circle>3</a> </section> <img src="{{path}}/images/illustrations/illustration1.png"> <img src="{{path}}/images/illustrations/illustration2.png"> <img src="{{path}}/images/illustrations/illustration3.png"> </div> <div class="grid-item grid-item-big grid-item-taller"> <h1>{{#labels}}{{home_top_five}}{{/labels}}</h1> <table class="ranking sortable"> <thead> <tr class=sorter role=row> <th data-sort-type=text><a class=empty data-type=sorter></a>Country <th data-sort-type=number><a class=empty data-type=sorter></a>Rank <th data-sort-type=number><a class=empty data-type=sorter></a>Universal Access <th data-sort-type=number><a class=empty data-type=sorter></a>Relevant content & use <th data-sort-type=number><a class=empty data-type=sorter></a>Freedom & Openness <th data-sort-type=number><a class=empty data-type=sorter></a>Empowerment   <tbody>  </table> <p class=text-right> <a href={{host}}/data class=read-more>{{#labels}}{{home_view_full_list}}{{/labels}} <span>&#187;</span></a> </p> </div> <div class="grid-item grid-item-taller follow-box"> <div class=sign-up> <i class="fa fa-envelope fa-3x"></i> <h1>{{#labels}}{{home_follow_us}}{{/labels}}</h1> <p>{{#labels}}{{home_follow_us_description}}{{/labels}}</p> <div class=newsletter-bar> <div class=newsletter-and-submit> <input type=email placeholder="Enter your email account"> <button type=submit> {{#labels}}{{home_sign_up}}{{/labels}} </button> </div> </div> </div> <div class=links> <ul> <li><a href={{host}}/feed><i class="fa fa-rss fa-3x"></i></a></li> <li><a href=https://twitter.com/webfoundation><i class="fa fa-twitter fa-3x"></i></a></li> <li><a href=https://www.facebook.com/webfoundation><i class="fa fa-facebook fa-3x"></i></a></li> </ul> </div> </div> <div class="line-behind-text news-header"> <h3>{{#labels}}{{home_news}}{{/labels}}</h3> </div> <div> <div class="grid-item news"> <header> {{{data.news.0.title}}} </header> <p class=content> {{{data.news.0.content}}} </p> <p class="text-right read-more"> <a href={{data.news.0.link}}>{{#labels}}{{read_more}}{{/labels}} <span>&#187;</span></a> </p> </div> <div class="grid-item tweet"> <header> <a href=https://twitter.com/{{data.tweets.0.account.displayName}}> <i class="fa fa-twitter fa-3x"></i> </a> <a href=https://twitter.com/{{data.tweets.0.account.displayName}} class=name> {{data.tweets.0.account.name}} </a> <a href=https://twitter.com/{{data.tweets.0.account.displayName}} class=account> @{{data.tweets.0.account.displayName}} </a> </header> <p class=content> {{{data.tweets.0.content}}} </p> </div> <div class="grid-item news"> <header> {{{data.news.1.title}}} </header> <p class=content> {{{data.news.1.content}}} </p> <p class="text-right read-more"> <a href={{data.news.1.link}}>{{#labels}}{{read_more}}{{/labels}} <span>&#187;</span></a> </p> </div> <div class="grid-item tweet"> <header> <a href=https://twitter.com/{{data.tweets.1.account.displayName}}> <i class="fa fa-twitter fa-3x"></i> </a> <a href=https://twitter.com/{{data.tweets.1.account.displayName}} class=name> {{data.tweets.1.account.name}} </a> <a href=https://twitter.com/{{data.tweets.1.account.displayName}} class=account> @{{data.tweets.1.account.displayName}} </a> </header> <p class=content> {{{data.tweets.1.content}}} </p> </div> <div class="grid-item news"> <header> {{{data.news.2.title}}} </header> <p class=content> {{{data.news.2.content}}} </p> <p class="text-right read-more"> <a href={{data.news.2.link}}>{{#labels}}{{read_more}}{{/labels}} <span>&#187;</span></a> </p> </div> <div class="grid-item tweet"> <header> <a href=https://twitter.com/{{data.tweets.2.account.displayName}}> <i class="fa fa-twitter fa-3x"></i> </a> <a href=https://twitter.com/{{data.tweets.2.account.displayName}} class=name> {{data.tweets.2.account.name}} </a> <a href=https://twitter.com/{{data.tweets.2.account.displayName}} class=account> @{{data.tweets.2.account.displayName}} </a> </header> <p class=content> {{{data.tweets.2.content}}} </p> </div> </div> </div> </div> <script src={{path}}/scripts/settings.js></script> <script src={{path}}/scripts/index.js></script> <script>setTimeout(function () {
-    var map = document.getElementById("map")
-
-    console.log(map.offsetHeight)
-    var countries = [
-      {
-        "code": "ESP",
-        "value": 1
-      },
-      {
-        "code": "FRA",
-        "value": 2
-      },
-      {
-        "code": "GBR",
-        "value": 3
-      },
-      {
-        "code": "ITA",
-        "value": 4
-      },
-      {
-        "code": "IRL",
-        "value": 5
-      }];
-
-      var map = wesCountry.maps.createMap({
-        container: '#map',
-        "borderWidth": 0,
-        borderColour: "#f93845",
-        countries: countries,
-        download: false,
-        width: 500,
-        height: 200,
-        zoom: false,
-        backgroundColour: "transparent",
-        landColour: "#FC6A74",
-        colourRange: ["#E98990", "#C20310"]
-      });
-    }, 1000);</script> </main>
+<main class="content">
+  <input type="hidden" id="path" value="{{path}}" />
+  <div class="accordion">
+    <article id="tab1">
+      <header>
+        <h1><strong class="percentage"></strong></h1>
+        <h2>privacy & surveillance</h2>
+      </header>
+      <footer>
+        <i class="fa fa-unlock-alt fa-3x"></i>
+      </footer>
+      <section class="extra">
+        <div class="extra-container-padding">
+          <svg id="world" width="280" height="280" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" version="1.1" baseProfile="full">
+            <defs>
+              <pattern id="world-colour" patternUnits="userSpaceOnUse" width="100%" height="100%">
+                  <image xlink:href="{{path}}/images/accordion/world.png" x="0" y="0" width="100%" height="100%" />
+              </pattern>
+              <pattern id="world-gray" patternUnits="userSpaceOnUse" width="100%" height="100%">
+                  <image xlink:href="{{path}}/images/accordion/world_gray.png" x="0" y="0" width="100%" height="100%" />
+              </pattern>
+              <filter id="shadow">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+                <feOffset dx="0" dy="0" result="offsetblur"/>
+                <feFlood flood-color="#333"/>
+                <feComposite in2="offsetblur" operator="in"/>
+                <feMerge>
+                <feMergeNode/>
+                <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            <circle cx="50%" cy="50%" r="50%" stroke="black" stroke-width="0" fill="url(#world-gray)" />
+            <path id="world-pie" d=""
+              fill="url(#world-colour)"
+              filter="url(#shadow)" />
+          </svg>
+        </div>
+        <footer>
+          <h1><strong class="percentage"></strong> of countries</h1>
+          <h2>do not have effective laws and practices to</h2>
+          <h2>protect the privacy of online communications</h2>
+        </footer>
+      </section>
+    </article>
+    <article id="tab2">
+      <header>
+        <h1><strong class="percentage"></strong></h1>
+        <h2>gender</h2>
+      </header>
+      <footer>
+        <i class="fa fa-female fa-3x"></i>
+      </footer>
+      <section class="extra">
+        <div class="infographic-percentage extra-container-padding">
+          <img class="infographic-icon" alt="" src="{{path}}/images/accordion/woman.svg" />
+        </div>
+        <footer>
+          <h1><strong class="percentage"></strong> of countries</h1>
+          <h2>are not doing enough to stop online</h2>
+          <h2>violence against women</h2>
+        </footer>
+      </section>
+    </article>
+    <article id="tab3">
+      <header>
+        <h1><strong class="percentage"></strong></h1>
+        <h2>empowerment</h2>
+      </header>
+      <footer>
+        <i class="fa fa-trophy fa-3x"></i>
+      </footer>
+      <section class="extra">
+        <div id="infographic-circles" class="infographic-circles extra-container-padding">
+          <div class="model">
+            <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" version="1.1" baseProfile="full">
+              <defs>
+            	</defs>
+              <circle cx="50%" cy="50%" r="50%" fill="#00758A" />
+              <circle cx="50%" cy="50%" r="50%" fill="#FACC2E" class="circle" />
+            </svg>
+            <p class="country"></p>
+          </div>
+        </div>
+        <footer>
+          <h1><strong class="percentage"></strong> of countries</h1>
+          <h2>do not have effective laws and practices to</h2>
+          <h2>protect the privacy of online communications</h2>
+        </footer>
+      </section>
+    </article>
+    <article id="tab4">
+      <header>
+        <h1><strong class="percentage"></strong></h1>
+        <h2>net neutrality</h2>
+      </header>
+      <footer>
+        <i class="fa fa-university fa-3x"></i>
+      </footer>
+      <section class="extra">
+        <div id="map" class="extra-container"></div>
+        <footer>
+          <h1><strong class="percentage"></strong> of countries</h1>
+          <h2>do not have effective laws and practices to</h2>
+          <h2>protect the privacy of online communications</h2>
+        </footer>
+      </section>
+    </article>
+  </div>
+  {{>by}}
+  <div class="container">
+    <h1 class="text-center">{{#labels}}{{home_title}}{{/labels}}</h1>
+    <h2>{{#labels}}{{home_description}}{{/labels}} <a href="{{host}}/about" class="read-more">{{#labels}}{{read_more}}{{/labels}} <span>&#187;</span></a></h2>
+    <!-- GRID -->
+    <div class="grid-items">
+      <a href="{{host}}/about" class="grid-item">
+        <i class="fa fa-play fa-3x"></i>
+        <h1>{{#labels}}{{home_video_box}}{{/labels}}</h1>
+      </a>
+      <a href="{{host}}/report" class="grid-item">
+        <i class="fa fa-file-text fa-3x"></i>
+        <h1>{{#labels}}{{home_report_box}}{{/labels}}</h1>
+      </a>
+      <a href="{{host}}/data" class="grid-item">
+        <i class="fa fa-line-chart fa-3x"></i>
+        <h1>{{#labels}}{{home_data_box}}{{/labels}}</h1>
+      </a>
+      <div class="grid-item grid-item-full illustrations">
+        <section class="illustration-buttons">
+          <a href="javascript:void(0);" class="circle selected">1</a>
+          <a href="javascript:void(0);" class="circle">2</a>
+          <a href="javascript:void(0);" class="circle">3</a>
+        </section>
+        <img src="{{path}}/images/illustrations/illustration1.png" />
+        <img src="{{path}}/images/illustrations/illustration2.png" />
+        <img src="{{path}}/images/illustrations/illustration3.png" />
+      </div>
+      <div class="grid-item grid-item-big grid-item-taller">
+        <h1>{{#labels}}{{home_top_five}}{{/labels}}</h1>
+        <table class="ranking sortable">
+          <thead>
+            <tr class="sorter" role="row">
+              <th data-sort-type="text"><a class="empty" data-type="sorter"></a>Country</th>
+              <th data-sort-type="number"><a class="empty" data-type="sorter"></a>Rank</th>
+              <th data-sort-type="number"><a class="empty" data-type="sorter"></a>Universal Access</th>
+              <th data-sort-type="number"><a class="empty" data-type="sorter"></a>Relevant content & use</th>
+              <th data-sort-type="number"><a class="empty" data-type="sorter"></a>Freedom & Openness</th>
+              <th data-sort-type="number"><a class="empty" data-type="sorter"></a>Empowerment</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+        <p class="text-right">
+          <a href="{{host}}/data" class="read-more">{{#labels}}{{home_view_full_list}}{{/labels}} <span>&#187;</span></a>
+        </p>
+      </div>
+      <div class="grid-item grid-item-taller follow-box">
+        <div class="sign-up">
+          <i class="fa fa-envelope fa-3x"></i>
+          <h1>{{#labels}}{{home_follow_us}}{{/labels}}</h1>
+          <p>{{#labels}}{{home_follow_us_description}}{{/labels}}</p>
+          <div class="newsletter-bar">
+            <div class="newsletter-and-submit">
+              <input type="email" placeholder="Enter your email account" />
+              <button type="submit">
+                {{#labels}}{{home_sign_up}}{{/labels}}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="links">
+          <ul>
+            <li><a href="{{host}}/feed"><i class="fa fa-rss fa-3x"></i></a></li>
+            <li><a href="https://twitter.com/webfoundation"><i class="fa fa-twitter fa-3x"></i></a></li>
+            <li><a href="https://www.facebook.com/webfoundation"><i class="fa fa-facebook fa-3x"></i></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="line-behind-text news-header">
+        <h3>{{#labels}}{{home_news}}{{/labels}}</h3>
+      </div>
+      <div>
+        <div class="grid-item news">
+          <header>
+            {{{data.news.0.title}}}
+          </header>
+          <p class="content">
+            {{{data.news.0.content}}}
+          </p>
+          <p class="text-right read-more">
+            <a href="{{data.news.0.link}}">{{#labels}}{{read_more}}{{/labels}} <span>&#187;</span></a>
+          </p>
+        </div>
+        <div class="grid-item tweet">
+          <header>
+            <a href="https://twitter.com/{{data.tweets.0.account.displayName}}">
+              <i class="fa fa-twitter fa-3x"></i>
+            </a>
+            <a href="https://twitter.com/{{data.tweets.0.account.displayName}}" class="name">
+              {{data.tweets.0.account.name}}
+            </a>
+            <a href="https://twitter.com/{{data.tweets.0.account.displayName}}" class="account">
+              @{{data.tweets.0.account.displayName}}
+            </a>
+          </header>
+          <p class="content">
+            {{{data.tweets.0.content}}}
+          </p>
+        </div>
+        <div class="grid-item news">
+          <header>
+            {{{data.news.1.title}}}
+          </header>
+          <p class="content">
+            {{{data.news.1.content}}}
+          </p>
+          <p class="text-right read-more">
+            <a href="{{data.news.1.link}}">{{#labels}}{{read_more}}{{/labels}} <span>&#187;</span></a>
+          </p>
+        </div>
+        <div class="grid-item tweet">
+          <header>
+            <a href="https://twitter.com/{{data.tweets.1.account.displayName}}">
+              <i class="fa fa-twitter fa-3x"></i>
+            </a>
+            <a href="https://twitter.com/{{data.tweets.1.account.displayName}}" class="name">
+              {{data.tweets.1.account.name}}
+            </a>
+            <a href="https://twitter.com/{{data.tweets.1.account.displayName}}" class="account">
+              @{{data.tweets.1.account.displayName}}
+            </a>
+          </header>
+          <p class="content">
+            {{{data.tweets.1.content}}}
+          </p>
+        </div>
+        <div class="grid-item news">
+          <header>
+            {{{data.news.2.title}}}
+          </header>
+          <p class="content">
+            {{{data.news.2.content}}}
+          </p>
+          <p class="text-right read-more">
+            <a href="{{data.news.2.link}}">{{#labels}}{{read_more}}{{/labels}} <span>&#187;</span></a>
+          </p>
+        </div>
+        <div class="grid-item tweet">
+          <header>
+            <a href="https://twitter.com/{{data.tweets.2.account.displayName}}">
+              <i class="fa fa-twitter fa-3x"></i>
+            </a>
+            <a href="https://twitter.com/{{data.tweets.2.account.displayName}}" class="name">
+              {{data.tweets.2.account.name}}
+            </a>
+            <a href="https://twitter.com/{{data.tweets.2.account.displayName}}" class="account">
+              @{{data.tweets.2.account.displayName}}
+            </a>
+          </header>
+          <p class="content">
+            {{{data.tweets.2.content}}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="{{path}}/scripts/settings.js"></script>
+  <script src="{{path}}/scripts/index.js"></script>
+</main>

@@ -1,5 +1,5 @@
 (function() {
-  var accordionCallbacks, accordionTabs, button, buttons, container, count, element, empowermentCallback, empowermentIndicator, genderTabCallback, host, i, icon, iconSrc, illustrations, img, p, percentage, row, tab, url, year, _accordionTabs, _i, _j, _k, _l, _len, _len1, _m, _ref;
+  var accordionCallbacks, accordionTabs, button, buttons, count, empowermentCallback, genderTabCallback, host, i, illustrations, indicator1, indicator2, indicator3, indicator4, interval, neutralityTabCallback, renderEmpowermentTab, renderGenderTab, renderNeutralityTab, renderPrivacyTab, renderTable, setPercentage, tab, url, _accordionTabs, _i, _j, _k, _len, _len1, _ref;
 
   illustrations = document.querySelectorAll(".illustrations img");
 
@@ -24,6 +24,17 @@
     };
     count++;
   }
+
+  neutralityTabCallback = function() {
+    var path, paths, _j, _len1, _results;
+    paths = document.querySelectorAll("#map .land-group");
+    _results = [];
+    for (_j = 0, _len1 = paths.length; _j < _len1; _j++) {
+      path = paths[_j];
+      _results.push(path.style.opacity = 0.9);
+    }
+    return _results;
+  };
 
   genderTabCallback = function() {
     var activeIcons, icon, _j, _len1, _results;
@@ -68,7 +79,7 @@
 
   accordionTabs = [];
 
-  accordionCallbacks = [null, empowermentCallback, genderTabCallback, null];
+  accordionCallbacks = [neutralityTabCallback, empowermentCallback, genderTabCallback, null];
 
   for (_j = 0, _len1 = _accordionTabs.length; _j < _len1; _j++) {
     tab = _accordionTabs[_j];
@@ -77,13 +88,13 @@
 
   for (i = _k = 0, _ref = accordionTabs.length - 1; 0 <= _ref ? _k <= _ref : _k >= _ref; i = 0 <= _ref ? ++_k : --_k) {
     tab = accordionTabs[i];
-    tab.closedPosition = tab.style.right;
+    tab.closedPosition = i === accordionTabs.length - 1 ? 100 - i * 10 : 0;
     tab.openedPosition = (accordionTabs.length - 1 - i) * 10;
     tab.opened = i === accordionTabs.length - 1;
     tab.tabs = accordionTabs;
     tab.index = i;
     tab.close = function() {
-      this.style.right = this.closedPosition;
+      this.style.right = this.closedPosition + "%";
       return this.opened = false;
     };
     tab.closeWithIncrement = function(increment) {
@@ -123,110 +134,66 @@
         return accordionCallbacks[this.index].call();
       }
     };
-  }
-
-  container = document.querySelector(".infographic-percentage");
-
-  icon = document.querySelector(".infographic-icon");
-
-  iconSrc = icon.src;
-
-  percentage = 65;
-
-  count = 1;
-
-  for (row = _l = 0; _l <= 3; row = ++_l) {
-    p = document.createElement("p");
-    container.appendChild(p);
-    for (element = _m = 0; _m <= 24; element = ++_m) {
-      img = document.createElement("img");
-      img.src = iconSrc;
-      p.appendChild(img);
-      if (count <= percentage) {
-        img.className = "active";
-      }
-      count++;
-    }
-  }
-
-  year = 2013;
-
-  empowermentIndicator = "EMPOWERMENT";
-
-  host = this.settings.server.url;
-
-  url = "" + host + "/observations/" + empowermentIndicator + "/ALL/" + year;
-
-  if (this.settings.server.method === "JSONP") {
-    url += "?callback=getEmpowermentObservationsCallback";
-    this.processJSONP(url);
-  } else {
-    this.processAJAX(url, getEmpowermentObservationsCallback);
-  }
-
-  this.getEmpowermentObservationsCallback = function(data) {
-    var circle, circleSize, newCircle, observation, observations, r, size, sorter, svg, value, valueCircle, _len2, _n, _ref1, _results;
-    if (!data.success) {
-      return;
-    }
-    observations = data.data;
-    sorter = function(a, b) {
-      var a_area, b_area;
-      a_area = a.area;
-      b_area = b.area;
-      if (a_area < b_area) {
-        return -1;
-      }
-      if (a_area > b_area) {
-        return 1;
-      }
-      return 0;
+    tab.onmouseenter = function() {
+      var position;
+      this.rememberedPosition = this.style.right;
+      position = this.opened ? this.openedPosition : this.closedPosition - 1;
+      return this.style.right = position + "%";
     };
-    observations.sort(sorter);
-    circle = document.querySelector(".infographic-circles .model");
-    container = document.getElementById("infographic-circles");
-    circleSize = container.offsetWidth * 0.8 / 24;
+    tab.onmouseout = function() {
+      if (!this.opened) {
+        return this.style.right = this.rememberedPosition;
+      }
+    };
+  }
+
+  interval = setInterval(function() {
+    var number1, number2, _l, _results;
     _results = [];
-    for (_n = 0, _len2 = observations.length; _n < _len2; _n++) {
-      observation = observations[_n];
-      newCircle = circle.cloneNode(true);
-      newCircle.setAttribute("class", "circle");
-      svg = newCircle.querySelector("svg");
-      svg.setAttribute("width", circleSize);
-      svg.setAttribute("height", circleSize);
-      container.appendChild(newCircle);
-      valueCircle = newCircle.querySelector(".circle");
-      size = valueCircle.getBoundingClientRect().width;
-      value = observation.values[0];
-      r = size * value / 100;
-      valueCircle.setAttribute("data-r", "" + r);
-      valueCircle.setAttribute("r", "0");
-      _results.push((_ref1 = newCircle.querySelector(".country")) != null ? _ref1.innerHTML = observation.area : void 0);
+    for (i = _l = 0; _l <= 4; i = ++_l) {
+      number1 = Math.floor(Math.random() * 10);
+      number2 = Math.floor(Math.random() * 10);
+      _results.push(setPercentage("#tab" + i, "" + number1 + number2));
     }
     return _results;
-  };
+  }, 40);
 
-  year = "2013";
+  indicator1 = "INDEX";
+
+  indicator2 = "INDEX";
+
+  indicator3 = "INDEX";
+
+  indicator4 = "INDEX";
 
   host = this.settings.server.url;
 
-  url = "" + host + "/rankings/" + year;
+  url = "" + host + "/home/" + indicator1 + "/" + indicator2 + "/" + indicator3 + "/" + indicator4;
 
   if (this.settings.server.method === "JSONP") {
-    url += "?callback=getRankingCallback";
+    url += "?callback=getDataCallback";
     this.processJSONP(url);
   } else {
-    this.processAJAX(url, getRankingCallback);
+    this.processAJAX(url, getDataCallback);
   }
 
-  this.getRankingCallback = function(data) {
-    var area, country, empowerment, flag, freedom_openness, index, path, rank, relevant_content, tableBody, td, tr, universal_access, value, values, _len2, _n, _ref1;
+  this.getDataCallback = function(data) {
+    clearInterval(interval);
+    renderTable(data.rankings);
+    renderNeutralityTab(data.observations1, data.percentage1);
+    renderEmpowermentTab(data.observations2, data.percentage2);
+    renderGenderTab(data.percentage3);
+    return renderPrivacyTab(data.percentage4);
+  };
+
+  renderTable = function(data) {
+    var area, country, empowerment, flag, freedom_openness, index, p, path, rank, relevant_content, tableBody, td, tr, universal_access, value, values, _l, _len2, _ref1;
     tableBody = document.querySelector("table.ranking tbody");
     values = data.values ? data.values : [];
     path = (_ref1 = document.getElementById("path")) != null ? _ref1.value : void 0;
     count = 0;
-    for (_n = 0, _len2 = values.length; _n < _len2; _n++) {
-      value = values[_n];
+    for (_l = 0, _len2 = values.length; _l < _len2; _l++) {
+      value = values[_l];
       count++;
       if (count > 5) {
         break;
@@ -273,6 +240,141 @@
       td.innerHTML = empowerment.toFixed(2);
     }
     return wesCountry.table.sort.apply();
+  };
+
+  renderNeutralityTab = function(countries, percentage) {
+    var path, paths, _l, _len2, _results;
+    setPercentage("#tab1", percentage);
+    wesCountry.maps.createMap({
+      container: '#map',
+      "borderWidth": 0,
+      borderColour: "#f93845",
+      countries: countries,
+      download: false,
+      width: 500,
+      height: 200,
+      zoom: false,
+      backgroundColour: "transparent",
+      landColour: "#FC6A74",
+      colourRange: ["#E98990", "#C20310"]
+    });
+    paths = document.querySelectorAll("#map .land-group");
+    _results = [];
+    for (_l = 0, _len2 = paths.length; _l < _len2; _l++) {
+      path = paths[_l];
+      _results.push(path.style.opacity = 0.3);
+    }
+    return _results;
+  };
+
+  renderEmpowermentTab = function(observations, percentage) {
+    var circle, circleSize, container, newCircle, observation, r, size, sorter, svg, value, valueCircle, _l, _len2, _ref1, _results;
+    setPercentage("#tab2", percentage);
+    sorter = function(a, b) {
+      var a_area, b_area;
+      a_area = a.area;
+      b_area = b.area;
+      if (a_area < b_area) {
+        return -1;
+      }
+      if (a_area > b_area) {
+        return 1;
+      }
+      return 0;
+    };
+    observations.sort(sorter);
+    circle = document.querySelector(".infographic-circles .model");
+    container = document.getElementById("infographic-circles");
+    circleSize = container.offsetWidth * 0.8 / 24;
+    _results = [];
+    for (_l = 0, _len2 = observations.length; _l < _len2; _l++) {
+      observation = observations[_l];
+      newCircle = circle.cloneNode(true);
+      newCircle.setAttribute("class", "circle");
+      svg = newCircle.querySelector("svg");
+      svg.setAttribute("width", circleSize);
+      svg.setAttribute("height", circleSize);
+      container.appendChild(newCircle);
+      valueCircle = newCircle.querySelector(".circle");
+      size = valueCircle.getBoundingClientRect().width;
+      value = observation.values[0];
+      r = size * value / 100;
+      valueCircle.setAttribute("data-r", "" + r);
+      valueCircle.setAttribute("r", "0");
+      _results.push((_ref1 = newCircle.querySelector(".country")) != null ? _ref1.innerHTML = observation.area : void 0);
+    }
+    return _results;
+  };
+
+  renderGenderTab = function(percentage) {
+    var container, element, icon, iconSrc, img, p, row, _l, _results;
+    setPercentage("#tab3", percentage);
+    container = document.querySelector(".infographic-percentage");
+    icon = document.querySelector(".infographic-icon");
+    iconSrc = icon.src;
+    count = 1;
+    _results = [];
+    for (row = _l = 0; _l <= 3; row = ++_l) {
+      p = document.createElement("p");
+      container.appendChild(p);
+      _results.push((function() {
+        var _m, _results1;
+        _results1 = [];
+        for (element = _m = 0; _m <= 24; element = ++_m) {
+          img = document.createElement("img");
+          img.src = iconSrc;
+          p.appendChild(img);
+          if (count <= percentage) {
+            img.className = "active";
+          }
+          _results1.push(count++);
+        }
+        return _results1;
+      })());
+    }
+    return _results;
+  };
+
+  renderPrivacyTab = function(percentage) {
+    var angle, cx, cy, increaseAngle, maxAngle, pie, radius, svg, total, width, x1, y1, _l, _results;
+    setPercentage("#tab4", percentage);
+    percentage = 100 - percentage;
+    svg = document.getElementById("world");
+    pie = document.getElementById("world-pie");
+    width = svg.width.baseVal.value;
+    cx = width / 2;
+    cy = width / 2;
+    radius = width / 2;
+    x1 = width / 2;
+    y1 = 0;
+    total = 100;
+    maxAngle = Math.abs(percentage / total * Math.PI * 2);
+    _results = [];
+    for (angle = _l = 0; _l <= maxAngle; angle = _l += 0.05) {
+      increaseAngle = function(angle, time) {
+        return setTimeout(function() {
+          var big, d, x2, y2;
+          x2 = cx + radius * Math.sin(angle);
+          y2 = cy - radius * Math.cos(angle);
+          big = percentage >= 50 ? 1 : 0;
+          d = "M " + cx + "," + cy + " L " + x1 + "," + y1 + " A " + radius + "," + radius + " 0 " + big + " 1 " + x2 + "," + y2 + " Z";
+          return pie.setAttribute("d", d);
+        }, time);
+      };
+      _results.push(increaseAngle(angle, angle * 150));
+    }
+    return _results;
+  };
+
+  setPercentage = function(article, percentage) {
+    var label, labels, _l, _len2, _results;
+    labels = document.querySelectorAll("" + article + " strong.percentage");
+    _results = [];
+    for (_l = 0, _len2 = labels.length; _l < _len2; _l++) {
+      label = labels[_l];
+      _results.push(label.innerHTML = "" + percentage + "%");
+    }
+    return _results;
   };
 
 }).call(this);

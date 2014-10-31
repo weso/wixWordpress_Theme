@@ -1,6 +1,44 @@
-<footer class=footer> <div class=footer-logo> <a href="http://www.webfoundation.org/" target=_blank title="link opens in new window"> <img src={{path}}/images/wwwf-gray.png alt="World Wide Web Foundation"> </a> </div> <div class=footer-links> <ul> <li><h3>{{#labels}}{{footer_content}}{{/labels}}</h3></li> <li><a href={{host}}/report>{{#labels}}{{footer_report}}{{/labels}}</a></li> <li><a href={{host}}/data>{{#labels}}{{footer_data}}{{/labels}}</a></li> <li><a href={{host}}/blog>{{#labels}}{{footer_blog}}{{/labels}}</a></li> <li><a href={{host}}/media>{{#labels}}{{footer_media_centre}}{{/labels}}</a></li> <li><a href={{host}}/about>{{#labels}}{{footer_about}}{{/labels}}</a></li> </ul> <ul> <li><h3>{{#labels}}{{footer_follow_us}}{{/labels}}</h3></li> <li><a href={{host}}/contact><i class="fa fa-envelope fa-lg"></i> {{#labels}}{{footer_contact}}{{/labels}}</a></li> <li><a href=https://www.facebook.com/webfoundation><i class="fa fa-facebook fa-lg"></i> {{#labels}}{{footer_facebook}}{{/labels}}</a></li> <li><a href=https://twitter.com/webfoundation><i class="fa fa-twitter fa-lg"></i> {{#labels}}{{footer_twitter}}{{/labels}}</a></li> </ul> <ul> <li><h3>{{#labels}}{{footer_legal}}{{/labels}}</h3></li> <li><a href="{{host}}/terms-of-use/">{{#labels}}{{footer_terms_of_use}}{{/labels}}</a></li> <li><a href={{host}}/privacy>{{#labels}}{{footer_privacy_policy}}{{/labels}}</a></li> </ul> </div> <hr> <p>{{#labels}}{{{footer_copyright}}}{{/labels}}</p> </footer> <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. --> <script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+    <footer class="footer">
+      <div class="footer-logo">
+        <a href="http://www.webfoundation.org/" target="_blank" title="link opens in new window">
+          <img src="{{path}}/images/wwwf-gray.png" alt="World Wide Web Foundation">
+        </a>
+      </div>
+      <div class="footer-links">
+        <ul>
+          <li><h3>{{#labels}}{{footer_content}}{{/labels}}</h3></li>
+          <li><a href="{{host}}/report">{{#labels}}{{footer_report}}{{/labels}}</a></li>
+          <li><a href="{{host}}/data">{{#labels}}{{footer_data}}{{/labels}}</a></li>
+          <li><a href="{{host}}/blog">{{#labels}}{{footer_blog}}{{/labels}}</a></li>
+          <li><a href="{{host}}/media">{{#labels}}{{footer_media_centre}}{{/labels}}</a></li>
+          <li><a href="{{host}}/about">{{#labels}}{{footer_about}}{{/labels}}</a></li>
+        </ul>
+        <ul>
+          <li><h3>{{#labels}}{{footer_follow_us}}{{/labels}}</h3></li>
+          <li><a href="{{host}}/contact"><i class="fa fa-envelope fa-lg"></i> {{#labels}}{{footer_contact}}{{/labels}}</a></li>
+          <li><a href="https://www.facebook.com/webfoundation"><i class="fa fa-facebook fa-lg"></i> {{#labels}}{{footer_facebook}}{{/labels}}</a></li>
+          <li><a href="https://twitter.com/webfoundation"><i class="fa fa-twitter fa-lg"></i> {{#labels}}{{footer_twitter}}{{/labels}}</a></li>
+        </ul>
+        <ul>
+          <li><h3>{{#labels}}{{footer_legal}}{{/labels}}</h3></li>
+          <li><a href="{{host}}/terms-of-use/">{{#labels}}{{footer_terms_of_use}}{{/labels}}</a></li>
+          <li><a href="{{host}}/privacy">{{#labels}}{{footer_privacy_policy}}{{/labels}}</a></li>
+        </ul>
+      </div>
+
+      <hr>
+
+      <p>{{#labels}}{{{footer_copyright}}}{{/labels}}</p>
+    </footer>
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
       function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
       e=o.createElement(i);r=o.getElementsByTagName(i)[0];
       e.src='//www.google-analytics.com/analytics.js';
       r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-XXXXX-X');ga('send','pageview');</script>  
+      ga('create','UA-XXXXX-X');ga('send','pageview');
+    </script>
+</body>
+</html>
