@@ -320,6 +320,7 @@ article ul.tags {
 
 /* ARTICLE */
 .right-content article, article.entry-article, .articles article {
+  font-family: "Merriweather", serif;
   text-align: left; }
   .right-content article:after, article.entry-article:after, .articles article:after {
     content: "";
@@ -398,7 +399,7 @@ article ul.tags {
   .right-content article p, article.entry-article p, .articles article p {
     font-family: "Merriweather", serif;
     line-height: 1.6em;
-    font-size: .9em;
+    font-size: 1em;
     margin-bottom: 1.5em; }
     .right-content article p span, article.entry-article p span, .articles article p span {
       font-family: "Merriweather Sans", sans-serif;
@@ -724,7 +725,8 @@ div.accordion {
     right: 0;
     overflow: hidden;
     transition-property: right;
-    transition-duration: 0.5s; }
+    transition-duration: 0.5s;
+    cursor: pointer; }
     div.accordion article section.extra {
       position: relative;
       text-align: left;
@@ -756,6 +758,10 @@ div.accordion {
         @media (min-width: 80em) {
           div.accordion article section.extra .infographic-circles p {
             font-size: 1em; } }
+      div.accordion article section.extra #map .land-group {
+        transition-property: opacity;
+        transition-delay: 0.1s;
+        transition-duration: 0.8s; }
       div.accordion article section.extra .infographic-percentage p {
         overflow: hidden;
         margin-bottom: 1em; }
@@ -1274,10 +1280,42 @@ ul.about-tags li:nth-child(4) a {
 ul.about-tags li.active:nth-child(4) a {
   border-color: #7e3e69;
   border-bottom-color: #4b253e; }
+ul.about-tags li:nth-child(5) a {
+  background-color: #ff761c; }
+ul.about-tags li.active:nth-child(5) a {
+  border-color: #ff761c;
+  border-bottom-color: #cf5200; }
+ul.about-tags li:nth-child(6) a {
+  background-color: #B18904; }
+ul.about-tags li.active:nth-child(6) a {
+  border-color: #B18904;
+  border-bottom-color: #664f02; }
+ul.about-tags li:nth-child(7) a {
+  background-color: #4CA4A4; }
+ul.about-tags li.active:nth-child(7) a {
+  border-color: #4CA4A4;
+  border-bottom-color: #347070; }
 
 /* ARTICLES */
-section.about-articles ul.tags a {
-  color: #0f0f0f; }
+section.about-articles ul.images {
+  padding: 0;
+  overflow: hidden;
+  margin-bottom: 2em; }
+  section.about-articles ul.images li {
+    float: left;
+    width: 33%;
+    text-align: center; }
+    section.about-articles ul.images li div {
+      line-height: 15em; }
+    section.about-articles ul.images li img {
+      width: 90%;
+      height: auto;
+      vertical-align: middle; }
+section.about-articles ul.tags {
+  margin-bottom: 0.5em; }
+  section.about-articles ul.tags a {
+    color: #0f0f0f;
+    font-family: Raleway, sans-serif; }
 section.about-articles article:nth-of-type(1) .chapter {
   background-color: #f93845; }
 section.about-articles article:nth-of-type(1) h3:before, section.about-articles article:nth-of-type(1) h4:before, section.about-articles article:nth-of-type(1) h5:before {
@@ -1302,6 +1340,24 @@ section.about-articles article:nth-of-type(4) h3:before, section.about-articles 
   color: #7e3e69; }
 section.about-articles article:nth-of-type(4) ul.tags li a {
   background-color: #a9538d; }
+section.about-articles article:nth-of-type(5) .chapter {
+  background-color: #ff761c; }
+section.about-articles article:nth-of-type(5) h3:before, section.about-articles article:nth-of-type(5) h4:before, section.about-articles article:nth-of-type(5) h5:before {
+  color: #ff761c; }
+section.about-articles article:nth-of-type(5) ul.tags li a {
+  background-color: #ff9149; }
+section.about-articles article:nth-of-type(6) .chapter {
+  background-color: #B18904; }
+section.about-articles article:nth-of-type(6) h3:before, section.about-articles article:nth-of-type(6) h4:before, section.about-articles article:nth-of-type(6) h5:before {
+  color: #B18904; }
+section.about-articles article:nth-of-type(6) ul.tags li a {
+  background-color: #f1bb05; }
+section.about-articles article:nth-of-type(7) .chapter {
+  background-color: #4CA4A4; }
+section.about-articles article:nth-of-type(7) h3:before, section.about-articles article:nth-of-type(7) h4:before, section.about-articles article:nth-of-type(7) h5:before {
+  color: #4CA4A4; }
+section.about-articles article:nth-of-type(7) ul.tags li a {
+  background-color: #6bbbbb; }
 
 /* READ MORE */
 .element-hidden {
