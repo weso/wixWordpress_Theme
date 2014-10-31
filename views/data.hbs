@@ -1,1 +1,116 @@
-<main class=content> {{>by}} <input type=hidden id=path value="{{path}}"> <div class="container data-container"> <aside class="left-bar absolute"> <h1>{{#labels}}{{data_title}}{{/labels}}</h1> <div class="select-box first-box"> <abbr class=help title={{#labels}}{{data_indicator_help}}{{/labels}}>?</abbr> <div class=circle-number>1</div> <h2>{{#labels}}{{data_select_indicator}}{{/labels}}</h2> <div class=indicator-selector> <select id=indicator-select> </select> </div> </div> <div class=down-arrow> <i class="fa fa-angle-down fa-5x"></i> </div> <div class="select-box second-box"> <abbr class=help title={{#labels}}{{data_year_help}}{{/labels}}>?</abbr> <div class=circle-number>2</div> <h2>{{#labels}}{{data_choose_year}}{{/labels}}</h2> <div id=timeline></div> </div> <div class=down-arrow> <i class="fa fa-angle-down fa-5x"></i> </div> <div class="select-box third-box"> <abbr class=help title={{#labels}}{{data_country_help}}{{/labels}}>?</abbr> <div class=circle-number>3</div> <h2>{{#labels}}{{data_pick_countries}}{{/labels}}</h2> <div class=country-box> <div id=country-selector class=selector></div> </div> </div> <div class=bar></div> </aside> <section class="right-content about-articles"> <p><span>{{#labels}}{{data_description}}{{/labels}}</span></p> <p class=downloads><a href={{host}}/downloads><i class="fa fa-download"></i> {{#labels}}{{data_download}}{{/labels}}</a></p> <div class="data-box map-box"> <div id=map-view> <header> <h2>{{#labels}}{{data_country_ranking}}{{/labels}}</h2> <nav class=tabs> <ul data-selector=charts-view-map> <li class=selected data-selector=first data-info=map><a href="javascript: void(0)"><span class=circle></span> {{#labels}}{{data_map}}{{/labels}}</a></li> <li data-selector=second><a href="javascript: void(0)"><span class=circle></span> {{#labels}}{{data_by_continent}}{{/labels}}</a></li> </ul> </nav> </header> <div class="charts-view charts-view-map"> <div id=map class="map first"></div> <div id=ranking class="map second notranslate"></div> </div> </div> <div id=country-view> <header> <h2>{{#labels}}{{data_country_ranking}}{{/labels}}</h2> <nav class=tabs> <ul data-selector=charts-view-country> <li class=selected data-selector=first><a href="javascript: void(0)"><span class=circle></span> {{#labels}}{{data_bar_chart}}{{/labels}}</a></li> <li data-selector=second><a href="javascript: void(0)"><span class=circle></span> {{#labels}}{{data_by_time}}{{/labels}}</a></li> </ul> </nav> </header> <abbr class=help title={{#labels}}{{data_charts_help}}{{/labels}}>?</abbr> <div class="charts-view charts-view-country"> <div id=country-bars class="map first notranslate"></div> <div id=lines class="map second notranslate"></div> </div> </div> <hr> <div id=bars class="bars notranslate"></div> </div> <div class=middle-section> <div class=box-mini> <p>{{#labels}}{{data_higher}}{{/labels}}</p> <p id=higher class=value></p> </div> <div class=box-mini> <p>{{#labels}}{{data_lower}}{{/labels}}</p> <p id=lower class=value></p> </div> <div class=box-mini> <p>{{#labels}}{{data_mean}}{{/labels}}</p> <p id=mean class=value></p> </div> <div class=box-mini> <p>{{#labels}}{{data_median}}{{/labels}}</p> <p id=median class=value></p> </div> </div> <div class="data-box table-box"> <div id=table class=table> <header> <h2>{{#labels}}{{data_extra_info}}{{/labels}}</h2> </header> <table id=data-table class="sortable full-ranking"> <thead> <tr class="row-1 odd" role=row> <th data-sort-type=text>{{#labels}}{{data_country}}{{/labels}} <th data-sort-type=number>{{#labels}}{{data_rank}}{{/labels}} <th data-sort-type=number>{{#labels}}{{data_value}}{{/labels}}  <tbody> </table> </div> </div> </section> </div> <script src={{path}}/scripts/settings.js></script> <script src={{path}}/scripts/data.js></script> </main>
+<main class="content">
+  {{>by}}
+  <input type="hidden" id="path" value="{{path}}" />
+  <div class="container data-container">
+    <aside class="left-bar absolute">
+      <h1>{{#labels}}{{data_title}}{{/labels}}</h1>
+      <div class="select-box first-box">
+        <abbr class="help" title='{{#labels}}{{data_indicator_help}}{{/labels}}'>?</abbr>
+        <div class="circle-number">1</div>
+        <h2>{{#labels}}{{data_select_indicator}}{{/labels}}</h2>
+        <div class="indicator-selector">
+          <select id="indicator-select">
+          </select>
+        </div>
+      </div>
+      <div class="down-arrow">
+        <i class="fa fa-angle-down fa-5x"></i>
+      </div>
+      <div class="select-box second-box">
+        <abbr class="help" title='{{#labels}}{{data_year_help}}{{/labels}}'>?</abbr>
+        <div class="circle-number">2</div>
+        <h2>{{#labels}}{{data_choose_year}}{{/labels}}</h2>
+        <div id="timeline"></div>
+      </div>
+      <div class="down-arrow">
+        <i class="fa fa-angle-down fa-5x"></i>
+      </div>
+      <div class="select-box third-box">
+        <abbr class="help" title='{{#labels}}{{data_country_help}}{{/labels}}'>?</abbr>
+        <div class="circle-number">3</div>
+        <h2>{{#labels}}{{data_pick_countries}}{{/labels}}</h2>
+        <div class="country-box">
+          <div id="country-selector" class="selector"></div>
+        </div>
+      </div>
+      <div class="bar"></div>
+    </aside>
+    <section class="right-content about-articles">
+      <p><span>{{#labels}}{{data_description}}{{/labels}}</p>
+      <p class="downloads"><a href="{{host}}/downloads"><i class="fa fa-download"></i> {{#labels}}{{data_download}}{{/labels}}</a></p>
+
+      <div class="data-box map-box">
+        <div id="map-view">
+          <header>
+            <h2>{{#labels}}{{data_country_ranking}}{{/labels}}</h2>
+            <nav class="tabs">
+              <ul data-selector="charts-view-map">
+                <li class="selected" data-selector="first" data-info="map"><a href="javascript: void(0)"><span class="circle"></span> {{#labels}}{{data_map}}{{/labels}}</a></li>
+                <li data-selector="second"><a href="javascript: void(0)"><span class="circle"></span> {{#labels}}{{data_by_continent}}{{/labels}}</a></li>
+              </ul>
+            </nav>
+          </header>
+          <div class="charts-view charts-view-map">
+            <div id="map" class="map first"></div>
+            <div id="ranking" class="map second notranslate"></div>
+          </div>
+        </div>
+        <div id="country-view">
+          <header>
+            <h2>{{#labels}}{{data_country_ranking}}{{/labels}}</h2>
+            <nav class="tabs">
+              <ul data-selector="charts-view-country">
+                <li class="selected" data-selector="first"><a href="javascript: void(0)"><span class="circle"></span> {{#labels}}{{data_bar_chart}}{{/labels}}</a></li>
+                <li data-selector="second"><a href="javascript: void(0)"><span class="circle"></span> {{#labels}}{{data_by_time}}{{/labels}}</a></li>
+              </ul>
+            </nav>
+          </header>
+          <abbr class="help" title='{{#labels}}{{data_charts_help}}{{/labels}}'>?</abbr>
+          <div class="charts-view charts-view-country">
+            <div id="country-bars" class="map first notranslate"></div>
+            <div id="lines" class="map second notranslate"></div>
+          </div>
+        </div>
+        <hr />
+        <div id="bars" class="bars notranslate"></div>
+      </div>
+
+      <div class="middle-section">
+        <div class="box-mini">
+          <p>{{#labels}}{{data_higher}}{{/labels}}</p>
+          <p id="higher" class="value"></p>
+        </div>
+        <div class="box-mini">
+          <p>{{#labels}}{{data_lower}}{{/labels}}</p>
+          <p id="lower" class="value"></p>
+        </div>
+        <div class="box-mini">
+          <p>{{#labels}}{{data_mean}}{{/labels}}</p>
+          <p id="mean" class="value"></p>
+        </div>
+        <div class="box-mini">
+          <p>{{#labels}}{{data_median}}{{/labels}}</p>
+          <p id="median" class="value"></p>
+        </div>
+      </div>
+      <div class="data-box table-box">
+        <div id="table" class="table">
+          <header>
+            <h2>{{#labels}}{{data_extra_info}}{{/labels}}</h2>
+          </header>
+          <table id="data-table" class="sortable full-ranking">
+            <thead>
+            <tr class="row-1 odd" role="row">
+              <th data-sort-type="text">{{#labels}}{{data_country}}{{/labels}}</th>
+              <th data-sort-type="number">{{#labels}}{{data_rank}}{{/labels}}</th>
+              <th data-sort-type="number">{{#labels}}{{data_value}}{{/labels}}</th>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script src="{{path}}/scripts/settings.js"></script>
+  <script src="{{path}}/scripts/data.js"></script>
+</main>
