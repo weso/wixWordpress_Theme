@@ -1724,7 +1724,7 @@ nav.tabs {
     margin-right: 0.5em;
     background-color: white; }
 
-.charts-view div:nth-child(2) {
+.charts-view > div:nth-child(2) {
   display: none; }
 
 table.full-ranking {
