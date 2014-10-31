@@ -62,6 +62,7 @@ class Renderer {
 			$pageContent["labels"] = $this->loadLabels("en");
 			$pageContent["path"] = get_stylesheet_directory_uri();
 			$pageContent["host"] = get_site_url();		
+			$pageContent["title"] = wp_title('|', false, 'right');
 
 			return $renderer($pageContent, true);
 		} else {
@@ -294,9 +295,9 @@ class ReportModel {
 
 			foreach($article->find('h2') as $h2) {
 				$section_counter++;
-				$h2->setAttribute('id', $this->formatTitleToAnchor($h2->innertext()));
+				$h2->setAttribute('id', $this->formatTitleToAnchor($h2->innertext));
 				
-				$content = $h2->innertext();
+				$content = $h2->innertext;
 				$id = $h2->id;
 				$tags .= "<li><a href='#$id'>$content</a></li>";
 			}
@@ -348,7 +349,7 @@ class ReportModel {
 			
 			if ($title)
 				$title->outertext = $title->outertext;
-				$article_id = $title->innertext;
+				$article_id = $this->formatTitleToAnchor($title->innertext);
 			
 			$content = $processed_article->outertext;
 			
