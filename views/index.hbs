@@ -1,5 +1,13 @@
 <main class="content">
   <input type="hidden" id="path" value="{{path}}" />
+  <input type="hidden" id="home-header-0-indicator" value="{{data.home-header.0.indicator}}" />
+  <input type="hidden" id="home-header-0-tendency" value="{{data.home-header.0.tendency}}" />
+  <input type="hidden" id="home-header-1-indicator" value="{{data.home-header.1.indicator}}" />
+  <input type="hidden" id="home-header-1-tendency" value="{{data.home-header.1.tendency}}" />
+  <input type="hidden" id="home-header-2-indicator" value="{{data.home-header.2.indicator}}" />
+  <input type="hidden" id="home-header-2-tendency" value="{{data.home-header.2.tendency}}" />
+  <input type="hidden" id="home-header-3-indicator" value="{{data.home-header.3.indicator}}" />
+  <input type="hidden" id="home-header-3-tendency" value="{{data.home-header.3.tendency}}" />
   <div class="accordion">
     <article id="tab1">
       <aside>
@@ -149,7 +157,7 @@
             {{#data.model.values}}
               <tr class="country-row">
                 <td>
-                  <img class="flag" alt="" src="images/flags/{{area}}.png" />
+                  <img class="flag" alt="" src="{{path}}/images/flags/{{area}}.png" />
                   <p class="country-name">{{name}}</p>
                 </td>
                 <td data-title="Rank">{{rank}}</td>
