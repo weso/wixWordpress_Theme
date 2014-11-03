@@ -416,7 +416,7 @@ class IndexModel {
 	      	$data["tweets"] = $twitter->loadDefaultAccountTweets();
 		$data["home-header"] = $this->loadFrontVisualisations();
 		$data["model"] = file_get_contents($api_url.'/rankings/2013');
-		
+	
 		return $data;
 	}
 	
@@ -426,7 +426,7 @@ class IndexModel {
 		$visualisationsFile = $visualisationsPath."front-settings.json";
 
 		if (file_exists($visualisationsFile)) {
-			return json_decode(file_get_contents($visualisationsFile, true));
+			return json_decode(file_get_contents($visualisationsFile), true);
 		} else {
 			return Array();
 		}

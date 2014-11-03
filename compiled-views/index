@@ -110,18 +110,28 @@
     );
     return '<main class="content">
   <input type="hidden" id="path" value="'.htmlentities((string)((isset($in['path']) && is_array($in)) ? $in['path'] : null), ENT_QUOTES, 'UTF-8').'" />
+  <input type="hidden" id="home-header-0-indicator" value="'.htmlentities((string)((isset($in['data']['home-header']['0']['indicator']) && is_array($in['data']['home-header']['0'])) ? $in['data']['home-header']['0']['indicator'] : null), ENT_QUOTES, 'UTF-8').'" />
+  <input type="hidden" id="home-header-0-tendency" value="'.htmlentities((string)((isset($in['data']['home-header']['0']['tendency']) && is_array($in['data']['home-header']['0'])) ? $in['data']['home-header']['0']['tendency'] : null), ENT_QUOTES, 'UTF-8').'" />
+  <input type="hidden" id="home-header-1-indicator" value="'.htmlentities((string)((isset($in['data']['home-header']['1']['indicator']) && is_array($in['data']['home-header']['1'])) ? $in['data']['home-header']['1']['indicator'] : null), ENT_QUOTES, 'UTF-8').'" />
+  <input type="hidden" id="home-header-1-tendency" value="'.htmlentities((string)((isset($in['data']['home-header']['1']['tendency']) && is_array($in['data']['home-header']['1'])) ? $in['data']['home-header']['1']['tendency'] : null), ENT_QUOTES, 'UTF-8').'" />
+  <input type="hidden" id="home-header-2-indicator" value="'.htmlentities((string)((isset($in['data']['home-header']['2']['indicator']) && is_array($in['data']['home-header']['2'])) ? $in['data']['home-header']['2']['indicator'] : null), ENT_QUOTES, 'UTF-8').'" />
+  <input type="hidden" id="home-header-2-tendency" value="'.htmlentities((string)((isset($in['data']['home-header']['2']['tendency']) && is_array($in['data']['home-header']['2'])) ? $in['data']['home-header']['2']['tendency'] : null), ENT_QUOTES, 'UTF-8').'" />
+  <input type="hidden" id="home-header-3-indicator" value="'.htmlentities((string)((isset($in['data']['home-header']['3']['indicator']) && is_array($in['data']['home-header']['3'])) ? $in['data']['home-header']['3']['indicator'] : null), ENT_QUOTES, 'UTF-8').'" />
+  <input type="hidden" id="home-header-3-tendency" value="'.htmlentities((string)((isset($in['data']['home-header']['3']['tendency']) && is_array($in['data']['home-header']['3'])) ? $in['data']['home-header']['3']['tendency'] : null), ENT_QUOTES, 'UTF-8').'" />
   <div class="accordion">
     <article id="tab1">
-      <header>
-        <h1><strong class="percentage"></strong></h1>
-        <h2>privacy & surveillance</h2>
-      </header>
-      <footer>
-        <i class="fa fa-unlock-alt fa-3x"></i>
-      </footer>
+      <aside>
+        <header>
+          <h1><strong class="percentage"></strong></h1>
+          <h2>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_tab_1']) && is_array($in)) ? $in['home_tab_1'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
+        </header>
+        <footer>
+          <i class="fa fa-unlock-alt fa"></i>
+        </footer>
+      </aside>
       <section class="extra">
         <div class="extra-container-padding">
-          <svg id="world" width="280" height="280" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" version="1.1" baseProfile="full">
+          <svg id="world" width="18em" height="18em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" version="1.1" baseProfile="full">
             <defs>
               <pattern id="world-colour" patternUnits="userSpaceOnUse" width="100%" height="100%">
                   <image xlink:href="'.htmlentities((string)((isset($in['path']) && is_array($in)) ? $in['path'] : null), ENT_QUOTES, 'UTF-8').'/images/accordion/world.png" x="0" y="0" width="100%" height="100%" />
@@ -129,59 +139,52 @@
               <pattern id="world-gray" patternUnits="userSpaceOnUse" width="100%" height="100%">
                   <image xlink:href="'.htmlentities((string)((isset($in['path']) && is_array($in)) ? $in['path'] : null), ENT_QUOTES, 'UTF-8').'/images/accordion/world_gray.png" x="0" y="0" width="100%" height="100%" />
               </pattern>
-              <filter id="shadow">
-                <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
-                <feOffset dx="0" dy="0" result="offsetblur"/>
-                <feFlood flood-color="#333"/>
-                <feComposite in2="offsetblur" operator="in"/>
-                <feMerge>
-                <feMergeNode/>
-                <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
             </defs>
             <circle cx="50%" cy="50%" r="50%" stroke="black" stroke-width="0" fill="url(#world-gray)" />
             <path id="world-pie" d=""
-              fill="url(#world-colour)"
-              filter="url(#shadow)" />
+              fill="url(#world-colour)" />
           </svg>
         </div>
         <footer>
-          <h1><strong class="percentage"></strong> of countries</h1>
-          <h2>do not have effective laws and practices to</h2>
-          <h2>protect the privacy of online communications</h2>
+          <h1><strong class="percentage"></strong> '.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_of_countries']) && is_array($in)) ? $in['home_of_countries'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h1>
+          <h2>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_tab_1_caption_1']) && is_array($in)) ? $in['home_tab_1_caption_1'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
+          <h2>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_tab_1_caption_2']) && is_array($in)) ? $in['home_tab_1_caption_2'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
         </footer>
       </section>
     </article>
     <article id="tab2">
-      <header>
-        <h1><strong class="percentage"></strong></h1>
-        <h2>gender</h2>
-      </header>
-      <footer>
-        <i class="fa fa-female fa-3x"></i>
-      </footer>
+      <aside>
+        <header>
+          <h1><strong class="percentage"></strong></h1>
+          <h2>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_tab_2']) && is_array($in)) ? $in['home_tab_2'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
+        </header>
+        <footer>
+          <i class="fa fa-female"></i>
+        </footer>
+      </aside>
       <section class="extra">
         <div class="infographic-percentage extra-container-padding">
           <img class="infographic-icon" alt="" src="'.htmlentities((string)((isset($in['path']) && is_array($in)) ? $in['path'] : null), ENT_QUOTES, 'UTF-8').'/images/accordion/woman.svg" />
         </div>
         <footer>
-          <h1><strong class="percentage"></strong> of countries</h1>
-          <h2>are not doing enough to stop online</h2>
-          <h2>violence against women</h2>
+          <h1><strong class="percentage"></strong> '.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_of_countries']) && is_array($in)) ? $in['home_of_countries'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h1>
+          <h2>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_tab_2_caption_1']) && is_array($in)) ? $in['home_tab_2_caption_1'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
+          <h2>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_tab_2_caption_2']) && is_array($in)) ? $in['home_tab_2_caption_2'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
         </footer>
       </section>
     </article>
     <article id="tab3">
-      <header>
-        <h1><strong class="percentage"></strong></h1>
-        <h2>empowerment</h2>
-      </header>
-      <footer>
-        <i class="fa fa-trophy fa-3x"></i>
-      </footer>
+      <aside>
+        <header>
+          <h1><strong class="percentage"></strong></h1>
+          <h2>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_tab_3']) && is_array($in)) ? $in['home_tab_3'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
+        </header>
+        <footer>
+          <i class="fa fa-trophy fa"></i>
+        </footer>
+      </aside>
       <section class="extra">
-        <div id="infographic-circles" class="infographic-circles extra-container-padding">
+        <div id="infographic-circles" class="infographic-circles extra-container-padding notranslate">
           <div class="model">
             <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" version="1.1" baseProfile="full">
               <defs>
@@ -193,26 +196,28 @@
           </div>
         </div>
         <footer>
-          <h1><strong class="percentage"></strong> of countries</h1>
-          <h2>do not have effective laws and practices to</h2>
-          <h2>protect the privacy of online communications</h2>
+          <h1><strong class="percentage"></strong> '.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_of_countries']) && is_array($in)) ? $in['home_of_countries'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h1>
+          <h2>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_tab_3_caption_1']) && is_array($in)) ? $in['home_tab_3_caption_1'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
+          <h2>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_tab_3_caption_2']) && is_array($in)) ? $in['home_tab_3_caption_2'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
         </footer>
       </section>
     </article>
     <article id="tab4">
-      <header>
-        <h1><strong class="percentage"></strong></h1>
-        <h2>net neutrality</h2>
-      </header>
-      <footer>
-        <i class="fa fa-university fa-3x"></i>
-      </footer>
+      <aside>
+        <header>
+          <h1><strong class="percentage"></strong></h1>
+          <h2>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_tab_4']) && is_array($in)) ? $in['home_tab_4'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
+        </header>
+        <footer>
+          <i class="fa fa-university"></i>
+        </footer>
+      </aside>
       <section class="extra">
         <div id="map" class="extra-container"></div>
         <footer>
-          <h1><strong class="percentage"></strong> of countries</h1>
-          <h2>do not have effective laws and practices to</h2>
-          <h2>protect the privacy of online communications</h2>
+          <h1><strong class="percentage"></strong> '.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_of_countries']) && is_array($in)) ? $in['home_of_countries'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h1>
+          <h2>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_tab_4_caption_1']) && is_array($in)) ? $in['home_tab_4_caption_1'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
+          <h2>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_tab_4_caption_2']) && is_array($in)) ? $in['home_tab_4_caption_2'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
         </footer>
       </section>
     </article>
@@ -265,6 +270,19 @@
             </tr>
           </thead>
           <tbody>
+            '.$cx['funcs']['sec']($cx, ((isset($in['data']['model']['values']) && is_array($in['data']['model'])) ? $in['data']['model']['values'] : null), $in, false, function($cx, $in) {return '
+              <tr class="country-row">
+                <td>
+                  <img class="flag" alt="" src="'.htmlentities((string)((isset($in['path']) && is_array($in)) ? $in['path'] : null), ENT_QUOTES, 'UTF-8').'/images/flags/'.htmlentities((string)((isset($in['area']) && is_array($in)) ? $in['area'] : null), ENT_QUOTES, 'UTF-8').'.png" />
+                  <p class="country-name">'.htmlentities((string)((isset($in['name']) && is_array($in)) ? $in['name'] : null), ENT_QUOTES, 'UTF-8').'</p>
+                </td>
+                <td data-title="Rank">'.htmlentities((string)((isset($in['rank']) && is_array($in)) ? $in['rank'] : null), ENT_QUOTES, 'UTF-8').'</td>
+                <td data-title="Universal Access">'.htmlentities((string)((isset($in['UNIVERSAL_ACCESS']) && is_array($in)) ? $in['UNIVERSAL_ACCESS'] : null), ENT_QUOTES, 'UTF-8').'</td>
+                <td data-title="Relevant Content">'.htmlentities((string)((isset($in['RELEVANT_CONTENT_AND_USE']) && is_array($in)) ? $in['RELEVANT_CONTENT_AND_USE'] : null), ENT_QUOTES, 'UTF-8').'</td>
+                <td data-title="Freedom And Openness">'.htmlentities((string)((isset($in['FREEDOM_AND_OPENNESS']) && is_array($in)) ? $in['FREEDOM_AND_OPENNESS'] : null), ENT_QUOTES, 'UTF-8').'</td>
+                <td data-title="Empowerment">'.htmlentities((string)((isset($in['EMPOWERMENT']) && is_array($in)) ? $in['EMPOWERMENT'] : null), ENT_QUOTES, 'UTF-8').'</td>
+              </tr>
+            ';}).'
           </tbody>
         </table>
         <p class="text-right">
