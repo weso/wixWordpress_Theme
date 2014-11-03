@@ -8,6 +8,9 @@
 $parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME']);
 require_once( str_replace('index.php', '', $parse_uri[0]).'wp-load.php');
 require_once(get_stylesheet_directory()."/inc/twitter/Twitter.php");
+
+$api_url;
+$visualisationsPath;
  
 class Renderer {
 
@@ -26,10 +29,14 @@ class Renderer {
 						Array("path"=>"about", "label"=>"About"));
 	
 	private function __construct($settings) {
+		global $visualisationsPath;
+		global $api_url;
+
 		$this->settings = $settings;
 		
 		$this->compiledTemplatesPath = get_stylesheet_directory().$this->settings['compiledTemplatesPath'];
-		$this->visualisationsPath = get_stylesheet_directory().$this->settings['visualisationsPath'];
+		$visualisationsPath = get_stylesheet_directory().$this->settings['visualisationsPath'];
+		$api_url = $this->settings['apiUrl'];
 		$this->labelsPath = get_stylesheet_directory().$this->settings['labelsPath'];
 	}
 
@@ -42,6 +49,8 @@ class Renderer {
 	}	
 
 	public function renderTemplate($templateName) {
+		global $api_url;
+
 		$fileCompiledTemplate = $this->compiledTemplatesPath.$templateName;
 		
 		if (file_exists($fileCompiledTemplate)) {
@@ -63,6 +72,7 @@ class Renderer {
 			$pageContent["path"] = get_stylesheet_directory_uri();
 			$pageContent["host"] = get_site_url();		
 			$pageContent["title"] = wp_title('|', false, 'right');
+			$pageContent["api"] = $api_url;
 
 			return $renderer($pageContent, true);
 		} else {
@@ -86,7 +96,9 @@ class Renderer {
 	}	
 	
 	private function loadVisualisations() {
-		$visualisationsFile = $this->visualisationsPath."settings.json";
+		global $visualisationsPath;
+
+		$visualisationsFile = $visualisationsPath."settings.json";
 		
 		if (file_exists($visualisationsFile)) {
 			return json_decode(file_get_contents($visualisationsFile), true);
@@ -396,14 +408,30 @@ class IndexModel {
 	}
 	
 	function get() {
-	  $twitter = new Twitter();
+		global $api_url;
+		$twitter = new Twitter();
 
-      	$data = Array();
-	$data["news"] = $this->getPostsByCategory('news');
-      	$data["tweets"] = $twitter->loadDefaultAccountTweets();
-	return $data;
+   	   	$data = Array();
+		$data["news"] = $this->getPostsByCategory('news');
+	      	$data["tweets"] = $twitter->loadDefaultAccountTweets();
+		$data["home-header"] = $this->loadFrontVisualisations();
+		$data["model"] = file_get_contents($api_url.'/rankings/2013');
+		
+		return $data;
 	}
 	
+	function loadFrontVisualisations() {
+		global $visualisationsPath;
+
+		$visualisationsFile = $visualisationsPath."front-settings.json";
+
+		if (file_exists($visualisationsFile)) {
+			return json_decode(file_get_contents($visualisationsFile, true));
+		} else {
+			return Array();
+		}
+	}
+
 	function getPostsByCategory($categorySlug) {
 		global $post;
 		$posts = Array();

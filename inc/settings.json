@@ -3,5 +3,6 @@
  "compiledTemplatesPath": "/compiled-views/",
  "modelsPath": "/models/",
  "visualisationsPath": "/visualisations/",
- "labelsPath": "/lang/"
+ "labelsPath": "/lang/",
+ "apiUrl": "http://intertip.webfoundation.org/api"
 }
