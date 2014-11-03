@@ -58,7 +58,7 @@
   "media_centre_section_3": "Visualisations",
   "media_centre_section_4": "In the Press",
   "data_title": "The Data",
-  "data_description": "Here is the all the data. Jump right in, explore it and find out how your country stacks up.",
+  "data_description": "Here is all the data. Jump right in, explore it and find out how your country stacks up.",
   "data_select_indicator": "Select an indicator",
   "data_choose_year": "Choose a year",
   "data_pick_countries": "Pick the countries",
@@ -84,5 +84,18 @@
   "data_year_help": "Select a year",
   "data_country_help": "Select a country. You can select up to 7 countries to compare.",
   "data_charts_help": "Countries are compared with higher and lower countries for the same region.",
-  "data_download": "Download data here"
+  "data_download": "Download data here",
+  "home_of_countries": "of countries",
+  "home_tab_1": "privacy & surveillance",
+  "home_tab_2": "gender",
+  "home_tab_3": "empowerment",
+  "home_tab_4": "net neutrality",
+  "home_tab_1_caption_1": "do not have effective laws and practices to",
+  "home_tab_1_caption_2": "protect the privacy of online communications",
+  "home_tab_2_caption_1": "are not doing enough to stop online",
+  "home_tab_2_caption_2": "violence against women",
+  "home_tab_3_caption_1": "are not doing enough to improve education",
+  "home_tab_3_caption_2": "outcomes for poor and marginalised communities",
+  "home_tab_4_caption_1": "do not manage network traffic",
+  "home_tab_4_caption_2": "in a manner that is transparent"
 }

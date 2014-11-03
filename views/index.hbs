@@ -1,17 +1,27 @@
 <main class="content">
   <input type="hidden" id="path" value="{{path}}" />
+  <input type="hidden" id="home-header-0-indicator" value="{{data.home-header.0.indicator}}" />
+  <input type="hidden" id="home-header-0-tendency" value="{{data.home-header.0.tendency}}" />
+  <input type="hidden" id="home-header-1-indicator" value="{{data.home-header.1.indicator}}" />
+  <input type="hidden" id="home-header-1-tendency" value="{{data.home-header.1.tendency}}" />
+  <input type="hidden" id="home-header-2-indicator" value="{{data.home-header.2.indicator}}" />
+  <input type="hidden" id="home-header-2-tendency" value="{{data.home-header.2.tendency}}" />
+  <input type="hidden" id="home-header-3-indicator" value="{{data.home-header.3.indicator}}" />
+  <input type="hidden" id="home-header-3-tendency" value="{{data.home-header.3.tendency}}" />
   <div class="accordion">
     <article id="tab1">
-      <header>
-        <h1><strong class="percentage"></strong></h1>
-        <h2>privacy & surveillance</h2>
-      </header>
-      <footer>
-        <i class="fa fa-unlock-alt fa-3x"></i>
-      </footer>
+      <aside>
+        <header>
+          <h1><strong class="percentage"></strong></h1>
+          <h2>{{#labels}}{{home_tab_1}}{{/labels}}</h2>
+        </header>
+        <footer>
+          <i class="fa fa-unlock-alt fa"></i>
+        </footer>
+      </aside>
       <section class="extra">
         <div class="extra-container-padding">
-          <svg id="world" width="280" height="280" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" version="1.1" baseProfile="full">
+          <svg id="world" width="18em" height="18em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" version="1.1" baseProfile="full">
             <defs>
               <pattern id="world-colour" patternUnits="userSpaceOnUse" width="100%" height="100%">
                   <image xlink:href="{{path}}/images/accordion/world.png" x="0" y="0" width="100%" height="100%" />
@@ -19,59 +29,52 @@
               <pattern id="world-gray" patternUnits="userSpaceOnUse" width="100%" height="100%">
                   <image xlink:href="{{path}}/images/accordion/world_gray.png" x="0" y="0" width="100%" height="100%" />
               </pattern>
-              <filter id="shadow">
-                <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
-                <feOffset dx="0" dy="0" result="offsetblur"/>
-                <feFlood flood-color="#333"/>
-                <feComposite in2="offsetblur" operator="in"/>
-                <feMerge>
-                <feMergeNode/>
-                <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
             </defs>
             <circle cx="50%" cy="50%" r="50%" stroke="black" stroke-width="0" fill="url(#world-gray)" />
             <path id="world-pie" d=""
-              fill="url(#world-colour)"
-              filter="url(#shadow)" />
+              fill="url(#world-colour)" />
           </svg>
         </div>
         <footer>
-          <h1><strong class="percentage"></strong> of countries</h1>
-          <h2>do not have effective laws and practices to</h2>
-          <h2>protect the privacy of online communications</h2>
+          <h1><strong class="percentage"></strong> {{#labels}}{{home_of_countries}}{{/labels}}</h1>
+          <h2>{{#labels}}{{home_tab_1_caption_1}}{{/labels}}</h2>
+          <h2>{{#labels}}{{home_tab_1_caption_2}}{{/labels}}</h2>
         </footer>
       </section>
     </article>
     <article id="tab2">
-      <header>
-        <h1><strong class="percentage"></strong></h1>
-        <h2>gender</h2>
-      </header>
-      <footer>
-        <i class="fa fa-female fa-3x"></i>
-      </footer>
+      <aside>
+        <header>
+          <h1><strong class="percentage"></strong></h1>
+          <h2>{{#labels}}{{home_tab_2}}{{/labels}}</h2>
+        </header>
+        <footer>
+          <i class="fa fa-female"></i>
+        </footer>
+      </aside>
       <section class="extra">
         <div class="infographic-percentage extra-container-padding">
           <img class="infographic-icon" alt="" src="{{path}}/images/accordion/woman.svg" />
         </div>
         <footer>
-          <h1><strong class="percentage"></strong> of countries</h1>
-          <h2>are not doing enough to stop online</h2>
-          <h2>violence against women</h2>
+          <h1><strong class="percentage"></strong> {{#labels}}{{home_of_countries}}{{/labels}}</h1>
+          <h2>{{#labels}}{{home_tab_2_caption_1}}{{/labels}}</h2>
+          <h2>{{#labels}}{{home_tab_2_caption_2}}{{/labels}}</h2>
         </footer>
       </section>
     </article>
     <article id="tab3">
-      <header>
-        <h1><strong class="percentage"></strong></h1>
-        <h2>empowerment</h2>
-      </header>
-      <footer>
-        <i class="fa fa-trophy fa-3x"></i>
-      </footer>
+      <aside>
+        <header>
+          <h1><strong class="percentage"></strong></h1>
+          <h2>{{#labels}}{{home_tab_3}}{{/labels}}</h2>
+        </header>
+        <footer>
+          <i class="fa fa-trophy fa"></i>
+        </footer>
+      </aside>
       <section class="extra">
-        <div id="infographic-circles" class="infographic-circles extra-container-padding">
+        <div id="infographic-circles" class="infographic-circles extra-container-padding notranslate">
           <div class="model">
             <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" version="1.1" baseProfile="full">
               <defs>
@@ -83,26 +86,28 @@
           </div>
         </div>
         <footer>
-          <h1><strong class="percentage"></strong> of countries</h1>
-          <h2>do not have effective laws and practices to</h2>
-          <h2>protect the privacy of online communications</h2>
+          <h1><strong class="percentage"></strong> {{#labels}}{{home_of_countries}}{{/labels}}</h1>
+          <h2>{{#labels}}{{home_tab_3_caption_1}}{{/labels}}</h2>
+          <h2>{{#labels}}{{home_tab_3_caption_2}}{{/labels}}</h2>
         </footer>
       </section>
     </article>
     <article id="tab4">
-      <header>
-        <h1><strong class="percentage"></strong></h1>
-        <h2>net neutrality</h2>
-      </header>
-      <footer>
-        <i class="fa fa-university fa-3x"></i>
-      </footer>
+      <aside>
+        <header>
+          <h1><strong class="percentage"></strong></h1>
+          <h2>{{#labels}}{{home_tab_4}}{{/labels}}</h2>
+        </header>
+        <footer>
+          <i class="fa fa-university"></i>
+        </footer>
+      </aside>
       <section class="extra">
         <div id="map" class="extra-container"></div>
         <footer>
-          <h1><strong class="percentage"></strong> of countries</h1>
-          <h2>do not have effective laws and practices to</h2>
-          <h2>protect the privacy of online communications</h2>
+          <h1><strong class="percentage"></strong> {{#labels}}{{home_of_countries}}{{/labels}}</h1>
+          <h2>{{#labels}}{{home_tab_4_caption_1}}{{/labels}}</h2>
+          <h2>{{#labels}}{{home_tab_4_caption_2}}{{/labels}}</h2>
         </footer>
       </section>
     </article>
@@ -149,6 +154,19 @@
             </tr>
           </thead>
           <tbody>
+            {{#data.model.values}}
+              <tr class="country-row">
+                <td>
+                  <img class="flag" alt="" src="{{../path}}/images/flags/{{area}}.png" />
+                  <p class="country-name">{{name}}</p>
+                </td>
+                <td data-title="Rank">{{rank}}</td>
+                <td data-title="Universal Access">{{UNIVERSAL_ACCESS}}</td>
+                <td data-title="Relevant Content">{{RELEVANT_CONTENT_AND_USE}}</td>
+                <td data-title="Freedom And Openness">{{FREEDOM_AND_OPENNESS}}</td>
+                <td data-title="Empowerment">{{EMPOWERMENT}}</td>
+              </tr>
+            {{/data.model.values}}
           </tbody>
         </table>
         <p class="text-right">

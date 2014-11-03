@@ -680,7 +680,7 @@ div.illustrations {
     position: absolute;
     right: 0;
     bottom: 0;
-    width: 15%;
+    width: 10%;
     height: 100%;
     text-align: right;
     padding-top: 1em;
@@ -709,31 +709,66 @@ div.illustrations {
 
 /* ACCORDION */
 div.accordion {
-  display: none;
   overflow: hidden;
-  height: 32em;
+  height: 28em;
   font-family: 'Raleway', sans-serif;
   position: relative;
   background-color: #47caaa; }
+  @media (min-width: 64em) {
+    div.accordion {
+      height: 32em; } }
+  div.accordion #tab3 .extra {
+    overflow: hidden; }
+    div.accordion #tab3 .extra footer {
+      background-color: #0096af; }
+  div.accordion #tab4 .extra {
+    padding-right: 0 !important; }
+    div.accordion #tab4 .extra footer {
+      background-color: #f93845; }
+    div.accordion #tab4 .extra #ATA {
+      fill: transparent; }
+    @media (min-width: 64em) {
+      div.accordion #tab4 .extra footer {
+        background-color: transparent; } }
+  div.accordion #tab1 aside {
+    background-color: #47caaa; }
+  @media (min-width: 64em) {
+    div.accordion #tab1 aside {
+      background-color: transparent; } }
   div.accordion article {
-    height: 32em;
     background-color: #ccc;
-    width: 70%;
+    width: 100%;
+    height: 70%;
     float: left;
     position: absolute;
-    top: 0;
     right: 0;
     overflow: hidden;
-    transition-property: right;
+    transition-property: right, bottom;
     transition-duration: 0.5s;
     cursor: pointer; }
+    @media (min-width: 64em) {
+      div.accordion article {
+        width: 70%;
+        height: 100%;
+        top: 0; } }
     div.accordion article section.extra {
-      position: relative;
+      position: absolute;
+      width: 100%;
+      height: 90%;
+      top: 0;
+      left: 0;
       text-align: left;
-      width: 85.7%;
-      /* 90% of 70% is 85.7% */
-      height: 100%;
-      float: left; }
+      padding-right: 2em; }
+      @media (min-width: 64em) {
+        div.accordion article section.extra {
+          position: relative;
+          top: auto;
+          left: auto;
+          width: 85.7%;
+          /* 90% of 70% is 85.7% */
+          height: 100%;
+          float: left;
+          padding-right: 0; } }
       div.accordion article section.extra .visor {
         display: none; }
       div.accordion article section.extra .extra-container {
@@ -747,6 +782,8 @@ div.accordion {
       div.accordion article section.extra .infographic-circles {
         padding-top: 1.5em;
         overflow: hidden; }
+        div.accordion article section.extra .infographic-circles .circle {
+          text-align: center; }
         div.accordion article section.extra .infographic-circles > div {
           float: left;
           margin-right: 0.5em; }
@@ -754,30 +791,46 @@ div.accordion {
           display: none; }
         div.accordion article section.extra .infographic-circles p {
           margin: 0 0 0.3em 0;
-          font-size: 0.7em; }
+          font-size: 0.5em;
+          min-width: 2.3em; }
+        @media (min-width: 64em) {
+          div.accordion article section.extra .infographic-circles p {
+            font-size: 0.7em; } }
         @media (min-width: 80em) {
           div.accordion article section.extra .infographic-circles p {
             font-size: 1em; } }
-      div.accordion article section.extra #map .land-group {
-        transition-property: opacity;
-        transition-delay: 0.1s;
-        transition-duration: 0.8s; }
+      div.accordion article section.extra #map {
+        padding-top: 1em; }
+        @media (min-width: 64em) {
+          div.accordion article section.extra #map {
+            padding-top: 0; } }
+        div.accordion article section.extra #map .land-group {
+          transition-property: opacity;
+          transition-delay: 0.1s;
+          transition-duration: 0.8s; }
       div.accordion article section.extra .infographic-percentage p {
         overflow: hidden;
         margin-bottom: 1em; }
       div.accordion article section.extra .infographic-percentage img {
-        width: 3%;
-        margin-right: 1%;
+        width: 4%;
+        margin-right: 0%;
         float: left;
         opacity: 0.3;
         transition-property: opacity;
         transition-delay: 0.5s;
         transition-duration: 0.8s; }
+      @media (min-width: 64em) {
+        div.accordion article section.extra .infographic-percentage img {
+          width: 3%;
+          margin-right: 1%; } }
       div.accordion article section.extra .infographic-percentage .infographic-icon {
         display: none; }
       div.accordion article section.extra h2 {
         margin-bottom: 0.2em;
-        font-size: 1.8em; }
+        font-size: 0.8em; }
+      @media (min-width: 64em) {
+        div.accordion article section.extra h2 {
+          font-size: 1.8em; } }
       div.accordion article section.extra p {
         margin-top: 1em;
         margin-bottom: 1.55em; }
@@ -790,25 +843,76 @@ div.accordion {
         bottom: 0;
         padding-left: 2em;
         padding-bottom: 1em; }
-    div.accordion article header {
-      width: 14.3%;
-      /* 10% of 70% is 14.3% */
-      float: right;
-      padding-left: 1em; }
-    div.accordion article > footer {
-      text-align: center;
+    div.accordion article aside {
       position: absolute;
-      right: 0;
+      width: 100%;
+      height: 12%;
+      padding-top: 2%;
       bottom: 0;
-      width: 14.3%;
-      /* 10% of 70% is 14.3% */
-      padding-bottom: 1.5em; }
+      z-index: 100; }
+      @media (min-width: 64em) {
+        div.accordion article aside {
+          position: relative;
+          width: 14.3%;
+          /* 10% of 70% is 14.3% */
+          height: 100%;
+          float: right;
+          bottom: auto;
+          padding-left: 1em;
+          padding-top: 0;
+          z-index: auto; } }
+      div.accordion article aside header {
+        float: left;
+        margin-top: -0.2em; }
+        @media (min-width: 64em) {
+          div.accordion article aside header {
+            margin-top: 0; } }
+        div.accordion article aside header h1 {
+          float: left;
+          padding-left: 0.5em; }
+        div.accordion article aside header h2 {
+          float: left;
+          padding-top: 0.4em;
+          margin-left: 0.8em; }
+        @media (min-width: 64em) {
+          div.accordion article aside header {
+            width: 100%;
+            float: none; }
+            div.accordion article aside header h1 {
+              float: none;
+              padding-left: 0; }
+            div.accordion article aside header h2 {
+              float: none;
+              padding-top: 0;
+              margin-left: 0; } }
+      div.accordion article aside > footer {
+        text-align: center;
+        position: relative;
+        width: 15%;
+        float: right;
+        padding-bottom: 1.5em; }
+        div.accordion article aside > footer i {
+          font-size: 1.5em; }
+        @media (min-width: 64em) {
+          div.accordion article aside > footer {
+            width: 100%;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            float: none; }
+            div.accordion article aside > footer i {
+              font-size: 3em; } }
     div.accordion article h1 {
       font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-      font-size: 2.3em;
+      font-size: 1.5em;
       font-weight: 500;
       margin-bottom: 0;
-      color: white; }
+      color: white;
+      padding-left: 0; }
+    @media (min-width: 60em) {
+      div.accordion article h1 {
+        font-size: 2.3em;
+        padding-left: 0; } }
     @media (min-width: 80em) {
       div.accordion article h1 {
         font-size: 3em; } }
@@ -817,15 +921,23 @@ div.accordion {
         font-size: 4.5em; } }
     div.accordion article h2 {
       text-align: left;
-      font-size: 0.7em;
+      font-size: 1em;
       padding-left: 0.2em; }
+    @media (min-width: 60em) {
+      div.accordion article h2 {
+        font-size: 0.7em; } }
     @media (min-width: 80em) {
       div.accordion article h2 {
-        font-size: 1.1em; } }
+        font-size: 1em; } }
   div.accordion article:nth-child(1) {
     background-color: #47caaa;
-    box-shadow: 0.5em 0 0.2em -0.1em #32ac8e;
-    right: 0; }
+    box-shadow: 0 0.5em 0.2em -0.1em #32ac8e;
+    bottom: 0%; }
+    @media (min-width: 64em) {
+      div.accordion article:nth-child(1) {
+        box-shadow: 0.5em 0 0.2em -0.1em #32ac8e;
+        bottom: auto;
+        right: 0; } }
     div.accordion article:nth-child(1) i {
       color: #32ac8e; }
     div.accordion article:nth-child(1) footer i {
@@ -834,8 +946,13 @@ div.accordion {
       color: #21715d; }
   div.accordion article:nth-child(2) {
     background-color: #89ba00;
-    box-shadow: 0.5em 0 0.2em -0.1em #32ac8e;
-    right: 70%; }
+    box-shadow: 0 0.5em 0.2em -0.1em #32ac8e;
+    bottom: 10%; }
+    @media (min-width: 64em) {
+      div.accordion article:nth-child(2) {
+        box-shadow: 0.5em 0 0.2em -0.1em #32ac8e;
+        bottom: auto;
+        right: 70%; } }
     div.accordion article:nth-child(2) i {
       color: #638700; }
     div.accordion article:nth-child(2) footer i {
@@ -844,8 +961,13 @@ div.accordion {
       color: #2b3a00; }
   div.accordion article:nth-child(3) {
     background-color: #0096af;
-    box-shadow: 0.5em 0 0.2em -0.1em #638700;
-    right: 80%; }
+    box-shadow: 0 0.5em 0.2em -0.1em #638700;
+    bottom: 20%; }
+    @media (min-width: 64em) {
+      div.accordion article:nth-child(3) {
+        box-shadow: 0.5em 0 0.2em -0.1em #638700;
+        bottom: auto;
+        right: 80%; } }
     div.accordion article:nth-child(3) i {
       color: #006a7c; }
     div.accordion article:nth-child(3) footer i {
@@ -854,8 +976,13 @@ div.accordion {
       color: #00292f; }
   div.accordion article:nth-child(4) {
     background-color: #f93845;
-    box-shadow: 0.5em 0 0.2em -0.1em #006a7c;
-    right: 90%; }
+    box-shadow: 0 0.5em 0.2em -0.1em #006a7c;
+    bottom: 30%; }
+    @media (min-width: 64em) {
+      div.accordion article:nth-child(4) {
+        box-shadow: 0.5em 0 0.2em -0.1em #006a7c;
+        bottom: auto;
+        right: 90%; } }
     div.accordion article:nth-child(4) i {
       color: #f70718; }
     div.accordion article:nth-child(4) footer i {
@@ -1077,7 +1204,12 @@ div.follow-box {
   div.follow-box div.sign-up {
     background-color: #919279;
     padding: 2em 1em 1em 1em;
-    margin-bottom: 1em; }
+    margin-bottom: 1em;
+    height: 19em; }
+    div.follow-box div.sign-up p {
+      margin-top: 1em;
+      margin-bottom: 1em;
+      min-height: 4em; }
   div.follow-box div.links {
     background-color: #DEE3C1;
     padding: 2em 1em; }
@@ -1151,6 +1283,14 @@ table.ranking {
     max-width: auto;
     width: 80%;
     color: #222; }
+  table.ranking tr.country-row {
+    display: none; }
+  table.ranking tr.country-row:nth-child(1),
+  table.ranking tr.country-row:nth-child(2),
+  table.ranking tr.country-row:nth-child(3),
+  table.ranking tr.country-row:nth-child(4),
+  table.ranking tr.country-row:nth-child(5) {
+    display: table-row; }
   table.ranking td {
     min-width: 15%;
     padding: 0.8em 0;
@@ -1942,6 +2082,7 @@ body {
   max-width: 68em;
   margin-left: auto;
   margin-right: auto;
+  max-width: 80em;
   height: 100%;
   overflow: hidden; }
   .container:after {
