@@ -73,7 +73,7 @@ class Renderer {
 			$pageContent["host"] = get_site_url();		
 			$pageContent["title"] = wp_title('|', false, 'right');
 			$pageContent["api"] = $api_url;
-
+			
 			return $renderer($pageContent, true);
 		} else {
 	
@@ -408,16 +408,29 @@ class IndexModel {
 	}
 	
 	function get() {
-		global $api_url;
 		$twitter = new Twitter();
 
    	   	$data = Array();
 		$data["news"] = $this->getPostsByCategory('news');
 	      	$data["tweets"] = $twitter->loadDefaultAccountTweets();
 		$data["home-header"] = $this->loadFrontVisualisations();
-		$data["model"] = file_get_contents($api_url.'/rankings/2013');
-	
+		$data["model"] = $this->formatApiData();
+
 		return $data;
+	}
+
+	function formatApiData() {
+		global $api_url;
+		$api_results = json_decode(file_get_contents($api_url.'/rankings/2013'), true);
+		$path = get_stylesheet_directory_uri();
+		
+		$values = $api_results['values'];
+		foreach ($values as &$value) {
+			$value['img'] = $path . '/images/flags/' . $value['area'] . '.png';
+		}
+		$api_results['values'] = $values;
+
+		return $api_results;
 	}
 	
 	function loadFrontVisualisations() {
