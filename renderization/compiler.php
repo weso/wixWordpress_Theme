@@ -1,5 +1,5 @@
 <?php
-	require_once('lightncandy/lightncandy.php');
+	require_once(__DIR__.'/../inc/lightncandy/lightncandy.php');
 
 	class Compiler {
 		
@@ -67,4 +67,13 @@
 		}
 		
 	}
+	
+  $settingsPath = __DIR__.'/settings.json';
+
+  if (file_exists($settingsPath)) {
+  	$settings = json_decode(file_get_contents($settingsPath), true);
+	$compiler = Compiler::getInstance($settings);
+	
+  	$compiler->compileTemplates();
+  }
 ?>
