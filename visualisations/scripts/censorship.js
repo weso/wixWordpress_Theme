@@ -78,17 +78,18 @@
     // show the affected label after there's something there
     $('.sv-affected-labels').fadeIn(400);
 
+    var that = this;
     function toolTipHTML(d) {
       if (!d.country) {
-        return ['<h3>', d.id, '</h3><hr /><h4>No data available</h4>'].join('');
+        return ['<h3>', d.id, '</h3><hr /><h4>' + that.labels['sv_tooltip_legend_na'] + ' </h4>'].join('');
       }
 
-      var affected = d.stat ? 'Directly affected' : 'Not directly affected';
+      var affected = d.stat ? that.labels['sv_tooltip_legend_true'] : that.labels['sv_tooltip_legend_false'] ;
       return ['<h3>', d.id, '</h3><h4>', Utility.prettyN(d.country.itu),
               ' internet users</h4><h4 class="sv-affected-', d.stat, '">',
               affected, '</h4><hr /><table><tbody><tr><td>', d.country.censorship,
-              '</td><td>Degree of government censorship</td></tr><tr><td>', d.country.surveillance,
-              '</td><td>Degree of vulnerability to government surveillance</td></tr><tr><td>',
+              '</td><td>'+ that.labels['sv_tooltip_degree_censorship'] + '</td></tr><tr><td>', d.country.surveillance,
+              '</td><td>' + that.labels['sv_tooltip_degree_surveillance'] + '</td></tr><tr><td>',
               '</tbody</table>',
       ].join('');
     }
@@ -176,10 +177,13 @@
   // called from base.js when the proper id exists on the page
   var init = function (args, settings) {
 
+    var labels = args.labels;
+
     // create a new instance of the surveillance chart
     var surveillance = new Censorship(args);
     surveillance.id = settings.id
     surveillance.$el = settings.$el;
+    surveillance.labels = labels;
 
     // binding
     var resize = surveillance.resize.bind(surveillance),
@@ -212,6 +216,9 @@
       });
       slider.$el = $('#' + slider.id);
 
+      //Text
+      $('#' + slider.id + '> h3').html(labels['sv_degree_' + slider.name]);
+
       // register the initial values
       surveillance.metrics[slider.name] = slider.start;
     });
@@ -240,6 +247,24 @@
         surveillance.fill();
       });
     }
+
+    // fill labels for UI
+    var labelMap = {
+      'sv-legend-true': 'sv_legend_true',
+      'sv-legend-false': 'sv_legend_false',
+      'sv-legend-na': 'sv_legend_na',
+      'sv-censorship-slider-low': 'sv_censorship_slider_low',
+      'sv-censorship-slider-high': 'sv_censorship_slider_high',
+      'sv-surveillance-slider-low': 'sv_surveillance_slider_low',
+      'sv-surveillance-slider-high': 'sv_surveillance_slider_high',
+      'sv-main-tally-number': 'sv_main_tally_number',
+      'sv-main-country-number': 'sv_main_country_number'
+    }
+    _(labelMap).each(function(labelKey, selector) {
+      if (labels[labelKey]) {
+        $('#' + selector).html(labels[labelKey]); 
+      }
+    })
 
     // query topojson, then draw chart
     d3.json('bin/wi_name_countries.topojson', function(topo) {

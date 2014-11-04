@@ -1,24 +1,5 @@
 (function() {
 
-  var regionTranslation = {
-    1: 'Latin America & Caribbean',
-    2: 'Sub-Saharan Africa',
-    3: 'Europe & Central Asia',
-    4: 'Middle East & North Africa',
-    5: 'East Asia & Pacific',
-    6: 'Antarctica',
-    7: 'South Asia',
-    8: 'North America',
-  };
-
-  var econTranslation = {
-    1: 'High Income OECD',
-    2: 'High Income non-OECD',
-    3: 'Upper Middle Income',
-    4: 'Lower Middle Income',
-    5: 'Low Income'
-  };
-
   var GenderViz = function() {
     return this;
   };
@@ -65,9 +46,9 @@
       .attr('y2', height + margin[2] + margin[0] - topLabelHeight);
 
     var xLabels = [
-      {text: ['Better at supporting', 'victims'], x: max/2},
-      {text: ['Equal at', 'support and prosecution'], x: 0},
-      {text: ['Better at prosecuting', 'perpetrators'], x: -max/2}
+      {text: [this.labels["gn_xaxis_supports_1"], this.labels["gn_xaxis_supports_2"]], x: max/2},
+      {text: [this.labels["gn_xaxis_equal_1"], this.labels["gn_xaxis_equal_2"]], x: 0},
+      {text: [this.labels["gn_xaxis_prosecutes_1"], this.labels["gn_xaxis_prosecutes_2"]], x: -max/2}
     ];
 
     this.xLabels = svg.selectAll('.gn-viz-label')
@@ -98,9 +79,9 @@
     var median = (ranked.length - 1) / 2,
       yLabelStart = 115,
       yLabels = [
-        {text: 'Best score', y: 0},
-        {text: 'Median score', y: median},
-        {text: 'Worst score', y: ranked.length - 1}
+        {text: this.labels["gn_yaxis_best"], y: 0},
+        {text: this.labels["gn_yaxis_median"], y: median},
+        {text: this.labels["gn_yaxis_worst"], y: ranked.length - 1}
       ];
 
     var yLabelPaths = this.yLabelPaths = g.selectAll('.y-label')
@@ -173,11 +154,12 @@
 
     }
 
+    var that = this;
     function toolTipHTML(d) {
-      return ['<label>', d.name, '</label><hr /><table><tbody><tr><td>', regionTranslation[d.region],
-        '</td><td>Supports victims: ', d.support, '<span class="gn-score-', d.scores.support,
-        '"> (', d.scores.support, ')</span></td></tr><tr><td>', econTranslation[d.econ],
-        '</td><td>Prosecutes perpetrators: ', d.action, '<span class="gn-score-', d.scores.action,
+      return ['<label>', d.name, '</label><hr /><table><tbody><tr><td>', that.labels['region_translation_' + d.region],
+        '</td><td>' + that.labels['gn_tooltip_supports']+': ', d.support, '<span class="gn-score-', d.scores.support,
+        '"> (', d.scores.support, ')</span></td></tr><tr><td>', that.labels['econ_translation_' + d.econ],
+        '</td><td>' + that.labels['gn_tooltip_prosecutes'] + ': ', d.action, '<span class="gn-score-', d.scores.action,
         '"> (', d.scores.action, ')</span></td></tr></tbody</table>',
       ].join('');
     }
@@ -255,9 +237,8 @@
   };
 
   function init(args, viz) {
-
+    var labels = args.labels;
     var econ_region = args.economic_regional;
-    console.log(econ_region);
 
     // create new data file containing what we need
     var data = _.map(args.primary, function(d, name) {
@@ -267,9 +248,9 @@
         action: action,
         overall: (support + action) / 2,
         scores: {
-          support: singleIndicatorScore(support),
-          action: singleIndicatorScore(action),
-          overall: singleIndicatorScore((support + action)/2)
+          support: singleIndicatorScore(support, labels),
+          action: singleIndicatorScore(action, labels),
+          overall: singleIndicatorScore((support + action)/2, labels)
         },
         diff: support - action,
         name: name,
@@ -280,6 +261,7 @@
 
     // init gender viz
     var gender = new GenderViz();
+    gender.labels = args.labels;
     gender.$tooltip = $('#gn-overlay-tip');
     gender.draw(data, viz);
 
@@ -296,16 +278,28 @@
       });
     }
 
+    // fill labels for UI
+    var labelMap = {
+      'gn-main-action': 'gn_nn_main_action',
+      'gn-toggle-region': 'gn_nn_toggle_region',
+      'gn-toggle-econ': 'gn_nn_toggle_econ'
+    }
+    _(labelMap).each(function(labelKey, selector) {
+      if (labels[labelKey]) {
+        $('#' + selector).html(labels[labelKey]); 
+      }
+    })
+
     // listen for page resize
     Utility.resize.addDispatch('gender', gender.resize, gender);
   }
 
-  function singleIndicatorScore(score) {
-    return score <= 3 ? 'low' : score <= 7 ? 'medium' : 'high';
+  function singleIndicatorScore(score, labels) {
+    return score <= 3 ? labels['gn_tooltip_low'] : score <= 7 ? labels['gn_tooltip_medium'] : labels['gn_tooltip_high'];
   }
 
-  function doubleIndicatorScore(score) {
-      return score <= 6 ? 'low' : score <= 13 ? 'medium' : 'high';
+  function doubleIndicatorScore(score, labels) {
+      return score <= 6 ? labels['gn_tooltip_low'] : score <= 13 ? labels['gn_tooltip_medium'] : labels['gn_tooltip_high'];
   }
 
   function calculateFontScale(height) {
@@ -319,7 +313,6 @@
     }
     return fontSize;
   }
-
 
   window.GenderViz = init;
 

@@ -1,15 +1,9 @@
 (function() {
   "use strict";
 
-  var labels = {
-    discrimination: 'Evidence of discrimination',
-    no_discrimination: 'No evidence of discrimination',
-    law: 'Has effective law and regulations',
-    no_law: 'No effective law and regulations'
-  }
-
   var Neutrality = function(args, viz) {
     this.dataset = []
+    this.labels = args.labels;
 
     var economic_regional = _(args.economic_regional).map(function(countryVal, country) {
       return {country: country, region: countryVal.region, econ: parseInt(countryVal.econ)}
@@ -50,29 +44,30 @@
             .attr('class', 'nn-rect')
             .attr('data-name', function(d) { return d.country})
 
+
     var ne = this.svg.append('text').attr('class', 'nn-text-ne nn-text')
     ne.append('tspan').text('●').attr('class', 'nn-pos-dot')
-    ne.append('tspan').attr('x', 10).attr('dy', 0).attr('dx', -20).text(labels.no_discrimination)
+    ne.append('tspan').attr('x', 10).attr('dy', 0).attr('dx', -20).text(this.labels['nn_axis_no_discrimination'])
     ne.append('tspan').text('●').attr('dy', '20').attr('class', 'nn-pos-dot')
-    ne.append('tspan').attr('x', 0).attr('dy', '20').attr('dx', -20).text(labels.law);
+    ne.append('tspan').attr('x', 0).attr('dy', '20').attr('dx', -20).text(this.labels['nn_axis_law']);
 
     var nw = this.svg.append('text').attr('class', 'nn-text-nw nn-text')
     nw.append('tspan').text('●').attr('class', 'nn-neg-dot')
-    nw.append('tspan').attr('x', 0).attr('dy', 0).attr('dx', 20).text(labels.discrimination)
+    nw.append('tspan').attr('x', 0).attr('dy', 0).attr('dx', 20).text(this.labels['nn_axis_discrimination'])
     nw.append('tspan').text('●').attr('dy', '20').attr('class', 'nn-pos-dot')
-    nw.append('tspan').attr('x', 0).attr('dy', '20').attr('dx', 20).text(labels.law);
+    nw.append('tspan').attr('x', 0).attr('dy', '20').attr('dx', 20).text(this.labels['nn_axis_law']);
 
     var sw = this.svg.append('text').attr('class', 'nn-text-sw nn-text')
     sw.append('tspan').text('●').attr('class', 'nn-neg-dot')
-    sw.append('tspan').attr('x', 0).attr('dy', 0).attr('dx', 20).text(labels.discrimination)
+    sw.append('tspan').attr('x', 0).attr('dy', 0).attr('dx', 20).text(this.labels['nn_axis_discrimination'])
     sw.append('tspan').text('●').attr('dy', '20').attr('class', 'nn-neg-dot')
-    sw.append('tspan').attr('x', 0).attr('dy', 20).attr('dx', 20).text(labels.no_law)
+    sw.append('tspan').attr('x', 0).attr('dy', 20).attr('dx', 20).text(this.labels['nn_axis_no_law'])
 
     var se = this.svg.append('text').attr('class', 'nn-text-se nn-text')
     se.append('tspan').text('●').attr('class', 'nn-pos-dot')
-    se.append('tspan').attr('x', 0).attr('dy', 0).attr('dx', -20).text(labels.no_discrimination)
+    se.append('tspan').attr('x', 0).attr('dy', 0).attr('dx', -20).text(this.labels['nn_axis_no_discrimination'])
     se.append('tspan').text('●').attr('dy', '20').attr('class', 'nn-neg-dot')
-    se.append('tspan').attr('x', 0).attr('dy', 20).attr('dx', -20).text(labels.no_law)
+    se.append('tspan').attr('x', 0).attr('dy', 20).attr('dx', -20).text(this.labels['nn_axis_no_law'])
 
     // ********************
     // APPEND AXES
@@ -317,7 +312,10 @@
         country: d.country,
         score: d.score,
         discriminationText: discriminationText,
-        lawText: lawText
+        lawText: lawText,
+        label: that.labels['nn_tooltip_score'],
+        region: that.labels['region_translation_' + d.region],
+        econ: that.labels['econ_translation_' + d.econ]
       })).show();
 
       that.svg.selectAll('.nn-rect').attr('class','nn-rect nn-rect-hover')
@@ -347,6 +345,7 @@
   }
 
   function init(args, viz) {
+    var labels = args.labels;
 
     var neutrality = new Neutrality(args, viz);
     neutrality.$el = viz.$el;
@@ -364,6 +363,18 @@
       });
     }
     neutrality.attribute = 'region'
+
+    // fill labels for UI
+    var labelMap = {
+      'nn-main-action': 'gn_nn_main_action',
+      'nn-toggle-region': 'gn_nn_toggle_region',
+      'nn-toggle-econ': 'gn_nn_toggle_econ'
+    }
+    _(labelMap).each(function(labelKey, selector) {
+      if (labels[labelKey]) {
+        $('#' + selector).html(labels[labelKey]); 
+      }
+    })
 
     Utility.resize.addDispatch('neutrality', neutrality.resize, neutrality);
     neutrality.draw();

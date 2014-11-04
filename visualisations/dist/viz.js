@@ -7,7 +7,8 @@
     primary: 'http://desolate-caverns-3750.herokuapp.com/json/primary.json',
     net_neutrality: 'http://desolate-caverns-3750.herokuapp.com/json/net_neutrality.json',
     flags: 'http://desolate-caverns-3750.herokuapp.com/json/flags_local.json',
-    economic_regional: 'http://desolate-caverns-3750.herokuapp.com/json/economic_regional.json'
+    economic_regional: 'http://desolate-caverns-3750.herokuapp.com/json/economic_regional.json',
+    labels: 'bin/labels.json'
   };
 
   // Uses queue.js to load json async
@@ -17,14 +18,15 @@
     for (var prop in urls) {
       q.defer(d3.json, urls[prop]);
     }
-    q.await(function(error, itu, primary, neutrality, flags, economic_regional) {
+    q.await(function(error, itu, primary, neutrality, flags, economic_regional, labels) {
       // if (error) { console.log(error); }
       fn({
         itu: itu,
         primary: primary,
         neutrality: neutrality,
         flags: flags,
-        economic_regional: economic_regional
+        economic_regional: economic_regional,
+        labels: labels
       });
     });
   };
@@ -199,17 +201,18 @@ $(document).on('ready', function() {
     // show the affected label after there's something there
     $('.sv-affected-labels').fadeIn(400);
 
+    var that = this;
     function toolTipHTML(d) {
       if (!d.country) {
-        return ['<h3>', d.id, '</h3><hr /><h4>No data available</h4>'].join('');
+        return ['<h3>', d.id, '</h3><hr /><h4>' + that.labels['sv_tooltip_legend_na'] + ' </h4>'].join('');
       }
 
-      var affected = d.stat ? 'Directly affected' : 'Not directly affected';
+      var affected = d.stat ? that.labels['sv_tooltip_legend_true'] : that.labels['sv_tooltip_legend_false'] ;
       return ['<h3>', d.id, '</h3><h4>', Utility.prettyN(d.country.itu),
               ' internet users</h4><h4 class="sv-affected-', d.stat, '">',
               affected, '</h4><hr /><table><tbody><tr><td>', d.country.censorship,
-              '</td><td>Degree of government censorship</td></tr><tr><td>', d.country.surveillance,
-              '</td><td>Degree of vulnerability to government surveillance</td></tr><tr><td>',
+              '</td><td>'+ that.labels['sv_tooltip_degree_censorship'] + '</td></tr><tr><td>', d.country.surveillance,
+              '</td><td>' + that.labels['sv_tooltip_degree_surveillance'] + '</td></tr><tr><td>',
               '</tbody</table>',
       ].join('');
     }
@@ -297,10 +300,13 @@ $(document).on('ready', function() {
   // called from base.js when the proper id exists on the page
   var init = function (args, settings) {
 
+    var labels = args.labels;
+
     // create a new instance of the surveillance chart
     var surveillance = new Censorship(args);
     surveillance.id = settings.id
     surveillance.$el = settings.$el;
+    surveillance.labels = labels;
 
     // binding
     var resize = surveillance.resize.bind(surveillance),
@@ -333,6 +339,9 @@ $(document).on('ready', function() {
       });
       slider.$el = $('#' + slider.id);
 
+      //Text
+      $('#' + slider.id + '> h3').html(labels['sv_degree_' + slider.name]);
+
       // register the initial values
       surveillance.metrics[slider.name] = slider.start;
     });
@@ -362,6 +371,24 @@ $(document).on('ready', function() {
       });
     }
 
+    // fill labels for UI
+    var labelMap = {
+      'sv-legend-true': 'sv_legend_true',
+      'sv-legend-false': 'sv_legend_false',
+      'sv-legend-na': 'sv_legend_na',
+      'sv-censorship-slider-low': 'sv_censorship_slider_low',
+      'sv-censorship-slider-high': 'sv_censorship_slider_high',
+      'sv-surveillance-slider-low': 'sv_surveillance_slider_low',
+      'sv-surveillance-slider-high': 'sv_surveillance_slider_high',
+      'sv-main-tally-number': 'sv_main_tally_number',
+      'sv-main-country-number': 'sv_main_country_number'
+    }
+    _(labelMap).each(function(labelKey, selector) {
+      if (labels[labelKey]) {
+        $('#' + selector).html(labels[labelKey]); 
+      }
+    })
+
     // query topojson, then draw chart
     d3.json('bin/wi_name_countries.topojson', function(topo) {
       surveillance.topo = topojson.feature(topo, topo.objects.countries).features;
@@ -374,25 +401,6 @@ $(document).on('ready', function() {
 })();
 
 (function() {
-
-  var regionTranslation = {
-    1: 'Latin America & Caribbean',
-    2: 'Sub-Saharan Africa',
-    3: 'Europe & Central Asia',
-    4: 'Middle East & North Africa',
-    5: 'East Asia & Pacific',
-    6: 'Antarctica',
-    7: 'South Asia',
-    8: 'North America',
-  };
-
-  var econTranslation = {
-    1: 'High Income OECD',
-    2: 'High Income non-OECD',
-    3: 'Upper Middle Income',
-    4: 'Lower Middle Income',
-    5: 'Low Income'
-  };
 
   var GenderViz = function() {
     return this;
@@ -440,9 +448,9 @@ $(document).on('ready', function() {
       .attr('y2', height + margin[2] + margin[0] - topLabelHeight);
 
     var xLabels = [
-      {text: ['Better at supporting', 'victims'], x: max/2},
-      {text: ['Equal at', 'support and prosecution'], x: 0},
-      {text: ['Better at prosecuting', 'perpetrators'], x: -max/2}
+      {text: [this.labels["gn_xaxis_supports_1"], this.labels["gn_xaxis_supports_2"]], x: max/2},
+      {text: [this.labels["gn_xaxis_equal_1"], this.labels["gn_xaxis_equal_2"]], x: 0},
+      {text: [this.labels["gn_xaxis_prosecutes_1"], this.labels["gn_xaxis_prosecutes_2"]], x: -max/2}
     ];
 
     this.xLabels = svg.selectAll('.gn-viz-label')
@@ -473,9 +481,9 @@ $(document).on('ready', function() {
     var median = (ranked.length - 1) / 2,
       yLabelStart = 115,
       yLabels = [
-        {text: 'Best score', y: 0},
-        {text: 'Median score', y: median},
-        {text: 'Worst score', y: ranked.length - 1}
+        {text: this.labels["gn_yaxis_best"], y: 0},
+        {text: this.labels["gn_yaxis_median"], y: median},
+        {text: this.labels["gn_yaxis_worst"], y: ranked.length - 1}
       ];
 
     var yLabelPaths = this.yLabelPaths = g.selectAll('.y-label')
@@ -548,11 +556,12 @@ $(document).on('ready', function() {
 
     }
 
+    var that = this;
     function toolTipHTML(d) {
-      return ['<label>', d.name, '</label><hr /><table><tbody><tr><td>', regionTranslation[d.region],
-        '</td><td>Supports victims: ', d.support, '<span class="gn-score-', d.scores.support,
-        '"> (', d.scores.support, ')</span></td></tr><tr><td>', econTranslation[d.econ],
-        '</td><td>Prosecutes perpetrators: ', d.action, '<span class="gn-score-', d.scores.action,
+      return ['<label>', d.name, '</label><hr /><table><tbody><tr><td>', that.labels['region_translation_' + d.region],
+        '</td><td>' + that.labels['gn_tooltip_supports']+': ', d.support, '<span class="gn-score-', d.scores.support,
+        '"> (', d.scores.support, ')</span></td></tr><tr><td>', that.labels['econ_translation_' + d.econ],
+        '</td><td>' + that.labels['gn_tooltip_prosecutes'] + ': ', d.action, '<span class="gn-score-', d.scores.action,
         '"> (', d.scores.action, ')</span></td></tr></tbody</table>',
       ].join('');
     }
@@ -630,9 +639,8 @@ $(document).on('ready', function() {
   };
 
   function init(args, viz) {
-
+    var labels = args.labels;
     var econ_region = args.economic_regional;
-    console.log(econ_region);
 
     // create new data file containing what we need
     var data = _.map(args.primary, function(d, name) {
@@ -642,9 +650,9 @@ $(document).on('ready', function() {
         action: action,
         overall: (support + action) / 2,
         scores: {
-          support: singleIndicatorScore(support),
-          action: singleIndicatorScore(action),
-          overall: singleIndicatorScore((support + action)/2)
+          support: singleIndicatorScore(support, labels),
+          action: singleIndicatorScore(action, labels),
+          overall: singleIndicatorScore((support + action)/2, labels)
         },
         diff: support - action,
         name: name,
@@ -655,6 +663,7 @@ $(document).on('ready', function() {
 
     // init gender viz
     var gender = new GenderViz();
+    gender.labels = args.labels;
     gender.$tooltip = $('#gn-overlay-tip');
     gender.draw(data, viz);
 
@@ -671,16 +680,28 @@ $(document).on('ready', function() {
       });
     }
 
+    // fill labels for UI
+    var labelMap = {
+      'gn-main-action': 'gn_nn_main_action',
+      'gn-toggle-region': 'gn_nn_toggle_region',
+      'gn-toggle-econ': 'gn_nn_toggle_econ'
+    }
+    _(labelMap).each(function(labelKey, selector) {
+      if (labels[labelKey]) {
+        $('#' + selector).html(labels[labelKey]); 
+      }
+    })
+
     // listen for page resize
     Utility.resize.addDispatch('gender', gender.resize, gender);
   }
 
-  function singleIndicatorScore(score) {
-    return score <= 3 ? 'low' : score <= 7 ? 'medium' : 'high';
+  function singleIndicatorScore(score, labels) {
+    return score <= 3 ? labels['gn_tooltip_low'] : score <= 7 ? labels['gn_tooltip_medium'] : labels['gn_tooltip_high'];
   }
 
-  function doubleIndicatorScore(score) {
-      return score <= 6 ? 'low' : score <= 13 ? 'medium' : 'high';
+  function doubleIndicatorScore(score, labels) {
+      return score <= 6 ? labels['gn_tooltip_low'] : score <= 13 ? labels['gn_tooltip_medium'] : labels['gn_tooltip_high'];
   }
 
   function calculateFontScale(height) {
@@ -695,7 +716,6 @@ $(document).on('ready', function() {
     return fontSize;
   }
 
-
   window.GenderViz = init;
 
 
@@ -704,15 +724,9 @@ $(document).on('ready', function() {
 (function() {
   "use strict";
 
-  var labels = {
-    discrimination: 'Evidence of discrimination',
-    no_discrimination: 'No evidence of discrimination',
-    law: 'Has effective law and regulations',
-    no_law: 'No effective law and regulations'
-  }
-
   var Neutrality = function(args, viz) {
     this.dataset = []
+    this.labels = args.labels;
 
     var economic_regional = _(args.economic_regional).map(function(countryVal, country) {
       return {country: country, region: countryVal.region, econ: parseInt(countryVal.econ)}
@@ -753,29 +767,30 @@ $(document).on('ready', function() {
             .attr('class', 'nn-rect')
             .attr('data-name', function(d) { return d.country})
 
+
     var ne = this.svg.append('text').attr('class', 'nn-text-ne nn-text')
     ne.append('tspan').text('●').attr('class', 'nn-pos-dot')
-    ne.append('tspan').attr('x', 10).attr('dy', 0).attr('dx', -20).text(labels.no_discrimination)
+    ne.append('tspan').attr('x', 10).attr('dy', 0).attr('dx', -20).text(this.labels['nn_axis_no_discrimination'])
     ne.append('tspan').text('●').attr('dy', '20').attr('class', 'nn-pos-dot')
-    ne.append('tspan').attr('x', 0).attr('dy', '20').attr('dx', -20).text(labels.law);
+    ne.append('tspan').attr('x', 0).attr('dy', '20').attr('dx', -20).text(this.labels['nn_axis_law']);
 
     var nw = this.svg.append('text').attr('class', 'nn-text-nw nn-text')
     nw.append('tspan').text('●').attr('class', 'nn-neg-dot')
-    nw.append('tspan').attr('x', 0).attr('dy', 0).attr('dx', 20).text(labels.discrimination)
+    nw.append('tspan').attr('x', 0).attr('dy', 0).attr('dx', 20).text(this.labels['nn_axis_discrimination'])
     nw.append('tspan').text('●').attr('dy', '20').attr('class', 'nn-pos-dot')
-    nw.append('tspan').attr('x', 0).attr('dy', '20').attr('dx', 20).text(labels.law);
+    nw.append('tspan').attr('x', 0).attr('dy', '20').attr('dx', 20).text(this.labels['nn_axis_law']);
 
     var sw = this.svg.append('text').attr('class', 'nn-text-sw nn-text')
     sw.append('tspan').text('●').attr('class', 'nn-neg-dot')
-    sw.append('tspan').attr('x', 0).attr('dy', 0).attr('dx', 20).text(labels.discrimination)
+    sw.append('tspan').attr('x', 0).attr('dy', 0).attr('dx', 20).text(this.labels['nn_axis_discrimination'])
     sw.append('tspan').text('●').attr('dy', '20').attr('class', 'nn-neg-dot')
-    sw.append('tspan').attr('x', 0).attr('dy', 20).attr('dx', 20).text(labels.no_law)
+    sw.append('tspan').attr('x', 0).attr('dy', 20).attr('dx', 20).text(this.labels['nn_axis_no_law'])
 
     var se = this.svg.append('text').attr('class', 'nn-text-se nn-text')
     se.append('tspan').text('●').attr('class', 'nn-pos-dot')
-    se.append('tspan').attr('x', 0).attr('dy', 0).attr('dx', -20).text(labels.no_discrimination)
+    se.append('tspan').attr('x', 0).attr('dy', 0).attr('dx', -20).text(this.labels['nn_axis_no_discrimination'])
     se.append('tspan').text('●').attr('dy', '20').attr('class', 'nn-neg-dot')
-    se.append('tspan').attr('x', 0).attr('dy', 20).attr('dx', -20).text(labels.no_law)
+    se.append('tspan').attr('x', 0).attr('dy', 20).attr('dx', -20).text(this.labels['nn_axis_no_law'])
 
     // ********************
     // APPEND AXES
@@ -1020,7 +1035,10 @@ $(document).on('ready', function() {
         country: d.country,
         score: d.score,
         discriminationText: discriminationText,
-        lawText: lawText
+        lawText: lawText,
+        label: that.labels['nn_tooltip_score'],
+        region: that.labels['region_translation_' + d.region],
+        econ: that.labels['econ_translation_' + d.econ]
       })).show();
 
       that.svg.selectAll('.nn-rect').attr('class','nn-rect nn-rect-hover')
@@ -1050,6 +1068,7 @@ $(document).on('ready', function() {
   }
 
   function init(args, viz) {
+    var labels = args.labels;
 
     var neutrality = new Neutrality(args, viz);
     neutrality.$el = viz.$el;
@@ -1067,6 +1086,18 @@ $(document).on('ready', function() {
       });
     }
     neutrality.attribute = 'region'
+
+    // fill labels for UI
+    var labelMap = {
+      'nn-main-action': 'gn_nn_main_action',
+      'nn-toggle-region': 'gn_nn_toggle_region',
+      'nn-toggle-econ': 'gn_nn_toggle_econ'
+    }
+    _(labelMap).each(function(labelKey, selector) {
+      if (labels[labelKey]) {
+        $('#' + selector).html(labels[labelKey]); 
+      }
+    })
 
     Utility.resize.addDispatch('neutrality', neutrality.resize, neutrality);
     neutrality.draw();

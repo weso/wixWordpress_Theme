@@ -1,0 +1,69 @@
+{
+	"sv_main_tally_number": "Internet users and ",
+	"sv_main_country_number": "countries directly affected using these filters", 
+
+	"sv_degree_censorship": "Degree of Government Censorship",
+	"sv_degree_surveillance": "Degree of Vulnerability to Government Surveillance",
+
+	"sv_tooltip_degree_censorship": "Degree of government censorship",
+	"sv_tooltip_degree_surveillance": "Degree of vulnerability to government surveillance",
+
+	"sv_censorship_slider_low": "Low",
+	"sv_censorship_slider_high": "High",
+
+	"sv_surveillance_slider_low": "Low",
+	"sv_surveillance_slider_high": "High",
+
+	"sv_legend_true": "Directly Affected",
+	"sv_legend_false": "Not Directly Affected",
+	"sv_legend_na": "No data",
+
+	"sv_tooltip_legend_true": "Directly affected",
+	"sv_tooltip_legend_false": "Not directly affected",
+	"sv_tooltip_legend_na": "No data available",
+
+	"gn_nn_main_action": "Connect Countries By",
+	"gn_nn_toggle_region": "Region",
+	"gn_nn_toggle_econ": "Economic level",
+
+	"gn_tooltip_supports": "Supports victims",
+	"gn_tooltip_prosecutes": "Prosecutes perpetrators",
+
+	"gn_xaxis_supports_1": "Better at supporting",
+	"gn_xaxis_supports_2": "victims",
+	"gn_xaxis_equal_1": "Equal at",
+	"gn_xaxis_equal_2": "support and prosecution",
+	"gn_xaxis_prosecutes_1": "Better at prosecuting",
+	"gn_xaxis_prosecutes_2": "perpetrators",
+
+	"gn_yaxis_best": "Best score",
+	"gn_yaxis_median": "Median score",
+	"gn_yaxis_worst": "Worst score",
+
+	"gn_tooltip_low": "low",
+	"gn_tooltip_medium": "medium",
+	"gn_tooltip_high": "high",
+
+	"nn_axis_discrimination": "Evidence of discrimination",
+	"nn_axis_no_discrimination": "No evidence of discrimination",
+	"nn_axis_law": "Has effective law and regulations",
+	"nn_axis_no_law": "No effective law and regulations",
+
+	"nn_tooltip_score": "Degree of ISP transparency",
+
+    "econ_translation_1": "High Income OECD",
+    "econ_translation_2": "High Income non-OECD",
+    "econ_translation_3": "Upper Middle Income",
+    "econ_translation_4": "Lower Middle Income",
+    "econ_translation_5": "Low Income",
+
+    "region_translation_1": "Latin America & Caribbean",
+    "region_translation_2": "Sub-Saharan Africa",
+    "region_translation_3": "Europe & Central Asia",
+    "region_translation_4": "Middle East & North Africa",
+    "region_translation_5": "East Asia & Pacific",
+    "region_translation_6": "Antarctica",
+    "region_translation_7": "South Asia",
+    "region_translation_8": "North America"
+  
+}
