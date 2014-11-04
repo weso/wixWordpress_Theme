@@ -671,41 +671,136 @@ div.goog-te-menu2 {
     background-image: url(../images/world-light.png); } }
 /* ILLUSTRATIONS */
 div.illustrations {
-  position: relative; }
-  div.illustrations img {
-    display: none; }
-  div.illustrations img:first-of-type {
+  position: relative;
+  background-color: #4ca3a3 !important; }
+  @media (min-width: 60em) {
+    div.illustrations {
+      background-color: transparent !important; } }
+  div.illustrations article:nth-child(3) header {
+    background-color: #31659a; }
+    @media (min-width: 67em) {
+      div.illustrations article:nth-child(3) header {
+        background-color: transparent; } }
+  div.illustrations article {
+    display: none;
+    width: 100%; }
+    div.illustrations article img {
+      width: 100%;
+      height: 100%; }
+    div.illustrations article header {
+      position: absolute;
+      left: 60%;
+      top: 2.2em;
+      width: 40%;
+      color: white !important;
+      font-size: 0.9em; }
+      @media (min-width: 50em) {
+        div.illustrations article header {
+          top: 20%; } }
+      @media (min-width: 67em) {
+        div.illustrations article header {
+          top: 30%; } }
+      @media (min-width: 60em) {
+        div.illustrations article header {
+          font-size: 1.1em; } }
+      div.illustrations article header h1 {
+        color: #febd4d !important;
+        font-size: 1.4em !important;
+        width: 80%;
+        margin: 0 !important;
+        text-align: left !important; }
+        @media (min-width: 50em) {
+          div.illustrations article header h1 {
+            font-size: 1.6em !important; } }
+        @media (min-width: 60em) {
+          div.illustrations article header h1 {
+            font-size: 2em !important; } }
+        div.illustrations article header h1 strong {
+          font-size: 1em;
+          font-weight: normal; }
+          @media (min-width: 50em) {
+            div.illustrations article header h1 strong {
+              font-size: 1.2em; } }
+          @media (min-width: 67em) {
+            div.illustrations article header h1 strong {
+              font-size: 1.5em; } }
+      div.illustrations article header h2 {
+        font-size: 1.2em !important;
+        margin: 0 !important;
+        text-align: left !important; }
+        @media (min-width: 50em) {
+          div.illustrations article header h2 {
+            font-size: 1.4em !important; } }
+        @media (min-width: 67em) {
+          div.illustrations article header h2 {
+            font-size: 1.8em !important; } }
+        div.illustrations article header h2 strong {
+          font-size: 1em; }
+          @media (min-width: 50em) {
+            div.illustrations article header h2 strong {
+              font-size: 1.6em !important; } }
+          @media (min-width: 67em) {
+            div.illustrations article header h2 strong {
+              font-size: 2.3em !important; } }
+      div.illustrations article header ol {
+        overflow: hidden;
+        padding: 0;
+        margin-top: 1em; }
+        div.illustrations article header ol li {
+          float: left;
+          width: 40%;
+          text-align: left; }
+      div.illustrations article header p {
+        text-align: left !important;
+        color: white !important;
+        width: 80%;
+        margin: 1em 0 0 0 !important; }
+        @media (min-width: 60em) {
+          div.illustrations article header p {
+            margin: 1em 0 0.1em 0 !important; } }
+  div.illustrations article:first-of-type {
     display: block; }
-  div.illustrations section.illustration-buttons {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 10%;
-    height: 100%;
-    text-align: right;
-    padding-top: 1em;
-    padding-right: 1em; }
-    div.illustrations section.illustration-buttons a.circle {
-      font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  div.illustrations aside.illustration-buttons {
+    width: 100%;
+    text-align: center;
+    overflow: hidden; }
+    @media (min-width: 60em) {
+      div.illustrations aside.illustration-buttons {
+        padding-top: 3em;
+        padding-right: 1em;
+        width: 10%;
+        height: 100%;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        text-align: right; } }
+    div.illustrations aside.illustration-buttons a.circle {
       display: inline-block;
+      margin-left: 0.5em;
+      margin-right: 0.5em;
+      margin-bottom: 0.2em;
+      font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
       text-decoration: none;
-      font-size: 2.6em;
+      font-size: 2em;
       width: 1.8em;
       height: 1.8em;
       padding-top: 0.1em;
       border-radius: 50%;
-      margin-bottom: 0.5em;
-      margin-top: 0.2em;
       background-color: rgba(20, 20, 20, 0.4);
       color: #ddd;
       text-align: center;
-      box-shadow: inset 0 0 0.3em #555;
       border: 1px solid #666; }
-    div.illustrations section.illustration-buttons a.selected {
+      @media (min-width: 60em) {
+        div.illustrations aside.illustration-buttons a.circle {
+          margin: 0.2em 0 0.5em 0; } }
+      @media (min-width: 67em) {
+        div.illustrations aside.illustration-buttons a.circle {
+          font-size: 2.6em; } }
+    div.illustrations aside.illustration-buttons a.selected {
       background-color: #febd4d;
       color: #444;
       box-shadow: none;
-      border: none; }
+      border: 1px solid transparent; }
 
 /* ACCORDION */
 div.accordion {
@@ -2118,5 +2213,9 @@ h2 {
 
 a:hover {
   text-decoration: underline; }
+
+ol {
+  list-style: decimal !important;
+  list-style-position: inside !important; }
 
 /*# sourceMappingURL=main.css.map */

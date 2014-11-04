@@ -1,7 +1,7 @@
 (function() {
-  var accordionCallbacks, accordionTabs, button, buttons, count, empowermentCallback, genderTabCallback, host, i, illustrations, indicator1, indicator2, indicator3, indicator4, interval, neutralityTabCallback, privacyCallback, renderEmpowermentTab, renderGenderTab, renderNeutralityTab, renderPrivacyTab, setPercentage, tab, url, _accordion, _accordionTabs, _i, _j, _k, _len, _len1, _ref;
+  var accordionCallbacks, accordionTabs, button, buttons, count, empowermentCallback, genderTabCallback, host, illustrations, indicator1, indicator2, indicator3, indicator4, interval, loadAccordionTabs, loadTabsData, neutralityTabCallback, privacyCallback, renderEmpowermentTab, renderGenderTab, renderNeutralityTab, renderPrivacyTab, resize, setPercentage, tab, url, _accordion, _accordionTabs, _i, _j, _len, _len1;
 
-  illustrations = document.querySelectorAll(".illustrations img");
+  illustrations = document.querySelectorAll(".illustrations article");
 
   buttons = document.querySelectorAll(".illustration-buttons a");
 
@@ -114,114 +114,136 @@
 
   accordionCallbacks = [neutralityTabCallback, empowermentCallback, genderTabCallback, privacyCallback];
 
+  this.tabsData = null;
+
   for (_j = 0, _len1 = _accordionTabs.length; _j < _len1; _j++) {
     tab = _accordionTabs[_j];
     accordionTabs.unshift(tab);
   }
 
-  for (i = _k = 0, _ref = accordionTabs.length - 1; 0 <= _ref ? _k <= _ref : _k >= _ref; i = 0 <= _ref ? ++_k : --_k) {
-    tab = accordionTabs[i];
-    tab.closedPosition = i === accordionTabs.length - 1 ? 0 : 100 - (i + 1) * 10;
-    tab.openedPosition = (accordionTabs.length - 1 - i) * 10;
-    tab.touched = false;
-    tab.tabs = accordionTabs;
-    tab.index = i;
-    tab.position = void 0;
-    tab.opened = void 0;
-    tab.touchable = void 0;
-    tab.close = function() {
-      this.setPosition(this.closedPosition + "%");
-      this.opened = false;
-      return this.position = this.closedPosition;
-    };
-    tab.closeWithIncrement = function(increment) {
-      this.setPosition(increment + "%");
-      this.opened = false;
-      return this.position = increment;
-    };
-    tab.open = function() {
-      this.setPosition(this.openedPosition + "%");
-      this.opened = true;
-      return this.position = this.openedPosition;
-    };
-    tab.isMobile = function() {
-      return this.offsetWidth === _accordion.offsetWidth;
-    };
-    tab.setPosition = function(value) {
-      if (this.isMobile()) {
-        return this.style.bottom = value;
-      } else {
-        return this.style.right = value;
-      }
-    };
-    tab.setInitialPosition = function() {
-      if (this.position === void 0) {
+  loadAccordionTabs = function() {
+    var i, _k, _ref, _results;
+    _results = [];
+    for (i = _k = 0, _ref = accordionTabs.length - 1; 0 <= _ref ? _k <= _ref : _k >= _ref; i = 0 <= _ref ? ++_k : --_k) {
+      tab = accordionTabs[i];
+      tab.closedPosition = i === accordionTabs.length - 1 ? 0 : 100 - (i + 1) * 10;
+      tab.openedPosition = (accordionTabs.length - 1 - i) * 10;
+      tab.touched = false;
+      tab.tabs = accordionTabs;
+      tab.index = i;
+      tab.position = void 0;
+      tab.opened = void 0;
+      tab.touchable = void 0;
+      tab.close = function() {
+        this.setPosition(this.closedPosition + "%");
+        this.opened = false;
+        return this.position = this.closedPosition;
+      };
+      tab.closeWithIncrement = function(increment) {
+        this.setPosition(increment + "%");
+        this.opened = false;
+        return this.position = increment;
+      };
+      tab.open = function() {
+        this.setPosition(this.openedPosition + "%");
+        this.opened = true;
+        return this.position = this.openedPosition;
+      };
+      tab.isMobile = function() {
+        return this.offsetWidth === _accordion.offsetWidth;
+      };
+      tab.setPosition = function(value) {
         if (this.isMobile()) {
-          this.opened = this.index === 0;
-          this.position = this.openedPosition;
-          return this.touchable = this.index !== accordionTabs.length - 1;
+          return this.style.bottom = value;
         } else {
-          this.opened = this.index === accordionTabs.length - 1;
-          this.position = this.opened ? this.openedPosition : this.closedPosition;
-          return this.touchable = !this.opened;
+          return this.style.right = value;
         }
-      }
-    };
-    tab.onclick = function() {
-      var increment, position, tabs, _l, _ref1;
-      this.setInitialPosition();
-      if (this.opened) {
-        return;
-      }
-      this.isMobile();
-      if (!this.openedTimes) {
-        this.openedTimes = 0;
-      }
-      this.openedTimes = this.openedTimes + 1;
-      tabs = this.tabs;
-      position = tabs.indexOf(this);
-      for (i = _l = 0, _ref1 = position - 1; 0 <= _ref1 ? _l <= _ref1 : _l >= _ref1; i = 0 <= _ref1 ? ++_l : --_l) {
-        if (i >= 0) {
-          tabs[i].close();
+      };
+      tab.setInitialPosition = function() {
+        if (this.position === void 0) {
+          if (this.isMobile()) {
+            this.opened = this.index === 0;
+            this.position = this.openedPosition;
+            return this.touchable = this.index !== accordionTabs.length - 1;
+          } else {
+            this.opened = this.index === accordionTabs.length - 1;
+            this.position = this.opened ? this.openedPosition : this.closedPosition;
+            return this.touchable = !this.opened;
+          }
         }
-      }
-      this.open();
-      increment = this.openedPosition;
-      count = 1;
-      i = position + 1;
-      while (i < tabs.length) {
-        tabs[i].closeWithIncrement(increment - count * 10);
-        count++;
-        i++;
-      }
-      if (this.openedTimes === 1 && accordionCallbacks[this.index]) {
-        return accordionCallbacks[this.index].call();
-      }
-    };
-    tab.onmouseenter = function() {
-      var position;
-      this.setInitialPosition();
-      if (!this.touchable || this.touched || this.opened) {
-        return;
-      }
-      this.touched = true;
-      position = this.position - 2;
-      return this.setPosition(position + "%");
-    };
-    tab.onmouseout = function() {
-      this.setInitialPosition();
-      if (!this.touched) {
-        return;
-      }
-      this.touched = false;
-      return this.setPosition(this.position + "%");
-    };
+      };
+      tab.onclick = function() {
+        var increment, position, tabs, _l, _ref1;
+        this.setInitialPosition();
+        if (this.opened) {
+          return;
+        }
+        this.isMobile();
+        if (!this.openedTimes) {
+          this.openedTimes = 0;
+        }
+        this.openedTimes = this.openedTimes + 1;
+        tabs = this.tabs;
+        position = tabs.indexOf(this);
+        for (i = _l = 0, _ref1 = position - 1; 0 <= _ref1 ? _l <= _ref1 : _l >= _ref1; i = 0 <= _ref1 ? ++_l : --_l) {
+          if (i >= 0) {
+            tabs[i].close();
+          }
+        }
+        this.open();
+        increment = this.openedPosition;
+        count = 1;
+        i = position + 1;
+        while (i < tabs.length) {
+          tabs[i].closeWithIncrement(increment - count * 10);
+          count++;
+          i++;
+        }
+        if (this.openedTimes === 1 && accordionCallbacks[this.index]) {
+          return accordionCallbacks[this.index].call();
+        }
+      };
+      tab.onmouseenter = function() {
+        var position;
+        this.setInitialPosition();
+        if (!this.touchable || this.touched || this.opened) {
+          return;
+        }
+        this.touched = true;
+        position = this.position - 2;
+        return this.setPosition(position + "%");
+      };
+      _results.push(tab.onmouseout = function() {
+        this.setInitialPosition();
+        if (!this.touched) {
+          return;
+        }
+        this.touched = false;
+        return this.setPosition(this.position + "%");
+      });
+    }
+    return _results;
+  };
+
+  loadAccordionTabs();
+
+  resize = function() {
+    loadAccordionTabs();
+    if (this.tabsData) {
+      return loadTabsData(this.tabsData);
+    }
+  };
+
+  if (window.attachEvent) {
+    window.attachEvent("onresize", resize);
+  } else {
+    window.addEventListener("resize", resize, false);
   }
 
   interval = setInterval(function() {
-    var number1, number2, _l, _results;
+    var i, number1, number2, _k, _results;
     _results = [];
-    for (i = _l = 0; _l <= 4; i = ++_l) {
+    for (i = _k = 0; _k <= 4; i = ++_k) {
       number1 = Math.floor(Math.random() * 10);
       number2 = Math.floor(Math.random() * 10);
       _results.push(setPercentage("#tab" + i, "" + number1 + number2));
@@ -229,13 +251,13 @@
     return _results;
   }, 40);
 
-  indicator1 = document.getElementById("home-header-0-indicator").value;
+  indicator1 = document.getElementById("home-header-3-indicator").value;
 
-  indicator2 = document.getElementById("home-header-1-indicator").value;
+  indicator2 = document.getElementById("home-header-2-indicator").value;
 
-  indicator3 = document.getElementById("home-header-2-indicator").value;
+  indicator3 = document.getElementById("home-header-1-indicator").value;
 
-  indicator4 = document.getElementById("home-header-3-indicator").value;
+  indicator4 = document.getElementById("home-header-0-indicator").value;
 
   host = this.settings.server.url;
 
@@ -249,6 +271,11 @@
   }
 
   this.getDataCallback = function(data) {
+    this.tabsData = data;
+    return loadTabsData(data);
+  };
+
+  loadTabsData = function(data) {
     clearInterval(interval);
     renderNeutralityTab(data.observations1, data.percentage1);
     renderEmpowermentTab(data.observations2, data.percentage2);
@@ -268,12 +295,13 @@
   };
 
   renderNeutralityTab = function(countries, percentage) {
-    var path, paths, tendency, _l, _len2, _results;
+    var path, paths, tendency, _k, _len2, _results;
     tendency = document.getElementById("home-header-0-tendency").value;
     if (parseInt(tendency) === -1) {
       percentage = 100 - percentage;
     }
     setPercentage("#tab1", percentage);
+    document.getElementById("map").innerHTML = "";
     wesCountry.maps.createMap({
       container: '#map',
       "borderWidth": 0,
@@ -290,15 +318,15 @@
     });
     paths = document.querySelectorAll("#map .land-group");
     _results = [];
-    for (_l = 0, _len2 = paths.length; _l < _len2; _l++) {
-      path = paths[_l];
+    for (_k = 0, _len2 = paths.length; _k < _len2; _k++) {
+      path = paths[_k];
       _results.push(path.style.opacity = 0.3);
     }
     return _results;
   };
 
   renderEmpowermentTab = function(observations, percentage) {
-    var circle, circleSize, container, newCircle, observation, r, sorter, svg, tendency, valueCircle, _l, _len2, _ref1, _results;
+    var circle, circleSize, circles, container, newCircle, observation, r, sorter, svg, tendency, valueCircle, _k, _l, _len2, _len3, _ref, _results;
     tendency = document.getElementById("home-header-1-tendency").value;
     if (parseInt(tendency) === -1) {
       percentage = 100 - percentage;
@@ -320,8 +348,13 @@
     circle = document.querySelector(".infographic-circles .model");
     container = document.getElementById("infographic-circles");
     circleSize = container.offsetWidth * 0.8 / 24;
+    circles = document.querySelector(".infographic-circles .circle");
+    for (_k = 0, _len2 = circles.length; _k < _len2; _k++) {
+      circle = circles[_k];
+      container.removeChild(circle);
+    }
     _results = [];
-    for (_l = 0, _len2 = observations.length; _l < _len2; _l++) {
+    for (_l = 0, _len3 = observations.length; _l < _len3; _l++) {
       observation = observations[_l];
       newCircle = circle.cloneNode(true);
       newCircle.setAttribute("class", "circle");
@@ -334,19 +367,29 @@
       r = r / 2;
       valueCircle.setAttribute("data-r", "" + r);
       valueCircle.setAttribute("r", "0");
-      _results.push((_ref1 = newCircle.querySelector(".country")) != null ? _ref1.innerHTML = observation.area : void 0);
+      _results.push((_ref = newCircle.querySelector(".country")) != null ? _ref.innerHTML = observation.area : void 0);
     }
     return _results;
   };
 
   renderGenderTab = function(percentage) {
-    var container, element, icon, iconSrc, img, p, row, tendency, _l, _results;
+    var container, element, icon, iconSrc, img, p, ps, row, tendency, _k, _l, _len2, _ref, _results;
     tendency = document.getElementById("home-header-2-tendency").value;
     if (parseInt(tendency) === -1) {
       percentage = 100 - percentage;
     }
     setPercentage("#tab3", percentage);
+    if ((_ref = document.getElementById("gender-percentage")) != null) {
+      if (_ref.innerHTML == null) {
+        _ref.innerHTML = "" + percentage + "%";
+      }
+    }
     container = document.querySelector(".infographic-percentage");
+    ps = document.querySelectorAll(".infographic-percentage p");
+    for (_k = 0, _len2 = ps.length; _k < _len2; _k++) {
+      p = ps[_k];
+      container.removeChild(p);
+    }
     icon = document.querySelector(".infographic-icon");
     iconSrc = icon.src;
     count = 1;
@@ -373,22 +416,27 @@
   };
 
   renderPrivacyTab = function(percentage) {
-    var pie, tendency;
+    var pie, tendency, _ref;
     tendency = document.getElementById("home-header-3-tendency").value;
     if (parseInt(tendency) === -1) {
       percentage = 100 - percentage;
     }
     setPercentage("#tab4", percentage);
+    if ((_ref = document.getElementById("privacy-percentage")) != null) {
+      if (_ref.innerHTML == null) {
+        _ref.innerHTML = "" + percentage + "%";
+      }
+    }
     pie = document.getElementById("world-pie");
     return pie.setAttribute("percentage", percentage);
   };
 
   setPercentage = function(article, percentage) {
-    var label, labels, _l, _len2, _results;
+    var label, labels, _k, _len2, _results;
     labels = document.querySelectorAll("" + article + " strong.percentage");
     _results = [];
-    for (_l = 0, _len2 = labels.length; _l < _len2; _l++) {
-      label = labels[_l];
+    for (_k = 0, _len2 = labels.length; _k < _len2; _k++) {
+      label = labels[_k];
       _results.push(label.innerHTML = "" + percentage + "%");
     }
     return _results;
