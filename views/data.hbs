@@ -5,40 +5,44 @@
     <aside class="left-bar absolute">
       <h1>{{#labels}}{{data_title}}{{/labels}}</h1>
       <div class="select-box first-box">
-        <abbr class="help" title='{{#labels}}{{data_indicator_help}}{{/labels}}'><i class="fa fa-info-circle fa-2x"></i></abbr>
-        <div class="circle-number">1</div>
-        <h2>{{#labels}}{{data_select_indicator}}{{/labels}}</h2>
-        <div class="indicator-selector">
-          <select id="indicator-select">
-          </select>
+        <div>
+          <abbr class="help" title='{{#labels}}{{data_indicator_help}}{{/labels}}'><i class="fa fa-info-circle fa-2x"></i></abbr>
+          <div class="circle-number">1</div>
+          <h2>{{#labels}}{{data_select_indicator}}{{/labels}}</h2>
+          <div class="indicator-selector">
+            <select id="indicator-select">
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="down-arrow">
-        <i class="fa fa-angle-down fa-5x"></i>
+        <img alt="" src="{{path}}/images/down-arrow.png" />
       </div>
       <div class="select-box second-box">
-        <abbr class="help" title='{{#labels}}{{data_year_help}}{{/labels}}'><i class="fa fa-info-circle fa-2x"></i></abbr>
-        <div class="circle-number">2</div>
-        <h2>{{#labels}}{{data_choose_year}}{{/labels}}</h2>
-        <div id="timeline"></div>
-      </div>
-      <div class="down-arrow">
-        <i class="fa fa-angle-down fa-5x"></i>
+        <img alt="" src="{{path}}/images/up-arrow.png" />
+        <div>
+          <abbr class="help" title='{{#labels}}{{data_year_help}}{{/labels}}'><i class="fa fa-info-circle fa-2x"></i></abbr>
+          <div class="circle-number">2</div>
+          <h2>{{#labels}}{{data_choose_year}}{{/labels}}</h2>
+          <div id="timeline"></div>
+        </div>
+        <img alt="" src="{{path}}/images/down-arrow.png" />
       </div>
       <div class="select-box third-box">
-        <abbr class="help" title='{{#labels}}{{data_country_help}}{{/labels}}'><i class="fa fa-info-circle fa-2x"></i></abbr>
-        <div class="circle-number">3</div>
-        <h2>{{#labels}}{{data_pick_countries}}{{/labels}}</h2>
-        <div class="country-box">
-          <div id="country-selector" class="selector"></div>
+        <img alt="" src="{{path}}/images/up-arrow.png" />
+        <div>
+          <abbr class="help" title='{{#labels}}{{data_country_help}}{{/labels}}'><i class="fa fa-info-circle fa-2x"></i></abbr>
+          <div class="circle-number">3</div>
+          <h2>{{#labels}}{{data_pick_countries}}{{/labels}}</h2>
+          <div class="country-box">
+            <div id="country-selector" class="selector"></div>
+          </div>
         </div>
       </div>
       <div class="bar"></div>
     </aside>
     <section class="right-content about-articles">
-      <p><span>{{#labels}}{{data_description}}{{/labels}}</p>
       <p class="downloads"><a href="{{host}}/downloads"><i class="fa fa-download"></i> {{#labels}}{{data_download}}{{/labels}}</a></p>
-
+      <p><span>{{#labels}}{{data_description}}{{/labels}}</p>
+        
       <div class="data-box map-box">
         <div id="map-view">
           <header>
@@ -52,7 +56,7 @@
           </header>
           <div class="charts-view charts-view-map">
             <div id="map" class="map first"></div>
-            <div id="ranking" class="map second notranslate"></div>
+            <div id="ranking-chart" class="map second notranslate"></div>
           </div>
         </div>
         <div id="country-view">
@@ -78,11 +82,11 @@
       <div class="middle-section">
         <div class="box-mini">
           <p>{{#labels}}{{data_higher}}{{/labels}}</p>
-          <p id="higher" class="value"></p>
+          <p id="higher" class="value higher-lower"></p>
         </div>
         <div class="box-mini">
           <p>{{#labels}}{{data_lower}}{{/labels}}</p>
-          <p id="lower" class="value"></p>
+          <p id="lower" class="value higher-lower"></p>
         </div>
         <div class="box-mini">
           <p>{{#labels}}{{data_mean}}{{/labels}}</p>
@@ -98,14 +102,13 @@
           <header>
             <h2>{{#labels}}{{data_extra_info}}{{/labels}}</h2>
           </header>
-          <table id="data-table" class="sortable full-ranking">
+          <table id="ranking" class="full-ranking">
             <thead>
             <tr class="row-1 odd" role="row">
               <th data-sort-type="text">{{#labels}}{{data_country}}{{/labels}}</th>
               <th data-sort-type="number">{{#labels}}{{data_rank}}{{/labels}}</th>
               <th data-sort-type="number">{{#labels}}{{data_value}}{{/labels}}</th>
             </thead>
-            <tbody></tbody>
           </table>
         </div>
       </div>

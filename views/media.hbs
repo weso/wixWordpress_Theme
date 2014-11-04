@@ -24,11 +24,19 @@
       <article class="text-article" id="visualisations">
         <h1>{{#labels}}{{media_centre_section_3}}{{/labels}}</h1>
         {{#data.visualisations}}
-          <h2>{{caption}}</h2>
-          <iframe src="{{url}}"></iframe>
-          <p class="open">
-            <a href="{{url}}" target="_blank">Open in a new window</a>
-          </p>
+          <h2 id="{{id}}">{{caption}}</h2>
+          <div class="visualisation" data-anchor="{{id}}">
+            <p class="esc">Press ESC to close</p>
+            <div class="expand">
+              <a href="javascript:void(0)" title="Maximise">
+                <i class="fa fa-expand"></i>
+              </a>
+            </div>
+            <iframe src="{{url}}"></iframe>
+            <p class="open">
+              <a href="{{url}}" target="_blank">Open in a new window</a>
+            </p>
+          </div>
         {{/data.visualisations}}
         {{{data.media.visualisations}}}
       </article>
@@ -39,4 +47,5 @@
     </section>
   </div>
   <script src="{{path}}/scripts/left-bar.js"></script>
+  <script src="{{path}}/scripts/visualisation.js"></script>
 </main>

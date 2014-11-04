@@ -1,5 +1,5 @@
 (function() {
-  var chartSelectors, checkSelectorDataReady, getCountries, getIndicators, getObservations, getSelectorData, getYears, global, li, renderBoxes, renderCharts, renderMap, renderTable, renderTendencyChart, setIndicatorOptions, setPageStateful, updateInfo, _i, _len;
+  var chartSelectors, checkSelectorDataReady, getCountries, getIndicators, getObservations, getSelectorData, getYears, global, li, renderBoxes, renderCharts, renderMap, renderTable, setIndicatorOptions, setPageStateful, updateInfo, _i, _len;
 
   global = this;
 
@@ -239,7 +239,7 @@
     mapContainer = "#map";
     barContainer = "#country-bars";
     lineContainer = "#lines";
-    rankingContainer = "#ranking";
+    rankingContainer = "#ranking-chart";
     mapView = "#map-view";
     countryView = "#country-view";
     if (global.selections.countries === "ALL") {
@@ -587,35 +587,40 @@
   };
 
   renderTable = function(data) {
-    var a, byCountry, code, count, img, name, observation, observations, path, previousValue, rank, row, rows, span, table, td, tendency, tr, value, years, _i, _j, _len, _len1, _ref;
+    var a, code, count, empowerment, extraInfo, extraTable, extraTbody, extraTheader, freedomOpenness, globalRank, img, name, observation, observations, path, previousValue, rank, relevantContent, span, table, tbodies, tbody, td, tendency, th, tr, universalAccess, value, wrapper, _i, _j, _k, _len, _len1, _len2, _ref;
     observations = data.observations;
-    byCountry = data.byCountry;
-    years = data.years;
-    table = document.querySelector("#data-table tbody");
+    table = document.querySelector("#ranking");
     path = (_ref = document.getElementById("path")) != null ? _ref.value : void 0;
-    table.innerHTML = "";
+    tbodies = document.querySelectorAll("#ranking > tbody");
+    for (_i = 0, _len = tbodies.length; _i < _len; _i++) {
+      tbody = tbodies[_i];
+      table.removeChild(tbody);
+    }
     count = 0;
-    for (_i = 0, _len = observations.length; _i < _len; _i++) {
-      observation = observations[_i];
+    for (_j = 0, _len1 = observations.length; _j < _len1; _j++) {
+      observation = observations[_j];
       count++;
       code = observation.code;
       name = observation.area_name;
       rank = observation.ranked ? observation.ranked : count;
       value = observation.values && observation.values.length > 0 ? observation.values[0] : observation.value;
       previousValue = observation.previous_value;
+      extraInfo = observation.extra;
       if (previousValue) {
         tendency = previousValue.tendency;
       }
+      tbody = document.createElement("tbody");
+      table.appendChild(tbody);
       tr = document.createElement("tr");
-      table.appendChild(tr);
-      tr.code = code;
-      tr.onclick = function() {
+      tbody.appendChild(tr);
+      tbody.code = code;
+      tbody.onclick = function() {
         code = this.code;
         global.options.countrySelector.select(code);
         return global.options.countrySelector.refresh();
       };
       if (count > global.maxTableRows) {
-        tr.className = "to-hide";
+        tbody.className = "to-hide";
       }
       td = document.createElement("td");
       td.setAttribute("data-title", "Country");
@@ -630,19 +635,85 @@
       td = document.createElement("td");
       td.setAttribute("data-title", "Rank");
       tr.appendChild(td);
-      td.innerHTML = rank;
+      wrapper = document.createElement("div");
+      wrapper.className = "circle";
+      td.appendChild(wrapper);
+      wrapper.innerHTML = rank;
       td = document.createElement("td");
       td.setAttribute("data-title", "Value");
       tr.appendChild(td);
-      td.innerHTML = value.toFixed(2);
+      value = value.toFixed(2);
+      td.innerHTML = "Value: " + value;
+      globalRank = extraInfo.rank;
+      universalAccess = extraInfo["UNIVERSAL_ACCESS"].toFixed(2);
+      freedomOpenness = extraInfo["FREEDOM_AND_OPENNESS"].toFixed(2);
+      relevantContent = extraInfo["RELEVANT_CONTENT_AND_USE"].toFixed(2);
+      empowerment = extraInfo["EMPOWERMENT"].toFixed(2);
+      tr = document.createElement("tr");
+      tbody.appendChild(tr);
+      td = document.createElement("td");
+      td.setAttribute("colspan", "3");
+      tr.appendChild(td);
+      extraTable = document.createElement("table");
+      extraTable.className = "extra-table";
+      td.appendChild(extraTable);
+      extraTheader = document.createElement("thead");
+      extraTable.appendChild(extraTheader);
+      tr = document.createElement("tr");
+      extraTheader.appendChild(tr);
+      th = document.createElement("th");
+      th.setAttribute("data-title", "Web Index Rank");
+      tr.appendChild(th);
+      th.innerHTML = "Web Index Rank";
+      th = document.createElement("th");
+      th.setAttribute("data-title", "Universal Access");
+      tr.appendChild(th);
+      th.innerHTML = "Universal Access";
+      th = document.createElement("th");
+      th.setAttribute("data-title", "Relevant Content");
+      tr.appendChild(th);
+      th.innerHTML = "Relevant Content";
+      th = document.createElement("th");
+      th.setAttribute("data-title", "Freedom And Openness");
+      tr.appendChild(th);
+      th.innerHTML = "Freedom And Openness";
+      th = document.createElement("th");
+      th.setAttribute("data-title", "Empowerment");
+      tr.appendChild(th);
+      th.innerHTML = "Empowerment";
+      extraTbody = document.createElement("tbody");
+      extraTable.appendChild(extraTbody);
+      tr = document.createElement("tr");
+      extraTbody.appendChild(tr);
+      td = document.createElement("td");
+      td.setAttribute("data-title", "Web Index Rank");
+      tr.appendChild(td);
+      td.innerHTML = globalRank;
+      td = document.createElement("td");
+      td.setAttribute("data-title", "Universal Access");
+      tr.appendChild(td);
+      td.innerHTML = universalAccess;
+      td = document.createElement("td");
+      td.setAttribute("data-title", "Relevant Content");
+      tr.appendChild(td);
+      td.innerHTML = relevantContent;
+      td = document.createElement("td");
+      td.setAttribute("data-title", "Freedom And Openness");
+      tr.appendChild(td);
+      td.innerHTML = freedomOpenness;
+      td = document.createElement("td");
+      td.setAttribute("data-title", "Empowerment");
+      tr.appendChild(td);
+      td.innerHTML = empowerment;
     }
     if (count > global.maxTableRows) {
-      rows = table.querySelectorAll(".to-hide");
-      for (_j = 0, _len1 = rows.length; _j < _len1; _j++) {
-        row = rows[_j];
-        row.className = "hidden";
+      tbodies = table.querySelectorAll(".to-hide");
+      for (_k = 0, _len2 = tbodies.length; _k < _len2; _k++) {
+        tbody = tbodies[_k];
+        tbody.className = "hidden";
       }
       tr = document.createElement("tr");
+      tr.className = "tr-view-more";
       table.appendChild(tr);
       td = document.createElement("td");
       td.colSpan = 4;
@@ -654,17 +725,17 @@
       a.collapsed = true;
       a.table = table;
       return a.onclick = function() {
-        var className, collapsed, newClassName, text, _k, _len2, _results;
+        var className, collapsed, newClassName, row, rows, text, _l, _len3, _results;
         collapsed = this.collapsed;
         this.collapsed = !collapsed;
         className = collapsed ? "hidden" : "shown";
         newClassName = collapsed ? "shown" : "hidden";
         text = collapsed ? "View less" : "View more";
         this.innerHTML = text;
-        rows = this.table.querySelectorAll("tr." + className);
+        rows = this.table.querySelectorAll("tbody." + className);
         _results = [];
-        for (_k = 0, _len2 = rows.length; _k < _len2; _k++) {
-          row = rows[_k];
+        for (_l = 0, _len3 = rows.length; _l < _len3; _l++) {
+          row = rows[_l];
           _results.push(row.className = newClassName);
         }
         return _results;
@@ -672,57 +743,36 @@
     }
   };
 
-  renderTendencyChart = function(container, serie, years) {
-    var options;
-    if (!serie) {
-      return;
-    }
-    options = {
-      container: container,
-      chartType: "line",
-      margins: [0, 0, 0, 0],
-      groupMargin: 0,
-      yAxis: {
-        title: "",
-        "font-colour": "transparent",
-        tickColour: "none"
-      },
-      xAxis: {
-        title: "",
-        "font-colour": "transparent",
-        values: years
-      },
-      series: [serie],
-      valueOnItem: {
-        show: false
-      },
-      vertex: {
-        show: false
-      },
-      legend: {
-        show: false
-      },
-      serieColours: ["#333"]
-    };
-    return wesCountry.charts.chart(options);
-  };
-
   renderBoxes = function(data) {
-    var higher, lower, mean, median, _ref, _ref1, _ref2, _ref3;
+    var higher, higherArea, higherContainer, lower, lowerArea, lowerContainer, mean, median, _ref, _ref1;
     mean = data.mean;
     median = data.median;
-    higher = data.higher.area;
-    lower = data.lower.area;
+    higher = data.higher["short_name"];
+    lower = data.lower["short_name"];
+    higherArea = data.higher.area;
+    lowerArea = data.lower.area;
     if ((_ref = document.getElementById("mean")) != null) {
       _ref.innerHTML = mean.toFixed(2);
     }
     if ((_ref1 = document.getElementById("median")) != null) {
       _ref1.innerHTML = median.toFixed(2);
     }
-    if ((_ref2 = document.getElementById("higher")) != null) {
-      _ref2.innerHTML = higher;
+    higherContainer = document.getElementById("higher");
+    if (higherContainer) {
+      higherContainer.innerHTML = higher;
+      higherContainer.onclick = function() {
+        global.options.countrySelector.select(higherArea);
+        return global.options.countrySelector.refresh();
+      };
     }
-    return (_ref3 = document.getElementById("lower")) != null ? _ref3.innerHTML = lower : void 0;
+    lowerContainer = document.getElementById("lower");
+    if (lowerContainer) {
+      lowerContainer.innerHTML = lower;
+      return lowerContainer.onclick = function() {
+        global.options.countrySelector.select(lowerArea);
+        return global.options.countrySelector.refresh();
+      };
+    }
   };
 
   setTimeout(function() {

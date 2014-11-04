@@ -1367,7 +1367,7 @@ div.follow-box {
 /* RANKING */
 table.ranking {
   font-size: 0.8em;
-  color: #222;
+  color: black;
   table-layout: auto; }
   table.ranking img.flag {
     float: left;
@@ -1377,7 +1377,7 @@ table.ranking {
     display: inline-block;
     max-width: auto;
     width: 80%;
-    color: #222; }
+    color: black; }
   table.ranking tr.country-row {
     display: none; }
   table.ranking tr.country-row:nth-child(1),
@@ -1399,7 +1399,7 @@ table.ranking {
     font-size: 0.7em;
     vertical-align: middle;
     border-bottom: 0.2em solid #ddd;
-    color: #111;
+    color: black;
     text-align: center; }
 
 /* LINE BEHIND TEXT */
@@ -1810,8 +1810,10 @@ div.box-follow {
 /* SELECT-BOX */
 div.select-box {
   margin: 0.5em 0 !important;
-  padding: 0.5em;
+  padding: 0;
   background-color: #47caaa; }
+  div.select-box > div {
+    padding: 0.5em 0.5em 0.8em 0.5em; }
   div.select-box h2 {
     margin-bottom: 0.5em; }
   div.select-box div.circle-number {
@@ -1823,6 +1825,9 @@ div.select-box {
     color: white;
     text-align: center;
     border-radius: 50%; }
+  div.select-box img {
+    width: 100%;
+    margin: 0 0 -0.4em 0; }
 
 div.select-box.first-box {
   background-color: #47caaa; }
@@ -1839,15 +1844,8 @@ div.select-box.third-box {
   div.select-box.third-box div.circle-number {
     background-color: #888d1e; }
 
-div.down-arrow {
-  text-align: center;
-  margin: 0.3em 0 !important; }
-  div.down-arrow i {
-    line-height: 0.5em;
-    color: #4CA4A4; }
-
 div.first-box {
-  margin-top: 1.7em !important; }
+  margin-top: 2.4em !important; }
 
 /* TIMELINE */
 div.timeline div.line a.circle {
@@ -1891,8 +1889,14 @@ div.timeline div.element a {
     margin: 0.4em 0 0.2em 0; }
 
 .table-box {
-  background-color: #d5d5d5;
+  background-color: #31A782;
   margin-top: 1em; }
+  .table-box header {
+    border-color: white; }
+    .table-box header h2 {
+      color: white; }
+  .table-box .view-more a {
+    color: white; }
 
 div.middle-section {
   max-width: 68em;
@@ -1913,7 +1917,8 @@ div.middle-section {
     background-color: #ccc;
     color: white;
     padding: 0.8em 0.5em 0.3em 0.5em;
-    text-align: center; }
+    text-align: center;
+    height: 10em; }
     div.middle-section div.box-mini:last-child {
       margin-right: 0; }
     div.middle-section div.box-mini p {
@@ -1922,7 +1927,16 @@ div.middle-section {
       font-size: 3em;
       font-family: "Roboto" sans-serif;
       font-weight: 300;
-      margin: 0 0 0.2em 0; }
+      margin: 0 0 0.2em 0;
+      display: table-cell;
+      vertical-align: middle;
+      width: 10%;
+      height: 2em; }
+    div.middle-section div.box-mini .higher-lower {
+      font-size: 2em;
+      height: 3em; }
+  div.middle-section div.box-mini:first-child, div.middle-section div.box-mini:nth-child(2) {
+    cursor: pointer; }
   div.middle-section div.box-mini:nth-child(1) {
     background-color: #005475; }
   div.middle-section div.box-mini:nth-child(2) {
@@ -2004,7 +2018,7 @@ nav.tabs {
       nav.tabs ul li a {
         color: #444; }
     nav.tabs ul li.selected span.circle {
-      background-color: #6f6f6f; }
+      background-color: #6c6e51; }
   nav.tabs span.circle {
     display: inline-block;
     vertical-align: middle;
@@ -2018,21 +2032,46 @@ nav.tabs {
   display: none; }
 
 table.full-ranking {
-  table-layout: auto; }
+  table-layout: auto;
+  color: black; }
   table.full-ranking th {
-    text-align: center; }
+    text-align: center;
+    font-weight: normal;
+    border-bottom-color: #1a5845; }
   table.full-ranking img {
     vertical-align: middle;
     margin-right: 1em; }
   table.full-ranking tr {
     cursor: pointer; }
-  table.full-ranking tr:hover {
-    background-color: #bbb; }
-  table.full-ranking tr.hidden {
+  table.full-ranking .circle {
+    width: 2em;
+    height: 2em;
+    background-color: #258063;
+    color: white;
+    padding-top: 0.2em;
+    border-radius: 50%;
+    text-align: center;
+    margin: 0 auto; }
+  table.full-ranking > tbody {
+    background-color: #43c89e;
+    border-top: 0.3em solid #31A782;
+    border-bottom: 0.6em solid #31A782; }
+    table.full-ranking > tbody th {
+      font-size: 0.7em;
+      border-bottom-color: #1a5845; }
+    table.full-ranking > tbody tbody {
+      text-align: center; }
+  table.full-ranking > tbody:hover {
+    background-color: #1a5845;
+    color: white; }
+  table.full-ranking tr.tr-view-more {
+    background-color: transparent; }
+  table.full-ranking tbody.hidden {
     display: none; }
   table.full-ranking td {
     padding-left: 0.4em;
-    padding-right: 0.4em; }
+    padding-right: 0.4em;
+    border: none; }
   table.full-ranking td[data-title="Country"] {
     width: 55%; }
   table.full-ranking td[data-title="Rank"] {
@@ -2162,6 +2201,54 @@ p.open {
 .report-articles iframe {
   min-height: 35em;
   border: none; }
+
+div.visualisation {
+  position: relative; }
+  div.visualisation .esc {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    font-size: 1.5em;
+    font-style: italic;
+    display: none; }
+  div.visualisation div.expand {
+    position: absolute;
+    top: 2em;
+    right: 1em;
+    font-size: 1.2em;
+    width: 1.6em;
+    height: 1.6em;
+    padding-top: 0.1em;
+    background-color: #fff;
+    color: #336699;
+    border-radius: 50%;
+    text-align: center; }
+    div.visualisation div.expand a {
+      text-decoration: none; }
+
+div.maximised {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000; }
+  div.maximised .esc {
+    display: block;
+    transition-property: opacity;
+    transition-duration: 1.5s; }
+  div.maximised div.expand {
+    top: 1em; }
+  div.maximised iframe {
+    height: 100%;
+    margin: 0; }
+
+body.noscroll {
+  position: fixed !important;
+  overflow-y: scroll !important;
+  width: 100% !important; }
 
 body {
   font-family: Raleway, sans-serif;
