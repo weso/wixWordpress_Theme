@@ -60,13 +60,14 @@ class Renderer {
 		$templateName = preg_replace("/[^A-Za-z]/", '', $templateName);
 		
 		require_once('models/'.$templateName.'.php');
+
 		try {
 			
 			$className = ucfirst($templateName) . "Model";
 			$modelClass = new ReflectionClass($className);
 			$modelObj = $modelClass->newInstanceArgs();
 			
-			data = $modelObj->get($this->api_url, $this->visualisationsPath);
+			$data = $modelObj->get($this->api_url, $this->visualisationsPath);
 		} catch (ReflectionException $e) {
 		}
 
@@ -109,4 +110,3 @@ class Renderer {
 	}
 } 
 ?>
-

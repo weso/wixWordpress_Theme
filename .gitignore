@@ -1,4 +1,7 @@
 *.json
+
+!/inc
+
 !/visualisations
 
 .DS_Store
