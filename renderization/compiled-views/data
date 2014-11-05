@@ -118,7 +118,8 @@
 '.'
   <input type="hidden" id="path" value="'.htmlentities((string)((isset($in['path']) && is_array($in)) ? $in['path'] : null), ENT_QUOTES, 'UTF-8').'" />
   <div class="container data-container">
-    <aside class="left-bar absolute">
+
+    <aside class="left-bar absolute select-bar">
       <h1>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_title']) && is_array($in)) ? $in['data_title'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h1>
       <div class="select-box first-box">
         <div>
@@ -130,20 +131,16 @@
             </select>
           </div>
         </div>
-        <img alt="" src="'.htmlentities((string)((isset($in['path']) && is_array($in)) ? $in['path'] : null), ENT_QUOTES, 'UTF-8').'/images/down-arrow.png" />
       </div>
       <div class="select-box second-box">
-        <img alt="" src="'.htmlentities((string)((isset($in['path']) && is_array($in)) ? $in['path'] : null), ENT_QUOTES, 'UTF-8').'/images/up-arrow.png" />
         <div>
           <abbr class="help" title=\''.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_year_help']) && is_array($in)) ? $in['data_year_help'] : null), ENT_QUOTES, 'UTF-8').'';}).'\'><i class="fa fa-info-circle fa-2x"></i></abbr>
           <div class="circle-number">2</div>
           <h2>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_choose_year']) && is_array($in)) ? $in['data_choose_year'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
           <div id="timeline"></div>
         </div>
-        <img alt="" src="'.htmlentities((string)((isset($in['path']) && is_array($in)) ? $in['path'] : null), ENT_QUOTES, 'UTF-8').'/images/down-arrow.png" />
       </div>
       <div class="select-box third-box">
-        <img alt="" src="'.htmlentities((string)((isset($in['path']) && is_array($in)) ? $in['path'] : null), ENT_QUOTES, 'UTF-8').'/images/up-arrow.png" />
         <div>
           <abbr class="help" title=\''.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_country_help']) && is_array($in)) ? $in['data_country_help'] : null), ENT_QUOTES, 'UTF-8').'';}).'\'><i class="fa fa-info-circle fa-2x"></i></abbr>
           <div class="circle-number">3</div>
@@ -156,13 +153,38 @@
       <div class="bar"></div>
     </aside>
     <section class="right-content about-articles">
-      <p class="downloads"><a href="'.htmlentities((string)((isset($in['host']) && is_array($in)) ? $in['host'] : null), ENT_QUOTES, 'UTF-8').'/downloads"><i class="fa fa-download"></i> '.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_download']) && is_array($in)) ? $in['data_download'] : null), ENT_QUOTES, 'UTF-8').'';}).'</a></p>
-      <p><span>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_description']) && is_array($in)) ? $in['data_description'] : null), ENT_QUOTES, 'UTF-8').'';}).'</p>
-        
+      <h2>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_description']) && is_array($in)) ? $in['data_description'] : null), ENT_QUOTES, 'UTF-8').'';}).' <a href="'.htmlentities((string)((isset($in['host']) && is_array($in)) ? $in['host'] : null), ENT_QUOTES, 'UTF-8').'/downloads">'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_here']) && is_array($in)) ? $in['data_here'] : null), ENT_QUOTES, 'UTF-8').'';}).'</a>.</h2>
       <div class="data-box map-box">
+        <div class="middle-section">
+          <div class="box-mini">
+            <p>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_indicator']) && is_array($in)) ? $in['data_indicator'] : null), ENT_QUOTES, 'UTF-8').'';}).'</p>
+            <p id="indicator" class="value higher-lower"></p>
+          </div>
+          <div class="box-mini">
+            <p>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_year']) && is_array($in)) ? $in['data_year'] : null), ENT_QUOTES, 'UTF-8').'';}).'</p>
+            <p id="year" class="value"></p>
+          </div>
+          <div class="box-mini">
+            <p>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_higher']) && is_array($in)) ? $in['data_higher'] : null), ENT_QUOTES, 'UTF-8').'';}).'</p>
+            <p id="higher" class="value higher-lower"></p>
+          </div>
+          <div class="box-mini">
+            <p>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_lower']) && is_array($in)) ? $in['data_lower'] : null), ENT_QUOTES, 'UTF-8').'';}).'</p>
+            <p id="lower" class="value higher-lower"></p>
+          </div>
+          <div class="box-mini">
+            <p>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_mean']) && is_array($in)) ? $in['data_mean'] : null), ENT_QUOTES, 'UTF-8').'';}).'</p>
+            <p id="mean" class="value"></p>
+          </div>
+          <div class="box-mini">
+            <p>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_median']) && is_array($in)) ? $in['data_median'] : null), ENT_QUOTES, 'UTF-8').'';}).'</p>
+            <p id="median" class="value"></p>
+          </div>
+        </div>
+
         <div id="map-view">
           <header>
-            <h2>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_country_ranking']) && is_array($in)) ? $in['data_country_ranking'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
+            <h2><i class="fa fa-flag-o"></i> '.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_country_ranking']) && is_array($in)) ? $in['data_country_ranking'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
             <nav class="tabs">
               <ul data-selector="charts-view-map">
                 <li class="selected" data-selector="first" data-info="map"><a href="javascript: void(0)"><span class="circle"></span> '.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_map']) && is_array($in)) ? $in['data_map'] : null), ENT_QUOTES, 'UTF-8').'';}).'</a></li>
@@ -177,7 +199,7 @@
         </div>
         <div id="country-view">
           <header>
-            <h2>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_country_ranking']) && is_array($in)) ? $in['data_country_ranking'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
+            <h2><i class="fa fa-flag-o"></i> '.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_country_ranking']) && is_array($in)) ? $in['data_country_ranking'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
             <nav class="tabs">
               <ul data-selector="charts-view-country">
                 <li class="selected" data-selector="first"><a href="javascript: void(0)"><span class="circle"></span> '.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_bar_chart']) && is_array($in)) ? $in['data_bar_chart'] : null), ENT_QUOTES, 'UTF-8').'';}).'</a></li>
@@ -191,32 +213,13 @@
             <div id="lines" class="map second notranslate"></div>
           </div>
         </div>
-        <hr />
         <div id="bars" class="bars notranslate"></div>
       </div>
 
-      <div class="middle-section">
-        <div class="box-mini">
-          <p>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_higher']) && is_array($in)) ? $in['data_higher'] : null), ENT_QUOTES, 'UTF-8').'';}).'</p>
-          <p id="higher" class="value higher-lower"></p>
-        </div>
-        <div class="box-mini">
-          <p>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_lower']) && is_array($in)) ? $in['data_lower'] : null), ENT_QUOTES, 'UTF-8').'';}).'</p>
-          <p id="lower" class="value higher-lower"></p>
-        </div>
-        <div class="box-mini">
-          <p>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_mean']) && is_array($in)) ? $in['data_mean'] : null), ENT_QUOTES, 'UTF-8').'';}).'</p>
-          <p id="mean" class="value"></p>
-        </div>
-        <div class="box-mini">
-          <p>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_median']) && is_array($in)) ? $in['data_median'] : null), ENT_QUOTES, 'UTF-8').'';}).'</p>
-          <p id="median" class="value"></p>
-        </div>
-      </div>
       <div class="data-box table-box">
         <div id="table" class="table">
           <header>
-            <h2>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_extra_info']) && is_array($in)) ? $in['data_extra_info'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
+            <h2><i class="fa fa-file-text-o"></i> '.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_extra_info']) && is_array($in)) ? $in['data_extra_info'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
           </header>
           <table id="ranking" class="full-ranking">
             <thead>
