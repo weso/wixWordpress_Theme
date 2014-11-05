@@ -247,18 +247,45 @@
         <h1>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_data_box']) && is_array($in)) ? $in['home_data_box'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h1>
       </a>
       <div class="grid-item grid-item-full illustrations">
-        <section class="illustration-buttons">
+        <article>
+          <header>
+            <h1>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_illustration_1_title']) && is_array($in)) ? $in['home_illustration_1_title'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h1>
+            <h2><strong>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_illustration_1_subtitle']) && is_array($in)) ? $in['home_illustration_1_subtitle'] : null), ENT_QUOTES, 'UTF-8').'';}).'</strong></h2>
+            <ol>
+              <li>Denmark</li>
+              <li>Finland</li>
+              <li>Norway</li>
+              <li>United Kingdom</li>
+              <li>Sweden</li>
+            </ol>
+          </header>
+          <img src="'.htmlentities((string)((isset($in['path']) && is_array($in)) ? $in['path'] : null), ENT_QUOTES, 'UTF-8').'/images/illustrations/illustration1.png" />
+        </article>
+        <article>
+          <header>
+            <h1>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_illustration_2_title']) && is_array($in)) ? $in['home_illustration_2_title'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h1>
+            <h2><strong id="gender-percentage">66%</strong> '.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_of_countries']) && is_array($in)) ? $in['home_of_countries'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
+            <p>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_illustration_2_text']) && is_array($in)) ? $in['home_illustration_2_text'] : null), ENT_QUOTES, 'UTF-8').'';}).'</p>
+          </header>
+          <img src="'.htmlentities((string)((isset($in['path']) && is_array($in)) ? $in['path'] : null), ENT_QUOTES, 'UTF-8').'/images/illustrations/illustration2.png" />
+        </article>
+        <article>
+          <header>
+            <h1>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_illustration_3_title']) && is_array($in)) ? $in['home_illustration_3_title'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h1>
+            <h2><strong id="privacy-percentage">68%</strong> '.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_of_countries']) && is_array($in)) ? $in['home_of_countries'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
+            <p>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_illustration_3_text']) && is_array($in)) ? $in['home_illustration_3_text'] : null), ENT_QUOTES, 'UTF-8').'';}).'</p>
+          </header>
+          <img src="'.htmlentities((string)((isset($in['path']) && is_array($in)) ? $in['path'] : null), ENT_QUOTES, 'UTF-8').'/images/illustrations/illustration3.png" />
+        </article>
+        <aside class="illustration-buttons">
           <a href="javascript:void(0);" class="circle selected">1</a>
           <a href="javascript:void(0);" class="circle">2</a>
           <a href="javascript:void(0);" class="circle">3</a>
-        </section>
-        <img src="'.htmlentities((string)((isset($in['path']) && is_array($in)) ? $in['path'] : null), ENT_QUOTES, 'UTF-8').'/images/illustrations/illustration1.png" />
-        <img src="'.htmlentities((string)((isset($in['path']) && is_array($in)) ? $in['path'] : null), ENT_QUOTES, 'UTF-8').'/images/illustrations/illustration2.png" />
-        <img src="'.htmlentities((string)((isset($in['path']) && is_array($in)) ? $in['path'] : null), ENT_QUOTES, 'UTF-8').'/images/illustrations/illustration3.png" />
+        </aside>
       </div>
       <div class="grid-item grid-item-big grid-item-taller">
         <h1>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_top_five']) && is_array($in)) ? $in['home_top_five'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h1>
-        <table class="ranking sortable">
+        <table class="ranking">
           <thead>
             <tr class="sorter" role="row">
               <th data-sort-type="text"><a class="empty" data-type="sorter"></a>Country</th>
@@ -286,7 +313,7 @@
           </tbody>
         </table>
         <p class="text-right">
-          <a href="'.htmlentities((string)((isset($in['host']) && is_array($in)) ? $in['host'] : null), ENT_QUOTES, 'UTF-8').'/data" class="read-more">'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_view_full_list']) && is_array($in)) ? $in['home_view_full_list'] : null), ENT_QUOTES, 'UTF-8').'';}).' <span>&#187;</span></a>
+          <a href="'.htmlentities((string)((isset($in['host']) && is_array($in)) ? $in['host'] : null), ENT_QUOTES, 'UTF-8').'/data#ranking" class="read-more">'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['home_view_full_list']) && is_array($in)) ? $in['home_view_full_list'] : null), ENT_QUOTES, 'UTF-8').'';}).' <span>&#187;</span></a>
         </p>
       </div>
       <div class="grid-item grid-item-taller follow-box">

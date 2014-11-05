@@ -1,5 +1,5 @@
 <?php
-	require_once('lightncandy/lightncandy.php');
+	require_once(__DIR__.'/../inc/lightncandy/lightncandy.php');
 
 	class Compiler {
 		
