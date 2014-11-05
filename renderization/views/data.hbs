@@ -2,7 +2,8 @@
   {{>by}}
   <input type="hidden" id="path" value="{{path}}" />
   <div class="container data-container">
-    <aside class="left-bar absolute">
+
+    <aside class="left-bar absolute select-bar">
       <h1>{{#labels}}{{data_title}}{{/labels}}</h1>
       <div class="select-box first-box">
         <div>
@@ -14,20 +15,16 @@
             </select>
           </div>
         </div>
-        <img alt="" src="{{path}}/images/down-arrow.png" />
       </div>
       <div class="select-box second-box">
-        <img alt="" src="{{path}}/images/up-arrow.png" />
         <div>
           <abbr class="help" title='{{#labels}}{{data_year_help}}{{/labels}}'><i class="fa fa-info-circle fa-2x"></i></abbr>
           <div class="circle-number">2</div>
           <h2>{{#labels}}{{data_choose_year}}{{/labels}}</h2>
           <div id="timeline"></div>
         </div>
-        <img alt="" src="{{path}}/images/down-arrow.png" />
       </div>
       <div class="select-box third-box">
-        <img alt="" src="{{path}}/images/up-arrow.png" />
         <div>
           <abbr class="help" title='{{#labels}}{{data_country_help}}{{/labels}}'><i class="fa fa-info-circle fa-2x"></i></abbr>
           <div class="circle-number">3</div>
@@ -40,13 +37,38 @@
       <div class="bar"></div>
     </aside>
     <section class="right-content about-articles">
-      <p class="downloads"><a href="{{host}}/downloads"><i class="fa fa-download"></i> {{#labels}}{{data_download}}{{/labels}}</a></p>
-      <p><span>{{#labels}}{{data_description}}{{/labels}}</p>
-        
+      <h2>{{#labels}}{{data_description}}{{/labels}} <a href="{{host}}/downloads">{{#labels}}{{data_here}}{{/labels}}</a>.</h2>
       <div class="data-box map-box">
+        <div class="middle-section">
+          <div class="box-mini">
+            <p>{{#labels}}{{data_indicator}}{{/labels}}</p>
+            <p id="indicator" class="value higher-lower"></p>
+          </div>
+          <div class="box-mini">
+            <p>{{#labels}}{{data_year}}{{/labels}}</p>
+            <p id="year" class="value"></p>
+          </div>
+          <div class="box-mini">
+            <p>{{#labels}}{{data_higher}}{{/labels}}</p>
+            <p id="higher" class="value higher-lower"></p>
+          </div>
+          <div class="box-mini">
+            <p>{{#labels}}{{data_lower}}{{/labels}}</p>
+            <p id="lower" class="value higher-lower"></p>
+          </div>
+          <div class="box-mini">
+            <p>{{#labels}}{{data_mean}}{{/labels}}</p>
+            <p id="mean" class="value"></p>
+          </div>
+          <div class="box-mini">
+            <p>{{#labels}}{{data_median}}{{/labels}}</p>
+            <p id="median" class="value"></p>
+          </div>
+        </div>
+
         <div id="map-view">
           <header>
-            <h2>{{#labels}}{{data_country_ranking}}{{/labels}}</h2>
+            <h2><i class="fa fa-flag-o"></i> {{#labels}}{{data_country_ranking}}{{/labels}}</h2>
             <nav class="tabs">
               <ul data-selector="charts-view-map">
                 <li class="selected" data-selector="first" data-info="map"><a href="javascript: void(0)"><span class="circle"></span> {{#labels}}{{data_map}}{{/labels}}</a></li>
@@ -61,7 +83,7 @@
         </div>
         <div id="country-view">
           <header>
-            <h2>{{#labels}}{{data_country_ranking}}{{/labels}}</h2>
+            <h2><i class="fa fa-flag-o"></i> {{#labels}}{{data_country_ranking}}{{/labels}}</h2>
             <nav class="tabs">
               <ul data-selector="charts-view-country">
                 <li class="selected" data-selector="first"><a href="javascript: void(0)"><span class="circle"></span> {{#labels}}{{data_bar_chart}}{{/labels}}</a></li>
@@ -75,32 +97,13 @@
             <div id="lines" class="map second notranslate"></div>
           </div>
         </div>
-        <hr />
         <div id="bars" class="bars notranslate"></div>
       </div>
 
-      <div class="middle-section">
-        <div class="box-mini">
-          <p>{{#labels}}{{data_higher}}{{/labels}}</p>
-          <p id="higher" class="value higher-lower"></p>
-        </div>
-        <div class="box-mini">
-          <p>{{#labels}}{{data_lower}}{{/labels}}</p>
-          <p id="lower" class="value higher-lower"></p>
-        </div>
-        <div class="box-mini">
-          <p>{{#labels}}{{data_mean}}{{/labels}}</p>
-          <p id="mean" class="value"></p>
-        </div>
-        <div class="box-mini">
-          <p>{{#labels}}{{data_median}}{{/labels}}</p>
-          <p id="median" class="value"></p>
-        </div>
-      </div>
       <div class="data-box table-box">
         <div id="table" class="table">
           <header>
-            <h2>{{#labels}}{{data_extra_info}}{{/labels}}</h2>
+            <h2><i class="fa fa-file-text-o"></i> {{#labels}}{{data_extra_info}}{{/labels}}</h2>
           </header>
           <table id="ranking" class="full-ranking">
             <thead>
