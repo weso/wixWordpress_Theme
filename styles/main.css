@@ -1784,16 +1784,19 @@ div.box-follow {
 .data-container .help {
   float: right;
   text-align: center;
-  color: white;
+  color: #01A9DB;
   cursor: pointer;
   font-size: 0.8em; }
 .data-container h1 {
   margin-bottom: 0 !important; }
+.data-container h2 {
+  text-align: left;
+  margin: 0 !important;
+  font-size: 1.2em; }
 .data-container .downloads {
   text-align: right; }
 .data-container .indicator-selector {
-  height: 2.5em;
-  overflow: hidden;
+  height: 2.6em;
   background: url(../images/select_arrow.png) no-repeat right white;
   border: 0.1em solid white; }
   .data-container .indicator-selector select {
@@ -1801,7 +1804,7 @@ div.box-follow {
     background: transparent;
     padding: 0.2em 0.5em;
     line-height: 1;
-    border: 0;
+    border: 0.1em solid #aaa;
     border-radius: 0;
     height: 2.5em;
     -webkit-appearance: none;
@@ -1811,17 +1814,18 @@ div.box-follow {
 div.select-box {
   margin: 0.5em 0 !important;
   padding: 0;
-  background-color: #47caaa; }
+  background-color: white; }
   div.select-box > div {
     padding: 0.5em 0.5em 0.8em 0.5em; }
   div.select-box h2 {
-    margin-bottom: 0.5em; }
+    margin-bottom: 1em !important;
+    text-align: center; }
   div.select-box div.circle-number {
     width: 1.6em;
     height: 1.6em;
     font-size: 1.8em;
-    margin: 0 auto !important;
-    background-color: #1b5d4d;
+    margin: 0 auto 0.5em auto !important;
+    background-color: #f93845;
     color: white;
     text-align: center;
     border-radius: 50%; }
@@ -1829,20 +1833,21 @@ div.select-box {
     width: 100%;
     margin: 0 0 -0.4em 0; }
 
-div.select-box.first-box {
-  background-color: #47caaa; }
-  div.select-box.first-box div.circle-number {
-    background-color: #26856e; }
+div.select-box.first-box div.circle-number {
+  background-color: #f93845; }
 
 div.select-box.second-box {
-  background-color: #a9ca47; }
+  border-top: 0.1em solid #aaa;
+  border-bottom: 0.1em solid #aaa;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  margin-top: 1em;
+  margin-bottom: 1em; }
   div.select-box.second-box div.circle-number {
-    background-color: #6d8526; }
+    background-color: #0096af; }
 
-div.select-box.third-box {
-  background-color: #CED53C; }
-  div.select-box.third-box div.circle-number {
-    background-color: #888d1e; }
+div.select-box.third-box div.circle-number {
+  background-color: #89ba00; }
 
 div.first-box {
   margin-top: 2.4em !important; }
@@ -1852,11 +1857,11 @@ div.timeline div.line a.circle {
   width: 1.5em;
   height: 1.5em;
   border: none;
-  background-color: white; }
+  background-color: #ccc; }
 div.timeline div.line:before {
   border: none; }
 div.timeline div.line a.circle:hover, div.timeline div.selected a.circle {
-  background-color: #4c5d1b !important; }
+  background-color: #006a7c !important; }
 div.timeline div.element a {
   color: #333 !important;
   font-size: 0.9em; }
@@ -1866,7 +1871,7 @@ div.timeline div.element a {
   padding: 0.5em;
   background-color: #aaa; }
   .data-box header {
-    border-bottom: 0.1em solid #999;
+    border-bottom: 0.15em solid #bbb;
     overflow: hidden;
     margin-bottom: 1em; }
   .data-box h2 {
@@ -1882,27 +1887,18 @@ div.timeline div.element a {
       margin-right: 0; }
 
 .map-box {
-  background-color: #CDCEBD;
+  background-color: #fff;
   margin-top: 1.2em; }
-  .map-box hr {
-    border-color: #bbb;
-    margin: 0.4em 0 0.2em 0; }
 
 .table-box {
-  background-color: #31A782;
+  background-color: #fff;
   margin-top: 1em; }
-  .table-box header {
-    border-color: white; }
-    .table-box header h2 {
-      color: white; }
-  .table-box .view-more a {
-    color: white; }
 
 div.middle-section {
   max-width: 68em;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 1em; }
+  margin-bottom: 2em; }
   div.middle-section:after {
     content: "";
     display: table;
@@ -1913,38 +1909,43 @@ div.middle-section {
     float: left;
     display: block;
     margin-right: 2.35765%;
-    width: 23.23176%;
+    width: 14.70196%;
     background-color: #ccc;
     color: white;
     padding: 0.8em 0.5em 0.3em 0.5em;
     text-align: center;
-    height: 10em; }
+    height: 7.5em; }
     div.middle-section div.box-mini:last-child {
       margin-right: 0; }
     div.middle-section div.box-mini p {
       margin: 0.5em 0 0 0; }
     div.middle-section div.box-mini .value {
-      font-size: 3em;
+      font-size: 2.3em;
       font-family: "Roboto" sans-serif;
       font-weight: 300;
       margin: 0 0 0.2em 0;
       display: table-cell;
       vertical-align: middle;
       width: 10%;
-      height: 2em; }
+      height: 1em; }
     div.middle-section div.box-mini .higher-lower {
-      font-size: 2em;
-      height: 3em; }
-  div.middle-section div.box-mini:first-child, div.middle-section div.box-mini:nth-child(2) {
+      font-size: 1.3em;
+      height: 2em;
+      word-break: break-all; }
+  div.middle-section div.box-mini:nth-child(3), div.middle-section div.box-mini:nth-child(4) {
     cursor: pointer; }
   div.middle-section div.box-mini:nth-child(1) {
-    background-color: #005475; }
+    background-color: rgba(249, 56, 69, 0.9); }
   div.middle-section div.box-mini:nth-child(2) {
-    background-color: #92c550; }
+    background-color: rgba(0, 150, 175, 0.9); }
   div.middle-section div.box-mini:nth-child(3) {
-    background-color: #919279; }
+    background-color: rgba(0, 84, 117, 0.9); }
   div.middle-section div.box-mini:nth-child(4) {
-    background-color: #5C5D45; }
+    background-color: rgba(146, 197, 80, 0.9); }
+  div.middle-section div.box-mini:nth-child(5) {
+    background-color: rgba(145, 146, 121, 0.9); }
+  div.middle-section div.box-mini:nth-child(6) {
+    background-color: rgba(92, 93, 69, 0.9); }
 
 div.country-box {
   padding: 0.5em; }
@@ -1961,7 +1962,7 @@ div.country-box {
     div.country-box .selector ul li.selected a {
       color: #111; }
       div.country-box .selector ul li.selected a div.circle {
-        background-color: #888d1e !important;
+        background-color: #3e5400 !important;
         color: white; }
     div.country-box .selector ul li {
       margin-bottom: 0.3em;
@@ -1979,18 +1980,36 @@ div.country-box {
       width: 1.3em;
       height: 1.3em;
       border: none;
-      background-color: white;
+      background-color: #ccc;
       padding-top: 0;
       line-height: 1.2em; }
 
 /* MAP */
 div.map {
-  height: 30em;
+  height: 32em;
   clear: both; }
   div.map .buttons {
     display: none; }
   div.map .visor {
     background-color: transparent; }
+  div.map .wrapper {
+    height: 27em; }
+  div.map .legend {
+    height: 5em;
+    padding: 0 2.5em; }
+    div.map .legend ul {
+      overflow: hidden; }
+      div.map .legend ul li {
+        float: left;
+        width: 33.33%;
+        padding: 0.2em 0; }
+    div.map .legend .circle {
+      width: 1em;
+      height: 1em;
+      border-radius: 50%;
+      float: left;
+      margin-top: 0.2em;
+      margin-right: 0.5em; }
 
 /* BARS */
 div.bars {
@@ -2018,7 +2037,7 @@ nav.tabs {
       nav.tabs ul li a {
         color: #444; }
     nav.tabs ul li.selected span.circle {
-      background-color: #6c6e51; }
+      background-color: #006a7c; }
   nav.tabs span.circle {
     display: inline-block;
     vertical-align: middle;
@@ -2026,7 +2045,7 @@ nav.tabs {
     height: 1.6em;
     border-radius: 50%;
     margin-right: 0.5em;
-    background-color: white; }
+    background-color: #ccc; }
 
 .charts-view > div:nth-child(2) {
   display: none; }
@@ -2037,7 +2056,7 @@ table.full-ranking {
   table.full-ranking th {
     text-align: center;
     font-weight: normal;
-    border-bottom-color: #1a5845; }
+    border-bottom-color: #cccccc; }
   table.full-ranking img {
     vertical-align: middle;
     margin-right: 1em; }
@@ -2046,24 +2065,23 @@ table.full-ranking {
   table.full-ranking .circle {
     width: 2em;
     height: 2em;
-    background-color: #258063;
+    background-color: #666;
     color: white;
     padding-top: 0.2em;
     border-radius: 50%;
     text-align: center;
     margin: 0 auto; }
+  table.full-ranking > thead {
+    display: none; }
   table.full-ranking > tbody {
-    background-color: #43c89e;
-    border-top: 0.3em solid #31A782;
-    border-bottom: 0.6em solid #31A782; }
+    border-bottom: 0.1em solid #666; }
     table.full-ranking > tbody th {
       font-size: 0.7em;
-      border-bottom-color: #1a5845; }
+      border-bottom-color: #b3b3b3; }
     table.full-ranking > tbody tbody {
       text-align: center; }
   table.full-ranking > tbody:hover {
-    background-color: #1a5845;
-    color: white; }
+    background-color: #cccccc; }
   table.full-ranking tr.tr-view-more {
     background-color: transparent; }
   table.full-ranking tbody.hidden {
@@ -2227,6 +2245,20 @@ div.visualisation {
     text-align: center; }
     div.visualisation div.expand a {
       text-decoration: none; }
+  div.visualisation section.copy {
+    background-color: white; }
+    div.visualisation section.copy p {
+      margin: 0;
+      font-size: 0.8em;
+      color: #444; }
+    div.visualisation section.copy textarea {
+      margin: 0 0 1em 0;
+      height: 2.5em;
+      border: 1px solid #B7C8D9;
+      font-size: 1em;
+      font-weight: 300;
+      color: #555;
+      background-color: #fff; }
 
 div.maximised {
   position: fixed;

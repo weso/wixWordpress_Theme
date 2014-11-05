@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+{{>head}}
+<body>
+  <!--[if lt IE 10]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+  <main class=content>
+      <div class="lighthouse">
+        <h1>{{#labels}}{{error_title}}{{/labels}}</h1>
+        <h2>{{#labels}}{{error_subtitle}}{{/labels}}</h2>
+        <img alt="" src="{{path}}/images/clouds_1.png" class="clouds" />
+        <img alt="" src="{{path}}/images/clouds_2.png" class="clouds clouds-right" />
+        <img alt="" src="{{path}}/images/lighthouse.png" />
+      </div>
+      <div class="water"></div>
+      <div class="error-links">
+        <div class=container>
+          <form>
+             <div class="error-search-bar">
+               <div class="search-and-submit">
+                 <input type="search" placeholder="{{#labels}}{{error_search}}{{/labels}}" />
+                 <button type="submit">
+                   <i class="fa fa-search fa-2x"></i>
+                 </button>
+               </div>
+             </div>
+          </form>
+          <p>
+            {{#labels}}{{{error_description}}}{{/labels}}
+          </p>
+        </div>
+      </div>
+  </main>
+  <div class="error-footer">
+    {{>footer}}
+  </div>
+</html>

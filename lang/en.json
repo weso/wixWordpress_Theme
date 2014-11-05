@@ -58,7 +58,7 @@
   "media_centre_section_3": "Visualisations",
   "media_centre_section_4": "In the Press",
   "data_title": "The Data",
-  "data_description": "Here is all the data. Jump right in, explore it and find out how your country stacks up.",
+  "data_description": "Here is all the data. Jump right in, explore it and find out how your country stacks up. You can download the data",
   "data_select_indicator": "Select an indicator",
   "data_choose_year": "Choose a year",
   "data_pick_countries": "Pick the countries",
@@ -103,5 +103,8 @@
   "home_illustration_2_title": "Women and the Web",
   "home_illustration_2_text": "are not doing enough to stop online violence against women",
   "home_illustration_3_title": "Privacy & Surveillance",
-  "home_illustration_3_text": "do not have effective laws and practices to protect the privacy of online communications"
+  "home_illustration_3_text": "do not have effective laws and practices to protect the privacy of online communications",
+  "data_here": "here",
+  "data_indicator": "indicator",
+  "data_year": "year"
 }

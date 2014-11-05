@@ -1,13 +1,9 @@
 (function() {
-  var captureKeys, expand, expands, maximise, maximiseVisualisation, maximiseVisualisationClick, minimise, visualisation, visualisations, _i, _j, _len, _len1;
+  var captureKeys, expand, expands, maximise, maximiseVisualisationClick, minimise, visualisations, _i, _len;
 
   visualisations = document.querySelectorAll(".visualisation");
 
   expands = document.querySelectorAll(".visualisation .expand");
-
-  maximiseVisualisation = function() {
-    return maximise(this);
-  };
 
   maximiseVisualisationClick = function(element) {
     return maximise(this.parentNode);
@@ -57,21 +53,13 @@
     document.body.className = "";
     anchor = element.getAttribute("data-anchor");
     if (anchor) {
+      document.location.hash = "";
       return document.location.hash = anchor;
     }
   };
 
-  for (_i = 0, _len = visualisations.length; _i < _len; _i++) {
-    visualisation = visualisations[_i];
-    if (visualisation.attachEvent) {
-      visualisation.attachEvent("ondblclick", maximiseVisualisation);
-    } else {
-      visualisation.addEventListener("dblclick", maximiseVisualisation, false);
-    }
-  }
-
-  for (_j = 0, _len1 = expands.length; _j < _len1; _j++) {
-    expand = expands[_j];
+  for (_i = 0, _len = expands.length; _i < _len; _i++) {
+    expand = expands[_i];
     expand.onclick = maximiseVisualisationClick;
   }
 

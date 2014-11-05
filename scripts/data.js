@@ -1,5 +1,5 @@
 (function() {
-  var chartSelectors, checkSelectorDataReady, getCountries, getIndicators, getObservations, getSelectorData, getYears, global, li, renderBoxes, renderCharts, renderMap, renderTable, setIndicatorOptions, setPageStateful, updateInfo, _i, _len;
+  var chartSelectors, checkSelectorDataReady, getCountries, getIndicators, getObservations, getSelectorData, getYears, global, li, renderBoxes, renderCharts, renderContinentLegend, renderMap, renderTable, setIndicatorOptions, setPageStateful, updateInfo, _i, _len;
 
   global = this;
 
@@ -221,7 +221,7 @@
   };
 
   updateInfo = function() {
-    var countries, indicator, year;
+    var countries, indicator, year, _ref, _ref1;
     year = global.selections.year;
     countries = global.selections.countries;
     indicator = global.selections.indicator;
@@ -231,11 +231,40 @@
     if (!year || !countries || !indicator) {
       return;
     }
-    return getObservations(indicator, countries, year);
+    getObservations(indicator, countries, year);
+    if ((_ref = document.getElementById("indicator")) != null) {
+      _ref.innerHTML = indicator.replace("_", " ");
+    }
+    return (_ref1 = document.getElementById("year")) != null ? _ref1.innerHTML = year : void 0;
+  };
+
+  renderContinentLegend = function(data, options, container, getContinents, getContinentColour) {
+    var circle, code, colour, continent, continents, li, name, span, ul, _i, _len, _results;
+    continents = getContinents(options);
+    ul = document.createElement("ul");
+    container.appendChild(ul);
+    _results = [];
+    for (_i = 0, _len = continents.length; _i < _len; _i++) {
+      continent = continents[_i];
+      code = continent.code;
+      colour = getContinentColour(options, continent);
+      name = data.continents[code];
+      li = document.createElement("li");
+      ul.appendChild(li);
+      circle = document.createElement("div");
+      circle.className = "circle";
+      circle.style.backgroundColor = colour;
+      li.appendChild(circle);
+      span = document.createElement("span");
+      span.className = "continent";
+      li.appendChild(span);
+      _results.push(span.innerHTML = name);
+    }
+    return _results;
   };
 
   renderCharts = function(data) {
-    var barContainer, countryView, lineContainer, mapContainer, mapView, options, rankingContainer, resize, view, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7;
+    var barContainer, countryView, getContinentColour, getLegendElements, lineContainer, mapContainer, mapView, options, rankingContainer, rankingContainerDiv, rankingLegend, rankingWrapper, resize, view, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6;
     mapContainer = "#map";
     barContainer = "#country-bars";
     lineContainer = "#lines";
@@ -252,13 +281,79 @@
       view = document.querySelector(mapView);
       global.observations = data.observations;
       renderMap();
-      if ((_ref2 = document.querySelector(rankingContainer)) != null) {
-        _ref2.innerHTML = "";
+      rankingContainerDiv = document.querySelector(rankingContainer);
+      if (rankingContainerDiv != null) {
+        rankingContainerDiv.innerHTML = "";
       }
+      rankingLegend = document.createElement("div");
+      rankingLegend.className = "legend";
+      if (rankingContainerDiv != null) {
+        rankingContainerDiv.appendChild(rankingLegend);
+      }
+      rankingWrapper = document.createElement("div");
+      rankingWrapper.className = "wrapper";
+      if (rankingContainerDiv != null) {
+        rankingContainerDiv.appendChild(rankingWrapper);
+      }
+      getContinentColour = function(options, element, index) {
+        var pos;
+        pos = 0;
+        switch (element.continent) {
+          case "ECS":
+            pos = 0;
+            break;
+          case "NAC":
+            pos = 5;
+            break;
+          case "LCN":
+            pos = 1;
+            break;
+          case "AFR":
+            pos = 2;
+            break;
+          case "SAS":
+            pos = 3;
+            break;
+          case "EAS":
+            pos = 6;
+            break;
+          case "MEA":
+            pos = 4;
+        }
+        return options.serieColours[pos];
+      };
+      getLegendElements = function(options) {
+        var continent, elements, i, length, range, serie, series, _i, _j, _k, _len, _len1, _ref2, _results;
+        elements = [];
+        series = options.series;
+        length = series.length;
+        for (_i = 0, _len = series.length; _i < _len; _i++) {
+          serie = series[_i];
+          continent = serie.continent;
+          if (elements.indexOf(continent) === -1) {
+            elements.push(continent);
+          }
+        }
+        elements = elements.sort();
+        length = elements.length;
+        range = (function() {
+          _results = [];
+          for (var _j = 0, _ref2 = length - 1; 0 <= _ref2 ? _j <= _ref2 : _j >= _ref2; 0 <= _ref2 ? _j++ : _j--){ _results.push(_j); }
+          return _results;
+        }).apply(this);
+        for (_k = 0, _len1 = range.length; _k < _len1; _k++) {
+          i = range[_k];
+          elements[i] = {
+            code: elements[i],
+            continent: elements[i]
+          };
+        }
+        return elements;
+      };
       options = {
         maxRankingRows: 10,
-        margins: [4, 12, 1, 0],
-        container: rankingContainer,
+        margins: [4, 0, 1, 0],
+        container: rankingWrapper,
         chartType: "ranking",
         rankingElementShape: "square",
         rankingDirection: "HigherToLower",
@@ -286,10 +381,9 @@
           "font-size": "12px"
         },
         legend: {
-          "font-family": "'Kite One', sans-serif",
-          "font-size": "14px"
+          show: false
         },
-        serieColours: ["#0489B1", "#088A68", "#21610B", "#DBA901", "#084B8A"],
+        serieColours: ["#0489B1", "#088A68", "#FF8000", "#DBA901", "#642EFE", "#795227", "#FA5858"],
         valueOnItem: {
           "font-family": "Helvetica",
           "font-colour": "#fff",
@@ -301,61 +395,8 @@
         getName: function(serie) {
           return serie.code;
         },
-        getElementColour: function(options, element, index) {
-          var pos;
-          pos = 0;
-          switch (element.continent) {
-            case "ECS":
-              pos = 0;
-              break;
-            case "NAC":
-              pos = 1;
-              break;
-            case "LCN":
-              pos = 1;
-              break;
-            case "AFR":
-              pos = 2;
-              break;
-            case "SAS":
-              pos = 3;
-              break;
-            case "EAS":
-              pos = 3;
-              break;
-            case "MEA":
-              pos = 4;
-          }
-          return options.serieColours[pos];
-        },
-        getLegendElements: function(options) {
-          var continent, elements, i, length, range, serie, series, _i, _j, _k, _len, _len1, _ref3, _results;
-          elements = [];
-          series = options.series;
-          length = series.length;
-          for (_i = 0, _len = series.length; _i < _len; _i++) {
-            serie = series[_i];
-            continent = serie.continent;
-            if (elements.indexOf(continent) === -1) {
-              elements.push(continent);
-            }
-          }
-          elements = elements.sort();
-          length = elements.length;
-          range = (function() {
-            _results = [];
-            for (var _j = 0, _ref3 = length - 1; 0 <= _ref3 ? _j <= _ref3 : _j >= _ref3; 0 <= _ref3 ? _j++ : _j--){ _results.push(_j); }
-            return _results;
-          }).apply(this);
-          for (_k = 0, _len1 = range.length; _k < _len1; _k++) {
-            i = range[_k];
-            elements[i] = {
-              code: elements[i],
-              continent: elements[i]
-            };
-          }
-          return elements;
-        },
+        getElementColour: getContinentColour,
+        getLegendElements: getLegendElements,
         events: {
           onclick: function(info) {
             var code;
@@ -366,15 +407,16 @@
         }
       };
       wesCountry.charts.chart(options);
+      renderContinentLegend(data, options, rankingLegend, getLegendElements, getContinentColour);
     } else {
-      if ((_ref3 = document.querySelector(mapView)) != null) {
-        _ref3.style.display = 'none';
+      if ((_ref2 = document.querySelector(mapView)) != null) {
+        _ref2.style.display = 'none';
       }
-      if ((_ref4 = document.querySelector(countryView)) != null) {
-        _ref4.style.display = 'block';
+      if ((_ref3 = document.querySelector(countryView)) != null) {
+        _ref3.style.display = 'block';
       }
-      if ((_ref5 = document.querySelector(barContainer)) != null) {
-        _ref5.innerHTML = "";
+      if ((_ref4 = document.querySelector(barContainer)) != null) {
+        _ref4.innerHTML = "";
       }
       view = document.querySelector(countryView);
       options = {
@@ -435,8 +477,8 @@
         }
       };
       wesCountry.charts.chart(options);
-      if ((_ref6 = document.querySelector(lineContainer)) != null) {
-        _ref6.innerHTML = "";
+      if ((_ref5 = document.querySelector(lineContainer)) != null) {
+        _ref5.innerHTML = "";
       }
       options = {
         container: lineContainer,
@@ -475,8 +517,8 @@
       wesCountry.charts.chart(options);
     }
     barContainer = "#bars";
-    if ((_ref7 = document.querySelector(barContainer)) != null) {
-      _ref7.innerHTML = "";
+    if ((_ref6 = document.querySelector(barContainer)) != null) {
+      _ref6.innerHTML = "";
     }
     options = {
       container: barContainer,
@@ -487,7 +529,8 @@
       margins: [8, 1, 0, 2.5],
       yAxis: {
         margin: 2,
-        title: ""
+        title: "",
+        tickColour: "none"
       },
       valueOnItem: {
         show: false
@@ -546,8 +589,8 @@
     return map = wesCountry.maps.createMap({
       container: mapContainer,
       borderWidth: 1.5,
-      landColour: "#E4E5D8",
-      borderColour: "#E4E5D8",
+      landColour: "#dcdcdc",
+      borderColour: "#fff",
       backgroundColour: "none",
       countries: global.observations,
       colourRange: ["#E5E066", "#83C04C", "#1B7A65", "#1B4E5A", "#005475"],
