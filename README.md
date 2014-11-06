@@ -23,6 +23,7 @@ As any other wordpress theme this one has its own customizations to fit the site
 
 ##Installation
 This is a child theme of the wordpress theme *'twentyfourteen', and can be installed as any other theme by uploading the files via the wordpress interface.
+
 ![How to upload the theme](/docs/readme-images/installation-1.png?raw=true)
 
 ###Required plugins
@@ -30,6 +31,7 @@ One of the best features of the wordpress world is the possibility of using plug
 
 ##Adding pages
 Whether the page is static or not, the first thing to do when adding one to the wordpress site is to select the template to use, all the pages in the theme must have the template “Web index page” as shown in the image.
+
 ![Selecting the template](/docs/readme-images/addpages-1.png?raw=true)
 
 ###Editing static pages
@@ -37,21 +39,27 @@ As you can see if you are a web index user, the website is divided in six sectio
 
 ####The report
 This is one of the static pages we were talking about, as you can see in the next image it has an aside navigation bar that corresponds with the top two header levels of the page.
+
 ![Report screenshot](/docs/readme-images/addpages-2.png?raw=true)
 
 So, this is all, the report is formed by paragraphs and different heading indentation, the thing is, how to modify it in wordpress? From the dashboard we have access to the page management tab, inside it we will see a list of all our current pages within the blog.
+
 ![Edit pages](/docs/readme-images/addpages-3.png?raw=true)
 
 By clicking in the one we desire to edit we access the wordpress edition tool, which have two options, visual and text. Under no circumstances, well, maybe if you really know what you are doing, the page should be edited in text mode. Also, visual mode is easier to work with.
 
 As you can see in the next image, once you have wrote the first level sections of the report (in this case “first section”) the only thing we have to do is to select the line and mark it as “heading 1” from the dropdown menu.
+
 ![Header one](/docs/readme-images/addpages-4.png?raw=true)
 
 In the same way, the subsections are marked by the second level headings or “heading 2”.
+
 ![Header two](/docs/readme-images/addpages-5.png?raw=true)
 
 And finally, but not least important the paragraphs, which must be marked by “paragraph”.
+
 ![Paragraphs](/docs/readme-images/addpages-6.png?raw=true)
+
 There are a lot of more options to select in the dropdown, but these three are the most important, cause the indentation will have side effects on the navigation sidebar.
 
 ####About page
@@ -62,9 +70,11 @@ As you will know an iframe is a piece of code that inside html pages will show s
 **<iframe src="//www.youtube.com/embed/TxkJp2qrjuQ" width="100%" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe>**
 
 In these cases, we do have to use the text view of the wordpress, so be carefully where you place your code snippet, make sure there are outside the “h” tags and if possible outside the “p” tags too. Here is a little example.
+
 ![Iframe example](/docs/readme-images/addpages-7.png?raw=true)
 
 Also, the about page contains third level headers “heading 3” which will look like this, bulleted with the color of the section we are in.
+
 ![Header three](/docs/readme-images/addpages-8.png?raw=true)
 
 ####Media centre
