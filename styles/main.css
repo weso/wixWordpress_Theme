@@ -1774,6 +1774,46 @@ div.box-follow {
     background-color: #5a5b4a;
     color: white; }
 
+.data-right-content {
+  min-height: 60em; }
+
+/* COLLAPSABLE */
+.collapsable {
+  background-color: white;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  box-shadow: 0 0.4em 0.2em -0.2em #777;
+  padding: 0 0 0.5em 0;
+  position: relative;
+  overflow-y: hidden; }
+  .collapsable section {
+    padding: 0 0.5em; }
+  .collapsable header.collapsable-header {
+    font-size: 1.2em;
+    color: #888;
+    border: none !important;
+    margin: 0 0 0.2em 0 !important;
+    overflow: hidden;
+    padding: 0 0.5em; }
+    .collapsable header.collapsable-header h2 {
+      float: left;
+      text-align: left;
+      font-size: 1em;
+      margin: 0 !important; }
+    .collapsable header.collapsable-header .button {
+      float: right;
+      color: #64A5BF;
+      cursor: pointer; }
+
+.collapsable.collapsed .button {
+  color: #888 !important; }
+.collapsable.collapsed section {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  z-index: -1; }
+
 /* SIGNATURE */
 .signature {
   display: none; }
@@ -1784,15 +1824,17 @@ div.box-follow {
 .data-container .help {
   float: right;
   text-align: center;
-  color: #01A9DB;
+  color: #64A5BF;
   cursor: pointer;
   font-size: 0.8em; }
 .data-container h1 {
-  margin-bottom: 0 !important; }
-.data-container h2 {
+  margin-bottom: 1em !important;
+  font-size: 2em; }
+.data-container section > h2 {
   text-align: left;
-  margin: 0 !important;
-  font-size: 1.2em; }
+  margin: 0 0 1em 0 !important;
+  font-size: 1.1em;
+  padding: 0 0.3em !important; }
 .data-container .downloads {
   text-align: right; }
 .data-container .indicator-selector {
@@ -1802,7 +1844,7 @@ div.box-follow {
   .data-container .indicator-selector select {
     width: 100%;
     background: transparent;
-    padding: 0.2em 0.5em;
+    padding: 0.2em 2em 0.2em 0.5em;
     line-height: 1;
     border: 0.1em solid #aaa;
     border-radius: 0;
@@ -1811,12 +1853,28 @@ div.box-follow {
     color: #333; }
 
 /* SELECT-BOX */
+.select-bar.fixed {
+  top: 1em !important;
+  height: 100%;
+  overflow-y: hidden; }
+  .select-bar.fixed div.select-box {
+    position: absolute;
+    width: 100%;
+    transition-property: top;
+    transition-duration: 0.3s; }
+
 div.select-box {
-  margin: 0.5em 0 !important;
+  margin: 0 0 0.2em 0 !important;
   padding: 0;
-  background-color: white; }
+  background-color: white;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  box-shadow: 0 0.4em 0.2em -0.2em #777; }
   div.select-box > div {
     padding: 0.5em 0.5em 0.8em 0.5em; }
+  div.select-box header {
+    overflow: hidden; }
   div.select-box h2 {
     margin-bottom: 1em !important;
     text-align: center; }
@@ -1829,28 +1887,44 @@ div.select-box {
     color: white;
     text-align: center;
     border-radius: 50%; }
-  div.select-box img {
-    width: 100%;
-    margin: 0 0 -0.4em 0; }
+  div.select-box .bottom {
+    margin: 0;
+    font-size: 1.3em;
+    padding: 0.1em;
+    color: #333;
+    text-align: center;
+    border-bottom: 0.1em solid #888; }
 
-div.select-box.first-box div.circle-number {
-  background-color: #f93845; }
+div.select-box.first-box {
+  z-index: 3; }
+  div.select-box.first-box .bottom {
+    background-color: #f93845;
+    color: #94040e;
+    border-bottom-color: #c50613; }
+  div.select-box.first-box div.circle-number {
+    background-color: #f93845; }
 
 div.select-box.second-box {
-  border-top: 0.1em solid #aaa;
-  border-bottom: 0.1em solid #aaa;
-  padding-top: 1em;
-  padding-bottom: 1em;
-  margin-top: 1em;
-  margin-bottom: 1em; }
+  z-index: 2; }
+  div.select-box.second-box .bottom {
+    background-color: #0096af;
+    color: #005462;
+    border-bottom-color: #006a7c; }
   div.select-box.second-box div.circle-number {
     background-color: #0096af; }
 
-div.select-box.third-box div.circle-number {
-  background-color: #89ba00; }
+div.select-box.third-box {
+  z-index: 1;
+  margin: 0 !important; }
+  div.select-box.third-box .bottom {
+    background-color: #89ba00;
+    color: #3e5400;
+    border-bottom-color: #638700; }
+  div.select-box.third-box div.circle-number {
+    background-color: #89ba00; }
 
 div.first-box {
-  margin-top: 2.4em !important; }
+  margin-top: 0 !important; }
 
 /* TIMELINE */
 div.timeline div.line a.circle {
@@ -1868,41 +1942,32 @@ div.timeline div.element a {
 
 /* BOXES */
 .data-box {
-  padding: 0.5em;
   background-color: #aaa; }
   .data-box header {
-    border-bottom: 0.15em solid #bbb;
     overflow: hidden;
     margin-bottom: 1em; }
-  .data-box h2 {
-    float: left;
-    display: block;
-    margin-right: 2.35765%;
-    width: 48.82117%;
-    font-size: 1.7em;
-    margin-bottom: 0.3em;
-    color: #444;
-    text-align: left; }
-    .data-box h2:last-child {
-      margin-right: 0; }
 
 .map-box {
   background-color: #fff;
-  margin-top: 1.2em; }
+  margin-top: 0.5em; }
 
 .table-box {
   background-color: #fff;
   margin-top: 1em; }
 
 div.middle-section {
-  max-width: 68em;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 2em; }
-  div.middle-section:after {
-    content: "";
-    display: table;
+  margin-bottom: 1.5em;
+  background-color: white; }
+  div.middle-section section > div:first-child {
+    max-width: 68em;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.5em;
     clear: both; }
+    div.middle-section section > div:first-child:after {
+      content: "";
+      display: table;
+      clear: both; }
   div.middle-section div {
     padding: 0; }
   div.middle-section div.box-mini {
@@ -1922,16 +1987,19 @@ div.middle-section {
     div.middle-section div.box-mini .value {
       font-size: 2.3em;
       font-family: "Roboto" sans-serif;
-      font-weight: 300;
+      font-weight: 400;
       margin: 0 0 0.2em 0;
       display: table-cell;
       vertical-align: middle;
       width: 10%;
-      height: 1em; }
+      height: 1em;
+      color: white; }
     div.middle-section div.box-mini .higher-lower {
       font-size: 1.3em;
-      height: 2em;
-      word-break: break-all; }
+      height: 2.5em; }
+    div.middle-section div.box-mini .indicator {
+      font-size: 0.9em;
+      height: 4em; }
   div.middle-section div.box-mini:nth-child(3), div.middle-section div.box-mini:nth-child(4) {
     cursor: pointer; }
   div.middle-section div.box-mini:nth-child(1) {
@@ -1956,7 +2024,7 @@ div.country-box {
       width: 100%;
       text-align: left; }
   div.country-box .selector ul {
-    font-size: 0.9em; }
+    font-size: 0.85em; }
     div.country-box .selector ul a {
       color: #222; }
     div.country-box .selector ul li.selected a {
@@ -1968,9 +2036,12 @@ div.country-box {
       margin-bottom: 0.3em;
       vertical-align: middle; }
       div.country-box .selector ul li ul {
-        padding-left: 2em; }
+        padding-left: 3em;
+        margin-top: 0.3em; }
       div.country-box .selector ul li div.title {
         margin-top: 0; }
+      div.country-box .selector ul li .hidden-plusOrMinus {
+        display: none; }
       div.country-box .selector ul li .plusOrMinus {
         font-size: 1.5em;
         line-height: 1em;
@@ -1986,12 +2057,69 @@ div.country-box {
 
 /* MAP */
 div.map {
-  height: 32em;
-  clear: both; }
+  clear: both;
+  height: 33em;
+  position: relative; }
+  div.map > div {
+    height: 32em;
+    clear: both; }
+  div.map .colour-legend {
+    width: 20%;
+    height: auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 0; }
+    div.map .colour-legend div {
+      height: 0.6em;
+      margin: 0.4em 4% 0 4%;
+      background-color: #E5E066;
+      background-image: -webkit-linear-gradient(right, #E5E066, #83C04C, #1B7A65, #1B4E5A, #005475);
+      background-image: linear-gradient(to left,#E5E066, #83C04C, #1B7A65, #1B4E5A, #005475);
+      float: left;
+      width: 52%; }
+    div.map .colour-legend span {
+      font-size: 0.9em;
+      display: block;
+      width: 20%; }
+    div.map .colour-legend span:first-child {
+      float: left; }
+    div.map .colour-legend span:nth-child(2) {
+      float: right; }
   div.map .buttons {
     display: none; }
   div.map .visor {
-    background-color: transparent; }
+    background-color: transparent;
+    padding: 0 1em 0.5em 1em;
+    min-height: 3.4em;
+    z-index: 1000;
+    bottom: -0.8em; }
+    div.map .visor .value {
+      float: right;
+      height: 100%;
+      margin-top: 0.5em; }
+    div.map .visor .country {
+      overflow: hidden;
+      height: 100%; }
+      div.map .visor .country .ranking {
+        float: left;
+        margin-right: 1em;
+        margin-top: 0.5em;
+        height: 100%; }
+      div.map .visor .country .flag {
+        float: left;
+        margin-right: 1em;
+        height: 100%; }
+        div.map .visor .country .flag img {
+          border: 0.1em solid #ccc;
+          border-radius: 50%;
+          margin-top: 0.65em; }
+      div.map .visor .country p {
+        margin: 0;
+        text-align: center; }
+      div.map .visor .country p.continent {
+        font-size: 0.7em;
+        color: #555; }
   div.map .wrapper {
     height: 27em; }
   div.map .legend {
@@ -2013,17 +2141,26 @@ div.map {
 
 /* BARS */
 div.bars {
-  height: 8.5em; }
+  height: 10em; }
+  div.bars text.item-name {
+    writing-mode: tb;
+    glyph-orientation-vertical: 0;
+    text-anchor: start !important;
+    color: #666 !important; }
+  div.bars text.item-name:nth-child(3n+1) {
+    fill: #333 !important; }
+  div.bars text.item-name:nth-child(3n) {
+    fill: #777 !important; }
+  div.bars text.item-name:nth-child(3n-1) {
+    fill: #006a7c !important; }
 
 /* TABS */
 nav.tabs {
-  float: left;
-  display: block;
-  margin-right: 2.35765%;
-  width: 48.82117%;
-  margin-top: 0.2em; }
-  nav.tabs:last-child {
-    margin-right: 0; }
+  margin-top: 0.2em;
+  overflow: hidden;
+  width: 50%;
+  min-width: 10em;
+  float: right; }
   nav.tabs ul {
     overflow: hidden;
     padding-top: 0.2em;
@@ -2052,7 +2189,8 @@ nav.tabs {
 
 table.full-ranking {
   table-layout: auto;
-  color: black; }
+  color: black;
+  font-family: 'Varela Round', sans-serif; }
   table.full-ranking th {
     text-align: center;
     font-weight: normal;
@@ -2060,6 +2198,16 @@ table.full-ranking {
   table.full-ranking img {
     vertical-align: middle;
     margin-right: 1em; }
+  table.full-ranking img.flag {
+    border: 0.1em solid #ccc; }
+  table.full-ranking td.big-number {
+    font-size: 10em;
+    line-height: 1em;
+    padding: 0;
+    color: #ccc;
+    text-align: right !important;
+    padding-right: 0.2em;
+    min-width: 1.5em; }
   table.full-ranking tr {
     cursor: pointer; }
   table.full-ranking .circle {
@@ -2074,7 +2222,7 @@ table.full-ranking {
   table.full-ranking > thead {
     display: none; }
   table.full-ranking > tbody {
-    border-bottom: 0.1em solid #666; }
+    border-bottom: 0.1em solid #aaa; }
     table.full-ranking > tbody th {
       font-size: 0.7em;
       border-bottom-color: #b3b3b3; }
@@ -2082,8 +2230,10 @@ table.full-ranking {
       text-align: center; }
   table.full-ranking > tbody:hover {
     background-color: #cccccc; }
-  table.full-ranking tr.tr-view-more {
-    background-color: transparent; }
+    table.full-ranking > tbody:hover .big-number {
+      color: #b3b3b3; }
+  table.full-ranking .tbody-view-more {
+    border: none; }
   table.full-ranking tbody.hidden {
     display: none; }
   table.full-ranking td {
@@ -2091,19 +2241,27 @@ table.full-ranking {
     padding-right: 0.4em;
     border: none; }
   table.full-ranking td[data-title="Country"] {
-    width: 55%; }
-  table.full-ranking td[data-title="Rank"] {
+    width: 45%; }
+  table.full-ranking td[data-title="Continent"] {
     text-align: center;
-    width: 15%; }
+    width: 25%;
+    color: #555;
+    font-size: 0.9em; }
   table.full-ranking td[data-title="Value"] {
     text-align: right;
     width: 15%; }
-    table.full-ranking td[data-title="Value"] i {
-      margin-left: 1em; }
-    table.full-ranking td[data-title="Value"] i.red {
-      color: #f93845; }
-    table.full-ranking td[data-title="Value"] i.green {
-      color: #0096af; }
+    table.full-ranking td[data-title="Value"] div {
+      background-color: #ccc;
+      text-align: center;
+      width: 5em;
+      height: 5em;
+      padding-top: 0.5em;
+      border-radius: 50%;
+      color: #000; }
+      table.full-ranking td[data-title="Value"] div p {
+        margin: 0 0 0.5em 0;
+        font-size: 0.8em;
+        color: #333; }
   table.full-ranking td[data-title="Tendency"] {
     width: 15%; }
     table.full-ranking td[data-title="Tendency"] div {
@@ -2281,6 +2439,67 @@ body.noscroll {
   position: fixed !important;
   overflow-y: scroll !important;
   width: 100% !important; }
+
+.wesCountry-tooltip {
+  padding-top: 0.3em;
+  padding-bottom: 0.5em;
+  font-family: "Roboto" sans-serif; }
+
+.wesCountry-tooltip img {
+  float: left;
+  width: 2.5em;
+  height: 2.5em;
+  margin-top: 0.3em;
+  margin-right: 1em;
+  border: 0.1em solid #ccc; }
+
+.wesCountry-tooltip .tooltip-header {
+  overflow: auto;
+  padding-bottom: 0.5em;
+  border-bottom: 0.1em solid #aaa;
+  margin-bottom: 0.5em; }
+
+.wesCountry-tooltip .tooltip-header .title {
+  padding: 0 2.8em; }
+
+.wesCountry-tooltip .tooltip-header .title .countryName {
+  font-weight: 600;
+  white-space: nowrap; }
+
+.wesCountry-tooltip .tooltip-header .title .continentName {
+  color: #555;
+  text-transform: uppercase;
+  white-space: nowrap; }
+
+.wesCountry-tooltip p {
+  margin: 0;
+  text-align: center; }
+
+.wesCountry-tooltip .tooltip-body {
+  min-width: 18em; }
+
+.wesCountry-tooltip p.time {
+  float: right;
+  padding: 0.7em 0.2em;
+  min-width: 2.8em;
+  background-color: #ccc;
+  color: #111;
+  font-size: 0.95em;
+  border-radius: 50%; }
+
+.wesCountry-tooltip p.ranking {
+  float: left;
+  text-align: center;
+  min-width: 2.8em;
+  padding: 0.7em 0.2em;
+  background-color: #333;
+  color: #fff;
+  font-size: 0.95em;
+  border-radius: 50%; }
+
+.wesCountry-tooltip p.value {
+  font-size: 1.2em;
+  padding-top: 0.4em; }
 
 body {
   font-family: Raleway, sans-serif;

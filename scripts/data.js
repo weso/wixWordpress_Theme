@@ -1,5 +1,5 @@
 (function() {
-  var chartSelectors, checkSelectorDataReady, getCountries, getIndicators, getObservations, getSelectorData, getYears, global, li, renderBoxes, renderCharts, renderContinentLegend, renderMap, renderTable, setIndicatorOptions, setPageStateful, updateInfo, _i, _len;
+  var button, chartSelectors, chartTooltip, checkSelectorDataReady, collapsable, collapsableSection, collapsables, getCountries, getIndicators, getObservations, getSelectorData, getYears, global, li, msie6, renderBoxes, renderCharts, renderContinentLegend, renderMap, renderTable, selectBar, setBoxesInitialPosition, setBoxesPosition, setIndicatorOptions, setPageStateful, top, updateInfo, _i, _j, _len, _len1;
 
   global = this;
 
@@ -14,6 +14,8 @@
   };
 
   global.maxTableRows = 7;
+
+  global.continents = {};
 
   setPageStateful = function() {
     return wesCountry.stateful.start({
@@ -157,14 +159,14 @@
       countries = data.data;
     }
     countries.unshift({
-      name: "All countries",
+      "short_name": "All countries",
       iso3: "ALL"
     });
     global.options.countrySelector = new wesCountry.selector.basic({
       data: countries,
       selectedItems: ["ALL"],
       maxSelectedItems: global.maxTableRows,
-      labelName: "name",
+      labelName: "short_name",
       valueName: "iso3",
       childrenName: "countries",
       autoClose: true,
@@ -215,6 +217,7 @@
       return;
     }
     observations = data.data;
+    global.continents = data.data.continents;
     renderCharts(observations);
     renderTable(observations);
     return renderBoxes(observations);
@@ -233,7 +236,7 @@
     }
     getObservations(indicator, countries, year);
     if ((_ref = document.getElementById("indicator")) != null) {
-      _ref.innerHTML = indicator.replace("_", " ");
+      _ref.innerHTML = indicator.replace(/_/g, " ");
     }
     return (_ref1 = document.getElementById("year")) != null ? _ref1.innerHTML = year : void 0;
   };
@@ -464,12 +467,7 @@
             return global.options.countrySelector.refresh();
           },
           onmouseover: function(info) {
-            var country, ranked, text, value;
-            country = info["data-area_name"];
-            value = info["data-values"];
-            ranked = info["data-ranked"];
-            text = "" + country + ": " + value + " #" + ranked;
-            return wesCountry.charts.showTooltip(text, info.event);
+            return chartTooltip(info, global);
           }
         },
         getName: function(serie) {
@@ -508,10 +506,13 @@
             code = info["data-code"];
             global.options.countrySelector.select(code);
             return global.options.countrySelector.refresh();
+          },
+          onmouseover: function(info) {
+            return chartTooltip(info, global);
           }
         },
         getName: function(serie) {
-          return serie.area_name;
+          return serie["short_name"] || serie["area_name"];
         }
       };
       wesCountry.charts.chart(options);
@@ -526,14 +527,15 @@
       legend: {
         show: false
       },
-      margins: [8, 1, 0, 2.5],
+      margins: [8, 0, 20, 0],
       yAxis: {
-        margin: 2,
+        margin: 0,
         title: "",
-        tickColour: "none"
+        tickColour: "none",
+        "font-colour": "none"
       },
       valueOnItem: {
-        show: false
+        show: true
       },
       xAxis: {
         values: [],
@@ -562,13 +564,11 @@
           return global.options.countrySelector.refresh();
         },
         onmouseover: function(info) {
-          var country, ranked, text, value;
-          country = info["data-area_name"];
-          value = info["data-values"];
-          ranked = info["data-ranked"];
-          text = "" + country + ": " + value + " #" + ranked;
-          return wesCountry.charts.showTooltip(text, info.event);
+          return chartTooltip(info, global);
         }
+      },
+      getName: function(element) {
+        return element.code;
       }
     };
     wesCountry.charts.chart(options);
@@ -582,7 +582,7 @@
 
   renderMap = function() {
     var map, mapContainer, _ref;
-    mapContainer = "#map";
+    mapContainer = "#map > div.chart";
     if ((_ref = document.querySelector(mapContainer)) != null) {
       _ref.innerHTML = "";
     }
@@ -608,29 +608,51 @@
         }
       },
       onCountryOver: function(info, visor) {
-        var name, ranked, rankedValue, value;
+        var code, continent, country, flag, img, name, path, ranked, rankedValue, value;
         if (visor) {
           visor.innerHTML = '';
-          name = document.createElement('span');
-          name.innerHTML = info.name;
-          name.className = 'name';
-          visor.appendChild(name);
-          value = document.createElement('span');
+          code = info["data-code"];
+          if (!code) {
+            return;
+          }
+          value = document.createElement('div');
           value.innerHTML = info.value;
           value.className = 'value';
           visor.appendChild(value);
-          ranked = document.createElement('span');
-          rankedValue = info["data-ranked"] ? "#" + info["data-ranked"] : "";
+          country = document.createElement('div');
+          country.className = 'country';
+          visor.appendChild(country);
+          ranked = document.createElement('div');
+          rankedValue = info["data-ranked"] ? info["data-ranked"] : "";
           ranked.innerHTML = rankedValue;
-          ranked.className = 'value';
-          return visor.appendChild(ranked);
+          ranked.className = 'ranking';
+          country.appendChild(ranked);
+          flag = document.createElement("flag");
+          flag.className = "flag";
+          country.appendChild(flag);
+          img = document.createElement("img");
+          path = document.getElementById("path").value;
+          img.src = "" + path + "/images/flags/" + code + ".png";
+          flag.appendChild(img);
+          name = document.createElement("p");
+          name.className = "name";
+          name.innerHTML = info["data-short_name"];
+          country.appendChild(name);
+          name = document.createElement("p");
+          name.className = "continent";
+          continent = info["data-continent"];
+          if (continent) {
+            continent = global.continents[continent];
+          }
+          name.innerHTML = continent;
+          return country.appendChild(name);
         }
       }
     });
   };
 
   renderTable = function(data) {
-    var a, code, count, empowerment, extraInfo, extraTable, extraTbody, extraTheader, freedomOpenness, globalRank, img, name, observation, observations, path, previousValue, rank, relevantContent, span, table, tbodies, tbody, td, tendency, th, tr, universalAccess, value, wrapper, _i, _j, _k, _len, _len1, _len2, _ref;
+    var a, code, continent, count, empowerment, extraInfo, extraTable, extraTbody, extraTheader, freedomOpenness, globalRank, img, name, observation, observations, path, previousValue, rank, relevantContent, span, table, tbodies, tbody, td, tendency, th, tr, universalAccess, value, _i, _j, _k, _len, _len1, _len2, _ref;
     observations = data.observations;
     table = document.querySelector("#ranking");
     path = (_ref = document.getElementById("path")) != null ? _ref.value : void 0;
@@ -644,11 +666,16 @@
       observation = observations[_j];
       count++;
       code = observation.code;
-      name = observation.area_name;
+      name = observation.short_name;
       rank = observation.ranked ? observation.ranked : count;
       value = observation.values && observation.values.length > 0 ? observation.values[0] : observation.value;
       previousValue = observation.previous_value;
       extraInfo = observation.extra;
+      continent = "";
+      if (observation.continent) {
+        continent = observation.continent;
+        continent = global.continents[continent];
+      }
       if (previousValue) {
         tendency = previousValue.tendency;
       }
@@ -666,6 +693,12 @@
         tbody.className = "to-hide";
       }
       td = document.createElement("td");
+      td.setAttribute("data-title", "Rank");
+      td.setAttribute("rowspan", "2");
+      td.className = "big-number";
+      tr.appendChild(td);
+      td.innerHTML = rank;
+      td = document.createElement("td");
       td.setAttribute("data-title", "Country");
       tr.appendChild(td);
       img = document.createElement("img");
@@ -676,17 +709,14 @@
       span.innerHTML = name;
       td.appendChild(span);
       td = document.createElement("td");
-      td.setAttribute("data-title", "Rank");
+      td.setAttribute("data-title", "Continent");
       tr.appendChild(td);
-      wrapper = document.createElement("div");
-      wrapper.className = "circle";
-      td.appendChild(wrapper);
-      wrapper.innerHTML = rank;
+      td.innerHTML = continent;
       td = document.createElement("td");
       td.setAttribute("data-title", "Value");
       tr.appendChild(td);
       value = value.toFixed(2);
-      td.innerHTML = "Value: " + value;
+      td.innerHTML = "<div><p>value</p> " + value + "</div>";
       globalRank = extraInfo.rank;
       universalAccess = extraInfo["UNIVERSAL_ACCESS"].toFixed(2);
       freedomOpenness = extraInfo["FREEDOM_AND_OPENNESS"].toFixed(2);
@@ -755,9 +785,11 @@
         tbody = tbodies[_k];
         tbody.className = "hidden";
       }
+      tbody = document.createElement("tbody");
+      tbody.className = "tbody-view-more";
+      table.appendChild(tbody);
       tr = document.createElement("tr");
-      tr.className = "tr-view-more";
-      table.appendChild(tr);
+      tbody.appendChild(tr);
       td = document.createElement("td");
       td.colSpan = 4;
       td.className = "view-more";
@@ -853,5 +885,111 @@
       }
     };
   }
+
+  msie6 = $.browser === "msie" && $.browser.version < 7;
+
+  selectBar = $(".select-bar");
+
+  top = null;
+
+  if (!msie6) {
+    $(window).scroll(function(event) {
+      var firstHeader, y;
+      firstHeader = document.querySelector(".select-box header");
+      if (top == null) {
+        top = selectBar.offset().top + firstHeader.offsetHeight;
+      }
+      y = $(this).scrollTop();
+      if (y >= top) {
+        if (!selectBar.collapsed) {
+          setBoxesInitialPosition();
+          selectBar.addClass("fixed");
+          setBoxesPosition();
+          return selectBar.collapsed = true;
+        }
+      } else {
+        selectBar.removeClass("fixed");
+        return selectBar.collapsed = false;
+      }
+    });
+  }
+
+  setBoxesInitialPosition = function() {
+    var box, boxes, _j, _len1, _results;
+    boxes = document.querySelectorAll(".select-box");
+    _results = [];
+    for (_j = 0, _len1 = boxes.length; _j < _len1; _j++) {
+      box = boxes[_j];
+      top = box.offsetTop;
+      _results.push(box.style.top = "" + top + "px");
+    }
+    return _results;
+  };
+
+  setBoxesPosition = function() {
+    var box, boxes, headerHeight, previousTop, _j, _len1, _results;
+    boxes = document.querySelectorAll(".select-box");
+    previousTop = 0;
+    _results = [];
+    for (_j = 0, _len1 = boxes.length; _j < _len1; _j++) {
+      box = boxes[_j];
+      headerHeight = box.querySelector("header").offsetHeight;
+      top = previousTop - headerHeight;
+
+      /*
+      box.collapsedTop = top
+      box.uncollapsedTop = previousTop
+      
+      box.onmouseover = ->
+        top = this.uncollapsedTop
+        this.style.top = "#{top}px"
+      
+      box.onmouseout = ->
+        top = this.collapsedTop
+        this.style.top = "#{top}px"
+       */
+      box.style.top = "" + top + "px";
+      _results.push(previousTop = top + box.offsetHeight);
+    }
+    return _results;
+  };
+
+  collapsables = document.querySelectorAll(".collapsable");
+
+  for (_j = 0, _len1 = collapsables.length; _j < _len1; _j++) {
+    collapsable = collapsables[_j];
+    button = collapsable.querySelector(".button");
+    collapsableSection = collapsable.querySelector("section");
+    button.collapsed = false;
+    button.container = collapsable;
+    button.onclick = function() {
+      var container, containerClass;
+      this.collapsed = !this.collapsed;
+      container = this.container;
+      containerClass = container.className;
+      container.className = this.collapsed ? containerClass + " collapsed" : containerClass.replace(" collapsed", "");
+      return this.className = this.collapsed ? "button fa fa-toggle-off" : "button fa fa-toggle-on";
+    };
+  }
+
+  chartTooltip = function(info, global) {
+    var code, continent, flagSrc, name, path, ranked, text, time, tooltipBody, tooltipHeader, value;
+    path = document.getElementById('path').value;
+    value = info["data-values"];
+    ranked = info["data-ranked"];
+    code = info["data-area"];
+    name = info["data-area_name"];
+    time = info["data-year"];
+    continent = "";
+    if (info["data-continent"]) {
+      continent = info["data-continent"];
+      continent = global.continents[continent];
+    }
+    flagSrc = "" + path + "/images/flags/" + code + ".png";
+    tooltipHeader = String.format('<div class="tooltip-header"><img src="{0}" /><div class="title"><p class="countryName">{1}</p><p class="continentName">{2}</p></div></div>', flagSrc, name, continent);
+    tooltipBody = String.format('<div class="tooltip-body"><p class="ranking">{0}</p><p class="time">{1}</p><p class="value">{2}</p></div>', ranked, time, value);
+    text = String.format("{0}{1}", tooltipHeader, ranked && time ? tooltipBody : "");
+    return wesCountry.charts.showTooltip(text, info.event);
+  };
 
 }).call(this);
