@@ -1,0 +1,8 @@
+{
+ "templatesPath": "/renderization/views/",
+ "compiledTemplatesPath": "/renderization/compiled-views/",
+ "modelsPath": "/models/",
+ "visualisationsPath": "/visualisations/",
+ "labelsPath": "/lang/",
+ "apiUrl": "http://intertip.webfoundation.org/api"
+}
