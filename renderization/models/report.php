@@ -24,30 +24,20 @@ class ReportModel {
 		$chapter_counter = 0;
 		$html = "";
 		
-		foreach(sliceHtmlIntoChapters($post_content) as $chapter) {
-			$chapter_counter++;
-			
-			$article = str_get_html($chapter);
-			
-			$tags = "";
-			foreach($article->find('h2') as $h2) {
-				$h2->setAttribute('id', formatTitleToAnchor($h2->innertext));
-				
-				$content = $h2->innertext;
-				$id = $h2->id;
-				$tags .= "<li><a href='#$id'>$content</a></li>";
-			}
-			
-			$nav = "<nav><ul class='tags'>$tags</ul></nav>";
-		
-			$title = $article->find('h1', 0);
+		 foreach(sliceHtmlIntoChapters($post_content) as $chapter) {
+                        $chapter_counter++;
 
-                        if ($title)
-                                $title->outertext = $title->outertext . $nav;
-	
-			$chapters['chapter_'.$chapter_counter] = $article;
-			$html .= $article;
-		}
+                        $article = str_get_html($chapter);
+
+                        $section_counter = 0;
+                        foreach($article->find('h2') as $h2) {
+                                $section_counter++;
+                                $h2->setAttribute('id', formatTitleToAnchor($h2->innertext));
+                        }
+
+                        $chapters['chapter_'.$chapter_counter] = $article;
+                        $html .= $article;
+                }
 		
 		$slices = generateSideBar($chapters);
 		
