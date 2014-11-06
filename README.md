@@ -105,4 +105,4 @@ What's a settings file? well, it's a file that contains the settings required by
 ### WIX settings plugin
 The WIX settings plugin is a small tool developed specifically for the use within this theme (however can be used in any theme with json files) and allows the user to edit the json files from the dashboard.
 
-It has, however a little set up process, and this is that has to be pointed to the json files that we want to edit.
+It has, however, a little set up process, and this is that has to be pointed to the json files that we want to edit.
