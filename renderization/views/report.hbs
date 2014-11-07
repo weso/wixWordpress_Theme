@@ -9,12 +9,33 @@
         </ul>
       </nav>
     </aside>
+    <section class="hidden-visualisations">
+      {{#data.visualisations}}
+        <div class="visualisation" data-anchor="{{id}}" data-position="{{position}}">
+          <p class="esc">Press ESC to close</p>
+          <div class="expand">
+            <a href="javascript:void(0)" title="Maximise">
+              <i class="fa fa-expand"></i>
+            </a>
+          </div>
+          <iframe src="{{url}}"></iframe>
+          <section class="copy notranslate">
+            <p>Copy and paste the code into the HTML of your website.</p>
+            <textarea class="notranslate" readonly >&lt;iframe src="{{url}}" width="800" height="600"&gt;&lt;/iframe&gt;</textarea>
+          </section>
+        </div>
+      {{/data.visualisations}}
+    </section>
     <section class="right-content report-articles">
       <p class="text-right">
         <a href="{{#labels}}{{report_download_link}}{{/labels}}"><i class="fa fa-file-pdf-o"></i> {{#labels}}{{report_download_label}}{{/labels}}</a>
       </p>
-      {{{data.report.content}}}
+      <div class="articles">
+        {{{data.report.content}}}
+      </div>
     </section>
   </div>
   <script src="{{path}}/scripts/left-bar.js"></script>
+  <script src="{{path}}/scripts/report.js"></script>
+  <script src="{{path}}/scripts/visualisation.js"></script>
 </main>

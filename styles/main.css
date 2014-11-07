@@ -1494,6 +1494,10 @@ section.report-articles article:nth-of-type(6) h3:before, section.report-article
 section.report-articles article:nth-of-type(6) ul.tags li a {
   background-color: #a9538d; }
 
+/* VISUALISATIONS */
+section.hidden-visualisations {
+  display: none; }
+
 /* SIDEBAR TAGS */
 ul.about-tags li:nth-child(1) a {
   background-color: #f93845; }
@@ -1786,7 +1790,8 @@ div.box-follow {
   box-shadow: 0 0.4em 0.2em -0.2em #777;
   padding: 0 0 0.5em 0;
   position: relative;
-  overflow-y: hidden; }
+  overflow-y: hidden;
+  margin-bottom: 1em; }
   .collapsable section {
     padding: 0 0.5em; }
   .collapsable header.collapsable-header {
@@ -1813,6 +1818,15 @@ div.box-follow {
   position: absolute;
   bottom: 0;
   z-index: -1; }
+
+.notifications {
+  background-color: #FDEBB1;
+  padding-top: 0.7em; }
+  .notifications header i {
+    margin-right: 1em;
+    color: #dca906; }
+  .notifications header h2 {
+    color: #473702; }
 
 /* SIGNATURE */
 .signature {
@@ -1932,6 +1946,13 @@ div.timeline div.line a.circle {
   height: 1.5em;
   border: none;
   background-color: #ccc; }
+div.timeline div.line a.circle.disabled {
+  background-color: #eee; }
+div.timeline div.line a.circle.disabled:hover {
+  background-color: #eee !important; }
+div.timeline div.elements .disabled a {
+  text-decoration: none;
+  color: #666; }
 div.timeline div.line:before {
   border: none; }
 div.timeline div.line a.circle:hover, div.timeline div.selected a.circle {
@@ -1945,18 +1966,16 @@ div.timeline div.element a {
   background-color: #aaa; }
   .data-box header {
     overflow: hidden;
-    margin-bottom: 1em; }
+    margin-bottom: 0; }
 
 .map-box {
   background-color: #fff;
   margin-top: 0.5em; }
 
 .table-box {
-  background-color: #fff;
-  margin-top: 1em; }
+  background-color: #fff; }
 
 div.middle-section {
-  margin-bottom: 1.5em;
   background-color: white; }
   div.middle-section section > div:first-child {
     max-width: 68em;

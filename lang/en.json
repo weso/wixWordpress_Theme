@@ -60,7 +60,7 @@
   "data_title": "The Data",
   "data_description": "Here is all the data. Jump right in, explore it and find out how your country stacks up.",
   "data_select_indicator": "Select an indicator",
-  "data_choose_year": "Choose a year",
+  "data_choose_year": "Choose a data year",
   "data_pick_countries": "Pick the countries",
   "data_country_ranking": "Country Ranking",
   "data_map": "map",
@@ -108,5 +108,6 @@
   "data_indicator": "indicator",
   "data_year": "year",
   "data_key_values": "Key values",
-  "data_continent": "Continent"
+  "data_continent": "Continent",
+  "data_non_publish": "This indicator is not publishable. Please visit the data provider for more information."
 }
