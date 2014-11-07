@@ -441,7 +441,7 @@ header.site-header {
     clear: both; }
 
 header.site-header .logo {
-  margin: 1.5em 0 0 0;
+  margin: 2em 0 0 0;
   display: inline-block;
   float: left; }
 
@@ -451,12 +451,33 @@ header.site-header .top {
   margin-bottom: 0;
   overflow: auto; }
 
+header.site-header .bottom {
+  overflow: hidden;
+  box-shadow: 0 0.3em 0.3em -0.3em #111; }
+  header.site-header .bottom div {
+    height: 1.5em;
+    width: 25%;
+    float: left;
+    background-color: #ccc; }
+  header.site-header .bottom div:nth-child(1) {
+    background-color: #f93845;
+    border-right: 0.1em solid #ac0510; }
+  header.site-header .bottom div:nth-child(2) {
+    background-color: #0096af;
+    border-right: 0.1em solid #007386;
+    box-shadow: inset 0.5em 0 0.8em -0.5em #f81020; }
+  header.site-header .bottom div:nth-child(3) {
+    background-color: #89ba00;
+    border-right: 0.1em solid #638700;
+    box-shadow: inset 0.5em 0 0.8em -0.5em #003f49; }
+  header.site-header .bottom div:nth-child(4) {
+    background-color: #47caaa;
+    box-shadow: inset 0.5em 0 0.8em -0.5em #3e5400; }
+
 header.site-header nav {
   overflow: auto;
   clear: right;
   padding: 1em 0.5em 1em 0;
-  border-bottom: 0.1em solid #bbb;
-  box-shadow: 0 0.3em 0.3em -0.2em #ddd;
   width: intrinsic;
   float: right; }
   header.site-header nav div {
@@ -660,7 +681,7 @@ div.goog-te-menu2 {
     text-align: center;
     border-radius: 50%;
     background-color: white;
-    color: #333;
+    color: #222;
     margin: 0.5em 0.3em 0.2em 0; }
   .footer i[class~="fa-envelope"] {
     padding-top: 0.33em; }
@@ -805,7 +826,7 @@ div.illustrations {
 div.accordion {
   overflow: hidden;
   height: 28em;
-  margin-top: -0.4em;
+  margin-top: -1.5em;
   font-family: 'Raleway', sans-serif;
   position: relative;
   background-color: #47caaa; }
@@ -1835,7 +1856,8 @@ div.box-follow {
 
 .notifications {
   background-color: #FDEBB1;
-  padding-top: 0.7em; }
+  padding-top: 0.7em;
+  display: none; }
   .notifications header i {
     margin-right: 1em;
     color: #dca906; }
