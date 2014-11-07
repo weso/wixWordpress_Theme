@@ -23,7 +23,7 @@ class LegacyModel {
                 }
 		
 		$data[$slug]['content'] = $formatted_content;
-		$data[$slug]['ul'] = generateSidebar($chapters);
+		$data[$slug]['ul'] = generateSidebar($chapters)['sidebar'];
 
                 return $data;
 	}
