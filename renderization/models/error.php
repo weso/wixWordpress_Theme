@@ -3,7 +3,7 @@ class ErrorModel {
 	function ErrorModel() {
 	}
 
-	function get($api_url, $visualisationsPath) {
+	function get() {
 		global $wpdb;
 		$data = Array();
 	
