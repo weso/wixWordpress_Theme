@@ -25,7 +25,6 @@ class LegacyModel {
 		$data[$slug]['content'] = $formatted_content;
 		$data[$slug]['ul'] = generateSidebar($chapters);
 
-		var_dump($data);
                 return $data;
 	}
 
