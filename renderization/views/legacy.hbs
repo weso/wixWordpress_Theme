@@ -1,0 +1,14 @@
+<main class=content>
+  {{>by}}
+  <div class=container>
+    <aside class=left-bar>
+      <h1>{{#labels}}{{legacy_title}}{{/labels}}</h1>
+      <nav>
+        <ul class="tags about-tags">{{{data.legacy.ul}}}</ul>
+      </nav>
+      <div class=bar></div>
+    </aside>
+    <section class="right-content about-articles">{{{data.legacy.content}}}</section>
+  </div>
+  <script src={{path}}/scripts/left-bar.js></script>
+</main>

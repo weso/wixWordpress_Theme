@@ -1,6 +1,10 @@
 <main class="content">
   {{>by}}
   <input type="hidden" id="path" value="{{path}}" />
+  <input type="hidden" id="label_ascending" value="{{#labels}}{{data_ascending}}{{/labels}}" />
+  <input type="hidden" id="label_descending" value="{{#labels}}{{data_descending}}{{/labels}}" />
+  <input type="hidden" id="label_higher" value="{{#labels}}{{data_higher}}{{/labels}}" />
+  <input type="hidden" id="label_lower" value="{{#labels}}{{data_lower}}{{/labels}}" />
   <div class="container data-container">
 
     <aside class="left-bar absolute select-bar">
@@ -57,7 +61,7 @@
 
         <div class="middle-section collapsable">
           <header class="collapsable-header">
-            <h2><i class="fa fa-dashboard"></i>  {{#labels}}{{data_key_values}}{{/labels}}</h2>
+            <h2><i class="fa fa-star-o"></i>  {{#labels}}{{data_key_values}}{{/labels}}</h2>
             <i class="button fa fa-toggle-on"></i>
           </header>
           <section>
@@ -91,9 +95,30 @@
         </section>
       </div>
 
+      <div class="indicator-section collapsable">
+        <header class="collapsable-header">
+          <h2><i class="fa fa-dashboard"></i>  {{#labels}}{{data_indicator_info}}{{/labels}}</h2>
+          <i class="button fa fa-toggle-on"></i>
+        </header>
+        <section class="info">
+          <label for="indicator-description">{{#labels}}{{indicator_description}}{{/labels}}</label>
+          <h2 id="indicator-description"></h2>
+          <label for="indicator-type">{{#labels}}{{indicator_type}}{{/labels}}</label>
+          <h2 id="indicator-type"></h2>
+          <label for="indicator-tendency">{{#labels}}{{indicator_tendency}}{{/labels}}</label>
+          <h2 id="indicator-tendency"></h2>
+        </section>
+      </div>
+
       <div id="notifications" class="notifications collapsable">
         <header class="collapsable-header">
           <h2><i class="fa fa-exclamation-triangle"></i>  {{#labels}}{{data_non_publish}}{{/labels}}</h2>
+        </header>
+      </div>
+
+      <div id="primary-info" class="notifications info collapsable">
+        <header class="collapsable-header">
+          <h2><i class="fa fa-info"></i>  {{#labels}}{{data_primary_indicators}}{{/labels}}</h2>
         </header>
       </div>
 
@@ -115,8 +140,8 @@
             <div class="charts-view charts-view-map">
               <div id="map" class="map first">
                 <div class="colour-legend">
-                  <span>higher</span>
-                  <span>lower</span>
+                  <span id="legend-higher">{{#labels}}{{data_higher}}{{/labels}}</span>
+                  <span id="legend-lower">{{#labels}}{{data_lower}}{{/labels}}</span>
                   <div></div>
                 </div>
                 <div class="chart"></div>

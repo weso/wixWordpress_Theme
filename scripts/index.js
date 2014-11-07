@@ -313,8 +313,10 @@
       zoom: false,
       backgroundColour: "transparent",
       landColour: "#FC6A74",
+      hoverColour: "#FC6A74",
       colourRange: ["#E98990", "#C20310"],
-      onCountryClick: function(info) {}
+      onCountryClick: function(info) {},
+      onCountryOver: function(info, visor) {}
     });
     paths = document.querySelectorAll("#map .land-group");
     _results = [];

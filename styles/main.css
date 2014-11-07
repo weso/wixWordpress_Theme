@@ -938,6 +938,9 @@ div.accordion {
         bottom: 0;
         padding-left: 2em;
         padding-bottom: 1em; }
+        div.accordion article section.extra footer a {
+          color: white;
+          font-size: 0.9em; }
     div.accordion article aside {
       position: absolute;
       width: 100%;
@@ -1794,6 +1797,16 @@ div.box-follow {
   margin-bottom: 1em; }
   .collapsable section {
     padding: 0 0.5em; }
+  .collapsable section.info label {
+    color: #888;
+    font-weight: 500;
+    text-align: left;
+    font-style: italic; }
+  .collapsable section.info h2 {
+    font-size: 1em;
+    margin-top: 0.2em;
+    text-align: justify !important;
+    padding: 0 !important; }
   .collapsable header.collapsable-header {
     font-size: 1.2em;
     color: #888;
@@ -1827,6 +1840,15 @@ div.box-follow {
     color: #dca906; }
   .notifications header h2 {
     color: #473702; }
+
+.notifications.info {
+  background-color: #CEECF5;
+  padding-top: 0.7em; }
+  .notifications.info header i {
+    margin-right: 1em;
+    color: #2aa7cd; }
+  .notifications.info header h2 {
+    color: #10404e; }
 
 /* SIGNATURE */
 .signature {
@@ -1947,7 +1969,10 @@ div.timeline div.line a.circle {
   border: none;
   background-color: #ccc; }
 div.timeline div.line a.circle.disabled {
-  background-color: #eee; }
+  background-color: #eee;
+  background-image: url(../images/cross.png);
+  background-size: cover;
+  border: 1px solid #ccc; }
 div.timeline div.line a.circle.disabled:hover {
   background-color: #eee !important; }
 div.timeline div.elements .disabled a {
@@ -2017,8 +2042,8 @@ div.middle-section {
       font-size: 1.3em;
       height: 2.5em; }
     div.middle-section div.box-mini .indicator {
-      font-size: 0.9em;
-      height: 4em; }
+      font-size: 1.4em;
+      height: 2.4em; }
   div.middle-section div.box-mini:nth-child(3), div.middle-section div.box-mini:nth-child(4) {
     cursor: pointer; }
   div.middle-section div.box-mini:nth-child(1) {
