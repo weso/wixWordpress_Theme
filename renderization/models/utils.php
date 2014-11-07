@@ -123,18 +123,22 @@ function getChildPages($post_slug) {
 
 	$my_wp_query = new WP_Query();	
 
-	$id = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_name = '$post_slug'");
-	$all_wp_pages = $my_wp_query->query(array('post_type' => 'page'));
-	return get_page_children($id, $all_wp_pages);
+	$page = get_page_by_path($post_slug);
+	$id = $page->ID;
+	$args = array( 
+        'child_of' => $page->ID, 
+        'parent' => $page->ID,
+        'hierarchical' => 0
+	);
+
+	return get_pages($args);
 }
 
 function getPostContent($post_slug) {	
 	global $wpdb;
-	
-	$id = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_name = '$post_slug'");
 
-	// Obtain the post through its id
-	$post = get_post($id);
+	// Obtain the post through its slug
+	$post = get_page_by_path($post_slug);
 
 	// Filter the post content
 	$content = apply_filters('the_content', $post->post_content);
