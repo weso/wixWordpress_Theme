@@ -13,7 +13,8 @@ class IndexModel {
 	      	$data["tweets"] = $twitter->loadDefaultAccountTweets();
 		$data["home-header"] = $this->loadFrontVisualisations($visualisationsPath);
 		$data["model"] = $this->formatApiData($api_url);
-
+		$data["register_url"] = site_url('wp-login.php?action=register', 'login_post');
+		
 		return $data;
 	}
 
