@@ -16,7 +16,7 @@
       data[key] = {
         pop: itu[key].Population,
         itu: users,
-        name: key,
+        name: primary[key].name,
         censorship: 10 - primary[key]['P4'],
         surveillance: 10 - primary[key]['P9']
       };
@@ -81,11 +81,11 @@
     var that = this;
     function toolTipHTML(d) {
       if (!d.country) {
-        return ['<h3>', d.id, '</h3><hr /><h4>' + that.labels['sv_tooltip_legend_na'] + ' </h4>'].join('');
+        return ['<h3>', that.data[d.id].name, '</h3><hr /><h4>' + that.labels['sv_tooltip_legend_na'] + ' </h4>'].join('');
       }
 
       var affected = d.stat ? that.labels['sv_tooltip_legend_true'] : that.labels['sv_tooltip_legend_false'] ;
-      return ['<h3>', d.id, '</h3><h4>', Utility.prettyN(d.country.itu),
+      return ['<h3>', that.data[d.id].name, '</h3><h4>', Utility.prettyN(d.country.itu),
               ' internet users</h4><h4 class="sv-affected-', d.stat, '">',
               affected, '</h4><hr /><table><tbody><tr><td>', d.country.censorship,
               '</td><td>'+ that.labels['sv_tooltip_degree_censorship'] + '</td></tr><tr><td>', d.country.surveillance,
@@ -267,7 +267,7 @@
     })
 
     // query topojson, then draw chart
-    d3.json('bin/wi_name_countries.topojson', function(topo) {
+    d3.json('bin/country_boundaries.topojson', function(topo) {
       surveillance.topo = topojson.feature(topo, topo.objects.countries).features;
       surveillance.draw();
     });

@@ -3,11 +3,11 @@
   // TODO
   // Switch to live API urls calls
   var urls = {
-    itu_pop: 'http://desolate-caverns-3750.herokuapp.com/json/ITU_pop.json',
-    primary: 'http://desolate-caverns-3750.herokuapp.com/json/primary.json',
-    net_neutrality: 'http://desolate-caverns-3750.herokuapp.com/json/net_neutrality.json',
-    flags: 'http://desolate-caverns-3750.herokuapp.com/json/flags_local.json',
-    economic_regional: 'http://desolate-caverns-3750.herokuapp.com/json/economic_regional.json',
+    population: 'bin/population.json',
+    primary: 'http://intertip.webfoundation.org/api/observations/P4,P7,P9,S11,S12,ITU_N/ALL/2013?callback=?',
+    neutrality: 'bin/neutrality.json',
+    flags: 'bin/flags_lookup.json',
+    economic_regional: 'bin/economic_regional.json',
     labels: 'bin/labels.json'
   };
 
@@ -15,14 +15,47 @@
   // https://github.com/mbostock/queue
   window.loadVizData = function(fn) {
     var q = queue();
+    
+    function getData(url, cb) { $.getJSON(url, function(data) { cb(null, data); }) }
     for (var prop in urls) {
-      q.defer(d3.json, urls[prop]);
+      q.defer(getData, urls[prop]);
     }
-    q.await(function(error, itu, primary, neutrality, flags, economic_regional, labels) {
-      // if (error) { console.log(error); }
+
+    q.await(function(error, pop, primary, neutrality, flags, economic_regional, labels) {
+
+      var indicators = {};
+      
+      //Format primary data
+      _(primary.data).each(function(result) {
+        if (typeof indicators[result.code] === 'undefined') {
+          indicators[result.code] = {}
+        }
+        indicators[result.code][result.indicator] = result.value;
+        indicators[result.code]['name'] = result.name;
+      })
+
+      //Format population data
+      var itu = {}; 
+      _(indicators).each(function(val, code) { 
+        itu[code] = {}; itu[code].ITU = indicators[code].ITU_N 
+      });
+
+      _(pop).each(function(val, code) {
+        if (pop[code] && itu[code]) {
+          itu[code].Population = pop[code];  
+        }
+      })
+
+      //Format neutrality data
+      _(neutrality).each(function(val, code) {
+        if (indicators[code] && neutrality[code]) {
+          neutrality[code]['Score'] = indicators[code].P7 
+        }
+      })
+
       fn({
         itu: itu,
-        primary: primary,
+        primary: indicators,
         neutrality: neutrality,
         flags: flags,
         economic_regional: economic_regional,

@@ -241,7 +241,7 @@
     var econ_region = args.economic_regional;
 
     // create new data file containing what we need
-    var data = _.map(args.primary, function(d, name) {
+    var data = _.map(args.primary, function(d, key) {
       var support = d['S11'], action = d['S12'];
       return {
         support: support,
@@ -253,9 +253,9 @@
           overall: singleIndicatorScore((support + action)/2, labels)
         },
         diff: support - action,
-        name: name,
-        econ: econ_region[name].econ,
-        region: econ_region[name].region
+        name: d.name,
+        econ: (econ_region[key])?econ_region[key].econ:"NA",
+        region: (econ_region[key])?econ_region[key].region:"NA"
       };
     });
 

@@ -207,11 +207,10 @@
           <p>{{#labels}}{{home_follow_us_description}}{{/labels}}</p>
           <div class="newsletter-bar">
             <div class="newsletter-and-submit">
-		<form action="{{#data}}{{register_url}}{{/data}}" method="post">
-    		  <input type="text" name="user_login" id="user_login" class="input" placeholder="Enter your username"/>
-    		  <input type="text" name="user_email" id="user_email" class="input" placeholder="Enter your email account" />
-    		  <input type="submit" value="Register" id="register" />
-		</form>
+              <input type="email" placeholder="Enter your email account" />
+              <button type="submit">
+                {{#labels}}{{home_sign_up}}{{/labels}}
+              </button>
             </div>
           </div>
         </div>

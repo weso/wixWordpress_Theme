@@ -4,30 +4,27 @@
   var Neutrality = function(args, viz) {
     this.dataset = []
     this.labels = args.labels;
-
-    var economic_regional = _(args.economic_regional).map(function(countryVal, country) {
-      return {country: country, region: countryVal.region, econ: parseInt(countryVal.econ)}
-    })
-
-    var totalPop = 0;
-    _(args.itu).each(function(countryVal, countryName) {
-        totalPop += args.itu[countryName]['Population']*args.itu[countryName]['ITU'];
-    })
-
-    for (var country in args.neutrality) {
-      if (args.itu[country]) {
-        this.dataset.push({
-          country: country,
-          discriminates: ((args.neutrality[country]['Discriminates Traffic'].trim() === 'Yes')?1:-1),
-          has_law: ((args.neutrality[country]['Has Law'].trim() === 'Yes')?1:-1),
-          score: args.neutrality[country]['Score'],
-          pop: args.itu[country]['Population'] * args.itu[country]['ITU']/totalPop,
-          id: args.flags[country]['ID'],
-          region: args.economic_regional[country]['region'],
-          econ: args.economic_regional[country]['econ']
-        });
+    var economic_regional = _(args.economic_regional).map(function(countryVal, key) {
+      return {
+        key: key, 
+        region: countryVal.region, 
+        econ: parseInt(countryVal.econ)
       }
-    }
+    })
+
+    _(args.neutrality).each(function(d,key) {
+      this.dataset.push({
+        key: key,
+        name: args.primary[key].name,
+        discriminates: ((d['Discriminates Traffic'].trim() === 'Yes')?1:-1),
+        has_law: ((d['Has Law'].trim() === 'Yes')?1:-1),
+        score: d['Score'],
+        id: args.flags[key]['ID'],
+        region: args.economic_regional[key]['region'],
+        econ: args.economic_regional[key]['econ']
+      });
+
+    }.bind(this))
 
     // ********************
     // APPEND SVG AND ELEMENTS
@@ -42,7 +39,7 @@
             .enter()
             .append('rect')
             .attr('class', 'nn-rect')
-            .attr('data-name', function(d) { return d.country})
+            .attr('data-name', function(d) { return d.key})
 
 
     var ne = this.svg.append('text').attr('class', 'nn-text-ne nn-text')
@@ -254,18 +251,18 @@
 
     this.svg.selectAll('.nn-rect')
     .attr('y', function(d) {
-      var rank = that.quad.getPosition(_(groupBy[d.has_law][d.discriminates]).chain().pluck('country').map(function(country) {
-        return country.toLowerCase();
-      }).indexOf(d.country.toLowerCase()).value());
+      var rank = that.quad.getPosition(_(groupBy[d.has_law][d.discriminates]).chain().pluck('key').map(function(key) {
+        return key;
+      }).indexOf(d.key).value());
       if (rank) {
         var y = ((d.has_law > 0 )?that.topScale[rank.y]:that.bottomScale[rank.y])
         return y
       }
     })
     .attr('x', function(d) {
-      var rank = that.quad.getPosition(_(groupBy[d.has_law][d.discriminates]).chain().pluck('country').map(function(country) {
-        return country.toLowerCase();
-      }).indexOf(d.country.toLowerCase()).value());
+      var rank = that.quad.getPosition(_(groupBy[d.has_law][d.discriminates]).chain().pluck('key').map(function(key) {
+        return key;
+      }).indexOf(d.key).value());
       if (rank) {
         var x = ((d.discriminates > 0)?that.leftScale[rank.x]:that.rightScale[rank.x])
         return x
@@ -309,7 +306,7 @@
         }
       }
       $tooltip.html(tmpl({
-        country: d.country,
+        country: d.name,
         score: d.score,
         discriminationText: discriminationText,
         lawText: lawText,
@@ -322,12 +319,12 @@
       d3.select(this).attr('class', 'nn-rect nn-rect-not-hover');
 
       if (that.attribute === 'region') {
-        _(that.groupByRegion[d.region]).pluck('country').forEach(function(countryName) {
-          d3.select('[data-name="'+ countryName+ '"]').attr('class', 'nn-rect nn-rect-not-hover')
+        _(that.groupByRegion[d.region]).pluck('key').forEach(function(key) {
+          d3.select('[data-name="'+ key+ '"]').attr('class', 'nn-rect nn-rect-not-hover')
         })        
       } else {
-        _(that.groupByEcon[d.econ]).pluck('country').forEach(function(countryName) {
-          d3.select('[data-name="'+ countryName+ '"]').attr('class', 'nn-rect nn-rect-not-hover')
+        _(that.groupByEcon[d.econ]).pluck('key').forEach(function(key) {
+          d3.select('[data-name="'+ key+ '"]').attr('class', 'nn-rect nn-rect-not-hover')
         })   
       }
 

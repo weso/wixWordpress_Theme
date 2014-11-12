@@ -3,11 +3,11 @@
   // TODO
   // Switch to live API urls calls
   var urls = {
-    itu_pop: 'http://desolate-caverns-3750.herokuapp.com/json/ITU_pop.json',
-    primary: 'http://desolate-caverns-3750.herokuapp.com/json/primary.json',
-    net_neutrality: 'http://desolate-caverns-3750.herokuapp.com/json/net_neutrality.json',
-    flags: 'http://desolate-caverns-3750.herokuapp.com/json/flags_local.json',
-    economic_regional: 'http://desolate-caverns-3750.herokuapp.com/json/economic_regional.json',
+    population: 'bin/population.json',
+    primary: 'http://intertip.webfoundation.org/api/observations/P4,P7,P9,S11,S12,ITU_N/ALL/2013?callback=?',
+    neutrality: 'bin/neutrality.json',
+    flags: 'bin/flags_lookup.json',
+    economic_regional: 'bin/economic_regional.json',
     labels: 'bin/labels.json'
   };
 
@@ -15,14 +15,47 @@
   // https://github.com/mbostock/queue
   window.loadVizData = function(fn) {
     var q = queue();
+    
+    function getData(url, cb) { $.getJSON(url, function(data) { cb(null, data); }) }
     for (var prop in urls) {
-      q.defer(d3.json, urls[prop]);
+      q.defer(getData, urls[prop]);
     }
-    q.await(function(error, itu, primary, neutrality, flags, economic_regional, labels) {
-      // if (error) { console.log(error); }
+
+    q.await(function(error, pop, primary, neutrality, flags, economic_regional, labels) {
+
+      var indicators = {};
+      
+      //Format primary data
+      _(primary.data).each(function(result) {
+        if (typeof indicators[result.code] === 'undefined') {
+          indicators[result.code] = {}
+        }
+        indicators[result.code][result.indicator] = result.value;
+        indicators[result.code]['name'] = result.name;
+      })
+
+      //Format population data
+      var itu = {}; 
+      _(indicators).each(function(val, code) { 
+        itu[code] = {}; itu[code].ITU = indicators[code].ITU_N 
+      });
+
+      _(pop).each(function(val, code) {
+        if (pop[code] && itu[code]) {
+          itu[code].Population = pop[code];  
+        }
+      })
+
+      //Format neutrality data
+      _(neutrality).each(function(val, code) {
+        if (indicators[code] && neutrality[code]) {
+          neutrality[code]['Score'] = indicators[code].P7 
+        }
+      })
+
       fn({
         itu: itu,
-        primary: primary,
+        primary: indicators,
         neutrality: neutrality,
         flags: flags,
         economic_regional: economic_regional,
@@ -139,7 +172,7 @@ $(document).on('ready', function() {
       data[key] = {
         pop: itu[key].Population,
         itu: users,
-        name: key,
+        name: primary[key].name,
         censorship: 10 - primary[key]['P4'],
         surveillance: 10 - primary[key]['P9']
       };
@@ -204,11 +237,11 @@ $(document).on('ready', function() {
     var that = this;
     function toolTipHTML(d) {
       if (!d.country) {
-        return ['<h3>', d.id, '</h3><hr /><h4>' + that.labels['sv_tooltip_legend_na'] + ' </h4>'].join('');
+        return ['<h3>', that.data[d.id].name, '</h3><hr /><h4>' + that.labels['sv_tooltip_legend_na'] + ' </h4>'].join('');
       }
 
       var affected = d.stat ? that.labels['sv_tooltip_legend_true'] : that.labels['sv_tooltip_legend_false'] ;
-      return ['<h3>', d.id, '</h3><h4>', Utility.prettyN(d.country.itu),
+      return ['<h3>', that.data[d.id].name, '</h3><h4>', Utility.prettyN(d.country.itu),
               ' internet users</h4><h4 class="sv-affected-', d.stat, '">',
               affected, '</h4><hr /><table><tbody><tr><td>', d.country.censorship,
               '</td><td>'+ that.labels['sv_tooltip_degree_censorship'] + '</td></tr><tr><td>', d.country.surveillance,
@@ -390,7 +423,7 @@ $(document).on('ready', function() {
     })
 
     // query topojson, then draw chart
-    d3.json('bin/wi_name_countries.topojson', function(topo) {
+    d3.json('bin/country_boundaries.topojson', function(topo) {
       surveillance.topo = topojson.feature(topo, topo.objects.countries).features;
       surveillance.draw();
     });
@@ -643,7 +676,7 @@ $(document).on('ready', function() {
     var econ_region = args.economic_regional;
 
     // create new data file containing what we need
-    var data = _.map(args.primary, function(d, name) {
+    var data = _.map(args.primary, function(d, key) {
       var support = d['S11'], action = d['S12'];
       return {
         support: support,
@@ -655,9 +688,9 @@ $(document).on('ready', function() {
           overall: singleIndicatorScore((support + action)/2, labels)
         },
         diff: support - action,
-        name: name,
-        econ: econ_region[name].econ,
-        region: econ_region[name].region
+        name: d.name,
+        econ: (econ_region[key])?econ_region[key].econ:"NA",
+        region: (econ_region[key])?econ_region[key].region:"NA"
       };
     });
 
@@ -727,30 +760,27 @@ $(document).on('ready', function() {
   var Neutrality = function(args, viz) {
     this.dataset = []
     this.labels = args.labels;
-
-    var economic_regional = _(args.economic_regional).map(function(countryVal, country) {
-      return {country: country, region: countryVal.region, econ: parseInt(countryVal.econ)}
-    })
-
-    var totalPop = 0;
-    _(args.itu).each(function(countryVal, countryName) {
-        totalPop += args.itu[countryName]['Population']*args.itu[countryName]['ITU'];
-    })
-
-    for (var country in args.neutrality) {
-      if (args.itu[country]) {
-        this.dataset.push({
-          country: country,
-          discriminates: ((args.neutrality[country]['Discriminates Traffic'].trim() === 'Yes')?1:-1),
-          has_law: ((args.neutrality[country]['Has Law'].trim() === 'Yes')?1:-1),
-          score: args.neutrality[country]['Score'],
-          pop: args.itu[country]['Population'] * args.itu[country]['ITU']/totalPop,
-          id: args.flags[country]['ID'],
-          region: args.economic_regional[country]['region'],
-          econ: args.economic_regional[country]['econ']
-        });
+    var economic_regional = _(args.economic_regional).map(function(countryVal, key) {
+      return {
+        key: key, 
+        region: countryVal.region, 
+        econ: parseInt(countryVal.econ)
       }
-    }
+    })
+
+    _(args.neutrality).each(function(d,key) {
+      this.dataset.push({
+        key: key,
+        name: args.primary[key].name,
+        discriminates: ((d['Discriminates Traffic'].trim() === 'Yes')?1:-1),
+        has_law: ((d['Has Law'].trim() === 'Yes')?1:-1),
+        score: d['Score'],
+        id: args.flags[key]['ID'],
+        region: args.economic_regional[key]['region'],
+        econ: args.economic_regional[key]['econ']
+      });
+
+    }.bind(this))
 
     // ********************
     // APPEND SVG AND ELEMENTS
@@ -765,7 +795,7 @@ $(document).on('ready', function() {
             .enter()
             .append('rect')
             .attr('class', 'nn-rect')
-            .attr('data-name', function(d) { return d.country})
+            .attr('data-name', function(d) { return d.key})
 
 
     var ne = this.svg.append('text').attr('class', 'nn-text-ne nn-text')
@@ -977,18 +1007,18 @@ $(document).on('ready', function() {
 
     this.svg.selectAll('.nn-rect')
     .attr('y', function(d) {
-      var rank = that.quad.getPosition(_(groupBy[d.has_law][d.discriminates]).chain().pluck('country').map(function(country) {
-        return country.toLowerCase();
-      }).indexOf(d.country.toLowerCase()).value());
+      var rank = that.quad.getPosition(_(groupBy[d.has_law][d.discriminates]).chain().pluck('key').map(function(key) {
+        return key;
+      }).indexOf(d.key).value());
       if (rank) {
         var y = ((d.has_law > 0 )?that.topScale[rank.y]:that.bottomScale[rank.y])
         return y
       }
     })
     .attr('x', function(d) {
-      var rank = that.quad.getPosition(_(groupBy[d.has_law][d.discriminates]).chain().pluck('country').map(function(country) {
-        return country.toLowerCase();
-      }).indexOf(d.country.toLowerCase()).value());
+      var rank = that.quad.getPosition(_(groupBy[d.has_law][d.discriminates]).chain().pluck('key').map(function(key) {
+        return key;
+      }).indexOf(d.key).value());
       if (rank) {
         var x = ((d.discriminates > 0)?that.leftScale[rank.x]:that.rightScale[rank.x])
         return x
@@ -1032,7 +1062,7 @@ $(document).on('ready', function() {
         }
       }
       $tooltip.html(tmpl({
-        country: d.country,
+        country: d.name,
         score: d.score,
         discriminationText: discriminationText,
         lawText: lawText,
@@ -1045,12 +1075,12 @@ $(document).on('ready', function() {
       d3.select(this).attr('class', 'nn-rect nn-rect-not-hover');
 
       if (that.attribute === 'region') {
-        _(that.groupByRegion[d.region]).pluck('country').forEach(function(countryName) {
-          d3.select('[data-name="'+ countryName+ '"]').attr('class', 'nn-rect nn-rect-not-hover')
+        _(that.groupByRegion[d.region]).pluck('key').forEach(function(key) {
+          d3.select('[data-name="'+ key+ '"]').attr('class', 'nn-rect nn-rect-not-hover')
         })        
       } else {
-        _(that.groupByEcon[d.econ]).pluck('country').forEach(function(countryName) {
-          d3.select('[data-name="'+ countryName+ '"]').attr('class', 'nn-rect nn-rect-not-hover')
+        _(that.groupByEcon[d.econ]).pluck('key').forEach(function(key) {
+          d3.select('[data-name="'+ key+ '"]').attr('class', 'nn-rect nn-rect-not-hover')
         })   
       }
 

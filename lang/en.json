@@ -108,15 +108,19 @@
   "data_here": "here",
   "data_indicator": "indicator",
   "data_year": "year",
-  "data_key_values": "Key values",
+  "data_indicator_ranking": "World Ranking",
   "data_continent": "Continent",
   "data_non_publish": "This indicator is not publishable. Please visit the data provider for more information.",
-  "data_indicator_info": "Indicator info",
+  "data_indicator_info": "Indicator",
   "indicator_description": "description",
   "legacy_title": "Legacy",
   "indicator_type": "type",
   "indicator_tendency": "tendency",
+  "indicator_name": "name",
   "data_ascending": "Ascending",
   "data_descending": "Descending",
-  "data_primary_indicators": "Primary indicators don't have historical values"
+  "data_primary_indicators": "Primary indicators don't have historical values",
+  "data_provider": "provider",
+  "data_country_info": "Country",
+  "data_indicator_full_list": "Indicator Full List"
 }

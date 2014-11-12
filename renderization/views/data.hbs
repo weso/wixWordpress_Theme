@@ -8,181 +8,239 @@
   <div class="container data-container">
 
     <aside class="left-bar absolute select-bar">
-      <h1>{{#labels}}{{data_title}}{{/labels}}</h1>
-
-      <div class="select-box first-box">
-        <div>
-          <header>
-            <abbr class="help" title='{{#labels}}{{data_indicator_help}}{{/labels}}'><i class="fa fa-info-circle fa-2x"></i></abbr>
-            <div class="circle-number">1</div>
-            <h2>{{#labels}}{{data_select_indicator}}{{/labels}}</h2>
-          </header>
-          <div class="indicator-selector">
-            <select id="indicator-select">
-            </select>
+      <section>
+        <div class="select-box first-box">
+          <div>
+            <header>
+              <abbr class="help" title='{{#labels}}{{data_indicator_help}}{{/labels}}'><i class="fa fa-info-circle fa-2x"></i></abbr>
+              <div class="circle-number">1</div>
+              <h2>{{#labels}}{{data_select_indicator}}{{/labels}}</h2>
+            </header>
+            <div class="indicator-selector">
+              <select id="indicator-select">
+              </select>
+            </div>
+          </div>
+          <div class="bottom">
+            <i class="fa fa-tachometer"></i>
           </div>
         </div>
-        <div class="bottom">
-          <i class="fa fa-tachometer"></i>
-        </div>
-      </div>
-      <div class="select-box second-box">
-        <div>
-          <header>
-            <abbr class="help" title='{{#labels}}{{data_year_help}}{{/labels}}'><i class="fa fa-info-circle fa-2x"></i></abbr>
-            <div class="circle-number">2</div>
-            <h2>{{#labels}}{{data_choose_year}}{{/labels}}</h2>
-          </header>
-          <div id="timeline"></div>
-        </div>
-        <div class="bottom">
-          <i class="fa fa-clock-o"></i>
-        </div>
-      </div>
-      <div class="select-box third-box">
-        <div>
-          <header>
-            <abbr class="help" title='{{#labels}}{{data_country_help}}{{/labels}}'><i class="fa fa-info-circle fa-2x"></i></abbr>
-            <div class="circle-number">3</div>
-            <h2>{{#labels}}{{data_pick_countries}}{{/labels}}</h2>
-          </header>
-          <div class="country-box">
-            <div id="country-selector" class="selector"></div>
+        <div class="select-box second-box">
+          <div>
+            <header>
+              <abbr class="help" title='{{#labels}}{{data_year_help}}{{/labels}}'><i class="fa fa-info-circle fa-2x"></i></abbr>
+              <div class="circle-number">2</div>
+              <h2>{{#labels}}{{data_choose_year}}{{/labels}}</h2>
+            </header>
+            <div id="timeline"></div>
+          </div>
+          <div class="bottom">
+            <i class="fa fa-clock-o"></i>
           </div>
         </div>
-        <div class="bottom">
-          <i class="fa fa-flag"></i>
+        <div class="select-box third-box">
+          <div>
+            <header>
+              <abbr class="help" title='{{#labels}}{{data_country_help}}{{/labels}}'><i class="fa fa-info-circle fa-2x"></i></abbr>
+              <div class="circle-number">3</div>
+              <h2>{{#labels}}{{data_pick_countries}}{{/labels}}</h2>
+            </header>
+            <div class="country-box">
+              <div id="country-selector" class="selector"></div>
+            </div>
+          </div>
+          <div class="bottom">
+            <i class="fa fa-flag"></i>
+          </div>
         </div>
-      </div>
-      <div class="bar"></div>
+        <div class="bar"></div>
+      </section>
     </aside>
     <section class="right-content data-right-content">
-      <h2>{{#labels}}{{data_description}}{{/labels}} <a href="{{host}}/downloads">{{#labels}}{{data_here}}{{/labels}}</a>.</h2>
+      <div class="first-section">
+        <div>
+          <p class="downloads"><a href="{{host}}/downloads"><i class="fa fa-download"></i> {{#labels}}{{data_download}}{{/labels}}</a></p>
+          <h1>{{#labels}}{{data_title}}{{/labels}}</h1>
+          <h2>{{#labels}}{{data_description}}{{/labels}}</h2>
+        </div>
+        <div class="tab first-tab">
+          <header class="indicator-header">
+            <div>
+              <i class="fa fa-dashboard"></i>
+              <h2>{{#labels}}{{data_indicator_info}}{{/labels}}</h2>
+            </div>
+          </header>
+          <div class="tab-content indicator-section collapsable collapsable-no-margin">
+            <div class="country-section collapsable collapsed">
+              <header class="collapsable-header">
+                <div class="icons">
+                  <i id="indicator-tendency-arrow" class="fa fa-arrow-up"></i> <span id="indicator-tendency-icon"></span>
+                  <i class="fa fa-tag"></i> <span id="indicator-type-icon"></span>
+                  <i class="fa fa-university"></i> <span id="indicator-provider-icon"></span>
+                </div>
+                <i class="button fa fa-toggle-on"></i>
+              </header>
+              <section class="info">
+                <label for="indicator-name">{{#labels}}{{indicator_name}}{{/labels}}</label>
+                <h2 id="indicator-name"></h2>
+                <label for="indicator-description">{{#labels}}{{indicator_description}}{{/labels}}</label>
+                <h2 id="indicator-description"></h2>
+                <label for="indicator-type">{{#labels}}{{indicator_type}}{{/labels}}</label>
+                <h2 id="indicator-type"></h2>
+                <label for="indicator-tendency">{{#labels}}{{indicator_tendency}}{{/labels}}</label>
+                <h2 id="indicator-tendency"></h2>
+                <label for="indicator-provider">{{#labels}}{{data_provider}}{{/labels}}</label>
+                <h2 id="indicator-provider"></h2>
+              </section>
+            </div>
+            <header class="collapsable-header">
+              <h2><i class="fa fa-globe"></i>  {{#labels}}{{data_indicator_ranking}}{{/labels}}</h2>
+              <i class="button fa fa-toggle-on"></i>
+            </header>
+            <section>
+              <div id="bars" class="bars notranslate"></div>
+            </section>
+            <div class="collapsable collapsed">
+              <header class="collapsable-header">
+                <h2><i class="fa fa-table"></i>  {{#labels}}{{data_indicator_full_list}}{{/labels}}</h2>
+                <i class="button fa fa-toggle-on"></i>
+              </header>
+              <section class="indicator-list">
+                <table id="indicator-list">
+                  <thead>
+                    <tr>
+                      <th>Indicator</th>
+                      <th>Code</th>
+                      <th>Type</th>
+                      <th>Weight</th>
+                      <th>Provider</th>
+                      <th>Publish</th>
+                    </tr>
+                  </thead>
+                </table>
+              </section>
+            </div>
+            <div id="notifications" class="notifications">
+              <header>
+                <h2><i class="fa fa-exclamation-triangle"></i> {{#labels}}{{data_non_publish}}{{/labels}}</h2>
+              </header>
+            </div>
+            <div id="primary-info" class="primary-info">
+              <header>
+                <h2><i class="fa fa-info"></i> {{#labels}}{{data_primary_indicators}}{{/labels}}</h2>
+              </header>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <div class="middle-section collapsable">
+      <div class="tab second-tab">
+        <header class="country-header">
+          <div>
+            <i class="fa fa-flag"></i>
+            <h2>{{#labels}}{{data_country_info}}{{/labels}}</h2>
+          </div>
+        </header>
+        <div class="tab-content data-box map-box collapsable">
+          <div class="country-section collapsable" id="country-section">
+            <header class="collapsable-header">
+              <h2><i class="fa fa-flag"></i>  {{#labels}}{{data_country_info}}{{/labels}}</h2>
+              <i class="button fa fa-toggle-on"></i>
+            </header>
+            <section>
+              <ul id="country-tabs" class="accordion-tabs-minimal"></ul>
+            </section>
+          </div>
           <header class="collapsable-header">
-            <h2><i class="fa fa-star-o"></i>  {{#labels}}{{data_key_values}}{{/labels}}</h2>
+            <h2><i class="fa fa-bar-chart-o"></i> {{#labels}}{{data_country_ranking}}{{/labels}}</h2>
             <i class="button fa fa-toggle-on"></i>
           </header>
           <section>
-            <div>
-              <div class="box-mini">
-                <p>{{#labels}}{{data_indicator}}{{/labels}}</p>
-                <p id="indicator" class="value indicator"></p>
-              </div>
-              <div class="box-mini">
-                <p>{{#labels}}{{data_year}}{{/labels}}</p>
-                <p id="year" class="value"></p>
-              </div>
-              <div class="box-mini">
-                <p>{{#labels}}{{data_higher}}{{/labels}}</p>
-                <p id="higher" class="value higher-lower"></p>
-              </div>
-              <div class="box-mini">
-                <p>{{#labels}}{{data_lower}}{{/labels}}</p>
-                <p id="lower" class="value higher-lower"></p>
-              </div>
-              <div class="box-mini">
-                <p>{{#labels}}{{data_mean}}{{/labels}}</p>
-                <p id="mean" class="value"></p>
-              </div>
-              <div class="box-mini">
-                <p>{{#labels}}{{data_median}}{{/labels}}</p>
-                <p id="median" class="value"></p>
-              </div>
-            </div>
-            <div id="bars" class="bars notranslate"></div>
-        </section>
-      </div>
-
-      <div class="indicator-section collapsable">
-        <header class="collapsable-header">
-          <h2><i class="fa fa-dashboard"></i>  {{#labels}}{{data_indicator_info}}{{/labels}}</h2>
-          <i class="button fa fa-toggle-on"></i>
-        </header>
-        <section class="info">
-          <label for="indicator-description">{{#labels}}{{indicator_description}}{{/labels}}</label>
-          <h2 id="indicator-description"></h2>
-          <label for="indicator-type">{{#labels}}{{indicator_type}}{{/labels}}</label>
-          <h2 id="indicator-type"></h2>
-          <label for="indicator-tendency">{{#labels}}{{indicator_tendency}}{{/labels}}</label>
-          <h2 id="indicator-tendency"></h2>
-        </section>
-      </div>
-
-      <div id="notifications" class="notifications collapsable">
-        <header class="collapsable-header">
-          <h2><i class="fa fa-exclamation-triangle"></i>  {{#labels}}{{data_non_publish}}{{/labels}}</h2>
-        </header>
-      </div>
-
-      <div id="primary-info" class="notifications info collapsable">
-        <header class="collapsable-header">
-          <h2><i class="fa fa-info"></i>  {{#labels}}{{data_primary_indicators}}{{/labels}}</h2>
-        </header>
-      </div>
-
-      <div class="data-box map-box collapsable">
-        <header class="collapsable-header">
-          <h2><i class="fa fa-bar-chart-o"></i> {{#labels}}{{data_country_ranking}}{{/labels}}</h2>
-          <i class="button fa fa-toggle-on"></i>
-        </header>
-        <section>
-          <div id="map-view">
-            <header>
-              <nav class="tabs">
-                <ul data-selector="charts-view-map">
-                  <li class="selected" data-selector="first" data-info="map"><a href="javascript: void(0)"><span class="circle"></span> {{#labels}}{{data_map}}{{/labels}}</a></li>
-                  <li data-selector="second"><a href="javascript: void(0)"><span class="circle"></span> {{#labels}}{{data_by_continent}}{{/labels}}</a></li>
-                </ul>
-              </nav>
-            </header>
-            <div class="charts-view charts-view-map">
-              <div id="map" class="map first">
-                <div class="colour-legend">
-                  <span id="legend-higher">{{#labels}}{{data_higher}}{{/labels}}</span>
-                  <span id="legend-lower">{{#labels}}{{data_lower}}{{/labels}}</span>
-                  <div></div>
+            <div class="middle-section">
+              <section>
+                <div>
+                  <div class="box-mini">
+                    <p>{{#labels}}{{data_indicator}}{{/labels}}</p>
+                    <p id="indicator" class="value indicator"></p>
+                  </div>
+                  <div class="box-mini">
+                    <p>{{#labels}}{{data_year}}{{/labels}}</p>
+                    <p id="year" class="value"></p>
+                  </div>
+                  <div class="box-mini">
+                    <p>{{#labels}}{{data_higher}}{{/labels}}</p>
+                    <p id="higher" class="value higher-lower"></p>
+                  </div>
+                  <div class="box-mini">
+                    <p>{{#labels}}{{data_lower}}{{/labels}}</p>
+                    <p id="lower" class="value higher-lower"></p>
+                  </div>
+                  <div class="box-mini">
+                    <p>{{#labels}}{{data_mean}}{{/labels}}</p>
+                    <p id="mean" class="value"></p>
+                  </div>
+                  <div class="box-mini">
+                    <p>{{#labels}}{{data_median}}{{/labels}}</p>
+                    <p id="median" class="value"></p>
+                  </div>
                 </div>
-                <div class="chart"></div>
+              </section>
+            </div>
+            <div id="map-view">
+              <header>
+                <nav class="tabs">
+                  <ul data-selector="charts-view-map">
+                    <li data-selector="second"><a href="javascript: void(0)">{{#labels}}{{data_by_continent}}{{/labels}}</a></li>
+                    <li class="selected" data-selector="first" data-info="map"><a href="javascript: void(0)">{{#labels}}{{data_map}}{{/labels}}</a></li>
+                  </ul>
+                </nav>
+              </header>
+              <div class="charts-view charts-view-map">
+                <div id="map" class="map first">
+                  <div class="colour-legend">
+                    <span id="legend-higher">{{#labels}}{{data_higher}}{{/labels}}</span>
+                    <span id="legend-lower">{{#labels}}{{data_lower}}{{/labels}}</span>
+                    <div></div>
+                  </div>
+                  <div class="chart"></div>
+                </div>
+                <div id="ranking-chart" class="map second notranslate"></div>
               </div>
-              <div id="ranking-chart" class="map second notranslate"></div>
             </div>
-          </div>
-          <div id="country-view">
-            <header>
-              <nav class="tabs">
-                <ul data-selector="charts-view-country">
-                  <li class="selected" data-selector="first"><a href="javascript: void(0)"><span class="circle"></span> {{#labels}}{{data_bar_chart}}{{/labels}}</a></li>
-                  <li data-selector="second"><a href="javascript: void(0)"><span class="circle"></span> {{#labels}}{{data_by_time}}{{/labels}}</a></li>
-                </ul>
-              </nav>
+            <div id="country-view">
+              <header>
+                <nav class="tabs">
+                  <ul data-selector="charts-view-country">
+                    <li data-selector="second"><a href="javascript: void(0)">{{#labels}}{{data_by_time}}{{/labels}}</a></li>
+                    <li class="selected" data-selector="first"><a href="javascript: void(0)">{{#labels}}{{data_bar_chart}}{{/labels}}</a></li>
+                  </ul>
+                </nav>
+              </header>
+              <abbr class="help" title='{{#labels}}{{data_charts_help}}{{/labels}}'><i class="fa fa-info-circle fa-2x"></i></abbr>
+              <div class="charts-view charts-view-country">
+                <div id="country-bars" class="map first notranslate"></div>
+                <div id="lines" class="map second notranslate"></div>
+              </div>
+            </div>
+          </section>
+          <div class="data-box table-box collapsable">
+            <header class="collapsable-header">
+              <h2><i class="fa fa-table"></i> {{#labels}}{{data_extra_info}}{{/labels}}</h2>
+              <i class="button fa fa-toggle-on"></i>
             </header>
-            <abbr class="help" title='{{#labels}}{{data_charts_help}}{{/labels}}'><i class="fa fa-info-circle fa-2x"></i></abbr>
-            <div class="charts-view charts-view-country">
-              <div id="country-bars" class="map first notranslate"></div>
-              <div id="lines" class="map second notranslate"></div>
-            </div>
+            <section id="table" class="table">
+              <table id="ranking" class="full-ranking">
+                <thead>
+                <tr class="row-1 odd" role="row">
+                  <th data-sort-type="number">{{#labels}}{{data_rank}}{{/labels}}</th>
+                  <th data-sort-type="text">{{#labels}}{{data_country}}{{/labels}}</th>
+                  <th data-sort-type="text">{{#labels}}{{data_continent}}{{/labels}}</th>
+                  <th data-sort-type="number">{{#labels}}{{data_value}}{{/labels}}</th>
+                </thead>
+              </table>
+            </section>
           </div>
-        </section>
-      </div>
-
-      <div class="data-box table-box collapsable">
-        <header class="collapsable-header">
-          <h2><i class="fa fa-table"></i> {{#labels}}{{data_extra_info}}{{/labels}}</h2>
-          <i class="button fa fa-toggle-on"></i>
-        </header>
-        <section id="table" class="table">
-          <table id="ranking" class="full-ranking">
-            <thead>
-            <tr class="row-1 odd" role="row">
-              <th data-sort-type="number">{{#labels}}{{data_rank}}{{/labels}}</th>
-              <th data-sort-type="text">{{#labels}}{{data_country}}{{/labels}}</th>
-              <th data-sort-type="text">{{#labels}}{{data_continent}}{{/labels}}</th>
-              <th data-sort-type="number">{{#labels}}{{data_value}}{{/labels}}</th>
-            </thead>
-          </table>
-        </section>
+        </div>
       </div>
     </section>
   </div>
