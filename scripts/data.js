@@ -1232,7 +1232,7 @@
       div.className = count === 1 ? "tab-content is-open" : "tab-content";
       li.appendChild(div);
       a.container = div;
-      a.onclick = function() {
+      a.onclick = function(event) {
         var countryMap, extraTbody, map, open, p, rankingDiv, table, tableWrapper, td, tr, valueDiv, wrapper;
         if (this.className.indexOf("is-active") === -1) {
           event.preventDefault();
