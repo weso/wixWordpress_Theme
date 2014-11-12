@@ -2064,25 +2064,25 @@ div.box-follow {
     border-bottom: 0.1em solid #fa6a73; }
   .indicator-list table tbody[data-subindex="UNIVERSAL_ACCESS"]:hover {
     background-color: rgba(249, 56, 69, 0.8); }
-  .indicator-list table tbody[data-subindex="FREEDOM_&_OPENNESS"] {
+  .indicator-list table tbody[data-subindex="FREEDOM_AND_OPENNESS"] {
     background-color: rgba(0, 150, 175, 0.6); }
-  .indicator-list table tbody[data-subindex="FREEDOM_&_OPENNESS"][data-type="Component"] {
+  .indicator-list table tbody[data-subindex="FREEDOM_AND_OPENNESS"][data-type="Component"] {
     background-color: rgba(0, 150, 175, 0.4); }
-  .indicator-list table tbody[data-subindex="FREEDOM_&_OPENNESS"][data-type="Primary"],
-  .indicator-list table tbody[data-subindex="FREEDOM_&_OPENNESS"][data-type="Secondary"] {
+  .indicator-list table tbody[data-subindex="FREEDOM_AND_OPENNESS"][data-type="Primary"],
+  .indicator-list table tbody[data-subindex="FREEDOM_AND_OPENNESS"][data-type="Secondary"] {
     background-color: rgba(0, 150, 175, 0.2);
     border-bottom: 0.1em solid #00c2e2; }
-  .indicator-list table tbody[data-subindex="FREEDOM_&_OPENNESS"]:hover {
+  .indicator-list table tbody[data-subindex="FREEDOM_AND_OPENNESS"]:hover {
     background-color: rgba(0, 150, 175, 0.8); }
-  .indicator-list table tbody[data-subindex="RELEVANT_CONTENT_&_USE"] {
+  .indicator-list table tbody[data-subindex="RELEVANT_CONTENT_AND_USE"] {
     background-color: rgba(137, 186, 0, 0.6); }
-  .indicator-list table tbody[data-subindex="RELEVANT_CONTENT_&_USE"][data-type="Component"] {
+  .indicator-list table tbody[data-subindex="RELEVANT_CONTENT_AND_USE"][data-type="Component"] {
     background-color: rgba(137, 186, 0, 0.4); }
-  .indicator-list table tbody[data-subindex="RELEVANT_CONTENT_&_USE"][data-type="Primary"],
-  .indicator-list table tbody[data-subindex="RELEVANT_CONTENT_&_USE"][data-type="Secondary"] {
+  .indicator-list table tbody[data-subindex="RELEVANT_CONTENT_AND_USE"][data-type="Primary"],
+  .indicator-list table tbody[data-subindex="RELEVANT_CONTENT_AND_USE"][data-type="Secondary"] {
     background-color: rgba(137, 186, 0, 0.2);
     border-bottom: 0.1em solid #638700; }
-  .indicator-list table tbody[data-subindex="RELEVANT_CONTENT_&_USE"]:hover {
+  .indicator-list table tbody[data-subindex="RELEVANT_CONTENT_AND_USE"]:hover {
     background-color: rgba(137, 186, 0, 0.8); }
   .indicator-list table tbody[data-subindex="EMPOWERMENT"] {
     background-color: rgba(254, 189, 77, 0.6); }
