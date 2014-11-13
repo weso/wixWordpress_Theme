@@ -79,6 +79,7 @@
                   <i class="fa fa-university"></i> <span id="indicator-provider-icon"></span>
                 </div>
                 <i class="button fa fa-toggle-on"></i>
+                <span class="full-details">{{#labels}}{{data_indicator_full_details}}{{/labels}}</i></span>
               </header>
               <section class="info">
                 <label for="indicator-name">{{#labels}}{{indicator_name}}{{/labels}}</label>
@@ -93,11 +94,60 @@
                 <h2 id="indicator-provider"></h2>
               </section>
             </div>
+            <div class="collapsable collapsed">
+              <header class="collapsable-header">
+                <ul class="hierarchy" id="hierarchy">
+            			<li class="index">
+                    <a href="javascript:void(0)"><span class="type">Web Index</span></a>
+                  </li>
+            			<li class="subindex">
+                    <a href="javascript:void(0)"><span class="type">subindex</span><span class="name"></span></a>
+                  </li>
+            			<li class="component">
+                    <a href="javascript:void(0)"><span class="type">component</span><span class="name"></span></a>
+                  </li>
+            			<li class="indicator">
+                    <a href="javascript:void(0)"><span class="type">indicator</span><span class="name"></span></a>
+                  </li>
+            		</ul>
+              </header>
+              <section class="indicator-list"></section>
+            </div>
             <header class="collapsable-header">
               <h2><i class="fa fa-globe"></i>  {{#labels}}{{data_indicator_ranking}}{{/labels}}</h2>
               <i class="button fa fa-toggle-on"></i>
             </header>
             <section>
+              <div class="middle-section">
+                <section>
+                  <div>
+                    <div class="box-mini">
+                      <p>{{#labels}}{{data_indicator}}{{/labels}}</p>
+                      <p id="global-indicator" class="value indicator"></p>
+                    </div>
+                    <div class="box-mini">
+                      <p>{{#labels}}{{data_year}}{{/labels}}</p>
+                      <p id="global-year" class="value"></p>
+                    </div>
+                    <div class="box-mini">
+                      <p>{{#labels}}{{data_higher}}{{/labels}}</p>
+                      <p id="global-higher" class="value higher-lower"></p>
+                    </div>
+                    <div class="box-mini">
+                      <p>{{#labels}}{{data_lower}}{{/labels}}</p>
+                      <p id="global-lower" class="value higher-lower"></p>
+                    </div>
+                    <div class="box-mini">
+                      <p>{{#labels}}{{data_mean}}{{/labels}}</p>
+                      <p id="global-mean" class="value"></p>
+                    </div>
+                    <div class="box-mini">
+                      <p>{{#labels}}{{data_median}}{{/labels}}</p>
+                      <p id="global-median" class="value"></p>
+                    </div>
+                  </div>
+                </section>
+              </div>
               <div id="bars" class="bars notranslate"></div>
             </section>
             <div class="collapsable collapsed">
@@ -152,7 +202,7 @@
             </section>
           </div>
           <header class="collapsable-header">
-            <h2><i class="fa fa-bar-chart-o"></i> {{#labels}}{{data_country_ranking}}{{/labels}}</h2>
+            <h2><i class="fa fa-bar-chart-o"></i> {{#labels}}{{data_country_ranking}}{{/labels}} <span id="region-label" class="region-name"></span></h2>
             <i class="button fa fa-toggle-on"></i>
           </header>
           <section>
