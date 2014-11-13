@@ -195,6 +195,7 @@
                   <i class="fa fa-university"></i> <span id="indicator-provider-icon"></span>
                 </div>
                 <i class="button fa fa-toggle-on"></i>
+                <span class="full-details">'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_indicator_full_details']) && is_array($in)) ? $in['data_indicator_full_details'] : null), ENT_QUOTES, 'UTF-8').'';}).'</i></span>
               </header>
               <section class="info">
                 <label for="indicator-name">'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['indicator_name']) && is_array($in)) ? $in['indicator_name'] : null), ENT_QUOTES, 'UTF-8').'';}).'</label>
@@ -209,11 +210,60 @@
                 <h2 id="indicator-provider"></h2>
               </section>
             </div>
+            <div class="collapsable collapsed">
+              <header class="collapsable-header">
+                <ul class="hierarchy" id="hierarchy">
+            			<li class="index">
+                    <a href="javascript:void(0)"><span class="type">Web Index</span></a>
+                  </li>
+            			<li class="subindex">
+                    <a href="javascript:void(0)"><span class="type">subindex</span><span class="name"></span></a>
+                  </li>
+            			<li class="component">
+                    <a href="javascript:void(0)"><span class="type">component</span><span class="name"></span></a>
+                  </li>
+            			<li class="indicator">
+                    <a href="javascript:void(0)"><span class="type">indicator</span><span class="name"></span></a>
+                  </li>
+            		</ul>
+              </header>
+              <section class="indicator-list"></section>
+            </div>
             <header class="collapsable-header">
               <h2><i class="fa fa-globe"></i>  '.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_indicator_ranking']) && is_array($in)) ? $in['data_indicator_ranking'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
               <i class="button fa fa-toggle-on"></i>
             </header>
             <section>
+              <div class="middle-section">
+                <section>
+                  <div>
+                    <div class="box-mini">
+                      <p>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_indicator']) && is_array($in)) ? $in['data_indicator'] : null), ENT_QUOTES, 'UTF-8').'';}).'</p>
+                      <p id="global-indicator" class="value indicator"></p>
+                    </div>
+                    <div class="box-mini">
+                      <p>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_year']) && is_array($in)) ? $in['data_year'] : null), ENT_QUOTES, 'UTF-8').'';}).'</p>
+                      <p id="global-year" class="value"></p>
+                    </div>
+                    <div class="box-mini">
+                      <p>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_higher']) && is_array($in)) ? $in['data_higher'] : null), ENT_QUOTES, 'UTF-8').'';}).'</p>
+                      <p id="global-higher" class="value higher-lower"></p>
+                    </div>
+                    <div class="box-mini">
+                      <p>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_lower']) && is_array($in)) ? $in['data_lower'] : null), ENT_QUOTES, 'UTF-8').'';}).'</p>
+                      <p id="global-lower" class="value higher-lower"></p>
+                    </div>
+                    <div class="box-mini">
+                      <p>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_mean']) && is_array($in)) ? $in['data_mean'] : null), ENT_QUOTES, 'UTF-8').'';}).'</p>
+                      <p id="global-mean" class="value"></p>
+                    </div>
+                    <div class="box-mini">
+                      <p>'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_median']) && is_array($in)) ? $in['data_median'] : null), ENT_QUOTES, 'UTF-8').'';}).'</p>
+                      <p id="global-median" class="value"></p>
+                    </div>
+                  </div>
+                </section>
+              </div>
               <div id="bars" class="bars notranslate"></div>
             </section>
             <div class="collapsable collapsed">
@@ -268,7 +318,7 @@
             </section>
           </div>
           <header class="collapsable-header">
-            <h2><i class="fa fa-bar-chart-o"></i> '.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_country_ranking']) && is_array($in)) ? $in['data_country_ranking'] : null), ENT_QUOTES, 'UTF-8').'';}).'</h2>
+            <h2><i class="fa fa-bar-chart-o"></i> '.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['data_country_ranking']) && is_array($in)) ? $in['data_country_ranking'] : null), ENT_QUOTES, 'UTF-8').'';}).' <span id="region-label" class="region-name"></span></h2>
             <i class="button fa fa-toggle-on"></i>
           </header>
           <section>
