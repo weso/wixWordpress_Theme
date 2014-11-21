@@ -70,7 +70,12 @@
     <div></div>
     <div></div>
     <div></div>
-    <div></div>
+    <div>
+      by 
+      <a href="http://www.webfoundation.org/" target="_blank" title="link opens in new window">
+        <strong>WORLD WIDE WEB</strong> FOUNDATION
+      </a>
+    </div>
   </div>
 </header>
 ';
