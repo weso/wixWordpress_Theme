@@ -105,9 +105,9 @@
             <div class="country-section collapsable collapsed">
               <header class="collapsable-header">
                 <div class="icons">
-                  <i id="indicator-tendency-arrow" class="fa fa-arrow-up"></i> <span id="indicator-tendency-icon"></span>
-                  <i class="fa fa-tag"></i> <span id="indicator-type-icon"></span>
-                  <i class="fa fa-university"></i> <span id="indicator-provider-icon"></span>
+                  <i id="indicator-tendency-arrow" class="fa fa-arrow-up"></i> <span class="name">{{#labels}}{{indicator_tendency}}{{/labels}}:</span> <span id="indicator-tendency-icon" class="value"></span>
+                  <i class="fa fa-tag"></i> <span class="name">{{#labels}}{{indicator_type}}{{/labels}}:</span> <span id="indicator-type-icon" class="value"></span>
+                  <i class="fa fa-university"></i> <span class="name">{{#labels}}{{data_provider}}{{/labels}}:</span> <span id="indicator-provider-icon" class="value"></span>
                 </div>
                 <i class="button fa fa-toggle-on"></i>
                 <span class="full-details">{{#labels}}{{data_indicator_full_details}}{{/labels}}</i></span>

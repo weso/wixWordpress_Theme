@@ -16,16 +16,11 @@
       <div class="water"></div>
       <div class="error-links">
         <div class=container>
-          <form>
-             <div class="error-search-bar">
-               <div class="search-and-submit">
-                 <input type="search" placeholder="{{#labels}}{{error_search}}{{/labels}}" />
-                 <button type="submit">
-                   <i class="fa fa-search fa-2x"></i>
-                 </button>
-               </div>
-             </div>
-          </form>
+          <div class="error-search-bar">
+            <div class="search-and-submit">
+              {{#data}}{{{search}}}{{/data}}
+            </div>
+          </div>
           <p>
             {{#labels}}{{{error_description}}}{{/labels}}
           </p>

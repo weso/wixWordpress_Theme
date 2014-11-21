@@ -1946,8 +1946,13 @@ div.box-follow {
     padding-top: 0.1em;
     float: left;
     color: #999; }
+    .collapsable .icons span.name {
+      font-size: 0.8em; }
+    .collapsable .icons span.value {
+      color: #0096af; }
     .collapsable .icons i {
-      margin-left: 1em; }
+      margin-left: 1em;
+      line-height: 0.6em; }
     .collapsable .icons i:first-child {
       margin-left: 0; }
   .collapsable span.full-details {
@@ -3072,6 +3077,8 @@ div.lighthouse {
     display: block; }
   .error-search-bar div.search-and-submit {
     position: relative; }
+    .error-search-bar div.search-and-submit label span {
+      display: none; }
     .error-search-bar div.search-and-submit input[type=search] {
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -3084,7 +3091,7 @@ div.lighthouse {
       font-style: italic;
       border-radius: 3px;
       margin: 0; }
-    .error-search-bar div.search-and-submit button[type=submit] {
+    .error-search-bar div.search-and-submit [type=submit] {
       position: absolute;
       top: 0;
       right: 0;
@@ -3095,9 +3102,6 @@ div.lighthouse {
       border-bottom-left-radius: 0;
       padding: 5px 10px;
       background-color: #71cb3a; }
-      .error-search-bar div.search-and-submit button[type=submit] img {
-        height: 12px;
-        opacity: .7; }
 
 div.error-footer {
   background-color: #2f8e8d; }
