@@ -1,5 +1,5 @@
 (function() {
-  var a, button, chartSelectors, chartTooltip, checkSelectorDataReady, collapsable, collapsableHeader, collapsableSection, collapsables, collapsed, content, createTableCell, createTip, firstBox, firstBoxHeaderHeight, firstHeight, firstSection, firstTab, firstTabFixedPosition, firstTabStartedMoving, getCountries, getIndicators, getObservations, getSelectorData, getValue, getYears, global, hide, li, msie6, previousY, renderBoxes, renderCharts, renderContinentLegend, renderCountries, renderExtraTableHeader, renderIndicatorInfo, renderMap, renderPieChart, renderRegionLabel, renderSomeBoxes, renderTable, renderYearBox, returnToStoppedPosition, secondBox, secondBoxHeaderHeight, secondHeight, secondTab, secondTabAbsolutePosition, secondTabStartedMoving, selectBar, setBoxesInitialPosition, setBoxesPosition, setIndicatorOptions, setPageStateful, setUnfixedPosition, show, showTutorial, siteHeader, tab, tabs, thirdBox, thirdBoxHeaderHeight, thirdHeight, top, totalHeight, tutorialBoxOnChange, tutorialRestore, updateInfo, _i, _j, _k, _len, _len1, _len2, _ref;
+  var a, button, chartSelectors, chartTooltip, checkSelectorDataReady, collapsable, collapsableHeader, collapsableSection, collapsables, collapsed, content, createTableCell, createTip, firstBox, firstBoxHeaderHeight, firstHeight, firstSection, firstTab, firstTabFixedPosition, firstTabStartedMoving, getCountries, getIndicators, getObservations, getSelectorData, getValue, getYears, global, hide, li, msie6, previousY, renderBoxes, renderCharts, renderContinentLegend, renderCountries, renderExtraTableHeader, renderIndicatorInfo, renderMap, renderPieChart, renderRegionLabel, renderSomeBoxes, renderTable, renderYearBox, returnToStoppedPosition, secondBox, secondBoxHeaderHeight, secondHeight, secondTab, secondTabAbsolutePosition, secondTabStartedMoving, selectBar, setBoxesInitialPosition, setBoxesPosition, setIndicatorOptions, setPageStateful, setUnfixedPosition, show, showTutorial, siteHeader, startTutorialFirstTime, tab, tabs, thirdBox, thirdBoxHeaderHeight, thirdHeight, top, totalHeight, tutorialBoxOnChange, tutorialRestore, updateInfo, _i, _j, _k, _len, _len1, _len2, _ref;
 
   global = this;
 
@@ -34,8 +34,9 @@
     return wesCountry.stateful.start({
       init: function(parameters, selectors) {
         if (settings.debug) {
-          return console.log("init");
+          console.log("init");
         }
+        return startTutorialFirstTime();
       },
       urlChanged: function(parameters, selectors) {
         var url;
@@ -1724,7 +1725,7 @@
     });
   };
 
-  $(function() {
+  startTutorialFirstTime = function() {
     var shown;
     if (typeof Storage !== "undefined") {
       shown = localStorage.getItem("tutorialShown");
@@ -1736,7 +1737,7 @@
     } else {
       return global.tutorial = false;
     }
-  });
+  };
 
   showTutorial = function() {
     var back, tutorial, tutorialElements;
