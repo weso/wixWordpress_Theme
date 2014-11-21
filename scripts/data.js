@@ -1,5 +1,5 @@
 (function() {
-  var a, button, chartSelectors, chartTooltip, checkSelectorDataReady, collapsable, collapsableHeader, collapsableSection, collapsables, collapsed, content, createTableCell, firstSection, firstTab, firstTabFixedPosition, firstTabStartedMoving, getCountries, getIndicators, getObservations, getSelectorData, getValue, getYears, global, hide, li, msie6, previousY, renderBoxes, renderCharts, renderContinentLegend, renderCountries, renderExtraTableHeader, renderIndicatorInfo, renderMap, renderPieChart, renderRegionLabel, renderSomeBoxes, renderTable, renderYearBox, returnToStoppedPosition, secondTab, secondTabAbsolutePosition, secondTabStartedMoving, selectBar, setBoxesInitialPosition, setBoxesPosition, setIndicatorOptions, setPageStateful, show, siteHeader, tab, tabs, top, updateInfo, _i, _j, _k, _len, _len1, _len2;
+  var a, button, chartSelectors, chartTooltip, checkSelectorDataReady, collapsable, collapsableHeader, collapsableSection, collapsables, collapsed, content, createTableCell, createTip, firstBox, firstBoxHeaderHeight, firstHeight, firstSection, firstTab, firstTabFixedPosition, firstTabStartedMoving, getCountries, getIndicators, getObservations, getSelectorData, getValue, getYears, global, hide, li, msie6, previousY, renderBoxes, renderCharts, renderContinentLegend, renderCountries, renderExtraTableHeader, renderIndicatorInfo, renderMap, renderPieChart, renderRegionLabel, renderSomeBoxes, renderTable, renderYearBox, returnToStoppedPosition, secondBox, secondBoxHeaderHeight, secondHeight, secondTab, secondTabAbsolutePosition, secondTabStartedMoving, selectBar, setBoxesInitialPosition, setBoxesPosition, setIndicatorOptions, setPageStateful, setUnfixedPosition, show, showTutorial, siteHeader, tab, tabs, thirdBox, thirdBoxHeaderHeight, thirdHeight, top, totalHeight, tutorialBoxOnChange, tutorialRestore, updateInfo, _i, _j, _k, _len, _len1, _len2, _ref;
 
   global = this;
 
@@ -13,12 +13,22 @@
     indicatorTendency: null,
     countries: null,
     year: null,
-    years: []
+    years: [],
+    areas: []
   };
 
   global.maxChartBars = 5;
 
   global.continents = {};
+
+  global.tutorial = true;
+
+  global.tutorialRestoreValues = {
+    indicator: null,
+    year: null,
+    countries: null,
+    selections: [false, false, false, false, false]
+  };
 
   setPageStateful = function() {
     return wesCountry.stateful.start({
@@ -50,7 +60,11 @@
             global.selections.indicatorOption = option;
             global.selections.indicatorTendency = tendency;
             updateInfo();
-            return renderIndicatorInfo(option, tendency);
+            renderIndicatorInfo(option, tendency);
+            if (global.tutorial) {
+              tutorialBoxOnChange.call(selectors["#indicator-select"]);
+              return global.tutorialRestoreValues.selections[0] = true;
+            }
           }
         }, {
           name: "time",
@@ -60,18 +74,41 @@
               console.log("year:onChange index:" + index + " value:" + value);
             }
             global.selections.year = parseInt(value);
-            return updateInfo();
+            updateInfo();
+            if (global.tutorial) {
+              tutorialBoxOnChange.call(global.options.timeline);
+              return global.tutorialRestoreValues.selections[1] = true;
+            }
           }
         }, {
           name: "country",
           selector: global.options.countrySelector,
           value: "ALL",
           onChange: function(index, value, parameters, selectors) {
+            var items, text, _ref;
             if (settings.debug) {
               console.log("country:onChange index:" + index + " value:" + value);
             }
             global.selections.countries = value;
-            return updateInfo();
+            updateInfo();
+            text = "&nbsp;";
+            if (global.options.countrySelector.selectedLength() === global.maxChartBars) {
+              text = document.getElementById("data_countries_reach").value || "&nbsp;";
+            }
+            if ((_ref = document.getElementById("third-box-help")) != null) {
+              _ref.innerHTML = text;
+            }
+            if (global.options.countrySelector.selectedLength() > global.maxChartBars) {
+              items = global.options.countrySelector.selected().split(",");
+              if (items.length > 0) {
+                global.options.countrySelector.unselect(items[items.length - 1]);
+                global.options.countrySelector.refresh();
+              }
+            }
+            if (global.tutorial) {
+              tutorialBoxOnChange.call(global.options.countrySelector);
+              return global.tutorialRestoreValues.selections[2] = true;
+            }
           }
         }
       ]
@@ -240,25 +277,46 @@
     global.options.countrySelector = new wesCountry.selector.basic({
       data: countries,
       selectedItems: ["ALL"],
-      maxSelectedItems: global.maxChartBars,
+      maxSelectedItems: -1,
       labelName: "short_name",
       valueName: "iso3",
       childrenName: "countries",
       autoClose: true,
-      selectParentNodes: false,
+      selectParentNodes: true,
       beforeChange: function(selectedItems, element) {
+        var isRegion, _ref, _ref1;
         if (!global.options.countrySelector) {
           return;
         }
+        isRegion = ((element != null ? (_ref = element.element) != null ? (_ref1 = _ref.data) != null ? _ref1.iso2 : void 0 : void 0 : void 0) || null) === null;
         if (selectedItems.length === 0) {
-          return global.options.countrySelector.select("ALL");
+          global.options.countrySelector.select("ALL");
+          return global.selections.areas = [];
         } else if (element.code === "ALL") {
           if (selectedItems.length > 1) {
             global.options.countrySelector.clear();
-            return global.options.countrySelector.select("ALL");
+            global.options.countrySelector.select("ALL");
+            return global.selections.areas = [];
           }
-        } else if (selectedItems.search("ALL") !== -1) {
-          return global.options.countrySelector.unselect("ALL");
+        } else {
+          if (selectedItems.search("ALL") !== -1) {
+            global.options.countrySelector.unselect("ALL");
+          }
+          if (isRegion) {
+            global.options.countrySelector.clear();
+            global.options.countrySelector.select(element.code);
+            return global.selections.areas = [element.code];
+          } else {
+            if (global.selections.areas.length > 0) {
+              global.selections.areas = [];
+              global.options.countrySelector.clear();
+              return global.options.countrySelector.select(element.code);
+            } else {
+              if (global.options.countrySelector.selectedLength() === global.maxChartBars + 1) {
+                return global.options.countrySelector.unselect(element.code);
+              }
+            }
+          }
         }
       },
       sort: false
@@ -1146,22 +1204,55 @@
 
   selectBar = $(".select-bar > section");
 
-  siteHeader = $(".site-header").height();
+  siteHeader = null;
 
   if (!selectBar) {
     return;
   }
 
+  firstBox = document.querySelector(".first-box");
+
+  secondBox = document.querySelector(".second-box");
+
+  thirdBox = document.querySelector(".third-box");
+
+  firstHeight = null;
+
+  secondHeight = null;
+
+  thirdHeight = null;
+
+  thirdHeight = null;
+
+  firstBoxHeaderHeight = null;
+
+  secondBoxHeaderHeight = null;
+
+  thirdBoxHeaderHeight = null;
+
+  totalHeight = null;
+
   top = null;
 
   if (!msie6) {
     $(window).scroll(function(event) {
-      var y;
+      var y, _ref, _ref1, _ref2;
       if (top == null) {
         top = selectBar.offset().top;
       }
+      if (siteHeader == null) {
+        siteHeader = $(".site-header").height();
+      }
+      firstHeight = firstBox ? firstBox.offsetHeight : 0;
+      secondHeight = secondBox ? secondBox.offsetHeight : 0;
+      thirdHeight = thirdBox ? thirdBox.offsetHeight : 0;
+      firstBoxHeaderHeight = (firstBox != null ? (_ref = firstBox.querySelector("header")) != null ? _ref.offsetHeight : void 0 : void 0) || 0;
+      secondBoxHeaderHeight = (secondBox != null ? (_ref1 = secondBox.querySelector("header")) != null ? _ref1.offsetHeight : void 0 : void 0) || 0;
+      thirdBoxHeaderHeight = (thirdBox != null ? (_ref2 = thirdBox.querySelector("header")) != null ? _ref2.offsetHeight : void 0 : void 0) || 0;
+      thirdHeight = (thirdHeight - thirdBoxHeaderHeight) * 2.8;
+      totalHeight = firstHeight + secondHeight + thirdHeight - firstBoxHeaderHeight - secondBoxHeaderHeight;
       y = $(this).scrollTop();
-      if (y >= siteHeader) {
+      if (!global.tutorial && y >= siteHeader && totalHeight < window.innerHeight) {
         if (!selectBar.collapsed) {
           setBoxesInitialPosition();
           selectBar.addClass("fixed");
@@ -1170,11 +1261,23 @@
           return selectBar.css("width", selectBar.parent().width());
         }
       } else {
-        selectBar.removeClass("fixed");
-        return selectBar.collapsed = false;
+        return setUnfixedPosition();
       }
     });
   }
+
+  setUnfixedPosition = function() {
+    var box, boxes, _j, _len1, _results;
+    selectBar.removeClass("fixed");
+    selectBar.collapsed = false;
+    boxes = document.querySelectorAll(".select-box");
+    _results = [];
+    for (_j = 0, _len1 = boxes.length; _j < _len1; _j++) {
+      box = boxes[_j];
+      _results.push(box.style.top = "0px");
+    }
+    return _results;
+  };
 
   setBoxesInitialPosition = function() {
     var box, boxes, _j, _len1, _results;
@@ -1547,6 +1650,8 @@
 
   secondTabStartedMoving = 0;
 
+  selectBar = $(".select-bar > section");
+
   if (!selectBar) {
     return;
   }
@@ -1567,7 +1672,7 @@
       tendency = y - previousY;
       firstTabTop = Math.floor(y - firstTab.offset().top);
       secondTabTop = Math.floor(y - secondTab.offset().top);
-      if (y >= siteHeader && windowHeight > fistTabHeight) {
+      if (!global.tutorial && y >= siteHeader && windowHeight > fistTabHeight) {
         if (!firstSection.collapsed && tendency > 0) {
           parent = firstSection.parent();
           height = parent.height();
@@ -1617,6 +1722,166 @@
     return firstSection.siblings().each(function() {
       return $(this).removeClass("absolute");
     });
+  };
+
+  $(function() {
+    var shown;
+    if (typeof Storage !== "undefined") {
+      shown = localStorage.getItem("tutorialShown");
+      if (!shown) {
+        return showTutorial();
+      } else {
+        return global.tutorial = false;
+      }
+    } else {
+      return global.tutorial = false;
+    }
+  });
+
+  showTutorial = function() {
+    var back, tutorial, tutorialElements;
+    global.tutorial = true;
+    window.scrollTo(0, 0);
+    global.tutorialRestoreValues = {
+      indicator: document.getElementById("indicator-select").value,
+      year: global.options.timeline.selected(),
+      countries: global.options.countrySelector.selected(),
+      selections: [false, false, false, false, false]
+    };
+    global.options.indicatorSelector.value = -1;
+    global.options.timeline.clear();
+    global.options.countrySelector.clear();
+    setUnfixedPosition();
+    localStorage.setItem("tutorialShown", true);
+    tutorial = document.querySelector(".tutorial");
+    document.body.appendChild(tutorial);
+    back = document.createElement("div");
+    back.className = "tutorial-back";
+    document.body.appendChild(back);
+    tutorialElements = [".first-box", ".second-box", ".third-box", ".first-tab", ".second-tab"];
+    tutorial.style.display = "block";
+    return createTip(tutorial, tutorialElements, 0, back);
+  };
+
+  tutorialBoxOnChange = function() {
+    var _ref;
+    if ((this.selectedIndex && this.selectedIndex !== -1) || (this.selected && this.selected() !== -1 && this.selected !== "")) {
+      document.getElementById("tutorial-next").setAttribute("status", "active");
+      return (_ref = document.getElementById("tutorial-next")) != null ? _ref.click() : void 0;
+    }
+  };
+
+  tutorialRestore = function() {
+    if (global.options.indicatorSelector.selectedIndex === -1) {
+      global.options.indicatorSelector.value = global.tutorialRestoreValues.indicator;
+      global.options.indicatorSelector.refresh();
+    }
+    if (global.options.timeline.selected() === -1) {
+      global.options.timeline.select(global.tutorialRestoreValues.year);
+      global.options.timeline.refresh();
+    }
+    if (global.options.countrySelector.selected() === "") {
+      global.options.countrySelector.select(global.tutorialRestoreValues.countries);
+      return global.options.countrySelector.refresh();
+    }
+  };
+
+  if ((_ref = document.getElementById("view-tutorial")) != null) {
+    _ref.onclick = function(event) {
+      return showTutorial();
+    };
+  }
+
+  createTip = function(tutorial, elements, index, back) {
+    var arrow, arrowContainer, close, closes, element, elementBox, next, nextStatus, number, previous, previousStatus, removePreviousStep, span, step, text, textNode, total, _l, _len3, _ref1, _ref2, _ref3;
+    element = elements[index];
+    number = index + 1;
+    total = elements.length;
+    elementBox = $(element);
+    elementBox.addClass("tutorial-element");
+    step = document.getElementById("tutorial-step");
+    step.innerHTML = "";
+    span = document.createElement("span");
+    span.className = "number large-text";
+    span.innerHTML = "" + number + "/" + total;
+    step.appendChild(span);
+    text = ((_ref1 = document.getElementById("data_tutorial_step_" + number)) != null ? _ref1.value : void 0) || "";
+    textNode = document.createTextNode(text);
+    step.appendChild(textNode);
+    if ((_ref2 = document.getElementById("tutorial-enjoy")) != null) {
+      if ((_ref3 = _ref2.style) != null) {
+        _ref3.display = index < total - 1 ? "none" : "block";
+      }
+    }
+    closes = document.querySelectorAll(".tutorial-close");
+    for (_l = 0, _len3 = closes.length; _l < _len3; _l++) {
+      close = closes[_l];
+      close.onclick = function(event) {
+        var _ref4;
+        removePreviousStep();
+        global.tutorial = false;
+        if ((_ref4 = back.parentNode) != null) {
+          if (typeof _ref4.removeChild === "function") {
+            _ref4.removeChild(back);
+          }
+        }
+        tutorial.style.display = "none";
+        return tutorialRestore();
+      };
+    }
+    arrowContainer = document.createElement("div");
+    arrowContainer.style.position = "absolute";
+    tutorial.appendChild(arrowContainer);
+    arrow = document.createElement("i");
+    if (index < total - 1) {
+      arrow.className = "fa fa-long-arrow-left fa-5x bouncing-arrow-left";
+      arrowContainer.style.left = elementBox.offset().left + elementBox.width() + 5 + "px";
+    } else {
+      arrow.className = "fa fa-long-arrow-down fa-5x bouncing-arrow-down";
+      arrowContainer.style.left = elementBox.offset().left + elementBox.width() / 2 + "px";
+    }
+    arrowContainer.appendChild(arrow);
+    if (index < total - 1) {
+      arrowContainer.style.top = elementBox.offset().top + elementBox.height() / 2 - arrow.offsetHeight / 2 + "px";
+    } else {
+      arrowContainer.style.top = elementBox.offset().top - arrow.offsetHeight / 2 - 25 + "px";
+    }
+    previous = document.getElementById("tutorial-previous");
+    next = document.getElementById("tutorial-next");
+    previousStatus = index > 0 ? "active" : "inactive";
+    nextStatus = "inactive";
+    if (index >= 3 && index < total - 1) {
+      nextStatus = "active";
+    } else if (index < 3 && global.tutorialRestoreValues.selections[index]) {
+      nextStatus = "active";
+    }
+    previous.setAttribute("status", previousStatus);
+    next.setAttribute("status", nextStatus);
+    removePreviousStep = function() {
+      elementBox.removeClass("tutorial-element");
+      return arrow.parentNode.removeChild(arrow);
+    };
+    if (index > 0) {
+      previous.onclick = function(event) {
+        removePreviousStep();
+        return createTip(tutorial, elements, index - 1, back);
+      };
+    } else {
+      previous.onclick = function(event) {};
+    }
+    if (index < total - 1) {
+      return next.onclick = function(event) {
+        var status;
+        status = this.getAttribute("status");
+        if (status === "inactive") {
+          return;
+        }
+        removePreviousStep();
+        return createTip(tutorial, elements, index + 1, back);
+      };
+    } else {
+      return next.onclick = function(event) {};
+    }
   };
 
 }).call(this);

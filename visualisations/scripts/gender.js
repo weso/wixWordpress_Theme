@@ -156,10 +156,11 @@
 
     var that = this;
     function toolTipHTML(d) {
-      return ['<label>', d.name, '</label><hr /><table><tbody><tr><td>', that.labels['region_translation_' + d.region],
-        '</td><td>' + that.labels['gn_tooltip_supports']+': ', d.support, '<span class="gn-score-', d.scores.support,
-        '"> (', d.scores.support, ')</span></td></tr><tr><td>', that.labels['econ_translation_' + d.econ],
-        '</td><td>' + that.labels['gn_tooltip_prosecutes'] + ': ', d.action, '<span class="gn-score-', d.scores.action,
+      var labels = that.labels;
+      return ['<label>', d.name, '</label><hr /><table><tbody><tr><td>', labels['region_translation_' + d.region],
+        '</td><td>' + labels['gn_tooltip_supports']+': ', d.support, '<span class="gn-score-', d.scores.support,
+        '"> (', d.scores.support, ')</span></td></tr><tr><td>', labels['econ_translation_' + d.econ],
+        '</td><td>' + labels['gn_tooltip_prosecutes'] + ': ', d.action, '<span class="gn-score-', d.scores.action,
         '"> (', d.scores.action, ')</span></td></tr></tbody</table>',
       ].join('');
     }
@@ -286,7 +287,7 @@
     }
     _(labelMap).each(function(labelKey, selector) {
       if (labels[labelKey]) {
-        $('#' + selector).html(labels[labelKey]); 
+        $('#' + selector).html(labels[labelKey]);
       }
     })
 

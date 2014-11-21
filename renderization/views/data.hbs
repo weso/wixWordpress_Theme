@@ -1,12 +1,41 @@
 <main class="content">
-  {{>by}}
   <input type="hidden" id="path" value="{{path}}" />
   <input type="hidden" id="label_ascending" value="{{#labels}}{{data_ascending}}{{/labels}}" />
   <input type="hidden" id="label_descending" value="{{#labels}}{{data_descending}}{{/labels}}" />
   <input type="hidden" id="label_higher" value="{{#labels}}{{data_higher}}{{/labels}}" />
   <input type="hidden" id="label_lower" value="{{#labels}}{{data_lower}}{{/labels}}" />
-  <div class="container data-container">
+  <input type="hidden" id="data_tutorial_step_1" value="{{#labels}}{{{data_tutorial_step_1}}}{{/labels}}" />
+  <input type="hidden" id="data_tutorial_step_2" value="{{#labels}}{{{data_tutorial_step_2}}}{{/labels}}" />
+  <input type="hidden" id="data_tutorial_step_3" value="{{#labels}}{{{data_tutorial_step_3}}}{{/labels}}" />
+  <input type="hidden" id="data_tutorial_step_4" value="{{#labels}}{{{data_tutorial_step_4}}}{{/labels}}" />
+  <input type="hidden" id="data_tutorial_step_5" value="{{#labels}}{{{data_tutorial_step_5}}}{{/labels}}" />
+  <input type="hidden" id="data_countries_reach" value="{{#labels}}{{{data_countries_reach}}}{{/labels}}" />
 
+  <div class="container data-container">
+    <div class="tutorial">
+      <a href="javascript:void(0)" class="tutorial-close close"><i class="fa fa-times fa-lg"></i> <span class="large-text">{{#labels}}{{data_tutorial_close}}{{/labels}}</span></a>
+      <header>
+        <h2>{{#labels}}{{data_tutorial_title}}{{/labels}}</h2>
+        <h3>{{#labels}}{{data_tutorial_description}}{{/labels}}</h3>
+        <p>
+          <a id="tutorial-previous" href="javascript:void(0)" class="left">
+            <i class="fa fa-angle-left fa-3x"></i>
+            <span>{{#labels}}{{data_previous}}{{/labels}}</span>
+          </a>
+          <a id="tutorial-next" href="javascript:void(0)" class="right">
+            <i class="fa fa-angle-right fa-3x"></i>
+            <span>{{#labels}}{{data_next}}{{/labels}}</span>
+          </a>
+          <p id="tutorial-step" class="step-content"></p>
+        </p>
+        <h4 id="tutorial-enjoy">
+          {{#labels}}{{data_tutorial_enjoy}}{{/labels}}
+          <p>
+            <a class="tutorial-close" href="javascript:void(0)">{{#labels}}{{data_tutorial_close}}{{/labels}}</a>
+          </p>
+        </h4>
+      </header>
+    </div>
     <aside class="left-bar absolute select-bar">
       <section>
         <div class="select-box first-box">
@@ -44,6 +73,7 @@
               <abbr class="help" title='{{#labels}}{{data_country_help}}{{/labels}}'><i class="fa fa-info-circle fa-2x"></i></abbr>
               <div class="circle-number">3</div>
               <h2>{{#labels}}{{data_pick_countries}}{{/labels}}</h2>
+              <p id="third-box-help" class="select-help">&nbsp;</p>
             </header>
             <div class="country-box">
               <div id="country-selector" class="selector"></div>
@@ -60,6 +90,7 @@
       <div class="first-section">
         <div>
           <p class="downloads"><a href="{{host}}/downloads"><i class="fa fa-download"></i> {{#labels}}{{data_download}}{{/labels}}</a></p>
+          <p id="view-tutorial" class="view-tutorial"><a href="javascript:void(0)"><i class="fa fa-graduation-cap"></i> {{#labels}}{{data_tutorial_view}}{{/labels}}</a></p>
           <h1>{{#labels}}{{data_title}}{{/labels}}</h1>
           <h2>{{#labels}}{{data_description}}{{/labels}}</h2>
         </div>
@@ -248,8 +279,8 @@
               <div class="charts-view charts-view-map">
                 <div id="map" class="map first">
                   <div class="colour-legend">
-                    <span id="legend-higher">{{#labels}}{{data_higher}}{{/labels}}</span>
-                    <span id="legend-lower">{{#labels}}{{data_lower}}{{/labels}}</span>
+                    <span id="legend-higher">{{#labels}}{{data_higher_short}}{{/labels}}</span>
+                    <span id="legend-lower">{{#labels}}{{data_lower_short}}{{/labels}}</span>
                     <div></div>
                   </div>
                   <div class="chart"></div>

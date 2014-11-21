@@ -24,6 +24,7 @@ module.exports = function (grunt) {
                         './styles/ui.css',
                         './styles/censorship.css',
                         './styles/neutrality.css',
+                        './styles/equality.css',
                         './styles/gender.css',
                         './styles/responsive.css',
                     ],
@@ -51,7 +52,7 @@ module.exports = function (grunt) {
                 'styles/*.css',
                 'styles/lib/*.css'
             ],
-            tasks: ['clean', 'concat:build']
+            tasks: ['concat:build']
         },
     });
 
@@ -61,7 +62,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('build', ['clean', 'concat:build']);
+    grunt.registerTask('build', ['concat:build']);
 
-    grunt.registerTask('production', ['clean', 'concat:build', 'uglify:build']);
+    grunt.registerTask('production', ['concat:build', 'uglify:build']);
 }

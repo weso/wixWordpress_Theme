@@ -453,7 +453,8 @@ header.site-header .top {
 
 header.site-header .bottom {
   overflow: hidden;
-  box-shadow: 0 0.3em 0.3em -0.3em #111; }
+  box-shadow: 0 0.3em 0.3em -0.3em #111;
+  font-family: arial; }
   header.site-header .bottom div {
     height: 1.6em;
     width: 25%;
@@ -462,11 +463,12 @@ header.site-header .bottom {
     background-color: #ccc;
     background-image: url(../images/world-header-1.png);
     background-size: cover;
-    text-transform: uppercase;
     text-align: center;
     font-size: 1em;
-    font-weight: 600;
-    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3), 0px -1px 0px rgba(0, 0, 0, 0.7); }
+    font-weight: 400;
+    /*text-shadow: 0px 1px 0px rgba(white, .3), 0px -1px 0px rgba(black, .7);*/ }
+    header.site-header .bottom div strong {
+      font-weight: 900; }
   header.site-header .bottom div:nth-child(1) {
     background-color: #f93845;
     border-right: 0.1em solid #94040e;
@@ -492,6 +494,9 @@ header.site-header .bottom {
     background-image: url(../images/world-header-4.png);
     color: #26856e;
     text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3), 0px -1px 0px rgba(44, 153, 126, 0.7); }
+    header.site-header .bottom div:nth-child(4) a {
+      color: #26856e;
+      text-transform: uppercase; }
 
 header.site-header nav {
   overflow: auto;
@@ -562,8 +567,7 @@ header.site-header nav li a {
   max-width: 68em;
   margin-left: auto;
   margin-right: auto;
-  max-width: 80em;
-  display: none; }
+  max-width: 80em; }
   .by:after {
     content: "";
     display: table;
@@ -1341,13 +1345,14 @@ div.follow-box {
   padding: 0 !important; }
   div.follow-box div.sign-up {
     background-color: #919279;
-    padding: 2em 1em 1em 1em;
+    padding: 1em;
     margin-bottom: 1em;
     height: 19em; }
     div.follow-box div.sign-up p {
-      margin-top: 1em;
-      margin-bottom: 1em;
-      min-height: 4em; }
+      margin: 0; }
+    div.follow-box div.sign-up label {
+      font-size: 0.8em;
+      font-weight: normal; }
   div.follow-box div.links {
     background-color: #DEE3C1;
     padding: 2em 1em; }
@@ -1370,15 +1375,17 @@ div.follow-box {
 .newsletter-bar {
   position: relative;
   display: inline-block;
-  width: 90%;
-  margin: 1.3em 0; }
+  width: 100%;
+  margin: 0; }
   .newsletter-bar input {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     display: block; }
   .newsletter-bar div.newsletter-and-submit {
-    position: relative; }
+    position: relative;
+    margin: 1em auto 0 auto;
+    width: 90%; }
     .newsletter-bar div.newsletter-and-submit input[type=email] {
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -1391,6 +1398,8 @@ div.follow-box {
       font-style: italic;
       border-radius: 3px;
       margin: 0; }
+      .newsletter-bar div.newsletter-and-submit input[type=email].mce_inline_error {
+        background-color: white !important; }
     .newsletter-bar div.newsletter-and-submit button[type=submit] {
       position: absolute;
       top: 0em;
@@ -1403,9 +1412,13 @@ div.follow-box {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
       padding: 5px 10px; }
-      .newsletter-bar div.newsletter-and-submit button[type=submit] img {
-        height: 12px;
-        opacity: .7; }
+  .newsletter-bar .mce_inline_error {
+    background-color: transparent !important;
+    color: black !important; }
+  .newsletter-bar .response {
+    margin-top: 0.5em;
+    color: #333;
+    font-size: 0.9em; }
 
 /* RANKING */
 table.ranking {
@@ -2340,43 +2353,47 @@ div.box-follow {
 .visor {
   color: #222 !important; }
 
-.data-container .help {
-  float: right;
-  text-align: center;
-  color: #64A5BF;
-  cursor: pointer;
-  font-size: 0.8em; }
-.data-container h1 {
-  margin-bottom: 0.2em !important;
-  font-size: 2em; }
-.data-container div.first-section > div > h2 {
-  margin: 0 0 1.5em 0.2em;
-  color: #444;
-  text-align: left;
-  font-size: 1.1em; }
-.data-container section > h2 {
-  text-align: left;
-  margin: 0 0 1em 0 !important;
-  font-size: 1.1em;
-  padding: 0 0.3em !important; }
-.data-container .downloads {
-  text-align: right;
-  float: right;
-  padding-top: 0.5em; }
-.data-container .indicator-selector {
-  height: 2.6em;
-  background: url(../images/select_arrow.png) no-repeat right white;
-  border: 0.1em solid white; }
-  .data-container .indicator-selector select {
-    width: 100%;
-    background: transparent;
-    padding: 0.2em 2em 0.2em 0.5em;
-    line-height: 1;
-    border: 0.1em solid #aaa;
-    border-radius: 0;
-    height: 2.5em;
-    -webkit-appearance: none;
-    color: #333; }
+.data-container {
+  position: relative; }
+  .data-container .help {
+    float: right;
+    text-align: center;
+    color: #64A5BF;
+    cursor: pointer;
+    font-size: 0.8em; }
+  .data-container h1 {
+    margin-bottom: 0.2em !important;
+    font-size: 2em; }
+  .data-container div.first-section > div > h2 {
+    margin: 0 0 1.5em 0.2em;
+    color: #444;
+    text-align: left;
+    font-size: 1.1em; }
+  .data-container section > h2 {
+    text-align: left;
+    margin: 0 0 1em 0 !important;
+    font-size: 1.1em;
+    padding: 0 0.3em !important; }
+  .data-container .downloads, .data-container .view-tutorial {
+    text-align: right;
+    float: right;
+    clear: both;
+    padding-top: 0.5em;
+    margin: 0; }
+  .data-container .indicator-selector {
+    height: 2.6em;
+    background: url(../images/select_arrow.png) no-repeat right white;
+    border: 0.1em solid white; }
+    .data-container .indicator-selector select {
+      width: 100%;
+      background: transparent;
+      padding: 0.2em 2em 0.2em 0.5em;
+      line-height: 1;
+      border: 0.1em solid #aaa;
+      border-radius: 0;
+      height: 2.5em;
+      -webkit-appearance: none;
+      color: #333; }
 
 /* SELECT-BOX */
 .select-bar section {
@@ -2409,7 +2426,16 @@ div.select-box {
     overflow: hidden; }
   div.select-box h2 {
     margin-bottom: 1em !important;
-    text-align: center; }
+    text-align: center;
+    font-size: 1.4em; }
+  div.select-box.third-box h2 {
+    margin-bottom: 0 !important; }
+  div.select-box p.select-help {
+    color: #0096af;
+    margin-bottom: 0;
+    font-size: 0.9em;
+    text-align: center;
+    line-height: 2em; }
   div.select-box div.circle-number {
     width: 1.6em;
     height: 1.6em;
@@ -2876,6 +2902,125 @@ table.full-ranking {
   color: #1B4E5A;
   font-weight: 500; }
 
+/* TUTORIAL */
+.tutorial {
+  position: absolute;
+  z-index: 3000;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: none; }
+  .tutorial .close {
+    color: #333;
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    font-size: 1.5em;
+    z-index: 6000; }
+    .tutorial .close span {
+      display: inline-block;
+      margin-top: 0.2em; }
+  .tutorial header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-top: 1em;
+    text-align: center;
+    font-size: 1em;
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.5); }
+    .tutorial header h2 {
+      margin: 0 0 0.2em 0;
+      font-size: 3em; }
+    .tutorial header h3 {
+      font-weight: 400;
+      font-size: 1.3em;
+      margin-bottom: 0.5em;
+      color: #777; }
+    .tutorial header h4 {
+      font-size: 2.5em;
+      margin-top: 0.2em; }
+      .tutorial header h4 p {
+        margin: 0;
+        line-height: 0.5em; }
+    .tutorial header p {
+      font-size: 1.5em;
+      max-width: 55em;
+      text-align: center;
+      margin: 0 auto; }
+      .tutorial header p .tutorial-close {
+        font-size: 0.4em;
+        margin: 0; }
+      .tutorial header p .left {
+        float: left; }
+      .tutorial header p .right {
+        float: right; }
+      .tutorial header p i {
+        display: block; }
+      .tutorial header p a.left, .tutorial header p a.right {
+        color: #333; }
+        .tutorial header p a.left i, .tutorial header p a.right i {
+          line-height: 0.6em; }
+        .tutorial header p a.left span, .tutorial header p a.right span {
+          font-size: 0.7em; }
+        .tutorial header p a.left:hover, .tutorial header p a.right:hover {
+          color: #0096af;
+          text-decoration: none !important; }
+      .tutorial header p a[status="inactive"] {
+        color: #ddd; }
+        .tutorial header p a[status="inactive"]:hover {
+          color: #ddd;
+          cursor: default; }
+      .tutorial header p span.large-text {
+        font-size: 2em;
+        line-height: 0.5em;
+        margin-right: 0.5em;
+        margin-top: 0.2em;
+        display: inline-block;
+        font-family: "Roboto" sans-serif; }
+
+.tutorial-back {
+  overflow: scroll;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 2500; }
+
+.tutorial-element {
+  position: relative !important;
+  z-index: 4000 !important; }
+
+.bouncing-arrow-left {
+  color: #0096af;
+  animation: bounce-left 1s infinite; }
+
+@keyframes bounce-left {
+  0% {
+    margin-left: 5px; }
+  25%, 75% {
+    margin-left: 15px; }
+  50% {
+    margin-left: 20px; }
+  100% {
+    margin-left: 0; } }
+.bouncing-arrow-down {
+  color: #0096af;
+  animation: bounce-down 1s infinite; }
+
+@keyframes bounce-down {
+  0% {
+    margin-top: 5px; }
+  25%, 75% {
+    margin-top: 15px; }
+  50% {
+    margin-top: 20px; }
+  100% {
+    margin-top: 0; } }
 div.water {
   width: 100%;
   min-height: 4em;

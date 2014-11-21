@@ -1,11 +1,11 @@
 (function() {
 
-  // TODO
-  // Switch to live API urls calls
   var urls = {
     population: 'bin/population.json',
     primary: 'http://intertip.webfoundation.org/api/observations/P4,P7,P9,S11,S12,ITU_N/ALL/2013?callback=?',
     neutrality: 'bin/neutrality.json',
+    equality: 'bin/gni_gini.json',
+    ranks: 'http://intertip.webfoundation.org/api/observations/INDEX/ALL/2013?callback=?',
     flags: 'bin/flags_lookup.json',
     economic_regional: 'bin/economic_regional.json',
     labels: 'bin/labels.json'
@@ -15,16 +15,16 @@
   // https://github.com/mbostock/queue
   window.loadVizData = function(fn) {
     var q = queue();
-    
+
     function getData(url, cb) { $.getJSON(url, function(data) { cb(null, data); }) }
     for (var prop in urls) {
       q.defer(getData, urls[prop]);
     }
 
-    q.await(function(error, pop, primary, neutrality, flags, economic_regional, labels) {
+    q.await(function(error, pop, primary, neutrality, equality, ranks, flags, economic_regional, labels) {
 
       var indicators = {};
-      
+
       //Format primary data
       _(primary.data).each(function(result) {
         if (typeof indicators[result.code] === 'undefined') {
@@ -35,21 +35,29 @@
       })
 
       //Format population data
-      var itu = {}; 
-      _(indicators).each(function(val, code) { 
-        itu[code] = {}; itu[code].ITU = indicators[code].ITU_N 
+      var itu = {};
+      _(indicators).each(function(val, code) {
+        itu[code] = {}; itu[code].ITU = indicators[code].ITU_N
       });
 
       _(pop).each(function(val, code) {
         if (pop[code] && itu[code]) {
-          itu[code].Population = pop[code];  
+          itu[code].Population = pop[code];
         }
       })
 
       //Format neutrality data
       _(neutrality).each(function(val, code) {
         if (indicators[code] && neutrality[code]) {
-          neutrality[code]['Score'] = indicators[code].P7 
+          neutrality[code]['Score'] = indicators[code].P7
+        }
+      })
+
+      //Format equality data
+      _(ranks.data).each(function(record) {
+        if (equality[record.code]) {
+          equality[record.code]['score'] = record.scored;
+          equality[record.code]['rank'] = record.ranked;
         }
       })
 
@@ -57,6 +65,7 @@
         itu: itu,
         primary: indicators,
         neutrality: neutrality,
+        equality: equality,
         flags: flags,
         economic_regional: economic_regional,
         labels: labels
@@ -140,15 +149,18 @@ $(document).on('ready', function() {
     {id: 'gender', fn: 'GenderViz'},
     {id: 'surveillance', fn: 'SurveillanceViz'},
     {id: 'neutrality-viz', fn: 'NeutralityViz'},
+    {id: 'equality-viz', fn: 'EqualityViz'},
   ];
 
   loadVizData(function(resp) {
     for(var i = 0; i < vizlist.length; ++i) {
+
       var viz = vizlist[i];
       var $container = $('#' + viz.id);
       if ($container.length) {
         viz.$el = $container;
         window[viz.fn](resp, viz);
+
       }
     }
   });

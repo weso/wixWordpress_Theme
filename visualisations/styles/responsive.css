@@ -1,5 +1,12 @@
-@media (min-width: 480px) {
+@media (max-width: 419px) {
+  .eq-ui-right { display: none; }
+}
 
+@media (min-width: 480px) and (max-width: 799px) {
+  .eq-overlay {
+    position: absolute;
+    left: 185px;
+    top: 0;
 }
 
 @media (min-width: 800px) {
@@ -20,6 +27,12 @@
     padding: 10px 5px 10px;
     height: 80px;
   }
+
+  .eq-ui,
+  .eq-overlay {
+    height: 110px;
+  }
+
   .viz-overlay-tip table td { padding: 4px 10px 0; }
 
   .viz-ui button {

@@ -6,8 +6,8 @@
     this.labels = args.labels;
     var economic_regional = _(args.economic_regional).map(function(countryVal, key) {
       return {
-        key: key, 
-        region: countryVal.region, 
+        key: key,
+        region: countryVal.region,
         econ: parseInt(countryVal.econ)
       }
     })
@@ -228,7 +228,6 @@
     this.leftScale = d3.scale.ordinal().domain(d3.range(0,12)).rangePoints([this.centerX - this.margin/2 - this.rectSize, this.box.left]).range();
     this.bottomScale = d3.scale.ordinal().domain(d3.range(0,12)).rangePoints([this.centerY + this.margin/2, this.box.bottom]).range();
     this.topScale = d3.scale.ordinal().domain(d3.range(0,12)).rangePoints([this.centerY - this.rectSize/2 - this.margin, this.box.top]).range();
-    this.colors = d3.scale.linear().domain(d3.range(0,9)).range(colorbrewer.RdBu[10]);
 
     var axesMargin = this.margin / 6
     this.svg.select('.nn-xLine-nw').attr({'x1': this.centerX - axesMargin, 'x2': 0, 'y1': this.centerY - axesMargin, 'y2': this.centerY - axesMargin, 'stroke-width': 2, 'stroke': 'black'})
@@ -274,8 +273,8 @@
       'width': that.rectSize,
       'height': that.rectSize,
       'fill': function(d) { return "url(#image_" + d.id+ ")"},
-    })
-    .style('stroke', function(d) { return that.colors(d.score)})
+    });
+    //.style('stroke', function(d) { return that.colors(d.score)})
 
     // ********************
     // MOUSE EVENTS
@@ -321,11 +320,11 @@
       if (that.attribute === 'region') {
         _(that.groupByRegion[d.region]).pluck('key').forEach(function(key) {
           d3.select('[data-name="'+ key+ '"]').attr('class', 'nn-rect nn-rect-not-hover')
-        })        
+        })
       } else {
         _(that.groupByEcon[d.econ]).pluck('key').forEach(function(key) {
           d3.select('[data-name="'+ key+ '"]').attr('class', 'nn-rect nn-rect-not-hover')
-        })   
+        })
       }
 
 
@@ -369,7 +368,7 @@
     }
     _(labelMap).each(function(labelKey, selector) {
       if (labels[labelKey]) {
-        $('#' + selector).html(labels[labelKey]); 
+        $('#' + selector).html(labels[labelKey]);
       }
     })
 

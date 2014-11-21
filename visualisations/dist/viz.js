@@ -1,11 +1,11 @@
 (function() {
 
-  // TODO
-  // Switch to live API urls calls
   var urls = {
     population: 'bin/population.json',
     primary: 'http://intertip.webfoundation.org/api/observations/P4,P7,P9,S11,S12,ITU_N/ALL/2013?callback=?',
     neutrality: 'bin/neutrality.json',
+    equality: 'bin/gni_gini.json',
+    ranks: 'http://intertip.webfoundation.org/api/observations/INDEX/ALL/2013?callback=?',
     flags: 'bin/flags_lookup.json',
     economic_regional: 'bin/economic_regional.json',
     labels: 'bin/labels.json'
@@ -15,16 +15,16 @@
   // https://github.com/mbostock/queue
   window.loadVizData = function(fn) {
     var q = queue();
-    
+
     function getData(url, cb) { $.getJSON(url, function(data) { cb(null, data); }) }
     for (var prop in urls) {
       q.defer(getData, urls[prop]);
     }
 
-    q.await(function(error, pop, primary, neutrality, flags, economic_regional, labels) {
+    q.await(function(error, pop, primary, neutrality, equality, ranks, flags, economic_regional, labels) {
 
       var indicators = {};
-      
+
       //Format primary data
       _(primary.data).each(function(result) {
         if (typeof indicators[result.code] === 'undefined') {
@@ -35,21 +35,29 @@
       })
 
       //Format population data
-      var itu = {}; 
-      _(indicators).each(function(val, code) { 
-        itu[code] = {}; itu[code].ITU = indicators[code].ITU_N 
+      var itu = {};
+      _(indicators).each(function(val, code) {
+        itu[code] = {}; itu[code].ITU = indicators[code].ITU_N
       });
 
       _(pop).each(function(val, code) {
         if (pop[code] && itu[code]) {
-          itu[code].Population = pop[code];  
+          itu[code].Population = pop[code];
         }
       })
 
       //Format neutrality data
       _(neutrality).each(function(val, code) {
         if (indicators[code] && neutrality[code]) {
-          neutrality[code]['Score'] = indicators[code].P7 
+          neutrality[code]['Score'] = indicators[code].P7
+        }
+      })
+
+      //Format equality data
+      _(ranks.data).each(function(record) {
+        if (equality[record.code]) {
+          equality[record.code]['score'] = record.scored;
+          equality[record.code]['rank'] = record.ranked;
         }
       })
 
@@ -57,6 +65,7 @@
         itu: itu,
         primary: indicators,
         neutrality: neutrality,
+        equality: equality,
         flags: flags,
         economic_regional: economic_regional,
         labels: labels
@@ -140,15 +149,18 @@ $(document).on('ready', function() {
     {id: 'gender', fn: 'GenderViz'},
     {id: 'surveillance', fn: 'SurveillanceViz'},
     {id: 'neutrality-viz', fn: 'NeutralityViz'},
+    {id: 'equality-viz', fn: 'EqualityViz'},
   ];
 
   loadVizData(function(resp) {
     for(var i = 0; i < vizlist.length; ++i) {
+
       var viz = vizlist[i];
       var $container = $('#' + viz.id);
       if ($container.length) {
         viz.$el = $container;
         window[viz.fn](resp, viz);
+
       }
     }
   });
@@ -433,6 +445,314 @@ $(document).on('ready', function() {
   window.CensorshipViz = init;
 })();
 
+  (function() {
+  "use strict";
+
+  var Equality = function(args, viz) {
+    this.labels = args.labels;
+
+    var primary = args.primary, econ = args.economic_regional;
+
+    var data = _.map(args.equality, function(data, countryCode) {
+      return {
+        code: countryCode,
+        name: primary[countryCode].name,
+        region: econ[countryCode].region,
+        econ: econ[countryCode].econ,
+        income: data['gni'],
+        inequality: data['gini'],
+        rank: data['rank'],
+        overall: data['score']
+      }
+    });
+
+    data = this.data = _.chain(data)
+      // ignore countries that don't have a GNI index value
+      // in data these are empty strings
+      .filter(function(d) { return d.inequality; })
+      .sortBy(function(d) { return -d.inequality; })
+      .value();
+
+    var margin = this.margin = [50, 25, 50, 25],
+      topLabelHeight = this.topLabelHeight = 40,
+      height = viz.$el.height() - margin[0] - margin[2],
+      width = viz.$el.width() - margin[1] - margin[3];
+
+    this.width = width;
+
+    var x = this.x = d3.scale.linear()
+      .domain(d3.extent(data, function(d) {
+        return d.rank
+      }))
+      .range([width, 0]);
+
+    var y = this.y = d3.scale.linear()
+      .domain(d3.extent(data, function(d) {
+        return d.income;
+      }))
+      .range([height, 0]);
+
+    var radius = d3.scale.sqrt()
+      .domain(d3.extent(data, function(d) {
+        return d.inequality;
+      }))
+      .range([7, 40]);
+
+    var svg = this.svg = d3.select('#' + viz.id)
+      .append('svg')
+      .attr('class', 'eq-svg')
+      .attr('width', width + margin[1] + margin[3])
+      .attr('height', height + margin[0] + margin[2]);
+
+    var g = this.g = svg.append('g')
+      .attr('transform', 'translate(' + margin[3] + ',' + margin[0] + ')');
+
+    var xTicks = [
+      {dy: '-2em', dx: '-50px', text: this.labels['eq_low_index_score'], anchor: 'end'},
+      {dy: '-2em', dx: '50px', text: this.labels['eq_high_index_score'], anchor: 'start'}
+    ];
+
+    this.xTicks = g.append('g').selectAll('.xtick')
+      .data(xTicks)
+    .enter().append('text')
+      .attr('class', 'xtick')
+      .text(function(d) { return d.text; })
+      .attr('transform', function(d) { return 'translate(' + [(width/2), 0] + ')'; })
+      .attr('dy', function(d) { return d.dy; })
+      .attr('dx', function(d) { return d.dx; })
+      .attr('text-anchor', function(d) { return d.anchor; });
+
+    var yTicks = [
+      {pos: 20000, label: this.labels['eq_20k'],},
+      {pos: 40000, label: this.labels['eq_40k']},
+      {pos: 80000, label: this.labels['eq_80k']},
+    ];
+
+    this.yTicks = g.append('g').selectAll('.ytick')
+      .data(yTicks)
+    .enter().append('g')
+      .attr('class', 'ytick')
+      .attr('transform', function(d) { return 'translate(0,' + y(d.pos) + ')'; });
+
+    this.yTicks.append('line')
+      .attr('x1', 0).attr('x2', width)
+      .attr('y1', 0).attr('y2', 0)
+      .attr('class', 'eq-divider')
+      .attr('stroke-dasharray', '5,5');
+
+    this.yTicks.append('text')
+      .text(function(d) { return d.label; })
+      .attr('text-anchor', 'middle')
+      .attr('dx', width/2 + 'px')
+      .attr('dy', '-4px');
+
+    var $tooltip = this.$tooltip = $('#eq-overlay-tip');
+    var tooltipTemplate = _.template($('#eq-tooltip').html());
+
+    var countries = this.countries = g.selectAll('.eq-country')
+      .data(data)
+    .enter().append('g')
+      .attr('class', 'eq-country');
+
+    var labels = this.labels, clicked = false, clickTarget, selected;
+
+    var that = this, needReset = false, timeout;
+
+    var circles = this.circles = countries.append('circle')
+      .attr('class', 'eq-circle')
+      .attr('data-name', function(d) { return d.code})
+      .attr('r', 0)
+      .attr('cx', function(d) { return x(d.rank); })
+      .attr('cy', function(d) { return y(d.income); });
+
+    var filterByAttribute = function(match) {
+      var attr = this.attribute;
+      circles
+        .attr('class', function(d) {
+          return d[attr] === match ? 'eq-circle' : 'eq-circle eq-hide';
+        })
+    }.bind(this);
+
+    circles
+      .on('mouseover', function(d) {
+        selected = d3.select(this)
+
+        if (that.width > 480) {
+          showToolTip(d);
+        }
+
+        if (!clicked) {
+          needReset = false;
+          timeout = window.setTimeout(function() {
+            // check if we haven't already clicked and filtered already
+            if (needReset) { return; }
+            needReset = true;
+            filterByAttribute(d[that.attribute]);
+          }, 1000)
+
+        }
+      })
+
+      .on('mouseout', function() {
+        hideToolTip();
+
+        if (!clicked) {
+          window.clearTimeout(timeout);
+          if (needReset) { circles.attr('class','eq-circle'); }
+        }
+      })
+
+      .on('click', function(d) {
+
+        // if already clicked, fade out last click target
+        if (clicked) {
+          selected.transition()
+            .duration(200)
+            .style('stroke-width', '.1em');
+
+          if (needReset) { circles.attr('class','eq-circle'); }
+        }
+
+        // clicking on the current selection
+        if (clickTarget === d.code) {
+          clickTarget = null;
+          clicked = false;
+          $tooltip.hide();
+
+          circles.attr('class','eq-circle');
+        }
+
+        else {
+          clicked = true;
+          selected = d3.select(this)
+          clickTarget = d.code;
+          if (that.width > 480) {
+            showToolTip(d);
+          }
+
+          needReset = true;
+          filterByAttribute(d[that.attribute]);
+        }
+      });
+
+    viz.$el.on('click', function(e) {
+      if (clicked && e.target.nodeName !== 'circle') {
+        clicked = false;
+        hideToolTip();
+        if (needReset) { circles.attr('class','eq-circle'); }
+      }
+    });
+
+    circles.transition()
+      .duration(200)
+      .delay(function(d, i) { return i * 5 })
+      .attr('r', function(d) { return radius(d.inequality); });
+
+    var showToolTip = function(d) {
+      var attribute = this.attribute === 'region' ?
+        labels['region_translation_' + d.region] :
+        labels['econ_translation_' + d.econ];
+
+      selected.transition()
+        .duration(200)
+        .style('stroke-width', '.5em');
+
+      $tooltip.html(tooltipTemplate({
+        country: d.name,
+        score_label: labels['eq_score_label'],
+        score: d.overall.toFixed(2),
+        income_label: labels["eq_gni_label"],
+        income: '$' + Utility.comma(d.income),
+        inequality_label: labels["eq_inequality_label"],
+        inequality: d.inequality,
+        sort: attribute
+
+      })).show();
+    }.bind(this);
+
+    function hideToolTip() {
+      selected.transition()
+        .duration(200)
+        .style('stroke-width', '.1em');
+      $tooltip.hide();
+    }
+
+  };
+
+  Equality.prototype.resize = function() {
+    var margin = this.margin,
+      height = this.$el.height() - margin[0] - margin[2],
+      width = this.$el.width() - margin[1] - margin[3];
+
+    this.width = width;
+
+    this.svg
+      .attr('width', width + margin[1] + margin[3])
+      .attr('height', height + margin[0] + margin[2]);
+
+    var x = this.x, y = this.y;
+
+    x.range([width, 0]);
+    y.range([height, 0]);
+
+    this.xTicks
+      .transition()
+      .attr('transform', function(d) { return 'translate(' + [width/2, 0] + ')'; })
+
+    this.yTicks.select('line').attr('x2', width)
+    this.yTicks.select('text').attr('dx', width/2 + 'px');
+
+    this.yTicks
+      .transition()
+      .attr('transform', function(d) { return 'translate(0,' + y(d.pos) + ')'; });
+
+    this.circles
+      .transition()
+      .attr('cx', function(d) { return x(d.rank); })
+      .attr('cy', function(d) { return y(d.income); });
+  }
+
+  function init(args, viz) {
+    var labels = args.labels;
+
+    var equality = new Equality(args, viz);
+    equality.$el = viz.$el;
+
+    var $toggles = $('#eq-ui-container');
+    if ($toggles.length) {
+      $toggles.on('click', 'button', function() {
+        var $target = $(this);
+        if ($target.hasClass('selected')) { return false; }
+
+        $toggles.find('.selected').removeClass('selected');
+        $target.addClass('selected');
+
+        equality.attribute = $target.attr('data-type');
+      });
+    }
+
+    equality.attribute = 'region'
+
+    // fill labels for UI
+    var labelMap = {
+      'eq-main-action': 'gn_nn_main_action',
+      'eq-toggle-region': 'gn_nn_toggle_region',
+      'eq-toggle-econ': 'gn_nn_toggle_econ'
+    }
+
+    _(labelMap).each(function(labelKey, selector) {
+      if (labels[labelKey]) {
+        $('#' + selector).html(labels[labelKey]);
+      }
+    })
+
+    Utility.resize.addDispatch('equality', equality.resize, equality);
+
+  }
+
+  window.EqualityViz = init;
+})();
+
 (function() {
 
   var GenderViz = function() {
@@ -591,10 +911,11 @@ $(document).on('ready', function() {
 
     var that = this;
     function toolTipHTML(d) {
-      return ['<label>', d.name, '</label><hr /><table><tbody><tr><td>', that.labels['region_translation_' + d.region],
-        '</td><td>' + that.labels['gn_tooltip_supports']+': ', d.support, '<span class="gn-score-', d.scores.support,
-        '"> (', d.scores.support, ')</span></td></tr><tr><td>', that.labels['econ_translation_' + d.econ],
-        '</td><td>' + that.labels['gn_tooltip_prosecutes'] + ': ', d.action, '<span class="gn-score-', d.scores.action,
+      var labels = that.labels;
+      return ['<label>', d.name, '</label><hr /><table><tbody><tr><td>', labels['region_translation_' + d.region],
+        '</td><td>' + labels['gn_tooltip_supports']+': ', d.support, '<span class="gn-score-', d.scores.support,
+        '"> (', d.scores.support, ')</span></td></tr><tr><td>', labels['econ_translation_' + d.econ],
+        '</td><td>' + labels['gn_tooltip_prosecutes'] + ': ', d.action, '<span class="gn-score-', d.scores.action,
         '"> (', d.scores.action, ')</span></td></tr></tbody</table>',
       ].join('');
     }
@@ -721,7 +1042,7 @@ $(document).on('ready', function() {
     }
     _(labelMap).each(function(labelKey, selector) {
       if (labels[labelKey]) {
-        $('#' + selector).html(labels[labelKey]); 
+        $('#' + selector).html(labels[labelKey]);
       }
     })
 
@@ -762,8 +1083,8 @@ $(document).on('ready', function() {
     this.labels = args.labels;
     var economic_regional = _(args.economic_regional).map(function(countryVal, key) {
       return {
-        key: key, 
-        region: countryVal.region, 
+        key: key,
+        region: countryVal.region,
         econ: parseInt(countryVal.econ)
       }
     })
@@ -984,7 +1305,6 @@ $(document).on('ready', function() {
     this.leftScale = d3.scale.ordinal().domain(d3.range(0,12)).rangePoints([this.centerX - this.margin/2 - this.rectSize, this.box.left]).range();
     this.bottomScale = d3.scale.ordinal().domain(d3.range(0,12)).rangePoints([this.centerY + this.margin/2, this.box.bottom]).range();
     this.topScale = d3.scale.ordinal().domain(d3.range(0,12)).rangePoints([this.centerY - this.rectSize/2 - this.margin, this.box.top]).range();
-    this.colors = d3.scale.linear().domain(d3.range(0,9)).range(colorbrewer.RdBu[10]);
 
     var axesMargin = this.margin / 6
     this.svg.select('.nn-xLine-nw').attr({'x1': this.centerX - axesMargin, 'x2': 0, 'y1': this.centerY - axesMargin, 'y2': this.centerY - axesMargin, 'stroke-width': 2, 'stroke': 'black'})
@@ -1030,8 +1350,8 @@ $(document).on('ready', function() {
       'width': that.rectSize,
       'height': that.rectSize,
       'fill': function(d) { return "url(#image_" + d.id+ ")"},
-    })
-    .style('stroke', function(d) { return that.colors(d.score)})
+    });
+    //.style('stroke', function(d) { return that.colors(d.score)})
 
     // ********************
     // MOUSE EVENTS
@@ -1077,11 +1397,11 @@ $(document).on('ready', function() {
       if (that.attribute === 'region') {
         _(that.groupByRegion[d.region]).pluck('key').forEach(function(key) {
           d3.select('[data-name="'+ key+ '"]').attr('class', 'nn-rect nn-rect-not-hover')
-        })        
+        })
       } else {
         _(that.groupByEcon[d.econ]).pluck('key').forEach(function(key) {
           d3.select('[data-name="'+ key+ '"]').attr('class', 'nn-rect nn-rect-not-hover')
-        })   
+        })
       }
 
 
@@ -1125,7 +1445,7 @@ $(document).on('ready', function() {
     }
     _(labelMap).each(function(labelKey, selector) {
       if (labels[labelKey]) {
-        $('#' + selector).html(labels[labelKey]); 
+        $('#' + selector).html(labels[labelKey]);
       }
     })
 
