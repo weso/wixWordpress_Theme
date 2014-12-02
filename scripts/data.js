@@ -1,5 +1,5 @@
 (function() {
-  var a, button, chartSelectors, chartTooltip, checkSelectorDataReady, collapsable, collapsableHeader, collapsableSection, collapsables, collapsed, content, createTableCell, createTip, firstBox, firstBoxHeaderHeight, firstHeight, firstSection, firstTab, firstTabFixedPosition, firstTabStartedMoving, getCountries, getIndicators, getObservations, getSelectorData, getValue, getYears, global, hide, li, msie6, previousY, renderBoxes, renderCharts, renderContinentLegend, renderCountries, renderExtraTableHeader, renderIndicatorInfo, renderMap, renderPieChart, renderRegionLabel, renderSomeBoxes, renderTable, renderYearBox, returnToStoppedPosition, secondBox, secondBoxHeaderHeight, secondHeight, secondTab, secondTabAbsolutePosition, secondTabStartedMoving, selectBar, setBoxesInitialPosition, setBoxesPosition, setIndicatorOptions, setPageStateful, setUnfixedPosition, show, showTutorial, siteHeader, startTutorialFirstTime, tab, tabs, thirdBox, thirdBoxHeaderHeight, thirdHeight, top, totalHeight, tutorialBoxOnChange, tutorialRestore, updateInfo, _i, _j, _k, _len, _len1, _len2, _ref;
+  var a, button, chartSelectors, chartTooltip, checkSelectorDataReady, collapsable, collapsableHeader, collapsableSection, collapsables, collapsed, content, createTableCell, createTip, firstBox, firstBoxHeaderHeight, firstHeight, getCountries, getIndicators, getObservations, getSelectorData, getValue, getYears, global, hide, li, msie6, renderBoxes, renderCharts, renderContinentLegend, renderCountries, renderExtraTableHeader, renderIndicatorInfo, renderMap, renderPieChart, renderRegionLabel, renderSomeBoxes, renderTable, renderYearBox, secondBox, secondBoxHeaderHeight, secondHeight, selectBar, setBoxesInitialPosition, setBoxesPosition, setIndicatorOptions, setPageStateful, setUnfixedPosition, show, showTutorial, siteHeader, startTutorialFirstTime, tab, tabs, thirdBox, thirdBoxHeaderHeight, thirdHeight, top, totalHeight, tutorialBoxOnChange, tutorialRestore, updateInfo, _i, _j, _k, _len, _len1, _len2, _ref;
 
   global = this;
 
@@ -1633,97 +1633,90 @@
     }
   };
 
-  msie6 = $.browser === "msie" && $.browser.version < 7;
 
-  siteHeader = $(".site-header").height();
-
-  firstSection = $(".first-section");
-
-  firstTab = $(".first-tab");
-
-  secondTab = $(".second-tab");
-
-  firstTabFixedPosition = 0;
-
-  secondTabAbsolutePosition = 0;
-
-  firstTabStartedMoving = 0;
-
-  secondTabStartedMoving = 0;
-
-  selectBar = $(".select-bar > section");
-
-  if (!selectBar) {
-    return;
-  }
-
-  top = null;
-
-  previousY = 0;
-
-  if (!msie6) {
-    $(window).scroll(function(event) {
-      var firstTabTop, fistTabHeight, height, offset, parent, secondTabTop, tendency, windowHeight, y;
-      if (top == null) {
-        top = section.offset().top;
-      }
-      windowHeight = $(window).height();
-      fistTabHeight = firstTab.height();
-      y = $(this).scrollTop();
-      tendency = y - previousY;
-      firstTabTop = Math.floor(y - firstTab.offset().top);
-      secondTabTop = Math.floor(y - secondTab.offset().top);
-      if (!global.tutorial && y >= siteHeader && windowHeight > fistTabHeight) {
-        if (!firstSection.collapsed && tendency > 0) {
-          parent = firstSection.parent();
-          height = parent.height();
-          parent.css("min-height", height);
-          firstSection.siblings().each(function() {
-            var offset;
-            offset = $(this).position().top;
-            secondTabAbsolutePosition = offset;
-            $(this).css("top", offset);
-            return $(this).addClass("absolute");
-          });
-          firstTabFixedPosition = firstTab.position().top;
-          firstSection.children().each(function() {
-            var width;
-            width = $(this).width();
-            $(this).css("width", width);
-            return $(this).addClass("fixed");
-          });
-          firstTab.css("top", firstTabFixedPosition);
-          firstSection.collapsed = true;
-          secondTabStartedMoving = y;
-        } else if (!firstTab.moving && tendency > 0 && secondTabTop >= firstTabTop) {
-          offset = secondTabAbsolutePosition - 6;
-          firstTab.css("top", offset).addClass("absolute").removeClass("fixed");
-          firstTab.moving = true;
-          firstTabStartedMoving = y;
-        } else if (tendency < 0 && firstTab.moving && y <= firstTabStartedMoving) {
-          firstTab.css("top", firstTabFixedPosition).addClass("fixed").removeClass("absolute");
-          firstTab.moving = false;
-        } else if (tendency < 0 && y <= secondTabStartedMoving) {
-          returnToStoppedPosition(firstSection, firstTab);
-        }
-      } else {
-        returnToStoppedPosition(firstSection, firstTab);
-      }
-      return previousY = y;
-    });
-  }
-
-  returnToStoppedPosition = function(firstSection, firstTab) {
-    if (!firstSection.collapsed) {
-      return;
-    }
-    firstSection.children().removeClass("fixed").removeClass("absolute");
-    firstSection.collapsed = false;
-    firstTab.moving = false;
-    return firstSection.siblings().each(function() {
-      return $(this).removeClass("absolute");
-    });
-  };
+  /*
+  msie6 = $.browser is "msie" and $.browser.version < 7
+  
+  siteHeader = $(".site-header").height()
+  firstSection = $(".first-section")
+  firstTab = $(".first-tab")
+  secondTab = $(".second-tab")
+  firstTabFixedPosition = 0
+  secondTabAbsolutePosition = 0
+  firstTabStartedMoving = 0
+  secondTabStartedMoving = 0
+  selectBar = $(".select-bar > section")
+  
+  if !selectBar then return;
+  
+  top = null
+  previousY = 0
+  
+  if !msie6
+    $(window).scroll((event) ->
+      top ?= section.offset().top
+  
+      windowHeight = $(window).height()
+      fistTabHeight = firstTab.height()
+  
+       * What the y position of the scroll is
+      y = $(this).scrollTop()
+      tendency = y - previousY
+  
+      firstTabTop = Math.floor(y - firstTab.offset().top)
+      secondTabTop = Math.floor(y - secondTab.offset().top)
+  
+       * Whether that's below the form
+      if !global.tutorial and y >= siteHeader and windowHeight > fistTabHeight
+        if !firstSection.collapsed and tendency > 0
+          parent = firstSection.parent()
+          height = parent.height()
+  
+          parent.css("min-height", height)
+  
+          firstSection.siblings().each(->
+              offset = $(this).position().top
+              secondTabAbsolutePosition = offset
+              $(this).css("top", offset)
+              $(this).addClass("absolute")
+          )
+  
+          firstTabFixedPosition = firstTab.position().top
+          firstSection.children().each(->
+            width = $(this).width()
+            $(this).css("width", width)
+            $(this).addClass("fixed")
+          )
+          firstTab.css("top", firstTabFixedPosition)
+          firstSection.collapsed = true
+          secondTabStartedMoving = y
+        else if !firstTab.moving && tendency > 0 && secondTabTop >= firstTabTop
+          offset = secondTabAbsolutePosition - 6
+          firstTab.css("top", offset).addClass("absolute").removeClass("fixed")
+          firstTab.moving = true
+          firstTabStartedMoving = y
+        else if tendency < 0 && firstTab.moving && y <= firstTabStartedMoving
+          firstTab.css("top", firstTabFixedPosition).addClass("fixed").removeClass("absolute")
+          firstTab.moving = false
+        else if tendency < 0 && y <= secondTabStartedMoving
+          returnToStoppedPosition(firstSection, firstTab)
+      else
+        returnToStoppedPosition(firstSection, firstTab)
+  
+      previousY = y
+    )
+  
+  returnToStoppedPosition = (firstSection, firstTab) ->
+    if !firstSection.collapsed then return
+  
+    firstSection.children().removeClass("fixed").removeClass("absolute")
+    firstSection.collapsed = false
+    firstTab.moving = false
+  
+    firstSection.siblings().each(->
+        $(this).removeClass("absolute")
+    )
+   */
 
   startTutorialFirstTime = function() {
     var shown;

@@ -69,6 +69,8 @@
   "data_by_time": "by time",
   "data_higher": "best score",
   "data_lower": "worst score",
+  "data_regional_higher": "best regional score",
+  "data_regional_lower": "worst regional score",
   "data_higher_short": "best",
   "data_lower_short": "worst",
   "data_mean": "mean",
@@ -96,7 +98,7 @@
   "home_tab_1_caption_2": "protect the privacy of online communications.",
   "home_tab_2_caption_1": "are not doing enough to stop online",
   "home_tab_2_caption_2": "violence against women.",
-  "home_tab_3_caption_1": "are failing to use the Web to improve",
+  "home_tab_3_caption_1": "have taken real steps towards improving",
   "home_tab_3_caption_2": "education outcomes for poor and marginalised communities.",
   "home_tab_4_caption_1": "do not manage network traffic",
   "home_tab_4_caption_2": "in a way that is fair and transparent.",
@@ -138,5 +140,7 @@
   "data_tutorial_close": "Close",
   "data_previous": "previous",
   "data_next": "next",
-  "data_countries_reach": "You have reached the selection limit"
+  "data_countries_reach": "You have reached the selection limit",
+  "automatic_translation": "automatic translation:",
+  "enter_your_email": "Enter your email"
 }

@@ -1,0 +1,28 @@
+.logos {
+	overflow: hidden;
+	background-color: #FEFEFE;
+}
+
+.logos div {
+	width: 50%;
+	float: left;
+	padding: 0.5em;
+}
+
+.logos a {
+	text-decoration: none;
+}
+
+.logos img {
+	width: 100%;
+	max-width: 15em;
+	border: none;
+}
+
+.logos div:first-child {
+	text-align: left;
+}
+
+.logos div:last-child {
+	text-align: right;
+}

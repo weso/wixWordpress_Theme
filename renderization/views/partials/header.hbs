@@ -16,7 +16,12 @@
       <a href="https://webfoundation.secure.nonprofitsoapbox.com/wfdonate" target="_blank" title="link opens in new window">Donate now</a>
     </p>
 
-    <div id="google_translate_element" class="translator"></div><script type="text/javascript">
+    <div class="translator">
+      <label>{{#labels}}{{automatic_translation}}{{/labels}}</label>
+      <div id="google_translate_element"></div>
+    </div>
+
+    <script type="text/javascript">
     function googleTranslateElementInit() {
       new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages:
     'en,es,ar,bn,zh-CN,fr,de,hi,ja,pt,ru,sw,it,sv,da,nl,ko,pl,ha,tr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
@@ -32,9 +37,9 @@
     <div></div>
     <div></div>
     <div>
-      by 
+      by
       <a href="http://www.webfoundation.org/" target="_blank" title="link opens in new window">
-        <strong>WORLD WIDE WEB</strong> FOUNDATION
+        the <strong>WORLD WIDE WEB</strong> FOUNDATION
       </a>
     </div>
   </div>

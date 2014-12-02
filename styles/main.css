@@ -307,7 +307,7 @@ ul.tags {
       display: inline-block;
       background-color: #e0272a;
       font-weight: 600;
-      color: #fff;
+      color: #000;
       padding: 0.2em 0.5em;
       border: 0.35em solid #fff;
       border-radius: 0.6em; }
@@ -341,7 +341,7 @@ article ul.tags {
     height: 2em;
     border-radius: 50%;
     background-color: red;
-    color: white;
+    color: #000;
     text-align: center; }
   .right-content article h1, article.entry-article h1, .articles article h1 {
     font-family: "Merriweather Sans", sans-serif;
@@ -489,14 +489,15 @@ header.site-header .bottom {
     color: #5c7d00;
     text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3), 0px -1px 0px rgba(81, 110, 0, 0.7); }
   header.site-header .bottom div:nth-child(4) {
-    background-color: #47caaa;
+    background-color: #3EA38A;
     box-shadow: inset 0.5em 0 0.8em -0.5em #3e5400;
     background-image: url(../images/world-header-4.png);
-    color: #26856e;
-    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3), 0px -1px 0px rgba(44, 153, 126, 0.7); }
+    color: #14342c;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3), 0px -1px 0px rgba(41, 108, 91, 0.7); }
     header.site-header .bottom div:nth-child(4) a {
-      color: #26856e;
-      text-transform: uppercase; }
+      color: #14342c; }
+      header.site-header .bottom div:nth-child(4) a strong {
+        text-transform: uppercase; }
 
 header.site-header nav {
   overflow: auto;
@@ -611,6 +612,15 @@ a.read-more {
 div.translator {
   float: right;
   margin: 0.1em 1em 0 0; }
+  div.translator > label {
+    float: left;
+    font-weight: 300;
+    font-size: 1em;
+    line-height: 1.7em;
+    text-transform: lowercase;
+    color: #555; }
+  div.translator > div {
+    float: right; }
   div.translator div {
     font-size: 1em; }
   div.translator a:hover {
@@ -696,6 +706,9 @@ div.goog-te-menu2 {
     line-height: 1.5em;
     margin: auto;
     text-align: center; }
+    .footer p a {
+      color: white;
+      text-decoration: underline; }
   .footer i {
     display: inline-block;
     width: 1.5em;
@@ -852,7 +865,7 @@ div.accordion {
   margin-top: -1.8em;
   font-family: 'Raleway', sans-serif;
   position: relative;
-  background-color: #47caaa; }
+  background-color: #3EA38A; }
   @media (min-width: 64em) {
     div.accordion {
       height: 32em; } }
@@ -870,7 +883,7 @@ div.accordion {
       div.accordion #tab4 .extra footer {
         background-color: transparent; } }
   div.accordion #tab1 aside {
-    background-color: #47caaa; }
+    background-color: #3EA38A; }
   @media (min-width: 64em) {
     div.accordion #tab1 aside {
       background-color: transparent; } }
@@ -1072,27 +1085,27 @@ div.accordion {
       div.accordion article h2 {
         font-size: 1em; } }
   div.accordion article:nth-child(1) {
-    background-color: #47caaa;
-    box-shadow: 0 0.5em 0.2em -0.1em #32ac8e;
+    background-color: #3EA38A;
+    box-shadow: 0 0.5em 0.2em -0.1em #307e6b;
     bottom: 0%; }
     @media (min-width: 64em) {
       div.accordion article:nth-child(1) {
-        box-shadow: 0.5em 0 0.2em -0.1em #32ac8e;
+        box-shadow: 0.5em 0 0.2em -0.1em #307e6b;
         bottom: auto;
         right: 0; } }
     div.accordion article:nth-child(1) i {
-      color: #32ac8e; }
+      color: #307e6b; }
     div.accordion article:nth-child(1) footer i {
-      color: #21715d; }
+      color: #2a6f5e; }
     div.accordion article:nth-child(1) .extra strong {
-      color: #21715d; }
+      color: #22594b; }
   div.accordion article:nth-child(2) {
     background-color: #89ba00;
-    box-shadow: 0 0.5em 0.2em -0.1em #32ac8e;
+    box-shadow: 0 0.5em 0.2em -0.1em #307e6b;
     bottom: 10%; }
     @media (min-width: 64em) {
       div.accordion article:nth-child(2) {
-        box-shadow: 0.5em 0 0.2em -0.1em #32ac8e;
+        box-shadow: 0.5em 0 0.2em -0.1em #307e6b;
         bottom: auto;
         right: 70%; } }
     div.accordion article:nth-child(2) i {
@@ -1100,7 +1113,7 @@ div.accordion {
     div.accordion article:nth-child(2) footer i {
       color: #547300; }
     div.accordion article:nth-child(2) .extra strong {
-      color: #2b3a00; }
+      color: #3e5400; }
   div.accordion article:nth-child(3) {
     background-color: #0096af;
     box-shadow: 0 0.5em 0.2em -0.1em #638700;
@@ -1115,7 +1128,7 @@ div.accordion {
     div.accordion article:nth-child(3) footer i {
       color: #005968; }
     div.accordion article:nth-child(3) .extra strong {
-      color: #00292f; }
+      color: #003f49; }
   div.accordion article:nth-child(4) {
     background-color: #f93845;
     box-shadow: 0 0.5em 0.2em -0.1em #006a7c;
@@ -1128,9 +1141,11 @@ div.accordion {
     div.accordion article:nth-child(4) i {
       color: #f70718; }
     div.accordion article:nth-child(4) footer i {
-      color: #ac0510; }
+      color: #94040e; }
     div.accordion article:nth-child(4) .extra strong {
-      color: #ac0510; }
+      color: #c50613; }
+  div.accordion article:nth-child(4) .extra strong {
+    color: #310105; }
 
 /* BROWSER HAPPY */
 .browsehappy {
@@ -1215,7 +1230,7 @@ div.accordion {
 .grid-items a.grid-item:hover {
   text-decoration: none; }
 .grid-items .read-more {
-  color: #fff !important;
+  color: #222 !important;
   font-size: 0.8em; }
 .grid-items .grid-item i {
   display: block;
@@ -1223,13 +1238,13 @@ div.accordion {
   margin-bottom: 0.3em;
   color: white; }
 .grid-items .grid-item h1 {
-  color: white;
+  color: #222;
   font-size: 1.5em;
   margin-bottom: .4em;
   text-align: center; }
 .grid-items .grid-item p {
   margin: auto;
-  color: rgba(51, 51, 51, 0.7); }
+  color: #222; }
   @media screen and (min-width: 40em) {
     .grid-items .grid-item p {
       max-width: 95%; } }
@@ -1257,6 +1272,8 @@ div.accordion {
   background-color: #DEE3C1 !important;
   text-align: left;
   height: 14em; }
+  .grid-items .tweet a {
+    color: #3763A0; }
   .grid-items .tweet header a {
     color: black; }
   .grid-items .tweet header img {
@@ -1305,7 +1322,7 @@ div.accordion {
     padding: 1em;
     text-transform: uppercase; }
     .grid-items .news .read-more a {
-      color: white; }
+      color: #333; }
   .grid-items .news a:hover {
     color: white; }
 .grid-items .news:nth-of-type(1) {
@@ -1343,6 +1360,8 @@ div.accordion {
 div.follow-box {
   background-color: white !important;
   padding: 0 !important; }
+  div.follow-box button {
+    background-color: #4076C2; }
   div.follow-box div.sign-up {
     background-color: #919279;
     padding: 1em;
@@ -1431,7 +1450,7 @@ table.ranking {
   table.ranking p.country-name {
     margin: 0;
     display: inline-block;
-    max-width: auto;
+    max-width: none;
     width: 80%;
     color: black; }
   table.ranking tr.country-row {
@@ -1468,7 +1487,7 @@ table.ranking {
     display: block;
     margin-bottom: 0em;
     background: white;
-    color: gray;
+    color: #333;
     display: inline-block;
     font-family: sans-serif;
     font-size: 1em;
@@ -1505,10 +1524,10 @@ ul.report-tags li.active:nth-child(5) a {
   border-color: #0096af;
   border-bottom-color: #004753; }
 ul.report-tags li:nth-child(6) a {
-  background-color: #7e3e69; }
+  background-color: #AE5693; }
 ul.report-tags li.active:nth-child(6) a {
-  border-color: #7e3e69;
-  border-bottom-color: #402036; }
+  border-color: #AE5693;
+  border-bottom-color: #723660; }
 
 /* ARTICLES */
 section.report-articles ul.tags a {
@@ -1544,11 +1563,11 @@ section.report-articles article:nth-of-type(5) h3:before, section.report-article
 section.report-articles article:nth-of-type(5) ul.tags li a {
   background-color: #00cff2; }
 section.report-articles article:nth-of-type(6) .chapter {
-  background-color: #7e3e69; }
+  background-color: #AE5693; }
 section.report-articles article:nth-of-type(6) h3:before, section.report-articles article:nth-of-type(6) h4:before, section.report-articles article:nth-of-type(6) h5:before {
-  color: #7e3e69; }
+  color: #AE5693; }
 section.report-articles article:nth-of-type(6) ul.tags li a {
-  background-color: #a9538d; }
+  background-color: #be78a9; }
 
 /* VISUALISATIONS */
 section.hidden-visualisations {
@@ -1571,10 +1590,10 @@ ul.about-tags li.active:nth-child(3) a {
   border-color: #89ba00;
   border-bottom-color: #516e00; }
 ul.about-tags li:nth-child(4) a {
-  background-color: #7e3e69; }
+  background-color: #AE5693; }
 ul.about-tags li.active:nth-child(4) a {
-  border-color: #7e3e69;
-  border-bottom-color: #4b253e; }
+  border-color: #AE5693;
+  border-bottom-color: #7c3b68; }
 ul.about-tags li:nth-child(5) a {
   background-color: #ff761c; }
 ul.about-tags li.active:nth-child(5) a {
@@ -1630,11 +1649,11 @@ section.about-articles article:nth-of-type(3) h3:before, section.about-articles 
 section.about-articles article:nth-of-type(3) ul.tags li a {
   background-color: #b9fb00; }
 section.about-articles article:nth-of-type(4) .chapter {
-  background-color: #7e3e69; }
+  background-color: #AE5693; }
 section.about-articles article:nth-of-type(4) h3:before, section.about-articles article:nth-of-type(4) h4:before, section.about-articles article:nth-of-type(4) h5:before {
-  color: #7e3e69; }
+  color: #AE5693; }
 section.about-articles article:nth-of-type(4) ul.tags li a {
-  background-color: #a9538d; }
+  background-color: #be78a9; }
 section.about-articles article:nth-of-type(5) .chapter {
   background-color: #ff761c; }
 section.about-articles article:nth-of-type(5) h3:before, section.about-articles article:nth-of-type(5) h4:before, section.about-articles article:nth-of-type(5) h5:before {
@@ -1659,7 +1678,7 @@ section.about-articles article:nth-of-type(7) ul.tags li a {
   display: none; }
 
 .element-shown {
-  display: auto; }
+  display: initial; }
 
 /* SIDEBAR TAGS */
 .sidebar-title:nth-child(2) {
@@ -1699,7 +1718,7 @@ li.cat-item {
 
 /* News media */
 .cat-links a[href$="/news-media/"], li.cat-item a[href$="/news-media/"] {
-  background-color: #7e3e69; }
+  background-color: #AE5693; }
 
 /* ARTICLES */
 section.blog-articles article {
@@ -1895,7 +1914,7 @@ div.box-follow {
   background-color: #f93845;
   border-top: 2px solid #c50613 !important;
   border-left: 2px solid #c50613 !important;
-  color: #620309 !important; }
+  color: #310105 !important; }
   .indicator-header div i {
     color: #94040e; }
 
@@ -1945,11 +1964,13 @@ div.box-follow {
     line-height: 1.25;
     padding-top: 0.1em;
     float: left;
-    color: #999; }
+    color: #555; }
     .collapsable .icons span.name {
       font-size: 0.8em; }
     .collapsable .icons span.value {
-      color: #0096af; }
+      color: #006a7c; }
+      .collapsable .icons span.value a {
+        color: #006a7c; }
     .collapsable .icons i {
       margin-left: 1em;
       line-height: 0.6em; }
@@ -2178,7 +2199,7 @@ div.box-follow {
       text-align: left;
       font-size: 1em;
       margin: 0 !important;
-      color: #888; }
+      color: #555; }
     .collapsable header.collapsable-header .button {
       float: right;
       color: #64A5BF;
@@ -2550,7 +2571,7 @@ div.middle-section {
     div.middle-section div.box-mini p {
       margin: 0.2em 0 0 0; }
     div.middle-section div.box-mini p:first-child {
-      font-size: 0.9em; }
+      font-size: 0.8em; }
     div.middle-section div.box-mini .left {
       float: left;
       margin-top: 0.3em;
@@ -2566,7 +2587,7 @@ div.middle-section {
       cursor: pointer; }
     div.middle-section div.box-mini .value {
       font-size: 2.3em;
-      font-family: "Roboto" sans-serif;
+      font-family: "Roboto", sans-serif;
       font-weight: 400;
       margin: 0 0 0.2em 0;
       display: table-cell;
@@ -2582,9 +2603,10 @@ div.middle-section {
       font-size: 1em;
       height: 2.4em;
       height: 4.5em;
-      display: block;
-      width: 100%;
-      overflow: hidden; }
+      width: 10%;
+      overflow: hidden;
+      display: table-cell;
+      vertical-align: middle; }
   div.middle-section div.box-mini:nth-child(3), div.middle-section div.box-mini:nth-child(4) {
     cursor: pointer; }
   div.middle-section div.box-mini:nth-child(1) {
@@ -2596,7 +2618,7 @@ div.middle-section {
   div.middle-section div.box-mini:nth-child(4) {
     background-color: rgba(146, 197, 80, 0.9); }
   div.middle-section div.box-mini:nth-child(5) {
-    background-color: rgba(145, 146, 121, 0.9); }
+    background-color: rgba(147, 148, 127, 0.9); }
   div.middle-section div.box-mini:nth-child(6) {
     background-color: rgba(92, 93, 69, 0.9); }
 
@@ -2760,11 +2782,11 @@ nav.tabs ul {
     background-color: #fff;
     height: 2.3em; }
     nav.tabs ul li.selected a {
-      color: #777; }
+      color: #333; }
   nav.tabs ul a {
     float: left;
     display: block;
-    color: #aaa;
+    color: #555;
     background: #fff;
     text-decoration: none;
     padding: 0.4em 4em 0.3em 4em; }
@@ -2791,7 +2813,7 @@ table.full-ranking {
     font-size: 11em;
     line-height: 1em;
     padding: 0;
-    color: #ccc;
+    color: #888;
     text-align: right !important;
     padding-right: 0.2em;
     min-width: 1.5em; }
@@ -2818,7 +2840,7 @@ table.full-ranking {
   table.full-ranking > tbody:hover {
     background-color: #cccccc; }
     table.full-ranking > tbody:hover .big-number {
-      color: #b3b3b3; }
+      color: #999999; }
   table.full-ranking tbody:last-child {
     border: none; }
   table.full-ranking td {
@@ -2983,7 +3005,7 @@ table.full-ranking {
         margin-right: 0.5em;
         margin-top: 0.2em;
         display: inline-block;
-        font-family: "Roboto" sans-serif; }
+        font-family: "Roboto", sans-serif; }
 
 .tutorial-back {
   overflow: scroll;
@@ -3029,12 +3051,12 @@ table.full-ranking {
 div.water {
   width: 100%;
   min-height: 4em;
-  background-color: #2f8e8d;
+  background-color: #317F7F;
   background-repeat: repeat-x;
   background-image: url(../images/error_water.png); }
 
 div.error-links {
-  background-color: #2f8e8d;
+  background-color: #317F7F;
   color: white;
   padding-top: 1em;
   padding-bottom: 3em; }
@@ -3104,7 +3126,7 @@ div.lighthouse {
       background-color: #71cb3a; }
 
 div.error-footer {
-  background-color: #2f8e8d; }
+  background-color: #317F7F; }
   div.error-footer .footer {
     background-image: none;
     background-color: transparent;
@@ -3112,7 +3134,7 @@ div.error-footer {
     div.error-footer .footer li a {
       color: white; }
     div.error-footer .footer i {
-      color: #2f8e8d; }
+      color: #317F7F; }
     div.error-footer .footer p {
       color: white; }
       div.error-footer .footer p a {
@@ -3193,7 +3215,7 @@ body.noscroll {
 .wesCountry-tooltip {
   padding-top: 0.3em;
   padding-bottom: 0.5em;
-  font-family: "Roboto" sans-serif; }
+  font-family: "Roboto", sans-serif; }
 
 .wesCountry-tooltip img {
   float: left;
@@ -3300,6 +3322,9 @@ h2 {
   font-size: 1.5em;
   font-weight: 300;
   text-align: center; }
+
+a {
+  color: #4177C3; }
 
 a:hover {
   text-decoration: underline; }

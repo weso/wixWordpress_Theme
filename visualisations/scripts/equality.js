@@ -19,14 +19,13 @@
       }
     });
 
-    data = this.data = _.chain(data)
-      // ignore countries that don't have a GNI index value
-      // in data these are empty strings
-      .filter(function(d) { return d.inequality; })
-      .sortBy(function(d) { return -d.inequality; })
-      .value();
+    // Keep countries that have no gini coefficient
+    // display no-data markers for these.
+    data = _.sortBy(data, function(d) {
+      return -d.inequality;
+    });
 
-    var margin = this.margin = [50, 25, 50, 25],
+    var margin = this.margin = [10, 25, 25, 25],
       topLabelHeight = this.topLabelHeight = 40,
       height = viz.$el.height() - margin[0] - margin[2],
       width = viz.$el.width() - margin[1] - margin[3];
@@ -45,11 +44,17 @@
       }))
       .range([height, 0]);
 
+    var radiusDomain = _.filter(data, function(d) {
+        return d.inequality;
+    });
+
     var radius = d3.scale.sqrt()
-      .domain(d3.extent(data, function(d) {
+      .domain(d3.extent(radiusDomain, function(d) {
         return d.inequality;
       }))
-      .range([7, 40]);
+      .range([5, 30]);
+
+    console.log(radius.domain());
 
     var svg = this.svg = d3.select('#' + viz.id)
       .append('svg')
@@ -61,8 +66,8 @@
       .attr('transform', 'translate(' + margin[3] + ',' + margin[0] + ')');
 
     var xTicks = [
-      {dy: '-2em', dx: '-50px', text: this.labels['eq_low_index_score'], anchor: 'end'},
-      {dy: '-2em', dx: '50px', text: this.labels['eq_high_index_score'], anchor: 'start'}
+      {dy: '1em', dx: '-50px', text: this.labels['eq_low_index_score'], anchor: 'end'},
+      {dy: '1em', dx: '50px', text: this.labels['eq_high_index_score'], anchor: 'start'}
     ];
 
     this.xTicks = g.append('g').selectAll('.xtick')
@@ -105,32 +110,26 @@
     var countries = this.countries = g.selectAll('.eq-country')
       .data(data)
     .enter().append('g')
+      .attr('transform', function(d) {
+        return 'translate(' + x(d.rank) + ',' + y(d.income) + ')';
+      })
       .attr('class', 'eq-country');
-
-    var labels = this.labels, clicked = false, clickTarget, selected;
-
-    var that = this, needReset = false, timeout;
-
-    var circles = this.circles = countries.append('circle')
-      .attr('class', 'eq-circle')
-      .attr('data-name', function(d) { return d.code})
-      .attr('r', 0)
-      .attr('cx', function(d) { return x(d.rank); })
-      .attr('cy', function(d) { return y(d.income); });
 
     var filterByAttribute = function(match) {
       var attr = this.attribute;
-      circles
-        .attr('class', function(d) {
-          return d[attr] === match ? 'eq-circle' : 'eq-circle eq-hide';
-        })
+      countries.attr('class', function(d) {
+        return d[attr] === match ? 'eq-country' : 'eq-country eq-hide';
+      })
     }.bind(this);
 
-    circles
+    var labels = this.labels, clicked = false, clickTarget, selected;
+    var self = this, needReset = false, timeout;
+
+    countries
       .on('mouseover', function(d) {
         selected = d3.select(this)
 
-        if (that.width > 480) {
+        if (self.width > 480) {
           showToolTip(d);
         }
 
@@ -140,7 +139,7 @@
             // check if we haven't already clicked and filtered already
             if (needReset) { return; }
             needReset = true;
-            filterByAttribute(d[that.attribute]);
+            filterByAttribute(d[self.attribute]);
           }, 1000)
 
         }
@@ -151,7 +150,7 @@
 
         if (!clicked) {
           window.clearTimeout(timeout);
-          if (needReset) { circles.attr('class','eq-circle'); }
+          if (needReset) { countries.attr('class','eq-country'); }
         }
       })
 
@@ -159,11 +158,8 @@
 
         // if already clicked, fade out last click target
         if (clicked) {
-          selected.transition()
-            .duration(200)
-            .style('stroke-width', '.1em');
-
-          if (needReset) { circles.attr('class','eq-circle'); }
+          removeHoverClass(selected);
+          if (needReset) { countries.attr('class','eq-country'); }
         }
 
         // clicking on the current selection
@@ -172,19 +168,19 @@
           clicked = false;
           $tooltip.hide();
 
-          circles.attr('class','eq-circle');
+          countries.attr('class','eq-country');
         }
 
         else {
           clicked = true;
           selected = d3.select(this)
           clickTarget = d.code;
-          if (that.width > 480) {
+          if (self.width > 480) {
             showToolTip(d);
           }
 
           needReset = true;
-          filterByAttribute(d[that.attribute]);
+          filterByAttribute(d[self.attribute]);
         }
       });
 
@@ -192,23 +188,38 @@
       if (clicked && e.target.nodeName !== 'circle') {
         clicked = false;
         hideToolTip();
-        if (needReset) { circles.attr('class','eq-circle'); }
+        if (needReset) { countries.attr('class','eq-country'); }
       }
     });
+
+    var circles = this.circles = countries.filter(function(d) {
+      return d.inequality !== '';
+    }).append('circle')
+      .attr('r', 0);
 
     circles.transition()
       .duration(200)
       .delay(function(d, i) { return i * 5 })
       .attr('r', function(d) { return radius(d.inequality); });
 
+    var crosses = this.crosses = countries.filter(function(d) {
+      return d.inequality === '';
+    }).append('text')
+      .text('x')
+      .style('opacity', 0);
+
+    var delay = circles[0].length * 5;
+    crosses.transition()
+      .duration(400)
+      .delay(function(d, i) { return delay + (i * 10); })
+      .style('opacity', 1);
+
     var showToolTip = function(d) {
       var attribute = this.attribute === 'region' ?
         labels['region_translation_' + d.region] :
         labels['econ_translation_' + d.econ];
 
-      selected.transition()
-        .duration(200)
-        .style('stroke-width', '.5em');
+      addHoverClass(selected);
 
       $tooltip.html(tooltipTemplate({
         country: d.name,
@@ -217,17 +228,23 @@
         income_label: labels["eq_gni_label"],
         income: '$' + Utility.comma(d.income),
         inequality_label: labels["eq_inequality_label"],
-        inequality: d.inequality,
+        inequality: (d.inequality || 'N/A'),
         sort: attribute
 
       })).show();
     }.bind(this);
 
     function hideToolTip() {
-      selected.transition()
-        .duration(200)
-        .style('stroke-width', '.1em');
+      removeHoverClass(selected);
       $tooltip.hide();
+    }
+
+    function removeHoverClass(el) {
+      el.attr('class', el.attr('class').replace('hover-over', ''));
+    }
+
+    function addHoverClass(el) {
+      el.attr('class', el.attr('class') + ' hover-over');
     }
 
   };
@@ -249,8 +266,7 @@
     y.range([height, 0]);
 
     this.xTicks
-      .transition()
-      .attr('transform', function(d) { return 'translate(' + [width/2, 0] + ')'; })
+      .attr('transform', function(d) { return 'translate(' + [width/2, 0] + ')'; });
 
     this.yTicks.select('line').attr('x2', width)
     this.yTicks.select('text').attr('dx', width/2 + 'px');
@@ -259,10 +275,10 @@
       .transition()
       .attr('transform', function(d) { return 'translate(0,' + y(d.pos) + ')'; });
 
-    this.circles
-      .transition()
-      .attr('cx', function(d) { return x(d.rank); })
-      .attr('cy', function(d) { return y(d.income); });
+    this.countries.transition()
+      .attr('transform', function(d) {
+        return 'translate(' + x(d.rank) + ',' + y(d.income) + ')';
+      });
   }
 
   function init(args, viz) {
