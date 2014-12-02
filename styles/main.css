@@ -1509,10 +1509,10 @@ ul.report-tags li.active:nth-child(2) a {
   border-color: #ff761c;
   border-bottom-color: #bf4c00; }
 ul.report-tags li:nth-child(3) a {
-  background-color: #B18904; }
+  background-color: #AE5693; }
 ul.report-tags li.active:nth-child(3) a {
-  border-color: #B18904;
-  border-bottom-color: #574402; }
+  border-color: #AE5693;
+  border-bottom-color: #723660; }
 ul.report-tags li:nth-child(4) a {
   background-color: #89ba00; }
 ul.report-tags li.active:nth-child(4) a {
@@ -1524,10 +1524,10 @@ ul.report-tags li.active:nth-child(5) a {
   border-color: #0096af;
   border-bottom-color: #004753; }
 ul.report-tags li:nth-child(6) a {
-  background-color: #AE5693; }
+  background-color: #B18904; }
 ul.report-tags li.active:nth-child(6) a {
-  border-color: #AE5693;
-  border-bottom-color: #723660; }
+  border-color: #B18904;
+  border-bottom-color: #574402; }
 
 /* ARTICLES */
 section.report-articles ul.tags a {
@@ -1545,11 +1545,11 @@ section.report-articles article:nth-of-type(2) h3:before, section.report-article
 section.report-articles article:nth-of-type(2) ul.tags li a {
   background-color: #ff9149; }
 section.report-articles article:nth-of-type(3) .chapter {
-  background-color: #B18904; }
+  background-color: #AE5693; }
 section.report-articles article:nth-of-type(3) h3:before, section.report-articles article:nth-of-type(3) h4:before, section.report-articles article:nth-of-type(3) h5:before {
-  color: #B18904; }
+  color: #AE5693; }
 section.report-articles article:nth-of-type(3) ul.tags li a {
-  background-color: #f1bb05; }
+  background-color: #be78a9; }
 section.report-articles article:nth-of-type(4) .chapter {
   background-color: #89ba00; }
 section.report-articles article:nth-of-type(4) h3:before, section.report-articles article:nth-of-type(4) h4:before, section.report-articles article:nth-of-type(4) h5:before {
@@ -1563,11 +1563,11 @@ section.report-articles article:nth-of-type(5) h3:before, section.report-article
 section.report-articles article:nth-of-type(5) ul.tags li a {
   background-color: #00cff2; }
 section.report-articles article:nth-of-type(6) .chapter {
-  background-color: #AE5693; }
+  background-color: #B18904; }
 section.report-articles article:nth-of-type(6) h3:before, section.report-articles article:nth-of-type(6) h4:before, section.report-articles article:nth-of-type(6) h5:before {
-  color: #AE5693; }
+  color: #B18904; }
 section.report-articles article:nth-of-type(6) ul.tags li a {
-  background-color: #be78a9; }
+  background-color: #f1bb05; }
 
 /* VISUALISATIONS */
 section.hidden-visualisations {
