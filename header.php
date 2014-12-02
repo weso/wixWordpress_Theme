@@ -3,6 +3,5 @@
 
         $controller = Controller::getInstance();
         $renderer = $controller->renderer;
-	
 	echo $renderer->renderTemplate("header");
 ?>

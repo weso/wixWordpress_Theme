@@ -143,16 +143,11 @@
       <div class="water"></div>
       <div class="error-links">
         <div class=container>
-          <form>
-             <div class="error-search-bar">
-               <div class="search-and-submit">
-                 <input type="search" placeholder="'.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.htmlentities((string)((isset($in['error_search']) && is_array($in)) ? $in['error_search'] : null), ENT_QUOTES, 'UTF-8').'';}).'" />
-                 <button type="submit">
-                   <i class="fa fa-search fa-2x"></i>
-                 </button>
-               </div>
-             </div>
-          </form>
+          <div class="error-search-bar">
+            <div class="search-and-submit">
+              '.$cx['funcs']['sec']($cx, ((isset($in['data']) && is_array($in)) ? $in['data'] : null), $in, false, function($cx, $in) {return ''.((isset($in['search']) && is_array($in)) ? $in['search'] : null).'';}).'
+            </div>
+          </div>
           <p>
             '.$cx['funcs']['sec']($cx, ((isset($in['labels']) && is_array($in)) ? $in['labels'] : null), $in, false, function($cx, $in) {return ''.((isset($in['error_description']) && is_array($in)) ? $in['error_description'] : null).'';}).'
           </p>

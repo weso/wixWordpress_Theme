@@ -7,13 +7,8 @@
  * @since Twenty Fourteen 1.0
  */
  
- require_once(__DIR__.'/renderization/controller.php');
- $controller = Controller::getInstance();
- $renderer = $controller->renderer;
-
 get_header(); ?>
 <main class="content">	
-	<?php echo $renderer->renderTemplate("by"); ?>
   	<div class="container">
 		<aside class="left-bar"><h1>Blog</h1>
   		<?php dynamic_sidebar('blog-sidebar'); ?>

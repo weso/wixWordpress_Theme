@@ -8,7 +8,6 @@ class ErrorModel {
 		$data = Array();
 	
 		$data["search"] = get_search_form(false);
-		
 		return $data;
 	}
 }

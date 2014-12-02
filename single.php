@@ -6,14 +6,10 @@
  * @subpackage Twenty_Fourteen
  * @since Twenty Fourteen 1.0
  */
-  require_once(__DIR__.'/renderization/controller.php');
-  $controller = Controller::getInstance();
-  $renderer = $controller->renderer;
   
 get_header(); ?>
 
 <main class="content">
-	<?php echo $renderer->renderTemplate("by"); ?>
 	<div class="container" role="main">
 		<section class="articles">
 			<?php
@@ -28,7 +24,7 @@ get_header(); ?>
 					get_template_part( 'content', get_post_format() );
 
 					// Previous/next post navigation.
-					twentyfourteen_post_nav();
+					// twentyfourteen_post_nav();
 
 					// If comments are open or we have at least one comment, load up the comment template.
 					/*if ( comments_open() || get_comments_number() ) {
