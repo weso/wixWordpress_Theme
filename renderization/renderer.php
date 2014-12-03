@@ -50,6 +50,7 @@ class Renderer {
 			
 			foreach ($pageContent["data"]["visualisations"] as &$visualisation) {
 				$visualisation["url"] = get_stylesheet_directory_uri().$visualisation["url"];
+				$visualisation["fullurl"] = get_stylesheet_directory_uri().$visualisation["fullurl"];
 			}
 
 			$pageContent["labels"] = $this->loadLabels("en");
