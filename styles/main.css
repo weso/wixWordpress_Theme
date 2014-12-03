@@ -1625,6 +1625,8 @@ section.about-articles ul.images {
       width: 90%;
       height: auto;
       vertical-align: middle; }
+section.about-articles iframe {
+  height: 34em; }
 section.about-articles ul.tags {
   margin-bottom: 0.5em; }
   section.about-articles ul.tags a {
@@ -2572,6 +2574,8 @@ div.middle-section {
       margin: 0.2em 0 0 0; }
     div.middle-section div.box-mini p:first-child {
       font-size: 0.8em; }
+    div.middle-section div.box-mini.regional-higher p:first-child {
+      font-size: 0.7em; }
     div.middle-section div.box-mini .left {
       float: left;
       margin-top: 0.3em;
