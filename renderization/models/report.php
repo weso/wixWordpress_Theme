@@ -32,7 +32,7 @@ class ReportModel {
                         $section_counter = 0;
                         foreach($article->find('h2') as $h2) {
                                 $section_counter++;
-                                $h2->setAttribute('id', formatTitleToAnchor($h2->innertext));
+                                $h2->setAttribute('id', getNodeText($h2));
                         }
 
                         $chapters['chapter_'.$chapter_counter] = $article;
