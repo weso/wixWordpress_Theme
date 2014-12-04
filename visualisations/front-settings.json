@@ -1,18 +1,26 @@
 [
         {
                 "indicator": "P7",
-                "tendency": -1
+                "tendency": -1,
+                "limit": "",
+                "value": 74
         },
         {
-                "indicator": "S3",
-                "tendency": -1
+                "indicator": "P3",
+                "tendency": 1,
+                "limit": 6,
+                "value": ""
         },
         {
                 "indicator": "S12",
-                "tendency": -1
+                "tendency": -1,
+                "limit": 5,
+                "value": ""
         },
         {
                 "indicator": "P9",
-                "tendency": -1
+                "tendency": -1,
+                "limit": 5,
+                "value": ""
         }
 ]
