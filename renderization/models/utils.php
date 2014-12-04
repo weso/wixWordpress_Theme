@@ -73,7 +73,7 @@ function sliceHtmlIntoChapters($html) {
 		
 		if ($title) {
 			$title->outertext = $title->outertext . $nav;
-			$article_id = formatTitleToAnchor($title->find('text'));
+			$article_id = getNodeText($title);
 		}
 		
 		$content = $processed_article->outertext;
@@ -110,8 +110,14 @@ function generateSideBar($chapters) {
 	return $slices;
 }
 
+function getNodeText($node) {
+	$texts = $node->find('text');
+	$texts = implode(",", $texts);
+	return formatTitleToAnchor($texts);
+}
+
 function formatTitleToAnchor($title) {
-	$anchor = strtolower(str_replace(' ', '_', $title));
+	$anchor = strtolower(str_replace(' ', '_', trim($title)));
         
 	return $anchor;
 }
