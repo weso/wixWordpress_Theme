@@ -63,7 +63,7 @@ function sliceHtmlIntoChapters($html) {
 		
 		foreach($processed_article->find('h2') as $h2) {
 			$content = $h2->innertext();
-			$id = formatTitleToAnchor($h2->innertext);
+			$id = getNodeText($h2);
 			$tags .= "<li><a href='#$id'>$content</a></li>";
 		}
 		
