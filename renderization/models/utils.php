@@ -71,9 +71,10 @@ function sliceHtmlIntoChapters($html) {
 		
 		$title = $processed_article->find('h1', 0);
 		
-		if ($title)
+		if ($title) {
 			$title->outertext = $title->outertext . $nav;
-			$article_id = formatTitleToAnchor($title->innertext);
+			$article_id = formatTitleToAnchor($title->find('text'));
+		}
 		
 		$content = $processed_article->outertext;
 		
