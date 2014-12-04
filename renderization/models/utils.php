@@ -62,7 +62,7 @@ function sliceHtmlIntoChapters($html) {
 		$tags = "";
 		
 		foreach($processed_article->find('h2') as $h2) {
-			$content = $h2->innertext();
+			$content = getSingleNodeText($h2);
 			$id = getNodeText($h2);
 			$tags .= "<li><a href='#$id'>$content</a></li>";
 		}
@@ -114,8 +114,8 @@ function generateSideBar($chapters) {
 
 function getSingleNodeText($node) {
 	$texts = $node->find('text');
-	$texts = implode(",", $texts);
-	return $texts;
+	$texts = implode(" ", $texts);
+	return preg_replace("/\s+/", ' ', $texts);
 }
 
 function getNodeText($node) {
@@ -123,7 +123,7 @@ function getNodeText($node) {
 }
 
 function formatTitleToAnchor($title) {
-	$anchor = strtolower(str_replace(' ', '_', trim($title)));
+	$anchor = strtolower(str_replace(' ', '_', $title));
         
 	return $anchor;
 }

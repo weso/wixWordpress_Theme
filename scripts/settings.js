@@ -7,7 +7,7 @@
       elapseTimeout: 100,
       server: {
         method: "JSONP",
-        url: "http://localhost:5000"
+        url: document.getElementById("api").value
       }
     },
     release: {

@@ -134,6 +134,7 @@
       tab.position = void 0;
       tab.opened = void 0;
       tab.touchable = void 0;
+      tab.openedTimes = 0;
       tab.close = function() {
         this.setPosition(this.closedPosition + "%");
         this.opened = false;
@@ -200,7 +201,7 @@
           i++;
         }
         if (this.openedTimes === 1 && accordionCallbacks[this.index]) {
-          return accordionCallbacks[this.index].call();
+          return accordionCallbacks[this.index].call(this);
         }
       };
       tab.onmouseenter = function() {
@@ -288,11 +289,16 @@
   };
 
   loadTabsData = function(data) {
+    var _l, _ref4;
     clearInterval(interval);
     renderNeutralityTab(data.observations4, data.percentage4);
     renderEmpowermentTab(data.observations3, data.percentage3);
     renderGenderTab(data.percentage2);
     renderPrivacyTab(data.percentage1);
+    for (i = _l = 0, _ref4 = accordionTabs.length - 1; 0 <= _ref4 ? _l <= _ref4 : _l >= _ref4; i = 0 <= _ref4 ? ++_l : --_l) {
+      tab = accordionTabs[i];
+      tab.close();
+    }
     return setTimeout(function() {
       var world;
       if (accordionTabs[0].isMobile()) {
@@ -354,7 +360,7 @@
     circle = document.querySelector(".infographic-circles .model");
     container = document.getElementById("infographic-circles");
     circleSize = container.offsetWidth * 0.8 / 24;
-    circles = document.querySelector(".infographic-circles .circle");
+    circles = document.querySelectorAll(".infographic-circles > .circle");
     for (_l = 0, _len2 = circles.length; _l < _len2; _l++) {
       circle = circles[_l];
       container.removeChild(circle);
