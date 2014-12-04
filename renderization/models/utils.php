@@ -93,9 +93,10 @@ function generateSideBar($chapters) {
 		$article_element = $article->find('article', 0);
 		$chapter_title = $article->find('h1', 0);
 		$sidebar .= "<li><a href='#".$article_element->getAttribute('id')."'>".$chapter_title->innertext."</a><ul>";
+		$subsection = "";
 		
 		foreach($article->find('h2') as $h2) {
-			$subsection = "<li><a href='#".$h2->getAttribute('id')."'>".$h2->innertext()."</a></li>";
+			$subsection .= "<li><a href='#".$h2->getAttribute('id')."'>".$h2->innertext()."</a></li>";
 		}
 		
 		$subsections[$article_element->getAttribute('id')] = "<ul>".$subsection."</ul>";
