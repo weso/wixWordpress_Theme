@@ -49,7 +49,7 @@
   "contact_form_comment_type_new": "New",
   "contact_form_comment": "Comment (required)",
   "contact_form_send": "Send",
-  "report_title": "The Report",
+  "report_title": "The Web and Rising Global Inequality",
   "report_download_label": "Download the PDF version (English language)",
   "report_download_link": "<enter_download_link>",
   "media_centre_title": "Media Centre",
@@ -142,5 +142,7 @@
   "data_next": "next",
   "data_countries_reach": "You have reached the selection limit",
   "automatic_translation": "automatic translation:",
-  "enter_your_email": "Enter your email"
+  "enter_your_email": "Enter your email",
+  "table_of_contents": "Table of Contents",
+  "report_chapters_title": "Chapters"
 }

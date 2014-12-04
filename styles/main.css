@@ -1542,7 +1542,8 @@ ul.report-tags li.active:nth-child(6) a {
 
 /* ARTICLES */
 section.report-articles {
-  /* BOX */ }
+  /* BOX */
+  /* TABLE OF CONTENTS */ }
   section.report-articles ul.tags a {
     color: #0f0f0f; }
   section.report-articles section.box {
@@ -1551,6 +1552,11 @@ section.report-articles {
     margin: 1em 0; }
     section.report-articles section.box h3:before {
       content: none; }
+  section.report-articles nav.report-table-contents {
+    margin: 1em 0 2em 0; }
+    section.report-articles nav.report-table-contents h2 {
+      text-align: left;
+      margin: 1em 0 0.5em 0; }
   section.report-articles article:nth-of-type(1) {
     /* BOX */ }
     section.report-articles article:nth-of-type(1) .chapter {
@@ -1558,7 +1564,7 @@ section.report-articles {
     section.report-articles article:nth-of-type(1) h2:before, section.report-articles article:nth-of-type(1) h3:before, section.report-articles article:nth-of-type(1) h4:before {
       color: #f93845; }
     section.report-articles article:nth-of-type(1) ul.tags li a {
-      background-color: #fa606a; }
+      background-color: rgba(249, 56, 69, 0.7); }
     section.report-articles article:nth-of-type(1) section.box {
       background-color: rgba(249, 56, 69, 0.3); }
   section.report-articles article:nth-of-type(2) {
@@ -1568,7 +1574,7 @@ section.report-articles {
     section.report-articles article:nth-of-type(2) h2:before, section.report-articles article:nth-of-type(2) h3:before, section.report-articles article:nth-of-type(2) h4:before {
       color: #ff761c; }
     section.report-articles article:nth-of-type(2) ul.tags li a {
-      background-color: #ff9149; }
+      background-color: rgba(255, 118, 28, 0.7); }
     section.report-articles article:nth-of-type(2) section.box {
       background-color: rgba(255, 118, 28, 0.3); }
   section.report-articles article:nth-of-type(3) {
@@ -1578,7 +1584,7 @@ section.report-articles {
     section.report-articles article:nth-of-type(3) h2:before, section.report-articles article:nth-of-type(3) h3:before, section.report-articles article:nth-of-type(3) h4:before {
       color: #AE5693; }
     section.report-articles article:nth-of-type(3) ul.tags li a {
-      background-color: #be78a9; }
+      background-color: rgba(174, 86, 147, 0.7); }
     section.report-articles article:nth-of-type(3) section.box {
       background-color: rgba(174, 86, 147, 0.3); }
   section.report-articles article:nth-of-type(4) {
@@ -1588,7 +1594,7 @@ section.report-articles {
     section.report-articles article:nth-of-type(4) h2:before, section.report-articles article:nth-of-type(4) h3:before, section.report-articles article:nth-of-type(4) h4:before {
       color: #89ba00; }
     section.report-articles article:nth-of-type(4) ul.tags li a {
-      background-color: #b9fb00; }
+      background-color: rgba(137, 186, 0, 0.7); }
     section.report-articles article:nth-of-type(4) section.box {
       background-color: rgba(137, 186, 0, 0.3); }
   section.report-articles article:nth-of-type(5) {
@@ -1598,7 +1604,7 @@ section.report-articles {
     section.report-articles article:nth-of-type(5) h2:before, section.report-articles article:nth-of-type(5) h3:before, section.report-articles article:nth-of-type(5) h4:before {
       color: #0096af; }
     section.report-articles article:nth-of-type(5) ul.tags li a {
-      background-color: #00cff2; }
+      background-color: rgba(0, 150, 175, 0.7); }
     section.report-articles article:nth-of-type(5) section.box {
       background-color: rgba(0, 150, 175, 0.3); }
   section.report-articles article:nth-of-type(6) {
@@ -1608,7 +1614,7 @@ section.report-articles {
     section.report-articles article:nth-of-type(6) h2:before, section.report-articles article:nth-of-type(6) h3:before, section.report-articles article:nth-of-type(6) h4:before {
       color: #B18904; }
     section.report-articles article:nth-of-type(6) ul.tags li a {
-      background-color: #f1bb05; }
+      background-color: rgba(177, 137, 4, 0.7); }
     section.report-articles article:nth-of-type(6) section.box {
       background-color: rgba(177, 137, 4, 0.3); }
 

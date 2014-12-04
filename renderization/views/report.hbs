@@ -1,7 +1,7 @@
 <main class="content">
   <div class="container">
     <aside class="left-bar">
-      <h1>{{#labels}}{{report_title}}{{/labels}}</h1>
+      <h1>{{#labels}}{{report_chapters_title}}{{/labels}}</h1>
       <nav>
         <ul class="tags report-tags">
           {{{data.report.ul}}}
@@ -29,6 +29,14 @@
       <p class="text-right">
         <a href="{{#labels}}{{report_download_link}}{{/labels}}"><i class="fa fa-file-pdf-o"></i> {{#labels}}{{report_download_label}}{{/labels}}</a>
       </p>
+      <h1>{{#labels}}{{report_title}}{{/labels}}</h1>
+      <nav class="report-table-contents">
+        <h2>{{#labels}}{{table_of_contents}}{{/labels}}</h2>
+        <ul>
+          {{{data.report.ul}}}
+        </ul>
+      </nav>
+
       <div class="articles">
         {{{data.report.content}}}
       </div>
