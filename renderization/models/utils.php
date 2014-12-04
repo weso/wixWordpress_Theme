@@ -93,11 +93,13 @@ function generateSideBar($chapters) {
 	foreach ($chapters as $article) {
 		$article_element = $article->find('article', 0);
 		$chapter_title = $article->find('h1', 0);
-		$sidebar .= "<li><a href='#".$article_element->getAttribute('id')."'>".$chapter_title->innertext."</a><ul>";
+		$innertext = getSingleNodeText($chapter_title);
+		$sidebar .= "<li><a href='#".$article_element->getAttribute('id')."'>".$innertext."</a><ul>";
 		$subsection = "";
 		
 		foreach($article->find('h2') as $h2) {
-			$subsection .= "<li><a href='#".$h2->getAttribute('id')."'>".$h2->innertext()."</a></li>";
+			$innertext = getSingleNodeText($h2);
+			$subsection .= "<li><a href='#".$h2->getAttribute('id')."'>".$innertext."</a></li>";
 		}
 		
 		$subsections[$article_element->getAttribute('id')] = "<ul>".$subsection."</ul>";
@@ -110,10 +112,14 @@ function generateSideBar($chapters) {
 	return $slices;
 }
 
-function getNodeText($node) {
+function getSingleNodeText($node) {
 	$texts = $node->find('text');
 	$texts = implode(",", $texts);
-	return formatTitleToAnchor($texts);
+	return $texts;
+}
+
+function getNodeText($node) {
+	return formatTitleToAnchor(getSingleNodeText($node));
 }
 
 function formatTitleToAnchor($title) {
