@@ -1,10 +1,18 @@
 (function() {
-  var container, nav, position, visualisation, visualisations, _i, _len;
+  var anchor, container, nav, position, visualisation, visualisations, wrapper, _i, _len;
 
   visualisations = document.querySelectorAll(".hidden-visualisations div.visualisation");
 
   for (_i = 0, _len = visualisations.length; _i < _len; _i++) {
     visualisation = visualisations[_i];
+    anchor = visualisation.getAttribute("data-anchor");
+    if (anchor) {
+      wrapper = document.querySelector(".visualisation-wrapper[data-visualisation='" + anchor + "']");
+      if (wrapper) {
+        wrapper.appendChild(visualisation);
+        continue;
+      }
+    }
     position = visualisation.getAttribute("data-position");
     if (!position) {
       continue;
