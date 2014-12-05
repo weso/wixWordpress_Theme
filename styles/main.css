@@ -2841,7 +2841,7 @@ div.bars {
     glyph-orientation-vertical: 0;
     text-anchor: start !important;
     color: #666 !important;
-    -moz-transform: rotate(90deg);
+    -moz-transform: rotate(90deg) translate(2px, -10px);
     -moz-transform-origin: top left; }
   div.bars text.item-name:nth-child(3n+1) {
     fill: #333 !important; }

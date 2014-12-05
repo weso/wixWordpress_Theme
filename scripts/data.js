@@ -1448,8 +1448,8 @@
         name = country.name;
         continent = country.area;
         observation = observations[code];
-        republish = observation.republish;
-        value = observation.value;
+        republish = observation.republish ? observation.republish : false;
+        value = observation.values && observation.values.length > 0 ? observation.values[0] : observation.value;
         value = getValue(value, republish);
         ranking = observation.ranked;
         extraInfo = observation.extra;
