@@ -1485,6 +1485,8 @@ table.ranking {
     width: 35%; }
   table.ranking td:nth-child(2) {
     width: 10%; }
+  table.ranking td:nth-child(n+3) {
+    font-family: Roboto, sans-serif; }
   table.ranking th {
     font-size: 0.7em;
     vertical-align: middle;
@@ -1755,7 +1757,8 @@ section.ranking-table {
       text-align: center;
       background-color: #b1c70d;
       width: 10%;
-      border: none; }
+      border: none;
+      font-family: Roboto, sans-serif; }
     section.ranking-table table.report-ranking td[data-title="Country"] {
       padding: 1em;
       vertical-align: middle; }
