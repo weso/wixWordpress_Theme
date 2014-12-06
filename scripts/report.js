@@ -49,7 +49,7 @@
     wrapper.appendChild(rankingTable);
     if (rankingTable != null) {
       if ((_ref = rankingTable.style) != null) {
-        _ref.display = "table";
+        _ref.display = "block";
       }
     }
   } else {
