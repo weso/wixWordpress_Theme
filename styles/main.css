@@ -255,7 +255,7 @@ aside.left-bar {
     aside.left-bar h1 {
       font-size: 2em;
       text-align: left;
-      margin-bottom: 1em;
+      margin-bottom: 0.5em;
       background-color: transparent; }
     aside.left-bar nav {
       padding: 0;
@@ -310,7 +310,11 @@ ul.tags {
       color: #000;
       padding: 0.2em 0.5em;
       border: 0.35em solid #fff;
-      border-radius: 0.6em; }
+      border-radius: 0.6em;
+      max-width: intrinsic;
+      max-width: -webkit-fit-content;
+      max-width: -moz-max-content;
+      font-size: 0.9em; }
   ul.tags li.active a {
     color: #111;
     border-bottom-color: #555; }
@@ -1549,11 +1553,18 @@ ul.report-tags li:nth-child(8) a {
 ul.report-tags li.active:nth-child(8) a {
   border-color: #31659a;
   border-bottom-color: #1b3754; }
+ul.report-tags li:nth-child(9) a {
+  background-color: #379A81; }
+ul.report-tags li.active:nth-child(9) a {
+  border-color: #379A81;
+  border-bottom-color: #1f5648; }
 
 /* ARTICLES */
 section.report-articles {
   /* BOX */
-  /* TABLE OF CONTENTS */ }
+  /* TABLE OF CONTENTS */
+  /* Surveillance G8 table */
+  /* Online And Offline Freedom table */ }
   section.report-articles ul.tags a {
     color: #0f0f0f; }
   section.report-articles section.box {
@@ -1571,6 +1582,65 @@ section.report-articles {
       margin: 0.3em 0; }
     section.report-articles nav.report-table-contents li ul {
       margin-left: 1em; }
+  section.report-articles table.surveillance-g8 {
+    width: 100%; }
+    section.report-articles table.surveillance-g8 caption {
+      margin-bottom: 1em;
+      color: #222; }
+    section.report-articles table.surveillance-g8 tr th {
+      width: 40%;
+      font-weight: 400;
+      font-size: 0.9em;
+      text-align: right;
+      padding-right: 1em;
+      color: #222; }
+      section.report-articles table.surveillance-g8 tr th p {
+        margin: 0.3em 0 0 0; }
+    section.report-articles table.surveillance-g8 td {
+      text-align: center;
+      font-size: 0.9em;
+      padding: 1.5em 0;
+      border: 1px solid white; }
+    section.report-articles table.surveillance-g8 .red {
+      background-color: #c93e53; }
+    section.report-articles table.surveillance-g8 .green {
+      background-color: #b1c70d; }
+    section.report-articles table.surveillance-g8 .yellow {
+      background-color: #fece00; }
+    section.report-articles table.surveillance-g8 .orange {
+      background-color: #f39000; }
+  section.report-articles table.online-offline-freedom {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+    margin-bottom: 2em; }
+    section.report-articles table.online-offline-freedom caption {
+      margin-bottom: 1em;
+      color: #222; }
+    section.report-articles table.online-offline-freedom th {
+      font-weight: 400;
+      border: none;
+      text-align: center;
+      color: #688A08; }
+    section.report-articles table.online-offline-freedom td {
+      border-top: 1px solid #bbb;
+      border-bottom: 1px solid #bbb; }
+    section.report-articles table.online-offline-freedom ul {
+      width: 50%;
+      margin: 0.5em auto;
+      padding: 0;
+      color: #393B0B; }
+      section.report-articles table.online-offline-freedom ul li {
+        list-style-type: none !important; }
+    section.report-articles table.online-offline-freedom tbody tr th {
+      text-align: right;
+      padding-right: 1em;
+      width: 15%;
+      color: #088A08; }
+    section.report-articles table.online-offline-freedom .blue {
+      color: #0096af; }
+      section.report-articles table.online-offline-freedom .blue li {
+        text-align: right; }
   section.report-articles article:nth-of-type(1) {
     /* BOX */ }
     section.report-articles article:nth-of-type(1) .chapter {
@@ -1651,10 +1721,47 @@ section.report-articles {
       background-color: rgba(49, 101, 154, 0.7); }
     section.report-articles article:nth-of-type(8) section.box {
       background-color: rgba(49, 101, 154, 0.3); }
+  section.report-articles article:nth-of-type(9) {
+    /* BOX */ }
+    section.report-articles article:nth-of-type(9) .chapter {
+      background-color: #379A81; }
+    section.report-articles article:nth-of-type(9) h2:before, section.report-articles article:nth-of-type(9) h3:before, section.report-articles article:nth-of-type(9) h4:before {
+      color: #379A81; }
+    section.report-articles article:nth-of-type(9) ul.tags li a {
+      background-color: rgba(55, 154, 129, 0.7); }
+    section.report-articles article:nth-of-type(9) section.box {
+      background-color: rgba(55, 154, 129, 0.3); }
 
 /* VISUALISATIONS */
 section.hidden-visualisations {
   display: none; }
+
+/* Ranking table */
+table.report-ranking {
+  font-size: 0.9em;
+  table-layout: auto;
+  display: none; }
+  table.report-ranking .flag {
+    float: right;
+    border: 1px solid #ccc; }
+  table.report-ranking th {
+    background-color: #c93e53;
+    font-weight: 400;
+    color: white;
+    text-align: center;
+    border: 1px solid white; }
+  table.report-ranking td[data-title="Rank"], table.report-ranking td[data-title="Score"] {
+    text-align: center;
+    background-color: #b1c70d;
+    width: 10%;
+    border: none; }
+  table.report-ranking td[data-title="Country"] {
+    padding: 1em;
+    vertical-align: middle; }
+  table.report-ranking tr:nth-child(n+11) {
+    display: none; }
+  table.report-ranking.opened tr:nth-child(n+11) {
+    display: table-row; }
 
 /* SIDEBAR TAGS */
 ul.about-tags li:nth-child(1) a {
@@ -1806,27 +1913,29 @@ li.cat-item {
   background-color: #AE5693; }
 
 /* ARTICLES */
-section.blog-articles article {
+section.blog-articles article, section.articles article {
   margin-bottom: 2.5em;
   padding-bottom: 0.5em;
   border-bottom: 0.1em solid #ccc; }
-section.blog-articles h1 {
+section.blog-articles h1, section.articles h1 {
   font-size: 2.2em; }
-  section.blog-articles h1 a {
+  section.blog-articles h1 a, section.articles h1 a {
     color: #333;
     font-family: 'Merriweather Sans', sans-serif;
     font-size: 1em;
     font-weight: 700; }
-section.blog-articles ul.tags a {
+section.blog-articles ul.tags a, section.articles ul.tags a {
   color: #0f0f0f; }
-section.blog-articles .cat-links a {
+section.blog-articles .cat-links a, section.articles .cat-links a {
   font-size: 0.8em; }
-section.blog-articles .entry-meta {
+section.blog-articles .entry-meta, section.articles .entry-meta {
   margin-bottom: 1em; }
-section.blog-articles figure {
+section.blog-articles .entry-date, section.articles .entry-date {
+  margin-right: 0.5em; }
+section.blog-articles figure, section.articles figure {
   margin: 0;
   width: 100% !important; }
-  section.blog-articles figure img {
+  section.blog-articles figure img, section.articles figure img {
     width: 100%;
     height: auto; }
 

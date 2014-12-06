@@ -25,6 +25,32 @@
         </div>
       {{/data.visualisations}}
     </section>
+    <section class="ranking-table">
+      <table class="report-ranking">
+        <thead>
+          <tr class="sorter" role="row">
+            <th data-sort-type="number"><a class="empty" data-type="sorter"></a>Rank</th>
+            <th data-sort-type="text"><a class="empty" data-type="sorter"></a>Country</th>
+            <th data-sort-type="number"><a class="empty" data-type="sorter"></a>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#data.model.values}}
+          <tr class="country-row">
+            <td data-title="Rank">{{rank}}</td>
+            <td data-title="Country">
+              <img class="flag" alt="" src="{{img}}" />
+              <p class="country-name">{{name}}</p>
+            </td>
+            <td data-title="Score">{{INDEX}}</td>
+          </tr>
+          {{/data.model.values}}
+        </tbody>
+      </table>
+      <p class="text-right clear">
+        <a href="javascript:void(0)" class="ranking-view-more">VIEW MORE <span>&#187;</span></a>
+      </p>
+    </section>
     <section class="right-content report-articles">
       <p class="text-right">
         <a href="{{#labels}}{{report_download_link}}{{/labels}}"><i class="fa fa-file-pdf-o"></i> {{#labels}}{{report_download_label}}{{/labels}}</a>
