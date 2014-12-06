@@ -1737,31 +1737,32 @@ section.hidden-visualisations {
   display: none; }
 
 /* Ranking table */
-table.report-ranking {
-  font-size: 0.9em;
-  table-layout: auto;
+section.ranking-table {
   display: none; }
-  table.report-ranking .flag {
-    float: right;
-    border: 1px solid #ccc; }
-  table.report-ranking th {
-    background-color: #c93e53;
-    font-weight: 400;
-    color: white;
-    text-align: center;
-    border: 1px solid white; }
-  table.report-ranking td[data-title="Rank"], table.report-ranking td[data-title="Score"] {
-    text-align: center;
-    background-color: #b1c70d;
-    width: 10%;
-    border: none; }
-  table.report-ranking td[data-title="Country"] {
-    padding: 1em;
-    vertical-align: middle; }
-  table.report-ranking tr:nth-child(n+11) {
-    display: none; }
-  table.report-ranking.opened tr:nth-child(n+11) {
-    display: table-row; }
+  section.ranking-table table.report-ranking {
+    font-size: 0.9em;
+    table-layout: auto; }
+    section.ranking-table table.report-ranking .flag {
+      float: right;
+      border: 1px solid #ccc; }
+    section.ranking-table table.report-ranking th {
+      background-color: #c93e53;
+      font-weight: 400;
+      color: white;
+      text-align: center;
+      border: 1px solid white; }
+    section.ranking-table table.report-ranking td[data-title="Rank"], section.ranking-table table.report-ranking td[data-title="Score"] {
+      text-align: center;
+      background-color: #b1c70d;
+      width: 10%;
+      border: none; }
+    section.ranking-table table.report-ranking td[data-title="Country"] {
+      padding: 1em;
+      vertical-align: middle; }
+    section.ranking-table table.report-ranking tr:nth-child(n+11) {
+      display: none; }
+    section.ranking-table table.report-ranking.opened tr:nth-child(n+11) {
+      display: table-row; }
 
 /* SIDEBAR TAGS */
 ul.about-tags li:nth-child(1) a {

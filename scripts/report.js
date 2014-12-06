@@ -1,5 +1,5 @@
 (function() {
-  var anchor, container, nav, position, rankingTable, viewMore, visualisation, visualisations, wrapper, _i, _len, _ref, _ref1;
+  var anchor, container, nav, position, rankingSection, rankingTable, viewMore, visualisation, visualisations, wrapper, _i, _len, _ref, _ref1;
 
   visualisations = document.querySelectorAll(".hidden-visualisations div.visualisation");
 
@@ -28,9 +28,11 @@
     nav.parentNode.insertBefore(visualisation, nav.nextSibling);
   }
 
-  rankingTable = document.querySelector("section.ranking-table");
+  rankingSection = document.querySelector("section.ranking-table");
 
-  viewMore = rankingTable.querySelector("a.ranking-view-more");
+  rankingTable = rankingSection.querySelector("table");
+
+  viewMore = rankingSection.querySelector("a.ranking-view-more");
 
   if (rankingTable && viewMore) {
     viewMore.onclick = function(event) {
@@ -46,15 +48,15 @@
   wrapper = document.querySelector(".ranking-wrapper");
 
   if (wrapper) {
-    wrapper.appendChild(rankingTable);
-    if (rankingTable != null) {
-      if ((_ref = rankingTable.style) != null) {
+    wrapper.appendChild(rankingSection);
+    if (rankingSection != null) {
+      if ((_ref = rankingSection.style) != null) {
         _ref.display = "block";
       }
     }
   } else {
-    if (rankingTable != null) {
-      if ((_ref1 = rankingTable.style) != null) {
+    if (rankingSection != null) {
+      if ((_ref1 = rankingSection.style) != null) {
         _ref1.display = "none";
       }
     }
