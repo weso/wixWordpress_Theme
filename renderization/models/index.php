@@ -10,7 +10,7 @@ class IndexModel {
 
    	   	$data = Array();
 		$data["news"] = getPostsByCategory('news');
-	      	$data["tweets"] = $twitter->loadDefaultAccountTweets();
+	    $data["tweets"] = $twitter->loadDefaultAccountTweets();
 		$data["home-header"] = $this->loadFrontVisualisations($visualisationsPath);
 		$data["model"] = $this->formatApiData($api_url);
 		$data["register_url"] = site_url('wp-login.php?action=register', 'login_post');

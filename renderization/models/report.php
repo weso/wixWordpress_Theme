@@ -6,7 +6,7 @@ class ReportModel {
 	function ReportModel() {
 	}
 	
-	function get() {
+	function get($api_url, $visualisationsPath) {
 		global $wpdb;
 		
 		$data = Array();
@@ -43,8 +43,22 @@ class ReportModel {
 		
 		$data["report"]["content"] = $html;
 		$data["report"]["ul"] = $slices["sidebar"];
+		$data["model"] = $this->formatApiData($api_url);
 		
 		return $data;
+	}
+	
+	function formatApiData($api_url) {
+		$api_results = json_decode(file_get_contents($api_url.'/rankings/2013'), true);
+		$path = get_stylesheet_directory_uri();
+		
+		$values = $api_results['values'];
+		foreach ($values as &$value) {
+			$value['img'] = $path . '/images/flags/' . $value['area'] . '.png';
+		}
+		$api_results['values'] = $values;
+
+		return $api_results;
 	}
 }
 ?>

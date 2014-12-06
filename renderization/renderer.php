@@ -85,7 +85,7 @@ class Renderer {
 				$parameters[$parameter->name] = $this->{$parameter->name};
 			}*/
 			
-			if ($templateName == 'index') {
+			if ($templateName == 'index' || $templateName == 'report') {
 				return $modelObj->get($this->api_url, $this->visualisationsPath);
 			} else {
 				return $modelObj->get();
