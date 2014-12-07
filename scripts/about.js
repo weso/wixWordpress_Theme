@@ -1,10 +1,14 @@
 (function() {
-  var a, lastParagraphs, left, p, paragraph, sibling, _i, _len, _ref;
+  var a, article, articles, left, p, paragraph, sibling, tag, tags, _i, _j, _len, _len1, _ref;
 
-  lastParagraphs = document.querySelectorAll("article p:nth-of-type(5)");
+  articles = document.querySelectorAll(".about-articles article");
 
-  for (_i = 0, _len = lastParagraphs.length; _i < _len; _i++) {
-    paragraph = lastParagraphs[_i];
+  for (_i = 0, _len = articles.length; _i < _len; _i++) {
+    article = articles[_i];
+    paragraph = article.querySelector("p:nth-of-type(5)");
+    if (!paragraph) {
+      continue;
+    }
     sibling = paragraph.nextSibling;
     left = 0;
     while (sibling) {
@@ -32,7 +36,7 @@
     p.appendChild(a);
     a.container = paragraph.parentNode;
     a.collapsed = true;
-    a.onclick = function() {
+    a.onclick = function(event) {
       var className, container, element, elements, newClassName, _j, _len1;
       container = this.container;
       className = this.collapsed ? "element-hidden" : "element-shown";
@@ -45,6 +49,20 @@
       this.innerHTML = this.collapsed ? "<span>&#171;</span> READ LESS" : "READ MORE <span>&#187;</span>";
       return this.collapsed = !this.collapsed;
     };
+    a.open = function() {
+      if (this.collapsed) {
+        return this.click();
+      }
+    };
+    tags = article.querySelectorAll("ul.tags li a");
+    for (_j = 0, _len1 = tags.length; _j < _len1; _j++) {
+      tag = tags[_j];
+      tag.readMore = a;
+      tag.onclick = function(event) {
+        this.readMore.open();
+        return true;
+      };
+    }
   }
 
 }).call(this);

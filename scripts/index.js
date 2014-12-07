@@ -385,11 +385,8 @@
   };
 
   renderGenderTab = function(percentage) {
-    var container, element, icon, iconSrc, img, p, ps, row, _l, _len2, _m, _ref4, _results;
+    var container, element, icon, iconSrc, img, p, ps, row, _l, _len2, _m, _results;
     setPercentage("#tab2", percentage);
-    if ((_ref4 = document.getElementById("gender-percentage")) != null) {
-      _ref4.innerHTML = "" + percentage + "%";
-    }
     container = document.querySelector(".infographic-percentage");
     ps = document.querySelectorAll(".infographic-percentage p");
     for (_l = 0, _len2 = ps.length; _l < _len2; _l++) {
@@ -422,11 +419,8 @@
   };
 
   renderPrivacyTab = function(percentage) {
-    var pie, _ref4;
+    var pie;
     setPercentage("#tab1", percentage);
-    if ((_ref4 = document.getElementById("privacy-percentage")) != null) {
-      _ref4.innerHTML = "" + percentage + "%";
-    }
     pie = document.getElementById("world-pie");
     return pie.setAttribute("percentage", percentage);
   };

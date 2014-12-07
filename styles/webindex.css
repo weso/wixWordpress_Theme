@@ -394,7 +394,7 @@ article ul.tags {
     font-size: 1.4em;
     font-weight: 400;
     line-height: 1.3em;
-    margin-bottom: .4em; }
+    margin-bottom: 1em; }
   .right-content article time, article.entry-article time, .articles article time {
     color: rgba(51, 51, 51, 0.4);
     font-family: "Merriweather Sans", sans-serif;
@@ -437,10 +437,13 @@ article ul.tags {
   .right-content article ul, .right-content article ol, article.entry-article ul, article.entry-article ol, .articles article ul, .articles article ol {
     text-align: left;
     list-style-position: inside; }
+  .right-content article ol li, article.entry-article ol li, .articles article ol li {
+    margin-bottom: 1em; }
   .right-content article ul:not(.tags), article.entry-article ul:not(.tags), .articles article ul:not(.tags) {
     padding-left: 1.5em; }
     .right-content article ul:not(.tags) li, article.entry-article ul:not(.tags) li, .articles article ul:not(.tags) li {
-      list-style: disc; }
+      list-style: circle;
+      margin-bottom: 0.5em; }
 
 header.site-header {
   max-width: 68em;
@@ -793,15 +796,16 @@ div.illustrations {
             div.illustrations article header h1 strong {
               font-size: 1.5em; } }
       div.illustrations article header h2 {
-        font-size: 1.2em !important;
+        font-size: 1.4em !important;
+        width: 80%;
         margin: 0 !important;
         text-align: left !important; }
         @media (min-width: 50em) {
           div.illustrations article header h2 {
-            font-size: 1.4em !important; } }
-        @media (min-width: 67em) {
+            font-size: 1.6em !important; } }
+        @media (min-width: 60em) {
           div.illustrations article header h2 {
-            font-size: 1.8em !important; } }
+            font-size: 2em !important; } }
         div.illustrations article header h2 strong {
           font-size: 1em; }
           @media (min-width: 50em) {
@@ -1804,6 +1808,8 @@ ul.about-tags li.active:nth-child(7) a {
 /* ARTICLES */
 section.about-articles h2 {
   text-align: left; }
+section.about-articles ul {
+  margin: 1em 0; }
 section.about-articles ul.images {
   padding: 0;
   overflow: hidden;
@@ -1827,43 +1833,43 @@ section.about-articles ul.tags {
     font-family: Raleway, sans-serif; }
 section.about-articles article:nth-of-type(1) .chapter {
   background-color: #f93845; }
-section.about-articles article:nth-of-type(1) h3:before, section.about-articles article:nth-of-type(1) h4:before, section.about-articles article:nth-of-type(1) h5:before {
+section.about-articles article:nth-of-type(1) h2:before, section.about-articles article:nth-of-type(1) h3:before, section.about-articles article:nth-of-type(1) h4:before, section.about-articles article:nth-of-type(1) h5:before {
   color: #f93845; }
 section.about-articles article:nth-of-type(1) ul.tags li a {
   background-color: #fa606a; }
 section.about-articles article:nth-of-type(2) .chapter {
   background-color: #0096af; }
-section.about-articles article:nth-of-type(2) h3:before, section.about-articles article:nth-of-type(2) h4:before, section.about-articles article:nth-of-type(2) h5:before {
+section.about-articles article:nth-of-type(2) h2:before, section.about-articles article:nth-of-type(2) h3:before, section.about-articles article:nth-of-type(2) h4:before, section.about-articles article:nth-of-type(2) h5:before {
   color: #0096af; }
 section.about-articles article:nth-of-type(2) ul.tags li a {
   background-color: #00cff2; }
 section.about-articles article:nth-of-type(3) .chapter {
   background-color: #89ba00; }
-section.about-articles article:nth-of-type(3) h3:before, section.about-articles article:nth-of-type(3) h4:before, section.about-articles article:nth-of-type(3) h5:before {
+section.about-articles article:nth-of-type(3) h2:before, section.about-articles article:nth-of-type(3) h3:before, section.about-articles article:nth-of-type(3) h4:before, section.about-articles article:nth-of-type(3) h5:before {
   color: #89ba00; }
 section.about-articles article:nth-of-type(3) ul.tags li a {
   background-color: #b9fb00; }
 section.about-articles article:nth-of-type(4) .chapter {
   background-color: #AE5693; }
-section.about-articles article:nth-of-type(4) h3:before, section.about-articles article:nth-of-type(4) h4:before, section.about-articles article:nth-of-type(4) h5:before {
+section.about-articles article:nth-of-type(4) h2:before, section.about-articles article:nth-of-type(4) h3:before, section.about-articles article:nth-of-type(4) h4:before, section.about-articles article:nth-of-type(4) h5:before {
   color: #AE5693; }
 section.about-articles article:nth-of-type(4) ul.tags li a {
   background-color: #be78a9; }
 section.about-articles article:nth-of-type(5) .chapter {
   background-color: #ff761c; }
-section.about-articles article:nth-of-type(5) h3:before, section.about-articles article:nth-of-type(5) h4:before, section.about-articles article:nth-of-type(5) h5:before {
+section.about-articles article:nth-of-type(5) h2:before, section.about-articles article:nth-of-type(5) h3:before, section.about-articles article:nth-of-type(5) h4:before, section.about-articles article:nth-of-type(5) h5:before {
   color: #ff761c; }
 section.about-articles article:nth-of-type(5) ul.tags li a {
   background-color: #ff9149; }
 section.about-articles article:nth-of-type(6) .chapter {
   background-color: #B18904; }
-section.about-articles article:nth-of-type(6) h3:before, section.about-articles article:nth-of-type(6) h4:before, section.about-articles article:nth-of-type(6) h5:before {
+section.about-articles article:nth-of-type(6) h2:before, section.about-articles article:nth-of-type(6) h3:before, section.about-articles article:nth-of-type(6) h4:before, section.about-articles article:nth-of-type(6) h5:before {
   color: #B18904; }
 section.about-articles article:nth-of-type(6) ul.tags li a {
   background-color: #f1bb05; }
 section.about-articles article:nth-of-type(7) .chapter {
   background-color: #4CA4A4; }
-section.about-articles article:nth-of-type(7) h3:before, section.about-articles article:nth-of-type(7) h4:before, section.about-articles article:nth-of-type(7) h5:before {
+section.about-articles article:nth-of-type(7) h2:before, section.about-articles article:nth-of-type(7) h3:before, section.about-articles article:nth-of-type(7) h4:before, section.about-articles article:nth-of-type(7) h5:before {
   color: #4CA4A4; }
 section.about-articles article:nth-of-type(7) ul.tags li a {
   background-color: #6bbbbb; }
