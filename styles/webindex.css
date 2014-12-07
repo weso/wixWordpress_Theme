@@ -311,9 +311,6 @@ ul.tags {
       padding: 0.2em 0.5em;
       border: 0.35em solid #fff;
       border-radius: 0.6em;
-      max-width: intrinsic;
-      max-width: -webkit-fit-content;
-      max-width: -moz-max-content;
       font-size: 0.9em; }
   ul.tags li.active a {
     color: #111;
@@ -1805,6 +1802,8 @@ ul.about-tags li.active:nth-child(7) a {
   border-bottom-color: #347070; }
 
 /* ARTICLES */
+section.about-articles h2 {
+  text-align: left; }
 section.about-articles ul.images {
   padding: 0;
   overflow: hidden;
@@ -1874,7 +1873,7 @@ section.about-articles article:nth-of-type(7) ul.tags li a {
   display: none; }
 
 .element-shown {
-  display: initial; }
+  display: block; }
 
 /* SIDEBAR TAGS */
 .sidebar-title:nth-child(2) {
@@ -3535,4 +3534,4 @@ ol {
   list-style: decimal !important;
   list-style-position: inside !important; }
 
-/*# sourceMappingURL=main.css.map */
+/*# sourceMappingURL=webindex.css.map */
