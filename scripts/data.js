@@ -1024,11 +1024,7 @@
     years = global.options.timeline.getElements();
     for (i = _i = 0, _ref4 = years.length - 2; 0 <= _ref4 ? _i <= _ref4 : _i >= _ref4; i = 0 <= _ref4 ? ++_i : --_i) {
       year = years[i];
-      if (primary) {
-        global.options.timeline.disable(year);
-      } else {
-        global.options.timeline.enable(year);
-      }
+      global.options.timeline.disable(year);
     }
     name = option.getAttribute("data-name");
     if ((_ref5 = document.getElementById("indicator-name")) != null) {
