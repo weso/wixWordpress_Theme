@@ -297,7 +297,7 @@
                 <i class="button fa fa-toggle-on"></i>
               </header>
               <section class="indicator-list">
-                <table id="indicator-list">
+                <table id="indicator-list" class="adaptative">
                   <thead>
                     <tr>
                       <th>Indicator</th>

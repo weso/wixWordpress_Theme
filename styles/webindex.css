@@ -280,9 +280,9 @@ aside.left-bar {
     margin-left: 19em;
     margin-bottom: 30em; } }
 /* FIXED */
-.absolute {
-  position: absolute; }
-
+@media (min-width: 64em) {
+  .absolute {
+    position: absolute; } }
 .fixed {
   position: fixed;
   top: 0; }
@@ -2060,6 +2060,9 @@ div.box-follow {
   min-height: 60em;
   margin-top: 0.3em;
   position: relative; }
+  @media (max-width: 64em) {
+    .data-right-content {
+      padding: 0 0.5em; } }
 
 /* TABS */
 .first-section {
@@ -2085,7 +2088,7 @@ div.box-follow {
       position: absolute;
       left: 0;
       bottom: 0;
-      width: 25%;
+      width: 50%;
       max-width: 12em;
       border-top: 1px solid #ccc;
       border-left: 1px solid #ccc;
@@ -2763,7 +2766,7 @@ div.middle-section {
     float: left;
     display: block;
     margin-right: 2.35765%;
-    width: 14.70196%;
+    width: 31.76157%;
     background-color: #ccc;
     color: white;
     padding: 0.5em 0.5em 0.1em 0.5em;
@@ -2771,6 +2774,17 @@ div.middle-section {
     height: 7.5em; }
     div.middle-section div.box-mini:last-child {
       margin-right: 0; }
+    @media (max-width: 64em) {
+      div.middle-section div.box-mini:nth-child(3) {
+        margin-right: 0; } }
+    @media (min-width: 64em) {
+      div.middle-section div.box-mini {
+        float: left;
+        display: block;
+        margin-right: 2.35765%;
+        width: 14.70196%; }
+        div.middle-section div.box-mini:last-child {
+          margin-right: 0; } }
     div.middle-section div.box-mini p {
       margin: 0.2em 0 0 0; }
     div.middle-section div.box-mini p:first-child {
@@ -2870,11 +2884,29 @@ div.country-box {
 /* MAP */
 div.map {
   clear: both;
-  height: 33em;
+  height: 21em;
   position: relative; }
+  @media (min-width: 48em) {
+    div.map {
+      height: 24em; } }
+  @media (min-width: 54em) {
+    div.map {
+      height: 29em; } }
+  @media (min-width: 64em) {
+    div.map {
+      height: 33em; } }
   div.map > div {
-    height: 32em;
+    height: 20em;
     clear: both; }
+    @media (min-width: 48em) {
+      div.map > div {
+        height: 23em; } }
+    @media (min-width: 54em) {
+      div.map > div {
+        height: 28em; } }
+    @media (min-width: 64em) {
+      div.map > div {
+        height: 32em; } }
   div.map .colour-legend {
     width: 20%;
     height: auto;
@@ -3017,13 +3049,20 @@ table.full-ranking {
   table.full-ranking img.flag {
     border: 0.1em solid #ccc; }
   table.full-ranking td.big-number {
-    font-size: 11em;
+    font-size: 4em;
     line-height: 1em;
     padding: 0;
     color: #888;
-    text-align: right !important;
     padding-right: 0.2em;
-    min-width: 1.5em; }
+    text-align: center !important; }
+    @media (min-width: 48em) {
+      table.full-ranking td.big-number {
+        font-size: 6em;
+        min-width: 1.5em;
+        text-align: right !important; } }
+    @media (min-width: 64em) {
+      table.full-ranking td.big-number {
+        font-size: 11em; } }
   table.full-ranking tr {
     cursor: pointer; }
   table.full-ranking .circle {
@@ -3480,6 +3519,33 @@ body.noscroll {
   font-size: 1.2em;
   padding-top: 0.4em; }
 
+@media all and (max-width: 37em) {
+  table.adaptative {
+    border: 0;
+    padding-bottom: 0;
+    display: block;
+    width: 100%; }
+    table.adaptative caption {
+      display: block; }
+    table.adaptative thead {
+      display: none;
+      visibility: hidden; }
+    table.adaptative tbody, table.adaptative tr, table.adaptative th, table.adaptative td {
+      border: 0;
+      display: block;
+      padding: 0;
+      text-align: left;
+      white-space: normal; }
+    table.adaptative tr {
+      margin-bottom: 2em; }
+    table.adaptative th[data-title]:before, table.adaptative td[data-title]:before {
+      content: attr(data-title) ":\a";
+      /* white-space: pre; */
+      font-weight: 700; }
+    table.adaptative th:not([data-title]) {
+      font-weight: 700; }
+    table.adaptative td:empty {
+      display: none; } }
 body {
   font-family: Raleway, sans-serif;
   color: #111;
