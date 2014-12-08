@@ -115,7 +115,6 @@
       <nav>
         <ul class="tags about-tags">'.((isset($in['data']['about']['ul']) && is_array($in['data']['about'])) ? $in['data']['about']['ul'] : null).'</ul>
       </nav>
-      <div class=bar></div>
     </aside>
     <section class="right-content about-articles">'.((isset($in['data']['about']['content']) && is_array($in['data']['about'])) ? $in['data']['about']['content'] : null).'</section>
   </div>

@@ -1,5 +1,5 @@
 (function() {
-  var clearActive, li, _i, _len, _ref;
+  var clearActive, closeMenu, li, openMenu, _i, _len, _ref;
 
   $(function() {
     var leftBar, msie6, top;
@@ -41,12 +41,35 @@
     return _results;
   };
 
+  openMenu = function() {
+    var leftBar;
+    leftBar = document.querySelector(".left-bar");
+    if (leftBar.className.indexOf("opened") === -1) {
+      return leftBar.className = leftBar.className + " opened";
+    }
+  };
+
+  closeMenu = function() {
+    var leftBar;
+    leftBar = document.querySelector(".left-bar");
+    if (leftBar.className.indexOf("opened") !== -1) {
+      return leftBar.className = leftBar.className.replace(" opened", "");
+    }
+  };
+
   _ref = document.querySelectorAll(".left-bar .tags li");
   for (_i = 0, _len = _ref.length; _i < _len; _i++) {
     li = _ref[_i];
     li.onclick = function() {
-      clearActive();
-      return this.className = "active";
+      if (this.className !== "active") {
+        clearActive();
+        this.className = "active";
+        closeMenu();
+        return true;
+      } else {
+        openMenu();
+        return false;
+      }
     };
   }
 
