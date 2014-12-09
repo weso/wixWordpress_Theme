@@ -1,18 +1,20 @@
 (function() {
-  var a, button, chartSelectors, chartTooltip, checkSelectorDataReady, collapsable, collapsableHeader, collapsableSection, collapsables, collapsed, content, createTableCell, createTip, firstBox, firstBoxHeaderHeight, firstHeight, getCountries, getIndicators, getObservations, getSelectorData, getValue, getYears, global, hide, li, msie6, renderBoxes, renderCharts, renderContinentLegend, renderCountries, renderExtraTableHeader, renderIndicatorInfo, renderMap, renderPieChart, renderRegionLabel, renderSomeBoxes, renderTable, renderYearBox, secondBox, secondBoxHeaderHeight, secondHeight, selectBar, setBoxesInitialPosition, setBoxesPosition, setIndicatorOptions, setPageStateful, setUnfixedPosition, show, showTutorial, siteHeader, startTutorialFirstTime, tab, tabs, thirdBox, thirdBoxHeaderHeight, thirdHeight, top, totalHeight, tutorialBoxOnChange, tutorialRestore, updateInfo, _i, _j, _k, _len, _len1, _len2, _ref;
+  var a, button, chartSelectors, chartTooltip, checkSelectorDataReady, collapsable, collapsableHeader, collapsableSection, collapsables, collapsed, content, createTableCell, createTip, firstBox, firstBoxHeaderHeight, firstHeight, getCountries, getIndicators, getObservations, getSelectorData, getValue, global, hide, li, msie6, renderBoxes, renderCharts, renderContinentLegend, renderCountries, renderExtraTableHeader, renderIndicatorInfo, renderMap, renderPieChart, renderRegionLabel, renderSomeBoxes, renderTable, renderYearBox, secondBox, secondBoxHeaderHeight, secondHeight, selectBar, setBoxesInitialPosition, setBoxesPosition, setIndicatorOptions, setPageStateful, setUnfixedPosition, show, showTutorial, siteHeader, startTutorialFirstTime, tab, tabs, thirdBox, thirdBoxHeaderHeight, thirdHeight, top, totalHeight, tutorialBoxOnChange, tutorialRestore, updateInfo, _i, _j, _k, _len, _len1, _len2, _ref;
 
   global = this;
 
   global.options = {};
 
-  global.selectorDataReady = {};
+  global.selectorDataReady = {
+    timeline: true
+  };
 
   global.selections = {
     indicator: null,
     indicatorOption: null,
     indicatorTendency: null,
     countries: null,
-    year: null,
+    year: 2014,
     years: [],
     areas: []
   };
@@ -68,20 +70,6 @@
             }
           }
         }, {
-          name: "time",
-          selector: global.options.timeline,
-          onChange: function(index, value, parameters, selectors) {
-            if (settings.debug) {
-              console.log("year:onChange index:" + index + " value:" + value);
-            }
-            global.selections.year = parseInt(value);
-            updateInfo();
-            if (global.tutorial) {
-              tutorialBoxOnChange.call(global.options.timeline);
-              return global.tutorialRestoreValues.selections[1] = true;
-            }
-          }
-        }, {
           name: "country",
           selector: global.options.countrySelector,
           value: "ALL",
@@ -118,7 +106,6 @@
 
   getSelectorData = function() {
     getIndicators();
-    getYears();
     return getCountries();
   };
 
@@ -130,7 +117,7 @@
       url += "?callback=getIndicatorsCallback";
       return this.processJSONP(url);
     } else {
-      return this.processAJAX(url, getYearsCallback);
+      return this.processAJAX(url, getIndicatorsCallback);
     }
   };
 
@@ -221,37 +208,39 @@
     return _results;
   };
 
-  getYears = function() {
-    var host, url;
-    host = this.settings.server.url;
-    url = "" + host + "/years/array";
-    if (this.settings.server.method === "JSONP") {
-      url += "?callback=getYearsCallback";
-      return this.processJSONP(url);
-    } else {
-      return this.processAJAX(url, getYearsCallback);
-    }
-  };
 
-  this.getYearsCallback = function(data) {
-    var index, year, years, _i, _len;
-    years = [];
-    if (data.success) {
-      years = data.data.sort();
-    }
-    for (index = _i = 0, _len = years.length; _i < _len; index = ++_i) {
-      year = years[index];
-      years[index] = parseInt(years[index]) + 1;
-    }
-    global.selections.years = years;
+  /*
+  getYears = () ->
+    host = @settings.server.url
+    url = "#{host}/years/array"
+  
+    if @settings.server.method is "JSONP"
+      url += "?callback=getYearsCallback"
+      @processJSONP(url)
+    else
+      @processAJAX(url, getYearsCallback)
+  
+  @getYearsCallback = (data) ->
+    years = []
+  
+    if data.success then years = data.data.sort()
+  
+    for year, index in years
+      years[index] = parseInt(years[index]) + 1
+  
+    global.selections.years = years
+  
+     * Timeline
+  
     global.options.timeline = wesCountry.selector.timeline({
       container: '#timeline',
       maxShownElements: 10,
       elements: years
-    });
-    global.selectorDataReady.timeline = true;
-    return checkSelectorDataReady();
-  };
+    })
+  
+    global.selectorDataReady.timeline = true
+    checkSelectorDataReady()
+   */
 
   getCountries = function() {
     var host, url;
@@ -399,41 +388,37 @@
   };
 
   renderYearBox = function(yearContainer, primary, year) {
-    var i, span;
+    var span;
     if (yearContainer != null) {
       yearContainer.innerHTML = "";
     }
-    i = document.createElement("i");
-    i.className = "fa fa-caret-left left";
-    if (yearContainer != null) {
-      yearContainer.appendChild(i);
-    }
-    if (!primary && global.selections.years.length > 0 && year > global.selections.years[0]) {
-      i.className += " active";
-      i.year = year - 1;
-      i.onclick = function(event) {
-        global.options.timeline.select(this.year);
-        return global.options.timeline.refresh();
-      };
-    }
+
+    /*
+    i = document.createElement "i"
+    i.className = "fa fa-caret-left left"
+    yearContainer?.appendChild i
+    if !primary and global.selections.years.length > 0 and year > global.selections.years[0]
+      i.className += " active"
+      i.year = year - 1
+      i.onclick = (event) ->
+        global.options.timeline.select(this.year)
+        global.options.timeline.refresh()
+     */
     span = document.createElement("span");
     span.innerHTML = year;
-    if (yearContainer != null) {
-      yearContainer.appendChild(span);
-    }
-    i = document.createElement("i");
-    i.className = "fa fa-caret-right right";
-    if (yearContainer != null) {
-      yearContainer.appendChild(i);
-    }
-    if (global.selections.years.length > 0 && year < global.selections.years[global.selections.years.length - 1]) {
-      i.className += " active";
-      i.year = year + 1;
-      return i.onclick = function(event) {
-        global.options.timeline.select(this.year);
-        return global.options.timeline.refresh();
-      };
-    }
+    return yearContainer != null ? yearContainer.appendChild(span) : void 0;
+
+    /*
+    i = document.createElement "i"
+    i.className = "fa fa-caret-right right"
+    yearContainer?.appendChild i
+    if global.selections.years.length > 0 and year < global.selections.years[global.selections.years.length - 1]
+      i.className += " active"
+      i.year = year + 1
+      i.onclick = (event) ->
+        global.options.timeline.select(this.year)
+        global.options.timeline.refresh()
+     */
   };
 
   renderContinentLegend = function(data, options, container, getContinents, getContinentColour) {
@@ -1002,7 +987,7 @@
   };
 
   renderIndicatorInfo = function(option, tendency) {
-    var component, componentBox, componentName, componentNameSpan, description, hierarchy, i, index, indexBox, indicatorBox, indicatorName, indicatorNameSpan, indicatorValue, name, primary, provider_anchor, provider_name, provider_url, republish, secondary, subindex, subindexBox, subindexName, subindexNameSpan, tendencyIcon, tendencyLabel, type, year, years, _i, _ref, _ref1, _ref10, _ref11, _ref12, _ref13, _ref14, _ref15, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
+    var component, componentBox, componentName, componentNameSpan, description, hierarchy, index, indexBox, indicatorBox, indicatorName, indicatorNameSpan, indicatorValue, name, primary, provider_anchor, provider_name, provider_url, republish, secondary, subindex, subindexBox, subindexName, subindexNameSpan, tendencyIcon, tendencyLabel, type, _ref, _ref1, _ref10, _ref11, _ref12, _ref13, _ref14, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
     republish = option.getAttribute("data-republish");
     republish = republish === "true";
     if ((_ref = document.getElementById("notifications")) != null) {
@@ -1021,44 +1006,51 @@
         _ref3.display = primary ? "block" : "none";
       }
     }
-    years = global.options.timeline.getElements();
-    for (i = _i = 0, _ref4 = years.length - 2; 0 <= _ref4 ? _i <= _ref4 : _i >= _ref4; i = 0 <= _ref4 ? ++_i : --_i) {
-      year = years[i];
-      global.options.timeline.disable(year);
-    }
+
+    /*
+    years = global.options.timeline.getElements()
+    
+    for i in [0..years.length - 2]
+      year = years[i]
+    
+      if primary
+        global.options.timeline.disable(year)
+      else
+        global.options.timeline.enable(year)
+     */
     name = option.getAttribute("data-name");
-    if ((_ref5 = document.getElementById("indicator-name")) != null) {
-      _ref5.innerHTML = name;
+    if ((_ref4 = document.getElementById("indicator-name")) != null) {
+      _ref4.innerHTML = name;
     }
     description = option.getAttribute("data-description");
-    if ((_ref6 = document.getElementById("indicator-description")) != null) {
-      _ref6.innerHTML = description;
+    if ((_ref5 = document.getElementById("indicator-description")) != null) {
+      _ref5.innerHTML = description;
     }
-    if ((_ref7 = document.getElementById("indicator-type")) != null) {
+    if ((_ref6 = document.getElementById("indicator-type")) != null) {
+      _ref6.innerHTML = type;
+    }
+    if ((_ref7 = document.getElementById("indicator-type-icon")) != null) {
       _ref7.innerHTML = type;
     }
-    if ((_ref8 = document.getElementById("indicator-type-icon")) != null) {
-      _ref8.innerHTML = type;
+    tendencyLabel = tendency ? (_ref8 = document.getElementById("label_ascending")) != null ? _ref8.value : void 0 : (_ref9 = document.getElementById("label_descending")) != null ? _ref9.value : void 0;
+    if ((_ref10 = document.getElementById("indicator-tendency")) != null) {
+      _ref10.innerHTML = tendencyLabel;
     }
-    tendencyLabel = tendency ? (_ref9 = document.getElementById("label_ascending")) != null ? _ref9.value : void 0 : (_ref10 = document.getElementById("label_descending")) != null ? _ref10.value : void 0;
-    if ((_ref11 = document.getElementById("indicator-tendency")) != null) {
+    if ((_ref11 = document.getElementById("indicator-tendency-icon")) != null) {
       _ref11.innerHTML = tendencyLabel;
     }
-    if ((_ref12 = document.getElementById("indicator-tendency-icon")) != null) {
-      _ref12.innerHTML = tendencyLabel;
-    }
     tendencyIcon = tendency ? "fa fa-arrow-up" : "fa fa-arrow-down";
-    if ((_ref13 = document.getElementById("indicator-tendency-arrow")) != null) {
-      _ref13.className = tendencyIcon;
+    if ((_ref12 = document.getElementById("indicator-tendency-arrow")) != null) {
+      _ref12.className = tendencyIcon;
     }
     provider_name = option.getAttribute("data-provider_name");
     provider_url = option.getAttribute("data-provider_url");
     provider_anchor = "<a href='" + provider_url + "'>" + provider_name + "</a>";
-    if ((_ref14 = document.getElementById("indicator-provider")) != null) {
-      _ref14.innerHTML = provider_anchor;
+    if ((_ref13 = document.getElementById("indicator-provider")) != null) {
+      _ref13.innerHTML = provider_anchor;
     }
-    if ((_ref15 = document.getElementById("indicator-provider-icon")) != null) {
-      _ref15.innerHTML = provider_anchor;
+    if ((_ref14 = document.getElementById("indicator-provider-icon")) != null) {
+      _ref14.innerHTML = provider_anchor;
     }
     hierarchy = document.getElementById("hierarchy");
     indexBox = hierarchy.querySelector(".index");
@@ -1737,12 +1729,10 @@
     window.scrollTo(0, 0);
     global.tutorialRestoreValues = {
       indicator: document.getElementById("indicator-select").value,
-      year: global.options.timeline.selected(),
       countries: global.options.countrySelector.selected(),
       selections: [false, false, false, false, false]
     };
     global.options.indicatorSelector.value = -1;
-    global.options.timeline.clear();
     global.options.countrySelector.clear();
     setUnfixedPosition();
     localStorage.setItem("tutorialShown", true);
@@ -1751,7 +1741,7 @@
     back = document.createElement("div");
     back.className = "tutorial-back";
     document.body.appendChild(back);
-    tutorialElements = [".first-box", ".second-box", ".third-box", ".first-tab", ".second-tab"];
+    tutorialElements = [".first-box", ".third-box", ".first-tab", ".second-tab"];
     tutorial.style.display = "block";
     return createTip(tutorial, tutorialElements, 0, back);
   };
@@ -1768,10 +1758,6 @@
     if (global.options.indicatorSelector.selectedIndex === -1) {
       global.options.indicatorSelector.value = global.tutorialRestoreValues.indicator;
       global.options.indicatorSelector.refresh();
-    }
-    if (global.options.timeline.selected() === -1) {
-      global.options.timeline.select(global.tutorialRestoreValues.year);
-      global.options.timeline.refresh();
     }
     if (global.options.countrySelector.selected() === "") {
       global.options.countrySelector.select(global.tutorialRestoreValues.countries);
@@ -1843,9 +1829,9 @@
     next = document.getElementById("tutorial-next");
     previousStatus = index > 0 ? "active" : "inactive";
     nextStatus = "inactive";
-    if (index >= 3 && index < total - 1) {
+    if (index >= 2 && index < total - 1) {
       nextStatus = "active";
-    } else if (index < 3 && global.tutorialRestoreValues.selections[index]) {
+    } else if (index < 2 && global.tutorialRestoreValues.selections[index]) {
       nextStatus = "active";
     }
     previous.setAttribute("status", previousStatus);
