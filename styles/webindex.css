@@ -567,7 +567,7 @@ header.site-header .logo {
   float: left;
   max-width: 100%;
   box-sizing: border-box; }
-  @media (max-width: 37em) {
+  @media (max-width: 64em) {
     header.site-header .logo {
       margin-left: 0.5em;
       margin-right: 0.5em; } }
@@ -636,11 +636,16 @@ header.site-header nav {
   overflow: auto;
   clear: right;
   padding: 1em 0.5em 1em 0;
-  width: intrinsic;
-  float: right; }
+  box-sizing: border-box; }
+  @media (min-width: 40em) {
+    header.site-header nav {
+      width: intrinsic;
+      float: right; } }
   header.site-header nav div {
-    overflow: hidden;
-    width: intrinsic; }
+    overflow: hidden; }
+    @media (min-width: 40em) {
+      header.site-header nav div {
+        width: intrinsic; } }
 
 @media (min-width: 40em) {
   header.site-header nav {
@@ -815,7 +820,9 @@ div.goog-te-menu2 {
           display: table;
           clear: both; } }
   .footer li {
-    text-align: center; }
+    text-align: left;
+    width: 70%;
+    margin: 0 auto; }
     @media screen and (min-width: 40em) {
       .footer li {
         text-align: left; } }
@@ -995,7 +1002,7 @@ div.illustrations {
 /* ACCORDION */
 div.accordion {
   overflow: hidden;
-  height: 28em;
+  height: 36em;
   margin-top: -1.8em;
   font-family: 'Raleway', sans-serif;
   position: relative;
@@ -1105,7 +1112,7 @@ div.accordion {
         transition-property: opacity;
         transition-delay: 0.5s;
         transition-duration: 0.8s; }
-      @media (min-width: 64em) {
+      @media (min-width: 70em) {
         div.accordion article section.extra .infographic-percentage img {
           width: 3%;
           margin-right: 1%; } }
@@ -1688,6 +1695,8 @@ section.report-articles {
   /* Online And Offline Freedom table */ }
   section.report-articles ul.tags a {
     color: #0f0f0f; }
+  section.report-articles img {
+    height: initial !important; }
   section.report-articles section.box {
     padding: 1em;
     font-size: 0.9em;
@@ -1950,7 +1959,13 @@ section.about-articles ul.images {
       height: auto;
       vertical-align: middle; }
 section.about-articles iframe {
-  height: 34em; }
+  height: 18em; }
+  @media (min-width: 40em) {
+    section.about-articles iframe {
+      height: 28em; } }
+  @media (min-width: 64em) {
+    section.about-articles iframe {
+      height: 34em; } }
 section.about-articles ul.tags {
   margin-bottom: 0.5em; }
   section.about-articles ul.tags a {
@@ -2213,7 +2228,7 @@ div.box-follow {
       position: absolute;
       left: 0;
       bottom: 0;
-      width: 50%;
+      width: 70%;
       max-width: 12em;
       border-top: 1px solid #ccc;
       border-left: 1px solid #ccc;
@@ -2459,11 +2474,26 @@ div.box-follow {
     .collapsable .hierarchy .subindex, .collapsable .hierarchy .component, .collapsable .hierarchy .indicator {
       display: none; }
     .collapsable .hierarchy .index {
-      width: 10%; }
+      width: 50%; }
+      @media (min-width: 64em) {
+        .collapsable .hierarchy .index {
+          width: 10%; } }
     .collapsable .hierarchy .subindex, .collapsable .hierarchy .component {
-      width: 20%; }
+      width: 50%; }
+      @media (min-width: 64em) {
+        .collapsable .hierarchy .subindex, .collapsable .hierarchy .component {
+          width: 20%; } }
+    @media (max-width: 64em) {
+      .collapsable .hierarchy li a:before, .collapsable .hierarchy li a:after {
+        display: none;
+        border: none; } }
     .collapsable .hierarchy .indicator {
-      width: 100%; }
+      width: 50%;
+      z-index: 2;
+      position: relative; }
+      @media (min-width: 64em) {
+        .collapsable .hierarchy .indicator {
+          width: 100%; } }
     .collapsable .hierarchy li[data-subindex="UNIVERSAL_ACCESS"] a:hover {
       background-color: #f93845 !important; }
     .collapsable .hierarchy li[data-subindex="UNIVERSAL_ACCESS"] a:hover:after {
@@ -2563,7 +2593,7 @@ div.box-follow {
     text-align: left; }
 
 .primary-info {
-  display: none;
+  display: none !important;
   background-color: #CEECF5;
   padding: 0.5em;
   margin: 0.5em 0 0 0;
@@ -2904,8 +2934,10 @@ div.middle-section {
     div.middle-section div.box-mini:last-child {
       margin-right: 0; }
     @media (max-width: 64em) {
-      div.middle-section div.box-mini:nth-child(3) {
-        margin-right: 0; } }
+      div.middle-section div.box-mini {
+        margin-bottom: 0.5em; }
+        div.middle-section div.box-mini:nth-child(3) {
+          margin-right: 0; } }
     @media (min-width: 64em) {
       div.middle-section div.box-mini {
         float: left;
@@ -3152,7 +3184,11 @@ nav.tabs ul {
   nav.tabs ul li {
     float: right;
     background-color: #fff;
-    margin: 0 0.5em 0 0.2em; }
+    margin: 0 0.5em 0 0.2em;
+    box-sizing: border-box; }
+    @media (max-width: 37em) {
+      nav.tabs ul li {
+        width: 40%; } }
   nav.tabs ul li.selected {
     border-top: 1px solid #ccc;
     border-left: 1px solid #ccc;
@@ -3169,7 +3205,15 @@ nav.tabs ul {
     color: #555;
     background: #fff;
     text-decoration: none;
-    padding: 0.4em 4em 0.3em 4em; }
+    padding: 0.3em 0;
+    box-sizing: border-box; }
+    @media (max-width: 37em) {
+      nav.tabs ul a {
+        width: 100%;
+        text-align: center; } }
+    @media (min-width: 37em) {
+      nav.tabs ul a {
+        padding: 0.4em 4em 0.3em 4em; } }
   nav.tabs ul a:hover {
     background: #fff; }
 
@@ -3293,7 +3337,10 @@ table.full-ranking {
   .country-section div.country-map {
     float: right;
     width: 45%;
-    height: 15em; }
+    height: 10em; }
+    @media (min-width: 37em) {
+      .country-section div.country-map {
+        height: 15em; } }
     .country-section div.country-map .visor {
       display: none; }
     .country-section div.country-map .ATA {
@@ -3313,9 +3360,10 @@ table.full-ranking {
       margin: 0.6em 0 0 0; }
   .country-section div.ranking {
     background-color: #f93845; }
-  .country-section div.table-wrapper {
-    float: left;
-    width: 55%; }
+  @media (min-width: 37em) {
+    .country-section div.table-wrapper {
+      float: left;
+      width: 55%; } }
   .country-section table {
     text-align: center; }
     .country-section table tbody, .country-section table td {
@@ -3729,6 +3777,9 @@ body {
     content: "";
     display: table;
     clear: both; }
+  @media (max-width: 64em) {
+    .container {
+      padding: 0 0.5em; } }
 
 .text-left {
   text-align: left; }

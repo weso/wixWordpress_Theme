@@ -304,11 +304,10 @@
       if (accordionTabs[0].isMobile()) {
         neutralityTabCallback.call();
         world = document.getElementById("world");
-        world.setAttribute("width", "10em");
-        return world.setAttribute("height", "10em");
-      } else {
-        return privacyCallback.call();
+        world.setAttribute("width", "12em");
+        world.setAttribute("height", "12em");
       }
+      return privacyCallback.call();
     }, 100);
   };
 
