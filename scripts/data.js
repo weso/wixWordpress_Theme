@@ -1140,7 +1140,7 @@
     }
     higherContainer = document.getElementById("" + prefix + "higher");
     if (higherContainer) {
-      higherContainer.innerHTML = global.selections.indicatorTendency ? higher : lower;
+      higherContainer.innerHTML = higher;
       higherContainer.onclick = function() {
         global.options.countrySelector.select(higherArea);
         return global.options.countrySelector.refresh();
@@ -1148,7 +1148,7 @@
     }
     lowerContainer = document.getElementById("" + prefix + "lower");
     if (lowerContainer) {
-      lowerContainer.innerHTML = global.selections.indicatorTendency ? lower : higher;
+      lowerContainer.innerHTML = lower;
       return lowerContainer.onclick = function() {
         global.options.countrySelector.select(lowerArea);
         return global.options.countrySelector.refresh();
@@ -1724,7 +1724,17 @@
   };
 
   showTutorial = function() {
-    var back, tutorial, tutorialElements;
+    var back, displayTutorial, tutorial, tutorialElements, viewTutorial, viewTutorialStyle;
+    viewTutorial = document.getElementById("view-tutorial");
+    if (viewTutorial) {
+      viewTutorialStyle = window.getComputedStyle(viewTutorial);
+      displayTutorial = viewTutorialStyle.getPropertyValue('display');
+      if (displayTutorial !== "block") {
+        return;
+      }
+    } else {
+      return;
+    }
     global.tutorial = true;
     window.scrollTo(0, 0);
     global.tutorialRestoreValues = {
