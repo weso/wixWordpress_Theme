@@ -2043,7 +2043,7 @@ li.cat-item {
   background-color: #89ba00; }
 
 /* News media */
-.cat-links a[href$="/news-media/"], li.cat-item a[href$="/news-media/"] {
+.cat-links a[href$="/blog/"], li.cat-item a[href$="/blog/"] {
   background-color: #AE5693; }
 
 /* ARTICLES */
