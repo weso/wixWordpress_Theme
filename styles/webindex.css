@@ -271,7 +271,7 @@ aside.left-bar {
     aside.left-bar.fixed:not(.opened) li:not(.active) {
       display: none; } }
 
-@media (max-width: 37em) {
+@media (max-width: 64em) {
   section.right-content {
     padding: 0 0.5em; } }
 @media (min-width: 64em) {
@@ -3777,9 +3777,6 @@ body {
     content: "";
     display: table;
     clear: both; }
-  @media (max-width: 64em) {
-    .container {
-      padding: 0 0.5em; } }
 
 .text-left {
   text-align: left; }
